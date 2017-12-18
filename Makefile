@@ -17,5 +17,5 @@ restylers.release: $(ALL_RESTYLERS)
 	@for r in $^; do \
 	  if [ -f "$$r/Dockerfile" ]; then \
 	    docker push "$(RESTYLER_IMAGE_PREFIX)$$r"; \
-	  if; \
+	  fi; \
 	done
