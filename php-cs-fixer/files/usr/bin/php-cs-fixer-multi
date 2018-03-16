@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# php-cs-fixer doesn't accept more than one path, so we do that here and invoke
+# it multiple times. N.B. we require -- to separate options from arguments.
+#
+###
+set -e
+
+options=()
+
+while [ -n "$1" ]; do
+  case "$1" in
+    --) shift; break ;;
+    *) options+=( "$1" );
+  esac
+  shift
+done
+
+for file; do
+  php-cs-fixer fix "$file" "${options[@]}"
+done
