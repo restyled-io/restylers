@@ -8,7 +8,7 @@ restylers: $(ALL_RESTYLERS)
 	@for r in $^; do \
 	  if [ -f "$$r/Dockerfile" ]; then \
 	    (cd "$$r" && \
-	      docker build --tag "$(RESTYLER_IMAGE_PREFIX)$$r" .); \
+	      docker build --tag "$(RESTYLER_IMAGE_PREFIX)$$r" .) || exit 1; \
 	  fi; \
 	done
 
@@ -16,6 +16,6 @@ restylers: $(ALL_RESTYLERS)
 restylers.release: $(ALL_RESTYLERS)
 	@for r in $^; do \
 	  if [ -f "$$r/Dockerfile" ]; then \
-	    docker push "$(RESTYLER_IMAGE_PREFIX)$$r"; \
+	    docker push "$(RESTYLER_IMAGE_PREFIX)$$r" || exit 1; \
 	  fi; \
 	done
