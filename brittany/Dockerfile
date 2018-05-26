@@ -3,11 +3,10 @@ MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
 
-ENV BRITTANY_VERSION 0.9.0.1
+ENV BRITTANY_VERSION 0.11.0.0
 RUN \
   git clone https://github.com/lspitzner/brittany.git && cd brittany && \
   git reset --hard "$BRITTANY_VERSION" && \
-  echo "extra-deps:\n  - butcher-1.3.0.0\n  - ghc-exactprint-0.5.6.1" >> stack.yaml && \
   stack setup && \
   stack install
 
