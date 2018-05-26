@@ -49,6 +49,10 @@ main = do
         for_ restylers $ \name -> do
             phony name $ need [stateFile name]
 
+            phony (name <> ".test") $ do
+                need [stateFile name]
+                command_ [] "cram" ["test" </> name <.> "t"]
+
             phony (name <> ".pull") $
                 command_ [] "docker" ["pull", imageName name]
 
@@ -59,6 +63,10 @@ main = do
             phony (name <> ".version") $ do
                 need [stateFile name]
                 command_ [] "docker" ["run", "--rm", imageName name, "--version"]
+
+        phony "test" $ do
+            need $ map stateFile restylers
+            command_ [] "cram" ["test"]
 
         phony "init" $ do
             need $ map (<> ".pull") restylers
