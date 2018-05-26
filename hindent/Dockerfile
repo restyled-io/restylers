@@ -1,9 +1,10 @@
-FROM fpco/stack-build:lts as builder
+# https://www.stackage.org/lts-11.10/package/hindent-5.2.5
+FROM fpco/stack-build:lts-11.10 as builder
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
-RUN stack --resolver lts setup
-RUN stack --resolver lts install hindent
+RUN stack --resolver lts-11.10 setup
+RUN stack --resolver lts-11.10 install hindent
 
 FROM fpco/stack-run:lts
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
