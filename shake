@@ -1,0 +1,115 @@
+#!/usr/bin/env stack
+{- stack
+  --resolver lts-11.10
+  --install-ghc
+  runghc
+  --package containers
+  --package directory
+  --package shake
+  --package time
+-}
+{-# OPTIONS_GHC -Wall -Werror #-}
+
+module Main (main) where
+
+import Control.Monad
+import Data.Foldable
+import Data.List (stripPrefix)
+import qualified Data.Map as M
+import Data.Maybe
+import Data.Semigroup ((<>))
+import Data.Time
+import Development.Shake
+import Development.Shake.FilePath
+import qualified System.Directory as IO
+
+-- | Prefix for built (and pushed) Images
+restylerImagePrefix :: String
+restylerImagePrefix = "restyled/restyler-"
+
+-- | Default Shake options
+options :: ShakeOptions
+options = shakeOptions
+    { shakeColor = True
+    }
+
+main :: IO ()
+main = do
+    restylers <- getRestylers
+
+    shakeArgs options $ do
+        -- Build a single restyler image and touch a state-file used in future
+        -- runs to provide evidence that it has already been built.
+        stateFile "*" %> \out -> do
+            let name = takeBaseName out
+            need =<< (name </>) <$$> getDirectoryFiles name ["**/*"]
+            command_ [Cwd name] "docker" ["build", "--tag", imageName name, "."]
+            writeFile' out ""
+
+        for_ restylers $ \name -> do
+            phony name $ need [stateFile name]
+
+            phony (name <> ".pull") $
+                command_ [] "docker" ["pull", imageName name]
+
+            phony (name <> ".push") $ do
+                need [stateFile name]
+                command_ [] "docker" ["push", imageName name]
+
+            phony (name <> ".version") $ do
+                need [stateFile name]
+                command_ [] "docker" ["run", "--rm", imageName name, "--version"]
+
+        phony "init" $ do
+            need $ map (<> ".pull") restylers
+            initializeImagesState
+
+        want $ map stateFile restylers
+
+imageName :: String -> String
+imageName = (restylerImagePrefix <>)
+
+stateFile :: FilePath -> String
+stateFile f = ".shake" </> "tmp" </> f
+
+getRestylers :: IO [String]
+getRestylers =
+    filterM hasDockerfile =<< IO.listDirectory "."
+  where
+    hasDockerfile = IO.doesFileExist . (</> "Dockerfile")
+
+initializeImagesState :: Action ()
+initializeImagesState = do
+    Stdout output <- command [] "docker"
+        ["images" , "--format" , "{{ .Repository }} {{ .CreatedAt }}"]
+
+    traverse_
+        (liftIO . uncurry updateStateFile)
+        . M.toList
+        . M.fromListWith max
+        . mapMaybe (parseWords . words)
+        $ lines output
+  where
+    parseWords :: [String] -> Maybe (String, UTCTime)
+    parseWords (w:ws) = do
+        name <- stripPrefix restylerImagePrefix w
+        mtime <- parseTimeM True defaultTimeLocale "%F %T %z %Z" $ unwords ws
+        pure (name, mtime)
+    parseWords _ = Nothing
+
+updateStateFile :: String -> UTCTime -> IO UTCTime
+updateStateFile name mtime = do
+    let path = stateFile name
+    exists <- IO.doesFileExist path
+    mtime' <- if exists
+        -- Docker layer caching oddities can result in us trying to move an
+        -- existing state file's mtime backward. This ensures we never do.
+        then max mtime <$> IO.getModificationTime path
+        else mtime <$ writeFile path ""
+
+    mtime' <$ IO.setModificationTime path mtime'
+
+(<$$>) :: (Functor f, Functor g) => (a -> b) -> f (g a) -> f (g b)
+f <$$> x = fmap f <$> x
+
+-- vim: ft=haskell
