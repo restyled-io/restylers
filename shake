@@ -43,7 +43,7 @@ main = do
         stateFile "*" %> \out -> do
             let name = takeBaseName out
             need =<< (name </>) <$$> getDirectoryFiles name ["**/*"]
-            command_ [Cwd name] "docker" ["build", "--tag", imageName name, "."]
+            cmd_ "docker" ["build", "--tag", imageName name, name]
             writeFile' out ""
 
         for_ restylers $ \name -> do
@@ -51,22 +51,22 @@ main = do
 
             phony (name <> ".test") $ do
                 need [stateFile name]
-                command_ [] "cram" ["test" </> name <.> "t"]
+                cmd_ "cram" ["test" </> name <.> "t"]
 
             phony (name <> ".pull") $
-                command_ [] "docker" ["pull", imageName name]
+                cmd_ "docker" ["pull", imageName name]
 
             phony (name <> ".push") $ do
                 need [stateFile name]
-                command_ [] "docker" ["push", imageName name]
+                cmd_ "docker" ["push", imageName name]
 
             phony (name <> ".version") $ do
                 need [stateFile name]
-                command_ [] "docker" ["run", "--rm", imageName name, "--version"]
+                cmd_ "docker" ["run", "--rm", imageName name, "--version"]
 
         phony "test" $ do
             need $ map stateFile restylers
-            command_ [] "cram" ["test"]
+            cmd_ "cram" ["test"]
 
         phony "init" $ do
             need $ map (<> ".pull") restylers
@@ -88,7 +88,7 @@ getRestylers =
 
 initializeImagesState :: Action ()
 initializeImagesState = do
-    Stdout output <- command [] "docker"
+    Stdout output <- cmd "docker"
         ["images" , "--format" , "{{ .Repository }} {{ .CreatedAt }}"]
 
     traverse_
