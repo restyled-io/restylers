@@ -105,7 +105,7 @@ initializeImagesState = do
         pure (name, mtime)
     parseWords _ = Nothing
 
-updateStateFile :: String -> UTCTime -> IO UTCTime
+updateStateFile :: String -> UTCTime -> IO ()
 updateStateFile name mtime = do
     let path = stateFile name
     exists <- IO.doesFileExist path
@@ -115,7 +115,7 @@ updateStateFile name mtime = do
         then max mtime <$> IO.getModificationTime path
         else mtime <$ writeFile path ""
 
-    mtime' <$ IO.setModificationTime path mtime'
+    IO.setModificationTime path mtime'
 
 (<$$>) :: (Functor f, Functor g) => (a -> b) -> f (g a) -> f (g b)
 f <$$> x = fmap f <$> x
