@@ -62,7 +62,7 @@ main = do
 
             phony (name <> ".version") $ do
                 need [stateFile name]
-                cmd_ "docker" ["run", "--rm", imageName name, "--version"]
+                cmd_ "docker" ["run", "--rm", imageName name, name, "--version"]
 
         phony "test" $ do
             need $ map stateFile restylers
