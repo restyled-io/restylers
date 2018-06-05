@@ -9,7 +9,7 @@ run_restyler_cmd() {
   docker run \
     --rm --net none \
     --volume "$PWD":/code \
-    "restyled/restyler-$name" "$command" "$@"
+    "restyled/restyler-$name" "$command" "$@" || exit 1
 
   for path; do
     if [ -e "$path" ]; then
