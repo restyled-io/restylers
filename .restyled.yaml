@@ -1,2 +1,25 @@
 ---
-enabled: false
+restylers:
+  - astyle
+  - autopep8
+  - elm-format
+  - hindent
+  - php-cs-fixer
+  - prettier
+  - rubocop
+  - rustfmt
+  - shfmt
+  - terraform
+
+  # Non-default, need to be limited to not conflict
+  - brittany:
+      include:
+        - new-files/patterns.hs
+  - stylish-haskell:
+      include:
+        - new-files/case.hs
+        - new-files/case-2.hs
+
+  - hlint:
+      include:
+        - new-files/redundant-dollar.hs
