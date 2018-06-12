@@ -43,13 +43,12 @@ main = do
                 writeFile' out ""
 
             pushedImage name %> \out -> do
-                need [builtImage name]
+                need [testedImage name]
                 cmd_ "docker" ["tag", imageName name, shaImageName name]
                 cmd_ "docker" ["push", shaImageName name]
                 writeFile' out $ shaImageName name
 
         "manifest" %> \out -> do
-            need $ map testedImage restylers
             need $ map pushedImage restylers
             contents <- for restylers $ \name -> do
                 -- Minor compatibility shim for existing images that were built
