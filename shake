@@ -15,6 +15,7 @@ module Main (main) where
 import Control.Monad
 import Data.List (intersect)
 import Data.Foldable
+import Data.Traversable
 import Data.Semigroup ((<>))
 import Development.Shake
 import Development.Shake.FilePath
@@ -30,22 +31,34 @@ main = do
 
     shakeArgs options $ do
         for_ restylers $ \name -> do
-            builtImage name *%> \_ -> do
+            builtImage name %> \out -> do
                 need =<< getTrackedContents name
                 cmd_ "docker" ["build", "--tag", imageName name, name]
+                writeFile' out ""
 
-            testedImage name *%> \_ -> do
+            testedImage name %> \out -> do
                 let test = "test" </> name <.> "t"
                 need [builtImage name, test]
                 cmd_ "cram" [test]
+                writeFile' out ""
 
-            pushedImage name *%> \_ -> do
+            pushedImage name %> \out -> do
                 need [builtImage name]
                 cmd_ "docker" ["tag", imageName name, shaImageName name]
                 cmd_ "docker" ["push", shaImageName name]
+                writeFile' out $ shaImageName name
 
-        want $ map testedImage restylers
-        want $ map pushedImage restylers
+        "manifest" %> \out -> do
+            need $ map testedImage restylers
+            need $ map pushedImage restylers
+            contents <- for restylers $ \name -> do
+                -- Minor compatibility shim for existing images that were built
+                -- and pushed as :latest and before we implemented the manifest
+                image <- readFile' $ pushedImage name
+                pure $ if null image then imageName name else image
+            writeFile' out $ unlines contents
+
+        want ["manifest"]
 
 imageName :: String -> String
 imageName = ("restyled/restyler-" <>)
@@ -70,10 +83,5 @@ getTrackedContents path = do
     Stdout output <- cmd "git" ["ls-files", path]
     contents <- map (path </>) <$> getDirectoryFiles path ["**/*"]
     pure $ contents `intersect` lines output
-
-(*%>) :: FilePattern -> (FilePath -> Action ()) -> Rules ()
-stateFile *%> rule = stateFile %> \out -> do
-    rule out
-    writeFile' out ""
 
 -- vim: ft=haskell
