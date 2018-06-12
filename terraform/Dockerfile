@@ -16,5 +16,4 @@ RUN \
 
 RUN mkdir -p /code
 WORKDIR /code
-COPY files /
-CMD ["terraform-fmt-multi", "--help"]
+CMD ["terraform", "fmt", "--help"]

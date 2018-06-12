@@ -1,6 +1,0 @@
-#!/bin/sh
-#
-# TODO: after shipping this, update restyler configuration to skip the shim.
-#
-###
-brittany --write-mode inplace "$@"

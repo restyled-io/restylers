@@ -3,7 +3,7 @@
 
 php-cs-fixer
 
-  $ run_restyler_cmd php-cs-fixer php-cs-fixer-multi -- tag.php
+  $ run_restyler php-cs-fixer fix tag.php
   Loaded config default.
      1) tag.php
   

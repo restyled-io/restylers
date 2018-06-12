@@ -1,3 +1,0 @@
-#!/bin/sh
-# Remove this after restyler is updated to call hindent-paths instead
-exec /usr/bin/hindent-paths "$@"

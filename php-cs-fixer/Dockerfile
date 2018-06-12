@@ -8,5 +8,4 @@ RUN apk add --update bash
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-COPY files /
-CMD ["php-cs-fixer-multi", "--help"]
+CMD ["php-cs-fixer", "fix", "--help"]

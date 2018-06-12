@@ -26,5 +26,4 @@ COPY --from=builder \
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-COPY files /
 CMD ["brittany", "--help"]

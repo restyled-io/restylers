@@ -3,9 +3,9 @@
 
 terraform fmt
 
-  $ run_restyler_cmd terraform terraform-fmt-multi -- outputs.tf variables.tf
+  $ run_restyler terraform fmt outputs.tf
+  > run_restyler terraform fmt variables.tf
   outputs.tf
-  variables.tf
   diff --git i/outputs.tf w/outputs.tf
   index d375be5..8e57a0d 100644
   --- i/outputs.tf
@@ -20,6 +20,7 @@ terraform fmt
   +output "fqdn" {
   +  value = "${azurerm_container_group.aci-example.fqdn}"
    }
+  variables.tf
   diff --git i/variables.tf w/variables.tf
   index 7fd5f00..b5ef381 100644
   --- i/variables.tf

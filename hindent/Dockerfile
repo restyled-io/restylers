@@ -13,5 +13,4 @@ COPY --from=builder /root/.local/bin/hindent /usr/bin/hindent
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-COPY files /
 CMD ["hindent", "--help"]
