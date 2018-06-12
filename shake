@@ -41,13 +41,17 @@ main = do
 
             pushedImage name *%> \_ -> do
                 need [builtImage name]
-                cmd_ "docker" ["push", imageName name]
+                cmd_ "docker" ["tag", imageName name, shaImageName name]
+                cmd_ "docker" ["push", shaImageName name]
 
         want $ map testedImage restylers
         want $ map pushedImage restylers
 
 imageName :: String -> String
-imageName name = "restyled/restyler-" <> name <> ":" <> take 7 $(gitHash)
+imageName = ("restyled/restyler-" <>)
+
+shaImageName :: String -> String
+shaImageName name = imageName name <> ":" <> take 7 $(gitHash)
 
 builtImage :: String -> FilePath
 builtImage f = ".shake" </> "tmp" </> f
