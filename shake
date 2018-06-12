@@ -13,13 +13,13 @@
 module Main (main) where
 
 import Control.Monad
-import Data.List (intersect)
 import Data.Foldable
-import Data.Traversable
+import Data.List (intersect, sort)
 import Data.Semigroup ((<>))
+import Data.Traversable
+import Development.GitRev (gitHash)
 import Development.Shake
 import Development.Shake.FilePath
-import Development.GitRev (gitHash)
 import qualified System.Directory as IO
 
 options :: ShakeOptions
@@ -27,7 +27,7 @@ options = shakeOptions { shakeColor = True }
 
 main :: IO ()
 main = do
-    restylers <- filterM hasDockerfile =<< IO.listDirectory "."
+    restylers <- filterM hasDockerfile . sort =<< IO.listDirectory "."
 
     shakeArgs options $ do
         for_ restylers $ \name -> do
