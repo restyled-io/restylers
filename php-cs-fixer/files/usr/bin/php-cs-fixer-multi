@@ -9,13 +9,16 @@ set -e
 options=()
 
 while [ -n "$1" ]; do
-  case "$1" in
-    --) shift; break ;;
-    *) options+=( "$1" );
-  esac
-  shift
+	case "$1" in
+	--)
+		shift
+		break
+		;;
+	*) options+=("$1") ;;
+	esac
+	shift
 done
 
 for file; do
-  php-cs-fixer fix "$file" "${options[@]}"
+	php-cs-fixer fix "$file" "${options[@]}"
 done
