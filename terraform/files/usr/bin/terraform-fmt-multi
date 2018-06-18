@@ -15,27 +15,27 @@ flags=()
 paths=()
 
 while [ -n "$1" ]; do
-  case "$1" in
-    # If we see help, output and exit here
-    --help)
-      terraform fmt --help
-      exit $?
-      ;;
+	case "$1" in
+	# If we see help, output and exit here
+	--help)
+		terraform fmt --help
+		exit $?
+		;;
 
-    --)
-      shift
-      break
-      ;;
-    -*) flags+=("$1") ;;
-    *) paths+=("$1") ;;
-  esac
+	--)
+		shift
+		break
+		;;
+	-*) flags+=("$1") ;;
+	*) paths+=("$1") ;;
+	esac
 
-  shift
+	shift
 done
 
 # Collect any remaining paths, in case -- was used.
 paths+=("$@")
 
 for path in "${paths[@]}"; do
-  terraform fmt "${flags[@]}" "$path"
+	terraform fmt "${flags[@]}" "$path"
 done
