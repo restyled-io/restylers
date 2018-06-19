@@ -7,6 +7,6 @@ restyled/restyler-php-cs-fixer
 restyled/restyler-prettier
 restyled/restyler-rubocop
 restyled/restyler-rustfmt
-restyled/restyler-shfmt
+restyled/restyler-shfmt:95f0cfe
 restyled/restyler-stylish-haskell:22dad3b
 restyled/restyler-terraform
