@@ -5,6 +5,7 @@
   runghc
   --package directory
   --package gitrev
+  --package safe-exceptions
   --package shake
 -}
 {-# LANGUAGE TemplateHaskell #-}
@@ -14,10 +15,11 @@ module Main (main) where
 
 import Control.Monad
 import Data.Foldable
+import Control.Exception.Safe (throwString)
 import Data.List (intersect, sort)
 import Data.Semigroup ((<>))
 import Data.Traversable
-import Development.GitRev (gitHash)
+import Development.GitRev
 import Development.Shake
 import Development.Shake.FilePath
 import qualified System.Directory as IO
@@ -44,6 +46,10 @@ main = do
 
             pushedImage name %> \out -> do
                 need [testedImage name]
+
+                unless cleanWorkingDirectory $ liftIO $ throwString
+                    "Refusing to push without clean working directory"
+
                 cmd_ "docker" ["tag", imageName name, shaImageName name]
                 cmd_ "docker" ["push", shaImageName name]
                 writeFile' out $ shaImageName name
@@ -82,5 +88,11 @@ getTrackedContents path = do
     Stdout output <- cmd "git" ["ls-files", path]
     contents <- map (path </>) <$> getDirectoryFiles path ["**/*"]
     pure $ contents `intersect` lines output
+
+cleanWorkingDirectory :: Bool
+cleanWorkingDirectory
+    | $(gitDirty) = False
+    | $(gitDirtyTracked) = False
+    | otherwise = True
 
 -- vim: ft=haskell
