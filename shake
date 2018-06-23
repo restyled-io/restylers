@@ -15,7 +15,7 @@ module Main (main) where
 
 import Control.Monad
 import Control.Exception.Safe (throwString)
-import Data.List (intersect, sort)
+import Data.List (sort)
 import Data.Semigroup ((<>))
 import Development.GitRev
 import Development.Shake
@@ -60,11 +60,10 @@ main = shakeArgs options $ do
         writeFile' out ""
 
     -- Evidence that we've built the image from the Dockerfile. This will only
-    -- run if the git-tracked contents of the directory containing the
-    -- Dockerfile change.
+    -- run if the Dockerfile itself changes.
     "*" </> "Dockerfile.built" %> \out -> do
         let name = takeDirectory out
-        need =<< getTrackedContents name
+        need [out -<.> ""]
         cmd_ "docker" ["build", "--tag", imageName name, name]
         writeFile' out ""
 
@@ -75,13 +74,6 @@ imageName = ("restyled/restyler-" <>)
 -- | The relased image tagged with current commit
 shaImageName :: String -> String
 shaImageName name = imageName name <> ":" <> take 7 $(gitHash)
-
--- | Behaves like @'getDirectoryFiles'@ but limited to git-tracked files
-getTrackedContents :: FilePath -> Action [FilePath]
-getTrackedContents path = do
-    Stdout output <- cmd "git" ["ls-files", path]
-    contents <- map (path </>) <$> getDirectoryFiles path ["**/*"]
-    pure $ contents `intersect` lines output
 
 -- | Returns @'True'@ for a clean working directory
 cleanWorkingDirectory :: Bool
