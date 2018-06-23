@@ -1,6 +1,7 @@
 restyled/restyler-astyle
 restyled/restyler-autopep8
 restyled/restyler-brittany
+restyled/restyler-dfmt:f3b58e0
 restyled/restyler-elm-format
 restyled/restyler-hindent
 restyled/restyler-php-cs-fixer
