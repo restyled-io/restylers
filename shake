@@ -14,81 +14,76 @@
 module Main (main) where
 
 import Control.Monad
-import Data.Foldable
 import Control.Exception.Safe (throwString)
 import Data.List (intersect, sort)
 import Data.Semigroup ((<>))
-import Data.Traversable
 import Development.GitRev
 import Development.Shake
 import Development.Shake.FilePath
-import qualified System.Directory as IO
 
 options :: ShakeOptions
 options = shakeOptions { shakeColor = True }
 
 main :: IO ()
-main = do
-    restylers <- filterM hasDockerfile . sort =<< IO.listDirectory "."
+main = shakeArgs options $ do
+    want ["manifest"]
 
-    shakeArgs options $ do
-        for_ restylers $ \name -> do
-            builtImage name %> \out -> do
-                need =<< getTrackedContents name
-                cmd_ "docker" ["build", "--tag", imageName name, name]
-                writeFile' out ""
+    -- A simple text file of the image tags we most-recently pushed, to make it
+    -- less error-prone to copy/paste into the Restyler code that uses it.
+    "manifest" %> \out -> do
+        dockerfiles <- getDirectoryFiles "" ["*/Dockerfile"]
+        need $ map (<.> "pushed") dockerfiles
+        contents <- traverse readFile' $ map (<.> "pushed") dockerfiles
+        writeFile' out $ unlines $ sort contents
 
-            testedImage name %> \out -> do
-                let test = "test" </> name <.> "t"
-                need [builtImage name, test]
-                cmd_ "cram" [test]
-                writeFile' out ""
+    -- Evidence that we've pushed a tested image, built from the Dockerfile.
+    -- This will refuse to run if the working directory is not clean, since that
+    -- could be pushing over an existing tag.
+    "*" </> "Dockerfile.pushed" %> \out -> do
+        need [out -<.> "tested"]
 
-            pushedImage name %> \out -> do
-                need [testedImage name]
+        unless cleanWorkingDirectory $ liftIO $ throwString
+            "Refusing to push without clean working directory"
 
-                unless cleanWorkingDirectory $ liftIO $ throwString
-                    "Refusing to push without clean working directory"
+        let name = takeDirectory out
+        cmd_ "docker" ["tag", imageName name, shaImageName name]
+        cmd_ "docker" ["push", shaImageName name]
+        writeFile' out $ shaImageName name
 
-                cmd_ "docker" ["tag", imageName name, shaImageName name]
-                cmd_ "docker" ["push", shaImageName name]
-                writeFile' out $ shaImageName name
+    -- Evidence that we've tested the image built from the Dockefile. This will
+    -- only run if the image is re-built or the test file itself changes.
+    "*" </> "Dockerfile.tested" %> \out -> do
+        let name = takeDirectory out
+            test = "test" </> name <.> "t"
+        need [out -<.> "built", test]
+        cmd_ "cram" [test]
+        writeFile' out ""
 
-        "manifest" %> \out -> do
-            need $ map pushedImage restylers
-            contents <- for restylers $ \name -> do
-                -- Minor compatibility shim for existing images that were built
-                -- and pushed as :latest and before we implemented the manifest
-                image <- readFile' $ pushedImage name
-                pure $ if null image then imageName name else image
-            writeFile' out $ unlines contents
+    -- Evidence that we've built the image from the Dockerfile. This will only
+    -- run if the git-tracked contents of the directory containing the
+    -- Dockerfile change.
+    "*" </> "Dockerfile.built" %> \out -> do
+        let name = takeDirectory out
+        need =<< getTrackedContents name
+        cmd_ "docker" ["build", "--tag", imageName name, name]
+        writeFile' out ""
 
-        want ["manifest"]
-
+-- | How to name the released image
 imageName :: String -> String
 imageName = ("restyled/restyler-" <>)
 
+-- | The relased image tagged with current commit
 shaImageName :: String -> String
 shaImageName name = imageName name <> ":" <> take 7 $(gitHash)
 
-builtImage :: String -> FilePath
-builtImage f = ".shake" </> "tmp" </> f
-
-testedImage :: String -> FilePath
-testedImage f = ".shake" </> "tmp" </> f <.> "tested"
-
-pushedImage :: String -> FilePath
-pushedImage f = ".shake" </> "tmp" </> f <.> "pushed"
-
-hasDockerfile :: FilePath -> IO Bool
-hasDockerfile = IO.doesFileExist . (</> "Dockerfile")
-
+-- | Behaves like @'getDirectoryFiles'@ but limited to git-tracked files
 getTrackedContents :: FilePath -> Action [FilePath]
 getTrackedContents path = do
     Stdout output <- cmd "git" ["ls-files", path]
     contents <- map (path </>) <$> getDirectoryFiles path ["**/*"]
     pure $ contents `intersect` lines output
 
+-- | Returns @'True'@ for a clean working directory
 cleanWorkingDirectory :: Bool
 cleanWorkingDirectory
     | $(gitDirty) = False

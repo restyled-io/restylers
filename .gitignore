@@ -1,2 +1,3 @@
 *.t.err
+*/Dockerfile.*
 .shake
