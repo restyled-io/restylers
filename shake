@@ -1,13 +1,5 @@
 #!/usr/bin/env stack
-{- stack
-  --resolver lts-11.10
-  --install-ghc
-  runghc
-  --package directory
-  --package gitrev
-  --package safe-exceptions
-  --package shake
--}
+-- stack script --resolver lts-11.15
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wall #-}
 
