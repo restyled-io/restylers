@@ -9,7 +9,7 @@
   --package shake
 -}
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS_GHC -Wall -Werror #-}
+{-# OPTIONS_GHC -Wall #-}
 
 module Main (main) where
 
