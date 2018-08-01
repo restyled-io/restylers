@@ -3,6 +3,9 @@ MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
 
+# Dumb cache-buster. Bump this to force a build
+ENV _DOCKERFILE_VERSION 0
+
 ENV BRITTANY_VERSION 0.11.0.0
 RUN \
   git clone https://github.com/lspitzner/brittany.git && cd brittany && \
