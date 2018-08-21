@@ -6,7 +6,7 @@ restyled/restyler-elm-format
 restyled/restyler-google-java-format:39b1d8f
 restyled/restyler-hindent
 restyled/restyler-php-cs-fixer
-restyled/restyler-prettier
+restyled/restyler-prettier:8cd304f
 restyled/restyler-rubocop
 restyled/restyler-rustfmt
 restyled/restyler-shfmt:95f0cfe
