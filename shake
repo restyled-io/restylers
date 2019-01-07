@@ -42,7 +42,7 @@ main = shakeArgs options $ do
         cmd_ "docker" ["push", shaImageName name]
         writeFile' out $ shaImageName name
 
-    -- Evidence that we've tested the image built from the Dockefile. This will
+    -- Evidence that we've tested the image built from the Dockerfile. This will
     -- only run if the image is re-built or the test file itself changes.
     "*" </> "Dockerfile.tested" %> \out -> do
         let name = takeDirectory out
