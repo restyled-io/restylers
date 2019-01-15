@@ -14,7 +14,10 @@ import Development.Shake
 import Development.Shake.FilePath
 
 options :: ShakeOptions
-options = shakeOptions { shakeColor = True }
+options = shakeOptions
+    { shakeChange = ChangeModtimeAndDigest
+    , shakeColor = True
+    }
 
 main :: IO ()
 main = shakeArgs options $ do
