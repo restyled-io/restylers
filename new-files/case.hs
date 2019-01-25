@@ -1,1 +1,3 @@
-example = case x of Just p -> foo bar
+example =
+  case x of
+    Just p -> foo bar
