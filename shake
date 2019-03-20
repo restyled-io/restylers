@@ -1,5 +1,5 @@
 #!/usr/bin/env stack
--- stack script --resolver lts-11.15
+-- stack script --resolver lts-13.13
 {-# LANGUAGE TemplateHaskell #-}
 {-# OPTIONS_GHC -Wall #-}
 
