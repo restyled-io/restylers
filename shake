@@ -41,7 +41,7 @@ main = shakeArgs options $ do
             "Refusing to push without clean working directory"
 
         let name = takeDirectory out
-        cmd_ "docker" ["tag", imageName name, shaImageName name]
+        cmd_ "docker" ["tag", imagePrefix <> name, shaImageName name]
         cmd_ "docker" ["push", shaImageName name]
         writeFile' out $ shaImageName name
 
@@ -59,16 +59,16 @@ main = shakeArgs options $ do
     "*" </> "Dockerfile.built" %> \out -> do
         let name = takeDirectory out
         need [out -<.> ""]
-        cmd_ "docker" ["build", "--tag", imageName name, name]
+        cmd_ "docker" ["build", "--tag", imagePrefix <> name, name]
         writeFile' out ""
 
--- | How to name the released image
-imageName :: String -> String
-imageName = ("restyled/restyler-" <>)
+-- | Registry prefix used for released images
+imagePrefix :: String
+imagePrefix = "restyled/restyler-"
 
 -- | The relased image tagged with current commit
 shaImageName :: String -> String
-shaImageName name = imageName name <> ":" <> take 7 $(gitHash)
+shaImageName name = imagePrefix <> name <> ":" <> take 7 $(gitHash)
 
 -- | Returns @'True'@ for a clean working directory
 cleanWorkingDirectory :: Bool
