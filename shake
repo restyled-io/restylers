@@ -7,7 +7,9 @@ module Main (main) where
 
 import Control.Monad
 import Control.Exception.Safe (throwString)
-import Data.List (sort)
+import Data.Maybe (fromMaybe)
+import Data.Foldable (for_)
+import Data.List (sort, stripPrefix)
 import Data.Semigroup ((<>))
 import Development.GitRev
 import Development.Shake
@@ -21,6 +23,20 @@ options = shakeOptions
 
 main :: IO ()
 main = shakeArgs options $ do
+    -- Pull and write state files for all minifested images in the manifest, to
+    -- initialize a build cache with the assumption everything's been built,
+    -- tested, and pushed already.
+    phony "setup" $ do
+        images <- lines <$> readFile' "manifest"
+
+        for_ images $ \image -> do
+            cmd_ "docker" ["pull", image]
+
+            let name = unShaImageName image
+            writeFile' (name </> "Dockerfile.built") image
+            writeFile' (name </> "Dockerfile.tested") image
+            writeFile' (name </> "Dockerfile.pushed") image
+
     want ["manifest"]
 
     -- A simple text file of the image tags we most-recently pushed, to make it
@@ -69,6 +85,12 @@ imagePrefix = "restyled/restyler-"
 -- | The released image tagged with current commit
 shaImageName :: String -> String
 shaImageName name = imagePrefix <> name <> ":" <> take 7 $(gitHash)
+
+-- | Reverse of @'shaImageName'@
+unShaImageName :: String -> String
+unShaImageName = takeWhile (/= ':') . fromMaybe err . stripPrefix imagePrefix
+  where
+    err = error "unShaImageName used on image without imagePrefix"
 
 -- | Returns @'True'@ for a clean working directory
 cleanWorkingDirectory :: Bool
