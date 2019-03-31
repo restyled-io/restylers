@@ -42,9 +42,9 @@ main = shakeArgs options $ do
     -- A simple text file of the image tags we most-recently pushed, to make it
     -- less error-prone to copy/paste into the Restyler code that uses it.
     "manifest" %> \out -> do
-        dockerfiles <- getDirectoryFiles "" ["*/Dockerfile"]
-        need $ map (<.> "pushed") dockerfiles
-        contents <- traverse (readFile' . (<.> "pushed")) dockerfiles
+        pusheds <- getDirectoryFiles "" ["*/Dockerfile.pushed"]
+        need pusheds
+        contents <- traverse readFile' pusheds
         writeFile' out $ unlines $ sort contents
 
     -- Evidence that we've pushed a tested image, built from the Dockerfile.
