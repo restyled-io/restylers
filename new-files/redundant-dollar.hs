@@ -1,2 +1,2 @@
 main :: IO ()
-main = putStrLn $ "hello hlint"
+main = putStrLn "hello hlint"
