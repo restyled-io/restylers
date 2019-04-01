@@ -4,6 +4,7 @@ restylers:
   - autopep8
   - elm-format
   - hindent
+  - pg_format
   - php-cs-fixer
   - prettier
   - rubocop
