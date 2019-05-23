@@ -16,6 +16,8 @@ RUN \
 FROM fpco/stack-run:lts
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
+
+# Brittany runtime files
 COPY --from=builder /root/.local/bin/brittany /usr/bin/brittany
 COPY --from=builder \
   /root/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/settings \
@@ -26,6 +28,18 @@ COPY --from=builder \
 COPY --from=builder \
   /root/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/package.conf.d \
   /root/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/package.conf.d
+
+# Needed for CPP
+COPY --from=builder \
+  /root/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/include/ghcversion.h \
+  /root/.stack/programs/x86_64-linux/ghc-8.2.2/lib/ghc-8.2.2/include/ghcversion.h
+
+# Also needed for CPP
+RUN \
+  apt-get update && \
+  apt-get install --assume-yes gcc && \
+  rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
