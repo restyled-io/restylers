@@ -11,7 +11,9 @@ MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
   apt-get update && \
-  apt-get -y install locales && \
+  apt-get -y install \
+    gcc \
+    locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 COPY --from=builder /root/.local/bin/hlint /usr/bin/hlint
@@ -33,6 +35,9 @@ COPY --from=builder \
 COPY --from=builder \
   /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/package.conf.d \
   /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/package.conf.d
+COPY --from=builder \
+  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/include/ghcversion.h \
+  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/include/ghcversion.h
 COPY --from=builder /root/.local/bin/refactor /usr/bin/refactor
 RUN mkdir -p /code
 WORKDIR /code
