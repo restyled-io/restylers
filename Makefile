@@ -1,12 +1,5 @@
 .DEFAULT_GOAL := manifest
 
-# Pull and write state files for all minifested images in the manifest, to
-# initialize a build cache with the assumption everything's been built, tested,
-# and pushed already.
-.PHONY: setup
-setup:
-	echo "TODO"
-
 # A simple text file of the image tags we most-recently pushed, to make it less
 # error-prone to copy/paste into the Restyler code that uses it.
 manifest: */Dockerfile.pushed

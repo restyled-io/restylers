@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Pull and write state files for all minifested images in the manifest, to
+# initialize a build cache with the assumption everything's been built, tested,
+# and pushed already.
+#
+###
+set -e
+echo "TODO: rewrite this when next needed"
+exit 1
