@@ -15,5 +15,5 @@ manifest: */Dockerfile.pushed
 
 %/Dockerfile.built: %/Dockerfile
 	restyler=$(shell dirname $<); \
-	  docker build --tag restyled/restyler-$$restyler $$restyler
+	docker build --tag restyled/restyler-$$restyler $$restyler
 	echo > $@
