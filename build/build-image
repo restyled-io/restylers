@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+if [ -z "$1" ]; then
+  echo "usage: push-image <name>" >&2
+  exit 1
+fi
+
+name=$1
+image=restyled/restyler-$name
+
+docker build --tag restyled/restyler-$$restyler $$restyler
+echo >$@

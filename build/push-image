@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+image_exists() {
+  curl --silent --fail --location --show-error \
+    "https://index.docker.io/v1/repositories/$1/tags/$2"
+}
+
+if [ $# -lt 2 ]; then
+  echo "usage: push-image <name> <tag>" >&2
+  exit 1
+fi
+
+image=$1
+tag=$2
+
+if image_exists "$image" "$tag" >/dev/null 2>&1; then
+  echo "Refusing ($image:$tag already exists on Docker Hub)" >&2
+  exit 1
+fi
+
+docker tag "$image" "$image:$tag"
+docker push "$image:$tag"

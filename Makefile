@@ -16,13 +16,10 @@ manifest: */Dockerfile.pushed
 # This will refuse to run if the working directory is not clean, since that
 # could be pushing over an existing tag.
 %/Dockerfile.pushed: %/Dockerfile.tested
-	restyler=$(shell dirname $<); \
-	sha=$(shell git rev-parse --short HEAD); \
-	restyler_latest=restyled/restyler-$$restyler; \
-	restyler_tagged=restyled/restyler-$$restyler:$$sha; \
-	  docker tag $$restyler_latest $$restyler_tagged && \
-	  docker push $$restyler_tagged && \
-	echo "$$restyler_tagged" > $@
+	image=restyled/restyler-$(shell dirname $<); \
+	tag=$(shell git rev-parse --short HEAD); \
+	./build/push-image "$$image" "$$tag" && \
+	echo "$$image:$$tag" >$@
 
 # Evidence that we've tested the image built from the Dockerfile. This will only
 # run if the image is re-built or the test file itself changes.
