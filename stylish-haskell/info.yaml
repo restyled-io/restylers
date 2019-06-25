@@ -1,0 +1,14 @@
+---
+name: stylish-haskell
+image: restyled/restyler-stylish-haskell:c0ba83d
+command:
+- stylish-haskell
+- "--inplace"
+arguments: []
+include:
+- "**/*.hs"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation:
+- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell

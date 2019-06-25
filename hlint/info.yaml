@@ -1,0 +1,16 @@
+---
+name: hlint
+image: restyled/restyler-hlint:efbd99c
+command:
+- hlint
+- lint
+- "--refactor"
+- "--refactor-options=-i"
+arguments: []
+include:
+- "**/*.hs"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: false
+documentation:
+- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-HLint

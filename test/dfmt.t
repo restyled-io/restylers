@@ -3,7 +3,7 @@
 
 dfmt
 
-  $ run_restyler dfmt --inplace -- getopt.d
+  $ run_restyler dfmt getopt.d
   diff --git i/getopt.d w/getopt.d
   index 1f4bc4c..8444ad0 100644
   --- i/getopt.d

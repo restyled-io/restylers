@@ -3,7 +3,7 @@
 
 brittany
 
-  $ run_restyler brittany --write-mode inplace patterns.hs
+  $ run_restyler brittany patterns.hs
   diff --git i/patterns.hs w/patterns.hs
   index 169b4f8..198bd69 100644
   --- i/patterns.hs

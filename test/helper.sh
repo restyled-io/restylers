@@ -1,15 +1,11 @@
-run_restyler_cmd() {
+run_restyler() {
   local name=$1
-  local command=$2
-  shift 2
+  shift
 
   local paths=()
   local path
 
-  docker run \
-    --rm --net none \
-    --volume "$PWD":/code \
-    "restyled/restyler-$name" "$command" "$@" || exit 1
+  "$TESTDIR"/../build/restyler-meta run "$name" "$@" || exit 1
 
   for path; do
     if [ -e "$path" ]; then
@@ -18,13 +14,6 @@ run_restyler_cmd() {
   done
 
   git diff "${paths[@]}"
-}
-
-run_restyler() {
-  local name=$1
-  shift
-
-  run_restyler_cmd "$name" "$name" "$@"
 }
 
 set -e

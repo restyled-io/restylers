@@ -3,7 +3,7 @@
 
 pg_format
 
-  $ run_restyler_cmd pg_format pg_format-inplace ./bad.sql
+  $ run_restyler pg_format ./bad.sql
   diff --git i/bad.sql w/bad.sql
   index d4cb666..71d12cc 100644
   --- i/bad.sql

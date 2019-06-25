@@ -1,0 +1,13 @@
+---
+name: php-cs-fixer
+image: restyled/restyler-php-cs-fixer:1bda900
+command:
+- php-cs-fixer
+- fix
+arguments: []
+include:
+- "**/*.php"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: false
+documentation: []

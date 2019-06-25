@@ -1,0 +1,12 @@
+---
+name: rustfmt
+image: restyled/restyler-rustfmt:51cf61e
+command:
+- rustfmt
+arguments: []
+include:
+- "**/*.rs"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

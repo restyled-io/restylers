@@ -3,7 +3,7 @@
 
 google-java-format
 
-  $ run_restyler google-java-format --replace ./Enum.java
+  $ run_restyler google-java-format ./Enum.java
   diff --git i/Enum.java w/Enum.java
   index dd9dfde..756608d 100644
   --- i/Enum.java

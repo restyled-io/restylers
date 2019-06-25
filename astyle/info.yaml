@@ -1,0 +1,17 @@
+---
+name: astyle
+image: restyled/restyler-astyle:9a3753a
+command:
+- astyle
+arguments: []
+include:
+- "**/*.c"
+- "**/*.cpp"
+- "**/*.cs"
+- "**/*.h"
+- "**/*.m"
+- "**/*.mm"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation: []

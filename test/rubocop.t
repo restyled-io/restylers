@@ -3,7 +3,7 @@
 
 rubocop
 
-  $ run_restyler rubocop --auto-correct -- four.rb
+  $ run_restyler rubocop four.rb
   Inspecting 1 file
   C
   
@@ -27,7 +27,7 @@ rubocop
 
 rubocop with incorrectable offenses (anyw8 example)
 
-  $ run_restyler rubocop --auto-correct --fail-level fatal -- andyw8_user.rb
+  $ run_restyler rubocop andyw8_user.rb
   Inspecting 1 file
   C
   

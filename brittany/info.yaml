@@ -1,0 +1,14 @@
+---
+name: brittany
+image: restyled/restyler-brittany:caa75f3
+command:
+- brittany
+- "--write-mode=inplace"
+arguments: []
+include:
+- "**/*.hs"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation:
+- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Brittany

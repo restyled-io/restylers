@@ -1,0 +1,12 @@
+---
+name: pg_format
+image: restyled/restyler-pg_format:9862f49
+command:
+- pg_format-inplace
+arguments: []
+include:
+- "**/*.sql"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: false
+documentation: []

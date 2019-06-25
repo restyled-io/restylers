@@ -1,0 +1,13 @@
+---
+name: dfmt
+image: restyled/restyler-dfmt:f3b58e0
+command:
+- dfmt
+- "--inplace"
+arguments: []
+include:
+- "**/*.d"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

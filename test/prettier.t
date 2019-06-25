@@ -3,7 +3,7 @@
 
 prettier for JS
 
-  $ run_restyler prettier --write -- matrix.js
+  $ run_restyler prettier matrix.js
   * (glob)
   diff --git i/matrix.js w/matrix.js
   index 430121c..811d19c 100644
@@ -19,7 +19,7 @@ prettier for JS
 
 prettier for YAML
 
-  $ run_restyler prettier --write -- example.yaml
+  $ run_restyler prettier example.yaml
   * (glob)
   diff --git i/example.yaml w/example.yaml
   index 5f47e96..015be9a 100644

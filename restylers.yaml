@@ -1,0 +1,210 @@
+---
+- name: astyle
+  image: restyled/restyler-astyle:9a3753a
+  command:
+  - astyle
+  arguments: []
+  include:
+  - "**/*.c"
+  - "**/*.cpp"
+  - "**/*.cs"
+  - "**/*.h"
+  - "**/*.m"
+  - "**/*.mm"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation: []
+- name: autopep8
+  image: restyled/restyler-autopep8:9a3753a
+  command:
+  - autopep8
+  - "--in-place"
+  arguments: []
+  include:
+  - "**/*.py"
+  interpreters:
+  - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: brittany
+  image: restyled/restyler-brittany:caa75f3
+  command:
+  - brittany
+  - "--write-mode=inplace"
+  arguments: []
+  include:
+  - "**/*.hs"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Brittany
+- name: dfmt
+  image: restyled/restyler-dfmt:f3b58e0
+  command:
+  - dfmt
+  - "--inplace"
+  arguments: []
+  include:
+  - "**/*.d"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: elm-format
+  image: restyled/restyler-elm-format:9a3753a
+  command:
+  - elm-format
+  - "--yes"
+  arguments: []
+  include:
+  - "**/*.elm"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: google-java-format
+  image: restyled/restyler-google-java-format:39b1d8f
+  command:
+  - google-java-format
+  - "--replace"
+  arguments: []
+  include:
+  - "**/*.java"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation: []
+- name: hindent
+  image: restyled/restyler-hindent:51cf61e
+  command:
+  - hindent
+  arguments: []
+  include:
+  - "**/*.hs"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  documentation: []
+- name: hlint
+  image: restyled/restyler-hlint:efbd99c
+  command:
+  - hlint
+  - lint
+  - "--refactor"
+  - "--refactor-options=-i"
+  arguments: []
+  include:
+  - "**/*.hs"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  documentation:
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-HLint
+- name: pg_format
+  image: restyled/restyler-pg_format:9862f49
+  command:
+  - pg_format-inplace
+  arguments: []
+  include:
+  - "**/*.sql"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  documentation: []
+- name: php-cs-fixer
+  image: restyled/restyler-php-cs-fixer:1bda900
+  command:
+  - php-cs-fixer
+  - fix
+  arguments: []
+  include:
+  - "**/*.php"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: false
+  documentation: []
+- name: prettier
+  image: restyled/restyler-prettier:8cd304f
+  command:
+  - prettier
+  - "--write"
+  arguments: []
+  include:
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.yml"
+  - "**/*.yaml"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: rubocop
+  image: restyled/restyler-rubocop:51cf61e
+  command:
+  - rubocop
+  - "--auto-correct"
+  arguments:
+  - "--fail-level"
+  - fatal
+  include:
+  - "**/*.rb"
+  interpreters:
+  - ruby
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: rustfmt
+  image: restyled/restyler-rustfmt:51cf61e
+  command:
+  - rustfmt
+  arguments: []
+  include:
+  - "**/*.rs"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: shfmt
+  image: restyled/restyler-shfmt:95f0cfe
+  command:
+  - shfmt
+  - "-w"
+  arguments: []
+  include:
+  - "**/*.sh"
+  - "**/*.bash"
+  interpreters:
+  - sh
+  - bash
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation: []
+- name: stylish-haskell
+  image: restyled/restyler-stylish-haskell:c0ba83d
+  command:
+  - stylish-haskell
+  - "--inplace"
+  arguments: []
+  include:
+  - "**/*.hs"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
+- name: terraform
+  image: restyled/restyler-terraform:e9b3935
+  command:
+  - terraform
+  - fmt
+  arguments: []
+  include:
+  - "**/*.tf"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: false
+  documentation:
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Rustfmt

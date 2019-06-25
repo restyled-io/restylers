@@ -1,0 +1,13 @@
+---
+name: elm-format
+image: restyled/restyler-elm-format:9a3753a
+command:
+- elm-format
+- "--yes"
+arguments: []
+include:
+- "**/*.elm"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

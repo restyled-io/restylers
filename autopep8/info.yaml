@@ -1,0 +1,14 @@
+---
+name: autopep8
+image: restyled/restyler-autopep8:9a3753a
+command:
+- autopep8
+- "--in-place"
+arguments: []
+include:
+- "**/*.py"
+interpreters:
+- python
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

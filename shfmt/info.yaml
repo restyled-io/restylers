@@ -1,0 +1,16 @@
+---
+name: shfmt
+image: restyled/restyler-shfmt:95f0cfe
+command:
+- shfmt
+- "-w"
+arguments: []
+include:
+- "**/*.sh"
+- "**/*.bash"
+interpreters:
+- sh
+- bash
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

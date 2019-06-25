@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+require "yaml"
+
+module Restylers
+  class Info
+    def initialize(root)
+      paths = Dir.glob(File.join(root, "*", "info.yaml")).sort
+      @info = paths.each_with_object({}) do |path, infos|
+        info = YAML.load_file(path)
+        infos[info.fetch("name")] = info
+      end
+    end
+
+    def fetch(name)
+      info.fetch(name)
+    end
+
+    def dump
+      YAML.dump(info)
+    end
+
+    private
+
+    attr_reader :info
+  end
+
+  class Run
+    DOCKER_RUN =
+      ["docker", "run", "--rm", "--net", "none", "--volume", "#{Dir.pwd}:/code"]
+
+    def initialize(info)
+      @info = info
+    end
+
+    def run(paths)
+      restyler_command = DOCKER_RUN.dup
+      restyler_command << info.fetch("image")
+      restyler_command += info.fetch("command")
+      restyler_command += info.fetch("arguments")
+      restyler_command << "--" if info.fetch("supports_arg_sep")
+
+      if info.fetch("supports_multiple_paths")
+        cmd = restyler_command + paths
+        system(*cmd) or raise "#{cmd.inspect} failed"
+      else
+        paths.each do |path|
+          cmd = restyler_command + [path]
+          system(*cmd) or raise "#{cmd.inspect} failed"
+        end
+      end
+    end
+
+    private
+
+    attr_reader :info
+  end
+
+  class Main
+    def self.run(argv)
+      root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+      info = Info.new(root)
+
+      case argv.shift
+      when "dump" then puts info.dump
+      when "get" then
+        name, key = argv.shift(2)
+        puts info.fetch(name).fetch(key)
+      when "run" then
+        name, paths = argv.shift, argv
+        Run.new(info.fetch(name)).run(paths)
+      else exit 64
+      end
+    end
+  end
+end
+
+Restylers::Main.run(ARGV)

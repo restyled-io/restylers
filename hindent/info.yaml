@@ -1,0 +1,12 @@
+---
+name: hindent
+image: restyled/restyler-hindent:51cf61e
+command:
+- hindent
+arguments: []
+include:
+- "**/*.hs"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: false
+documentation: []

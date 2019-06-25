@@ -3,7 +3,7 @@
 
 stylish-haskell
 
-  $ run_restyler stylish-haskell --inplace -- pragmas.hs
+  $ run_restyler stylish-haskell pragmas.hs
   diff --git i/pragmas.hs w/pragmas.hs
   index fd4c8c8..a07dc58 100644
   --- i/pragmas.hs
@@ -15,7 +15,7 @@ stylish-haskell
 
 MultiParam regression
 
-  $ run_restyler stylish-haskell --inplace -- App.hs
+  $ run_restyler stylish-haskell App.hs
   diff --git i/App.hs w/App.hs
   index 125bd49..2814620 100644
   --- i/App.hs

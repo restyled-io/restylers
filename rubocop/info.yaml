@@ -1,0 +1,16 @@
+---
+name: rubocop
+image: restyled/restyler-rubocop:51cf61e
+command:
+- rubocop
+- "--auto-correct"
+arguments:
+- "--fail-level"
+- fatal
+include:
+- "**/*.rb"
+interpreters:
+- ruby
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation: []

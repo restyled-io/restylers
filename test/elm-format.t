@@ -3,7 +3,7 @@
 
 elm-format
 
-  $ run_restyler elm-format --yes -- case.elm
+  $ run_restyler elm-format case.elm
   Processing file case.elm
   diff --git i/case.elm w/case.elm
   index e4654af..65d084f 100644

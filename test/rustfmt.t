@@ -3,7 +3,7 @@
 
 rustfmt
 
-  $ run_restyler rustfmt -- example.rs
+  $ run_restyler rustfmt example.rs
   diff --git i/example.rs w/example.rs
   index 639567b..a5d4acc 100644
   --- i/example.rs

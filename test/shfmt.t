@@ -3,7 +3,7 @@
 
 shfmt
 
-  $ run_restyler shfmt -w -- foo-script
+  $ run_restyler shfmt foo-script
   diff --git i/foo-script w/foo-script
   index bcbb874..2fc3db2 100644
   --- i/foo-script

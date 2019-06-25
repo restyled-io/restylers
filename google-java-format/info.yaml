@@ -1,0 +1,13 @@
+---
+name: google-java-format
+image: restyled/restyler-google-java-format:39b1d8f
+command:
+- google-java-format
+- "--replace"
+arguments: []
+include:
+- "**/*.java"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation: []
