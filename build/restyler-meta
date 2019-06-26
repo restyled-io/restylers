@@ -2,34 +2,19 @@
 require "yaml"
 
 module Restylers
-  class Info
-    def initialize(root)
-      paths = Dir.glob(File.join(root, "*", "info.yaml")).sort
-      @info = paths.each_with_object({}) do |path, infos|
-        info = YAML.load_file(path)
-        infos[info.fetch("name")] = info
-      end
-    end
-
-    def fetch(name)
-      info.fetch(name)
-    end
-
-    def dump
-      YAML.dump(info)
-    end
-
-    private
-
-    attr_reader :info
+  ROOT = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+  GLOB = Dir.glob(File.join(ROOT, "*", "info.yaml"))
+  INFO = GLOB.sort.each_with_object({}) do |path, infos|
+    info = YAML.load_file(path)
+    infos[info.fetch("name")] = info
   end
 
   class Run
     DOCKER_RUN =
       ["docker", "run", "--rm", "--net", "none", "--volume", "#{Dir.pwd}:/code"]
 
-    def initialize(info)
-      @info = info
+    def initialize(name)
+      @info = INFO.fetch(name)
     end
 
     def run(paths)
@@ -57,18 +42,18 @@ module Restylers
 
   class Main
     def self.run(argv)
-      root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-      info = Info.new(root)
-
       case argv.shift
-      when "dump" then puts info.dump
-      when "get" then
+      when "dump"
+        puts YAML.dump(INFO.values)
+      when "get"
         name, key = argv.shift(2)
-        puts info.fetch(name).fetch(key)
-      when "run" then
+        puts INFO.fetch(name).fetch(key)
+      when "run"
         name, paths = argv.shift, argv
-        Run.new(info.fetch(name)).run(paths)
-      else exit 64
+        Run.new(name).run(paths)
+      else
+        $stderr.puts "Invalid usage"
+        exit 64
       end
     end
   end
