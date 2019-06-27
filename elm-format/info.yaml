@@ -1,6 +1,6 @@
 ---
 name: elm-format
-image: restyled/restyler-elm-format:9a3753a
+image: restyled/restyler-elm-format:v0.6.1-alpha
 command:
 - elm-format
 - "--yes"

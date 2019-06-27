@@ -1,6 +1,6 @@
 ---
 name: hindent
-image: restyled/restyler-hindent:51cf61e
+image: restyled/restyler-hindent:v5.2.5
 command:
 - hindent
 arguments: []

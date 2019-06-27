@@ -1,6 +1,6 @@
 ---
 name: rustfmt
-image: restyled/restyler-rustfmt:51cf61e
+image: restyled/restyler-rustfmt:v0.3.4-nightly
 command:
 - rustfmt
 arguments: []

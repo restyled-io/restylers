@@ -1,6 +1,6 @@
 ---
 name: astyle
-image: restyled/restyler-astyle:9a3753a
+image: restyled/restyler-astyle:v3.1
 command:
 - astyle
 arguments: []

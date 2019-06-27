@@ -1,6 +1,6 @@
 ---
 name: shfmt
-image: restyled/restyler-shfmt:95f0cfe
+image: restyled/restyler-shfmt:v2.4.0
 command:
 - shfmt
 - "-w"

@@ -1,6 +1,6 @@
 ---
 name: rubocop
-image: restyled/restyler-rubocop:51cf61e
+image: restyled/restyler-rubocop:v0.62.0
 command:
 - rubocop
 - "--auto-correct"

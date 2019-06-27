@@ -1,6 +1,6 @@
 ---
 name: autopep8
-image: restyled/restyler-autopep8:9a3753a
+image: restyled/restyler-autopep8:v1.4.3
 command:
 - autopep8
 - "--in-place"

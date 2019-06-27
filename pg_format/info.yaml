@@ -1,6 +1,6 @@
 ---
 name: pg_format
-image: restyled/restyler-pg_format:9862f49
+image: restyled/restyler-pg_format:v3.3
 command:
 - pg_format-inplace
 arguments: []

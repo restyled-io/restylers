@@ -1,6 +1,6 @@
 ---
 name: terraform
-image: restyled/restyler-terraform:e9b3935
+image: restyled/restyler-terraform:v0.11.7
 command:
 - terraform
 - fmt

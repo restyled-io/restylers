@@ -1,6 +1,6 @@
 ---
 name: google-java-format
-image: restyled/restyler-google-java-format:39b1d8f
+image: restyled/restyler-google-java-format:v1.6
 command:
 - google-java-format
 - "--replace"

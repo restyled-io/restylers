@@ -1,6 +1,6 @@
 ---
 name: dfmt
-image: restyled/restyler-dfmt:f3b58e0
+image: restyled/restyler-dfmt:v0.8.2
 command:
 - dfmt
 - "--inplace"

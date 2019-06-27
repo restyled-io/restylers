@@ -1,6 +1,6 @@
 ---
 name: hlint
-image: restyled/restyler-hlint:efbd99c
+image: restyled/restyler-hlint:v2.1.11
 command:
 - hlint
 - lint

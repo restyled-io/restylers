@@ -1,6 +1,6 @@
 ---
 name: prettier
-image: restyled/restyler-prettier:8cd304f
+image: restyled/restyler-prettier:v1.14.2
 command:
 - prettier
 - "--write"
