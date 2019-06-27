@@ -2,18 +2,9 @@ run_restyler() {
   local name=$1
   shift
 
-  local paths=()
-  local path
-
   "$TESTDIR"/../build/restyler-meta run "$name" "$@" || exit 1
 
-  for path; do
-    if [ -e "$path" ]; then
-      paths+=("$path")
-    fi
-  done
-
-  git diff "${paths[@]}"
+  git diff "$@"
 }
 
 set -e
