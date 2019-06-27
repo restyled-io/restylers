@@ -1,17 +1,18 @@
+IMAGES := $(wildcard */Dockerfile.pushed)
+
+all: $(IMAGES) restylers.yaml
+
 restylers.yaml: */info.yaml
 	./build/restyler-meta dump > $@
 
 %/Dockerfile.pushed: %/Dockerfile.tested
-	name=$(shell dirname $<); \
 	./build/restyler-meta get "$*" image | ./build/push-image
 	echo > $@
 
 %/Dockerfile.tested: %/Dockerfile.built
-	cram test/$(shell dirname $<).t
+	cram "test/$*.t"
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml
-	name=$(shell dirname $<); \
-	image=$(shell ./build/restyler-meta get "$$name" image) && \
-	docker build --tag "$$image" "$$name"
+	docker build --tag "$$(./build/restyler-meta get "$*" image)" "$*"
 	echo > $@
