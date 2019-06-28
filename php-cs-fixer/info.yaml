@@ -10,4 +10,5 @@ include:
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: false
-documentation: []
+documentation:
+- https://github.com/FriendsOfPHP/PHP-CS-Fixer

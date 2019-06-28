@@ -11,4 +11,5 @@ interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Brittany
+- https://github.com/lspitzner/brittany
+- https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany

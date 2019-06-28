@@ -9,4 +9,5 @@ include:
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
-documentation: []
+documentation:
+- https://github.com/darold/pgFormatter#readme

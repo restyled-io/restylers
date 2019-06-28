@@ -11,4 +11,4 @@ interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: false
 documentation:
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Rustfmt
+- https://www.terraform.io/docs/commands/fmt.html

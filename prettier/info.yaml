@@ -13,4 +13,5 @@ include:
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
-documentation: []
+documentation:
+- https://prettier.io/docs/en/

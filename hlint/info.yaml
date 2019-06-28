@@ -13,4 +13,5 @@ interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors-HLint
+- https://github.com/ndmitchell/hlint#readme
+- https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint

@@ -11,4 +11,5 @@ interpreters:
 - python
 supports_arg_sep: true
 supports_multiple_paths: true
-documentation: []
+documentation:
+- https://github.com/hhatto/autopep8
