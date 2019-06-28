@@ -47,6 +47,19 @@ module Restylers
         infos = INFO.values
         infos.each { |i| i.delete("metadata") }
         puts YAML.dump(infos)
+      when "dump-table"
+        puts "| Name | Tag | Language(s) |"
+        puts "| --- | --- | --- |"
+
+        INFO.each do |name, info|
+          elems = [
+            "[#{name}](#{info.fetch("documentation").first})",
+            info.fetch("image").split(":").last,
+            info.fetch("metadata").fetch("languages").join(", "),
+          ]
+
+          puts "| #{elems.join(" | ")} |"
+        end
       when "get"
         name, key = argv.shift(2)
         puts INFO.fetch(name).fetch(key)
