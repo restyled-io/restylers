@@ -53,6 +53,12 @@ module Restylers
       when "run"
         name, paths = argv.shift, argv
         Run.new(name).run(paths)
+      when "cache-build"
+        INFO.each do |name, _|
+          ["", ".built", ".tested", ".pushed"].each do |ext|
+            system("touch", File.join(name, "Dockerfile#{ext}"))
+          end
+        end
       else
         $stderr.puts "Invalid usage"
         exit 64
