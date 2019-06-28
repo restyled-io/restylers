@@ -12,3 +12,6 @@ supports_multiple_paths: true
 documentation:
 - https://github.com/rust-lang-nursery/rustfmt#readme
 - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
+metadata:
+  languages:
+  - Rust

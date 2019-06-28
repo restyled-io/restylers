@@ -16,3 +16,10 @@ supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
 - http://astyle.sourceforge.net/astyle.html
+metadata:
+  languages:
+  - C
+  - C++
+  - C#
+  - Java*
+  - Objective-C

@@ -15,3 +15,6 @@ supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
 - https://rubocop.readthedocs.io/en/latest/
+metadata:
+  languages:
+  - Ruby

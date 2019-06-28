@@ -15,3 +15,7 @@ supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
 - https://github.com/mvdan/sh#shfmt
+metadata:
+  languages:
+  - POSIX sh
+  - Bash

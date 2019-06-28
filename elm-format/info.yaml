@@ -12,3 +12,6 @@ supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
 - https://github.com/avh4/elm-format
+metadata:
+  languages:
+  - Elm

@@ -13,3 +13,6 @@ supports_multiple_paths: true
 documentation:
 - https://github.com/jaspervdj/stylish-haskell
 - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
+metadata:
+  languages:
+  - Haskell

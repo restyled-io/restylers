@@ -12,3 +12,6 @@ supports_arg_sep: true
 supports_multiple_paths: false
 documentation:
 - https://www.terraform.io/docs/commands/fmt.html
+metadata:
+  languages:
+  - Terraform
