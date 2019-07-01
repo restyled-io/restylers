@@ -4,7 +4,7 @@ ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
 RUN stack upgrade
 RUN stack setup
-RUN stack install stylish-haskell
+RUN stack install stylish-haskell-0.9.2.2
 
 FROM fpco/stack-run:lts
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
