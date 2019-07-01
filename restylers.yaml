@@ -198,7 +198,7 @@
   documentation:
   - https://github.com/mvdan/sh#shfmt
 - name: stylish-haskell
-  image: restyled/restyler-stylish-haskell:v0.9.2.0
+  image: restyled/restyler-stylish-haskell:v0.9.2.2
   command:
   - stylish-haskell
   - "--inplace"
