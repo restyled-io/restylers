@@ -23,6 +23,7 @@ matrix:
     - env: TARGET=stylish-haskell/Dockerfile.tested
     - env: TARGET=terraform/Dockerfile.tested
     - env: TARGET=yapf/Dockerfile.tested
+    - env: TARGET=jdt/Dockerfile.tested
     - env: TARGET=generate-travis
 install: pip install cram
 script: build/make-if-target-changed "$TARGET"
