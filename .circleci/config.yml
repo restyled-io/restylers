@@ -33,7 +33,7 @@ jobs:
               exit 1
             fi
 
-            read -r -a paths < <(changed_restylers_tests)
+            read -r -a paths < <(changed_restylers_tests) || true
 
             if (( ${#paths[@]} )); then
               make -B "${paths[*]}"
