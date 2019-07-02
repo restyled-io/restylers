@@ -29,8 +29,8 @@ jobs:
             }
 
             if [[ "$CIRCLE_BRANCH" = master ]]; then
-              echo "Aborting for master branch" >&2
-              exit 1
+              echo "Skipping for master branch" >&2
+              exit 0
             fi
 
             read -r -a paths < <(changed_restylers_tests) || true
