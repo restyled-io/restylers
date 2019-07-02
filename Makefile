@@ -16,3 +16,12 @@ restylers.yaml: */info.yaml
 %/Dockerfile.built: %/Dockerfile %/info.yaml
 	docker build --tag "$$(./build/restyler-meta get "$*" image)" "$*"
 	echo > $@
+
+RELASE_TAG ?= $(shell date +'%Y%m%d')
+
+.PHONY: release
+release: all
+	git add restylers.yaml
+	git commit -m 'Update restylers.yaml'
+	git tag -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
+	git push --follow-tags
