@@ -1,0 +1,17 @@
+---
+name: jdt
+image: restyled/restyler-jdt
+command:
+- "mvn"
+- "net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format"
+arguments: []
+include:
+- "**/*.java"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation:
+- https://code.revelc.net/formatter-maven-plugin/
+metadata:
+  languages:
+  - Java
