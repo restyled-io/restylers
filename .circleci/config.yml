@@ -1,0 +1,42 @@
+version: 2.0
+
+jobs:
+  build:
+    docker:
+      - image: docker:stable
+    steps:
+      - run:
+          name: Dependencies
+          command: apk --update add bash git make ruby
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build
+          shell: /bin/bash -eo pipefail
+          command: |
+            changed_restylers_tests() {
+              git diff --name-only "$(git merge-base HEAD master)" |
+                while read -r path; do dirname "$path"; done |
+                while read -r path; do
+                  if [ -f "$path/Dockerfile" ]; then
+                    # TODO: we can't run the tests because the --volume doesn't
+                    # work on CI where Docker is remote. For now we only test
+                    # that the image can build.
+                    echo "$path/Dockerfile.built"
+                  fi
+                done |
+                sort -u
+            }
+
+            if [[ "$CIRCLE_BRANCH" = master ]]; then
+              echo "Aborting for master branch" >&2
+              exit 1
+            fi
+
+            read -r -a paths < <(changed_restylers_tests) || true
+
+            if (( ${#paths[@]} )); then
+              make -B "${paths[*]}"
+            else
+              echo "No Restylers changed"
+            fi
