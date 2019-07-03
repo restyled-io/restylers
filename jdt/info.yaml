@@ -7,6 +7,7 @@ command:
 arguments: []
 include:
 - "**/*.java"
+- "**/pom.xml"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
