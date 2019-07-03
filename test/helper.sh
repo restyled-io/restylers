@@ -12,7 +12,6 @@ set -e
 mkdir repo
 cd repo
 cp -r "$TESTDIR"/fixtures/* .
-ls .
 
 {
   git init

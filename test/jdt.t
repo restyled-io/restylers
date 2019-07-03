@@ -3,4 +3,4 @@
 
 jdt
 
-  $ run_restyler jdt
+  $ run_restyler jdt ./src/main/java/Foo.java

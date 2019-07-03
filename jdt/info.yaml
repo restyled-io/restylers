@@ -4,6 +4,7 @@ image: restyled/restyler-jdt
 command:
 - "mvn"
 - "net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format"
+- "-Dproject.build.sourceEncoding=UTF-8"
 arguments: []
 include:
 - "**/*.java"
