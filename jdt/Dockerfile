@@ -1,5 +1,4 @@
-FROM alpine
+FROM maven:3.6.1-jdk-11
 RUN mkdir -p /code
 WORKDIR /code
-ENTRYPOINT []
-CMD ["mvn", "net.revelc.code.formatter:formatter-maven-plugin:2.9.0:format"]
+RUN ["mvn", "org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get", "-Dartifact=net.revelc.code.formatter:formatter-maven-plugin:2.10.0"]
