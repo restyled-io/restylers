@@ -3,4 +3,4 @@
 
 jdt
 
-  $ run_restyler jdt ./src/main/java/Foo.java
+  $ run_restyler jdt ./src/main/java/ShouldFormat1.java,./src/main/java/ShouldFormat2.java
