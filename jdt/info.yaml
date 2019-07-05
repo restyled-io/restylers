@@ -18,3 +18,8 @@ documentation:
 metadata:
   languages:
   - Java
+  - JavaScript
+  - HTML
+  - CSS
+  - JSON
+  - XML
