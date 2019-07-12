@@ -1,0 +1,25 @@
+git:
+  depth: false  # fetch all branches
+language: python
+services: [docker]
+matrix:
+  include:
+    - env: TARGET=astyle/Dockerfile.tested
+    - env: TARGET=autopep8/Dockerfile.tested
+    - env: TARGET=brittany/Dockerfile.tested
+    - env: TARGET=dfmt/Dockerfile.tested
+    - env: TARGET=elm-format/Dockerfile.tested
+    - env: TARGET=google-java-format/Dockerfile.tested
+    - env: TARGET=hindent/Dockerfile.tested
+    - env: TARGET=hlint/Dockerfile.tested
+    - env: TARGET=pg_format/Dockerfile.tested
+    - env: TARGET=php-cs-fixer/Dockerfile.tested
+    - env: TARGET=prettier/Dockerfile.tested
+    - env: TARGET=rubocop/Dockerfile.tested
+    - env: TARGET=rustfmt/Dockerfile.tested
+    - env: TARGET=shfmt/Dockerfile.tested
+    - env: TARGET=stylish-haskell/Dockerfile.tested
+    - env: TARGET=terraform/Dockerfile.tested
+    - env: TARGET=generate-travis
+install: pip install cram
+script: build/make-if-target-changed "$TARGET"
