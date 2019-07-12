@@ -1,9 +1,8 @@
 ---
-name: autopep8
-image: restyled/restyler-autopep8:v1.4.4
+name: black
+image: restyled/restyler-black:v19.3b0
 command:
-- autopep8
-- "--in-place"
+- black
 arguments: []
 include:
 - "**/*.py"
@@ -12,7 +11,7 @@ interpreters:
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/hhatto/autopep8
+- https://github.com/python/black
 metadata:
   languages:
   - Python
