@@ -16,6 +16,7 @@ matrix:
     - env: TARGET=pg_format/Dockerfile.tested
     - env: TARGET=php-cs-fixer/Dockerfile.tested
     - env: TARGET=prettier/Dockerfile.tested
+    - env: TARGET=reorder-python-imports/Dockerfile.tested
     - env: TARGET=rubocop/Dockerfile.tested
     - env: TARGET=rustfmt/Dockerfile.tested
     - env: TARGET=shfmt/Dockerfile.tested
