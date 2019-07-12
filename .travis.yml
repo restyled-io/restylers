@@ -6,6 +6,7 @@ matrix:
   include:
     - env: TARGET=astyle/Dockerfile.tested
     - env: TARGET=autopep8/Dockerfile.tested
+    - env: TARGET=black/Dockerfile.tested
     - env: TARGET=brittany/Dockerfile.tested
     - env: TARGET=dfmt/Dockerfile.tested
     - env: TARGET=elm-format/Dockerfile.tested
