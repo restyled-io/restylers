@@ -9,7 +9,7 @@ restylers.yaml: */info.yaml
 	./build/restyler-meta get "$*" image | ./build/push-image
 	echo > $@
 
-%/Dockerfile.tested: %/Dockerfile.built
+%/Dockerfile.tested: %/Dockerfile.built test/%.t
 	cram "test/$*.t"
 	echo > $@
 
