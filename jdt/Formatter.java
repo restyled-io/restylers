@@ -1,19 +1,18 @@
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Formatter {
 
-	private static final Set<String> PREFIXES = Set.of(
+	private static final List<String> PREFIXES = List.of(
 		"./",
 		"src/main/java/",
 		"src/test/java/",
 		"src/main/resources/",
-		"src/test/resources/",
+		"src/test/resources/"
 	);
 
 	public static void main(String... args) throws Exception {
