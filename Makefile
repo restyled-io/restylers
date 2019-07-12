@@ -10,7 +10,7 @@ restylers.yaml: */info.yaml
 	echo > $@
 
 %/Dockerfile.tested: %/Dockerfile.built test/%.t
-	cram "test/$*.t"
+	cram --shell=bash "test/$*.t"
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml
