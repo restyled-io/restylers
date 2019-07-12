@@ -17,6 +17,10 @@ restylers.yaml: */info.yaml
 	docker build --tag "$$(./build/restyler-meta get "$*" image)" "$*"
 	echo > $@
 
+.PHONY: generate-travis
+generate-travis:
+	build/generate-travis
+
 RELASE_TAG ?= $(shell date +'%Y%m%d')
 
 .PHONY: release
