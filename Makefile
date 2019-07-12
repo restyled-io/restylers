@@ -25,3 +25,5 @@ release: all
 	git commit -m 'Update restylers.yaml'
 	git tag -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
 	git push --follow-tags
+
+.SECONDARY:
