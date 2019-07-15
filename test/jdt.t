@@ -3,7 +3,7 @@
 
 jdt
 
-  $ run_restyler jdt ./src/main/java/ShouldFormat1.java ./src/main/java/ShouldFormat2.java
+  $ run_restyler jdt ./src/main/java/ShouldFormat1.java ./ShouldFormat2.java
   Calling [mvn, net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format, -Dproject.build.sourceEncoding=UTF-8, -Dformatter.includes=ShouldFormat1.java,ShouldFormat2.java]
   [INFO] Scanning for projects...
   [INFO] 

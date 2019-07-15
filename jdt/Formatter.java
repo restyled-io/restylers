@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 public class Formatter {
 
 	private static final List<String> PREFIXES = List.of(
-		"./",
+		"./"/*,
 		"src/main/java/",
 		"src/test/java/",
 		"src/main/resources/",
-		"src/test/resources/"
+		"src/test/resources/"*/
 	);
 
 	public static void main(String... args) throws Exception {
@@ -34,6 +34,7 @@ public class Formatter {
 			"-Dproject.build.sourceEncoding=UTF-8"
 		));
 		call.addAll(formatterArgs);
+		call.add("-DsourceDirectory=./");
 		call.add("-Dformatter.includes="+files.stream().collect(Collectors.joining(",")));
 		
 		System.out.println("Calling "+call);
