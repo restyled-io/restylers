@@ -17,7 +17,7 @@
   documentation:
   - http://astyle.sourceforge.net/astyle.html
 - name: autopep8
-  image: restyled/restyler-autopep8:v1.4.3
+  image: restyled/restyler-autopep8:v1.4.4
   command:
   - autopep8
   - "--in-place"
@@ -30,6 +30,19 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/hhatto/autopep8
+- name: black
+  image: restyled/restyler-black:v19.3b0
+  command:
+  - black
+  arguments: []
+  include:
+  - "**/*.py"
+  interpreters:
+  - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/python/black
 - name: brittany
   image: restyled/restyler-brittany:v0.11.0.0
   command:
@@ -152,8 +165,22 @@
   supports_multiple_paths: true
   documentation:
   - https://prettier.io/docs/en/
+- name: reorder-python-imports
+  image: restyled/restyler-reorder-python-imports:v1.6.0
+  command:
+  - reorder-python-imports
+  - "--exit-zero-even-if-changed"
+  arguments: []
+  include:
+  - "**/*.py"
+  interpreters:
+  - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/asottile/reorder_python_imports
 - name: rubocop
-  image: restyled/restyler-rubocop:v0.62.0
+  image: restyled/restyler-rubocop:v0.72.0
   command:
   - rubocop
   - "--auto-correct"
@@ -224,3 +251,17 @@
   supports_multiple_paths: false
   documentation:
   - https://www.terraform.io/docs/commands/fmt.html
+- name: yapf
+  image: restyled/restyler-yapf:v0.27.0
+  command:
+  - yapf
+  - "--in-place"
+  arguments: []
+  include:
+  - "**/*.py"
+  interpreters:
+  - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/google/yapf
