@@ -12,6 +12,9 @@ public class Formatter {
 		ArrayList<String> formatterArgs = new ArrayList<>(args.length);
 		for(String arg : args) {
 			if(new File(arg).exists()) {
+				if(arg.startsWith("./")) {
+					arg = arg.substring(2);
+				}
 				files.add(arg);
 			}
 			else {
