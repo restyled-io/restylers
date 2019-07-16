@@ -7,20 +7,12 @@ import java.util.stream.Collectors;
 
 public class Formatter {
 
-	private static final List<String> PREFIXES = List.of(
-		"./"/*,
-		"src/main/java/",
-		"src/test/java/",
-		"src/main/resources/",
-		"src/test/resources/"*/
-	);
-
 	public static void main(String... args) throws Exception {
 		ArrayList<String> files = new ArrayList<>(args.length);
 		ArrayList<String> formatterArgs = new ArrayList<>(args.length);
 		for(String arg : args) {
 			if(new File(arg).exists()) {
-				files.add(removePrefix(arg));
+				files.add(arg);
 			}
 			else {
 				formatterArgs.add(arg);
@@ -46,14 +38,5 @@ public class Formatter {
 		new ProcessBuilder("mvn","clean").inheritIO().start().waitFor();
 		
 		System.exit(exit);
-	}
-	
-	private static String removePrefix(String file) {
-		for(String prefix : PREFIXES) {
-			if(file.startsWith(prefix)) {
-				file = file.substring(prefix.length());
-			}
-		}
-		return file;
 	}
 }
