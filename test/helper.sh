@@ -4,7 +4,7 @@ run_restyler() {
 
   "$TESTDIR"/../build/restyler-meta run "$name" "$@" || exit 1
 
-  git diff "$@"
+  git diff --src-prefix=i/ --dst-prefix=w/ "$@"
 }
 
 set -e

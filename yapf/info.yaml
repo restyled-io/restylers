@@ -1,8 +1,8 @@
 ---
-name: autopep8
-image: restyled/restyler-autopep8:v1.4.4
+name: yapf
+image: restyled/restyler-yapf:v0.27.0
 command:
-- autopep8
+- yapf
 - "--in-place"
 arguments: []
 include:
@@ -12,7 +12,7 @@ interpreters:
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/hhatto/autopep8
+- https://github.com/google/yapf
 metadata:
   languages:
   - Python
