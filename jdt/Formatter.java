@@ -25,6 +25,7 @@ public class Formatter {
 		List<String> call = new ArrayList<>();
 		call.addAll(Arrays.asList(
 			"mvn",
+			"-o",
 			"net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format",
 			"-Dproject.build.sourceEncoding=UTF-8"
 		));
@@ -33,12 +34,9 @@ public class Formatter {
 		call.add("-Dformatter.includes="+files.stream().collect(Collectors.joining(",")));
 		
 		System.out.println("Calling "+call);
-		int exit = new ProcessBuilder(call)
-			.inheritIO()
-			.start()
-			.waitFor();
+		int exit = new ProcessBuilder(call).inheritIO().start().waitFor();
 		
-		new ProcessBuilder("mvn","clean").inheritIO().start().waitFor();
+		new ProcessBuilder("mvn","-o","clean").inheritIO().start().waitFor();
 		
 		System.exit(exit);
 	}

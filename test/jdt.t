@@ -4,7 +4,7 @@
 jdt
 
   $ run_restyler jdt ./src/main/java/ShouldFormat1.java ./ShouldFormat2.java
-  Calling [mvn, net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format, -Dproject.build.sourceEncoding=UTF-8, -DsourceDirectory=./, -Dformatter.includes=src/main/java/ShouldFormat1.java,ShouldFormat2.java]
+  Calling [mvn, -o, net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format, -Dproject.build.sourceEncoding=UTF-8, -DsourceDirectory=./, -Dformatter.includes=src/main/java/ShouldFormat1.java,ShouldFormat2.java]
   [INFO] Scanning for projects...
   [INFO] 
   [INFO] ------------------------< fooGroup:fooArtifact >------------------------
@@ -18,7 +18,7 @@ jdt
   [INFO] Fail to format:                  0 file(s)
   [INFO] Skipped:                         0 file(s)
   [INFO] Read only skipped:               0 file(s)
-  [INFO] Approximate time taken:          2s
+  [INFO] Approximate time taken:          *s (glob)
   [INFO] ------------------------------------------------------------------------
   [INFO] BUILD SUCCESS
   [INFO] ------------------------------------------------------------------------
@@ -39,10 +39,10 @@ jdt
   [INFO] Total time:  * (glob)
   [INFO] Finished at: * (glob)
   [INFO] ------------------------------------------------------------------------
-  diff --git a/ShouldFormat2.java b/ShouldFormat2.java
+  diff --git i/ShouldFormat2.java w/ShouldFormat2.java
   index c7311a5..2df6745 100644
-  --- a/ShouldFormat2.java
-  +++ b/ShouldFormat2.java
+  --- i/ShouldFormat2.java
+  +++ w/ShouldFormat2.java
   @@ -6,7 +6,8 @@ public class ShouldFormat2 {
                bar();
    
@@ -54,10 +54,10 @@ jdt
   -    }}
   +    }
   +}
-  diff --git a/src/main/java/ShouldFormat1.java b/src/main/java/ShouldFormat1.java
+  diff --git i/src/main/java/ShouldFormat1.java w/src/main/java/ShouldFormat1.java
   index c3123f9..6fafba6 100644
-  --- a/src/main/java/ShouldFormat1.java
-  +++ b/src/main/java/ShouldFormat1.java
+  --- i/src/main/java/ShouldFormat1.java
+  +++ w/src/main/java/ShouldFormat1.java
   @@ -1,5 +1,5 @@
    public class ShouldFormat1 {
   -int Foo(bool isBar) {
