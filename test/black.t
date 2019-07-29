@@ -5,7 +5,7 @@ black
 
   $ run_restyler black crazy.py
   reformatted crazy.py
-  All done! \xe2\x9c\xa8 \xf0\x9f\x8d\xb0 \xe2\x9c\xa8 (esc)
+  All done! * (glob)
   1 file reformatted.
   diff --git i/crazy.py w/crazy.py
   index 9941de7..ab602ed 100644
