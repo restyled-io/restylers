@@ -13,6 +13,7 @@ matrix:
     - env: TARGET=google-java-format/Dockerfile.tested
     - env: TARGET=hindent/Dockerfile.tested
     - env: TARGET=hlint/Dockerfile.tested
+    - env: TARGET=jdt/Dockerfile.tested
     - env: TARGET=pg_format/Dockerfile.tested
     - env: TARGET=php-cs-fixer/Dockerfile.tested
     - env: TARGET=prettier/Dockerfile.tested

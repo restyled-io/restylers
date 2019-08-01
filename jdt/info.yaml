@@ -1,0 +1,25 @@
+---
+name: jdt
+image: restyled/restyler-jdt:v2.10.0
+command:
+- formatter
+arguments: []
+include:
+- "**/*.java"
+- "**/*.css"
+- "**/*.html"
+- "**/*.json"
+- "**/*.xml"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation:
+- https://code.revelc.net/formatter-maven-plugin/
+metadata:
+  languages:
+  - Java
+  - JavaScript*
+  - CSS
+  - HTML
+  - JSON
+  - XML
