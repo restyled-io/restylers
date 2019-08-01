@@ -2,10 +2,7 @@
 name: jdt
 image: restyled/restyler-jdt:v2.10.0
 command:
-- java
-- -cp
-- /script/
-- Formatter
+- formatter
 arguments: []
 include:
 - "**/*.java"

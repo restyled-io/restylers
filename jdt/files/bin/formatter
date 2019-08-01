@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -eu
+
+join() {
+  printf '%s\n' "$@" | paste -s -d","
+}
+
+files=()
+formatter_args=()
+
+for arg; do
+  if [ -e "$arg" ]; then
+    files+=("${arg#./*}")
+  else
+    formatter_args+=("$arg")
+  fi
+done
+
+trap 'mvn -o clean' EXIT
+
+mvn \
+  -o "net.revelc.code.formatter:formatter-maven-plugin:$FORMATTER_VERSION:format" \
+  -D"sourceDirectory=./" \
+  -D"project.build.sourceEncoding=UTF-8" \
+  -D"formatter.includes=$(join "${files[@]}")" \
+  "${formatter_args[@]}"
