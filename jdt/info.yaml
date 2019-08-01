@@ -9,6 +9,10 @@ command:
 arguments: []
 include:
 - "**/*.java"
+- "**/*.css"
+- "**/*.html"
+- "**/*.json"
+- "**/*.xml"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
@@ -17,3 +21,8 @@ documentation:
 metadata:
   languages:
   - Java
+  - JavaScript*
+  - CSS
+  - HTML
+  - JSON
+  - XML
