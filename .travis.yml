@@ -13,6 +13,7 @@ matrix:
     - env: TARGET=google-java-format/Dockerfile.tested
     - env: TARGET=hindent/Dockerfile.tested
     - env: TARGET=hlint/Dockerfile.tested
+    - env: TARGET=jdt/Dockerfile.tested
     - env: TARGET=pg_format/Dockerfile.tested
     - env: TARGET=php-cs-fixer/Dockerfile.tested
     - env: TARGET=prettier/Dockerfile.tested
@@ -23,7 +24,6 @@ matrix:
     - env: TARGET=stylish-haskell/Dockerfile.tested
     - env: TARGET=terraform/Dockerfile.tested
     - env: TARGET=yapf/Dockerfile.tested
-    - env: TARGET=jdt/Dockerfile.tested
     - env: TARGET=generate-travis
 install: pip install cram
 script: build/make-if-target-changed "$TARGET"
