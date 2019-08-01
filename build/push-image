@@ -14,7 +14,6 @@ IFS=: read -r image tag
 
 if image_exists "$image" "$tag" >/dev/null 2>&1; then
   echo "Refusing: $image:$tag already exists on Docker Hub" >&2
-  exit 1
+else
+  docker push "$image:$tag"
 fi
-
-docker push "$image:$tag"
