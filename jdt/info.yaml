@@ -1,6 +1,6 @@
 ---
 name: jdt
-image: restyled/restyler-jdt
+image: restyled/restyler-jdt:v2.10.0
 command:
 - java
 - -cp
@@ -9,7 +9,6 @@ command:
 arguments: []
 include:
 - "**/*.java"
-- "**/pom.xml"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
@@ -18,8 +17,3 @@ documentation:
 metadata:
   languages:
   - Java
-  - JavaScript
-  - HTML
-  - CSS
-  - JSON
-  - XML
