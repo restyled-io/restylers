@@ -3,8 +3,8 @@
 
 jdt
 
-  $ run_restyler jdt ./src/main/java/ShouldFormat1.java ./ShouldFormat2.java
-  Calling [mvn, -o, net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format, -Dproject.build.sourceEncoding=UTF-8, -DsourceDirectory=./, -Dformatter.includes=src/main/java/ShouldFormat1.java,ShouldFormat2.java]
+  $ run_restyler jdt ./ShouldFormat1.java ./ShouldFormat2.java
+  Calling [mvn, -o, net.revelc.code.formatter:formatter-maven-plugin:2.10.0:format, -Dproject.build.sourceEncoding=UTF-8, -DsourceDirectory=./, -Dformatter.includes=ShouldFormat1.java,ShouldFormat2.java]
   [INFO] Scanning for projects...
   [INFO] 
   [INFO] ------------------------< fooGroup:fooArtifact >------------------------
@@ -39,6 +39,17 @@ jdt
   [INFO] Total time:  * (glob)
   [INFO] Finished at: * (glob)
   [INFO] ------------------------------------------------------------------------
+  diff --git i/ShouldFormat1.java w/ShouldFormat1.java
+  index c3123f9..6fafba6 100644
+  --- i/ShouldFormat1.java
+  +++ w/ShouldFormat1.java
+  @@ -1,5 +1,5 @@
+   public class ShouldFormat1 {
+  -int Foo(bool isBar) {
+  +    int Foo(bool isBar) {
+           if (isBar) {
+               bar();
+               return 1;
   diff --git i/ShouldFormat2.java w/ShouldFormat2.java
   index c7311a5..2df6745 100644
   --- i/ShouldFormat2.java
@@ -54,14 +65,3 @@ jdt
   -    }}
   +    }
   +}
-  diff --git i/src/main/java/ShouldFormat1.java w/src/main/java/ShouldFormat1.java
-  index c3123f9..6fafba6 100644
-  --- i/src/main/java/ShouldFormat1.java
-  +++ w/src/main/java/ShouldFormat1.java
-  @@ -1,5 +1,5 @@
-   public class ShouldFormat1 {
-  -int Foo(bool isBar) {
-  +    int Foo(bool isBar) {
-           if (isBar) {
-               bar();
-               return 1;
