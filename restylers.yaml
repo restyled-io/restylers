@@ -124,6 +124,22 @@
   documentation:
   - https://github.com/ndmitchell/hlint#readme
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
+- name: jdt
+  image: restyled/restyler-jdt:v2.10.0
+  command:
+  - formatter
+  arguments: []
+  include:
+  - "**/*.java"
+  - "**/*.css"
+  - "**/*.html"
+  - "**/*.json"
+  - "**/*.xml"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation:
+  - https://code.revelc.net/formatter-maven-plugin/
 - name: pg_format
   image: restyled/restyler-pg_format:v3.3
   command:
