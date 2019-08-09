@@ -1,0 +1,16 @@
+---
+overrides: prettier
+name: prettier-markdown
+arguments:
+- "--print-width"
+- "80"
+- "--prose-wrap"
+- "always"
+include:
+- "**/*.md"
+- "**/*.markdown"
+documentation:
+- https://prettier.io/blog/2017/11/07/1.8.0.html
+metadata:
+  languages:
+  - Markdown
