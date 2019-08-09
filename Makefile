@@ -1,6 +1,6 @@
-IMAGES := $(wildcard */Dockerfile.pushed)
+IMAGES := $(wildcard */Dockerfile)
 
-all: $(IMAGES) restylers.yaml
+all: $(IMAGES:%=%.pushed) restylers.yaml
 
 restylers.yaml: */info.yaml
 	./build/restyler-meta dump > $@
