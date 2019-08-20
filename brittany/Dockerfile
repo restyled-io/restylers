@@ -3,7 +3,7 @@ MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 RUN stack upgrade
 
 # Dumb cache-buster. Bump this to force a build
-ENV _DOCKERFILE_VERSION 1
+ENV _DOCKERFILE_VERSION 0
 
 ENV BRITTANY_VERSION 0.12.0.0
 RUN \
