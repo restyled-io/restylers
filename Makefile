@@ -33,7 +33,7 @@ RELASE_TAG ?= $(shell date +'%Y%m%d')
 release: all
 	git add restylers.yaml
 	git commit -m 'Update restylers.yaml'
-	git tag -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
+	git tag -f -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
 	git push --follow-tags
 
 .SECONDARY:
