@@ -6,7 +6,15 @@ module Restylers
   GLOB = Dir.glob(File.join(ROOT, "*", "info.yaml"))
   INFO = GLOB.sort.each_with_object({}) do |path, infos|
     info = YAML.load_file(path)
-    infos[info.fetch("name")] = info
+    merged =
+      if parent = info["overrides"]
+        parent_info = YAML.load_file(File.join(ROOT, parent, "info.yaml"))
+        parent_info.merge(info)
+      else
+        info
+      end
+
+    infos[merged.fetch("name")] = merged
   end
 
   class Run
@@ -53,7 +61,10 @@ module Restylers
       case argv.shift
       when "dump"
         infos = INFO.values
-        infos.each { |i| i.delete("metadata") }
+        infos.each do |i|
+          i.delete("overrides")
+          i.delete("metadata")
+        end
         puts YAML.dump(infos)
       when "dump-table"
         puts "| Name | Tag | Language(s) |"
