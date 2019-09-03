@@ -14,6 +14,7 @@ module Restylers
       ["docker", "run", "--rm", "--net", "none", "--volume", "#{Dir.pwd}:/code"]
 
     def initialize(name)
+      @name = name
       @info = INFO.fetch(name)
     end
 
@@ -26,18 +27,25 @@ module Restylers
 
       if info.fetch("supports_multiple_paths")
         cmd = restyler_command + paths
-        system(*cmd) or raise "#{cmd.inspect} failed"
+        run_restyler(cmd)
       else
         paths.each do |path|
           cmd = restyler_command + [path]
-          system(*cmd) or raise "#{cmd.inspect} failed"
+          run_restyler(cmd)
         end
       end
     end
 
     private
 
-    attr_reader :info
+    attr_reader :name, :info
+
+    def run_restyler(cmd)
+      unless system(*cmd)
+        $stderr.puts("Restyler #{name} exited #{$?.to_i}")
+        exit $?.to_i
+      end
+    end
   end
 
   class Main
