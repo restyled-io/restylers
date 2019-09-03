@@ -1,10 +1,13 @@
 ---
 name: shfmt
-image: restyled/restyler-shfmt:v2.4.0
+image: restyled/restyler-shfmt:v2.4.0-2
 command:
 - shfmt
 - "-w"
-arguments: []
+arguments:
+- -i
+- "2"
+- -ci
 include:
 - "**/*.sh"
 - "**/*.bash"
