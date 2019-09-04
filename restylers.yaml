@@ -198,6 +198,21 @@
   documentation:
   - https://prettier.io/docs/en/
   - https://github.com/prettier/plugin-ruby
+- name: prettier-yaml
+  image: restyled/restyler-prettier:v1.18.2
+  command:
+  - prettier
+  - "--write"
+  arguments: []
+  include:
+  - "**/*.yml"
+  - "**/*.yaml"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://prettier.io/docs/en/
+  - https://prettier.io/blog/2018/07/29/1.14.0.html
 - name: prettier
   image: restyled/restyler-prettier:v1.18.2
   command:
@@ -207,8 +222,6 @@
   include:
   - "**/*.js"
   - "**/*.jsx"
-  - "**/*.yml"
-  - "**/*.yaml"
   interpreters: []
   supports_arg_sep: true
   supports_multiple_paths: true

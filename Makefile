@@ -1,6 +1,6 @@
 IMAGES := $(wildcard */Dockerfile)
 
-OVERRIDES := prettier-markdown
+OVERRIDES := prettier-markdown prettier-yaml
 
 all: $(IMAGES:%=%.pushed) $(OVERRIDES:%=%.tested) restylers.yaml
 

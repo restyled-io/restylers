@@ -8,8 +8,6 @@ arguments: []
 include:
 - "**/*.js"
 - "**/*.jsx"
-- "**/*.yml"
-- "**/*.yaml"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
@@ -18,4 +16,3 @@ documentation:
 metadata:
   languages:
   - JavaScript
-  - YAML
