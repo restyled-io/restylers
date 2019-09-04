@@ -183,6 +183,21 @@
   supports_multiple_paths: true
   documentation:
   - https://prettier.io/blog/2017/11/07/1.8.0.html
+- name: prettier-ruby
+  image: restyled/restyler-prettier-ruby:v0.15.0
+  command:
+  - prettier
+  - "--write"
+  arguments: []
+  include:
+  - "**/*.rb"
+  interpreters:
+  - ruby
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://prettier.io/docs/en/
+  - https://github.com/prettier/plugin-ruby
 - name: prettier
   image: restyled/restyler-prettier:v1.18.2
   command:

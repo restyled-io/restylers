@@ -1,0 +1,19 @@
+---
+name: prettier-ruby
+image: restyled/restyler-prettier-ruby:v0.15.0
+command:
+- prettier
+- "--write"
+arguments: []
+include:
+- "**/*.rb"
+interpreters:
+- ruby
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation:
+- https://prettier.io/docs/en/
+- https://github.com/prettier/plugin-ruby
+metadata:
+  languages:
+  - Ruby
