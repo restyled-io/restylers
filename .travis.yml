@@ -19,6 +19,7 @@ matrix:
     - env: TARGET=prettier/Dockerfile.tested
     - env: TARGET=prettier-markdown/Dockerfile.tested
     - env: TARGET=prettier-ruby/Dockerfile.tested
+    - env: TARGET=prettier-yaml/Dockerfile.tested
     - env: TARGET=reorder-python-imports/Dockerfile.tested
     - env: TARGET=rubocop/Dockerfile.tested
     - env: TARGET=rustfmt/Dockerfile.tested
