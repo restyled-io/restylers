@@ -23,6 +23,7 @@ matrix:
     - env: TARGET=reorder-python-imports/Dockerfile.tested
     - env: TARGET=rubocop/Dockerfile.tested
     - env: TARGET=rustfmt/Dockerfile.tested
+    - env: TARGET=shellharden/Dockerfile.tested
     - env: TARGET=shfmt/Dockerfile.tested
     - env: TARGET=stylish-haskell/Dockerfile.tested
     - env: TARGET=terraform/Dockerfile.tested
