@@ -1,0 +1,21 @@
+---
+name: shellharden
+image: restyled/restyler-shellharden:v4.1.1
+command:
+- shellharden
+- --replace
+arguments: []
+include:
+- "**/*.sh"
+- "**/*.bash"
+interpreters:
+- sh
+- bash
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation:
+- https://github.com/anordal/shellharden#readme
+metadata:
+  languages:
+  - POSIX sh
+  - Bash
