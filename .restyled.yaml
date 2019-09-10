@@ -16,7 +16,6 @@ restylers:
   - prettier-yaml
   - reorder-python-imports
   - rubocop
-  - rustfmt
   - shellharden
   - shfmt
   - terraform
