@@ -5,7 +5,6 @@ restylers:
   - black
   - dfmt
   - elm-format
-  - google-java-format
   - hindent
   - jdt
   - pg_format
@@ -34,3 +33,6 @@ restylers:
   - hlint:
       include:
         - new-files/redundant-dollar.hs
+  - google-java-format:
+      include:
+        - new-files/Enum.java
