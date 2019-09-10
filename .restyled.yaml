@@ -2,15 +2,27 @@
 restylers:
   - astyle
   - autopep8
+  - black
+  - dfmt
   - elm-format
+  - google-java-format
   - hindent
+  - jdt
   - pg_format
   - php-cs-fixer
   - prettier
+  - prettier-markdown
+  - prettier-markdown.tested
+  - prettier-ruby
+  - prettier-yaml
+  - prettier-yaml.tested
+  - reorder-python-imports
   - rubocop
   - rustfmt
+  - shellharden
   - shfmt
   - terraform
+  - yapf
 
   # Non-default, need to be limited to not conflict
   - brittany:
