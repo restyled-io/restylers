@@ -6,7 +6,8 @@ restylers:
   - dfmt
   - elm-format
   - hindent
-  - jdt
+  # TODO: Blows up because of pom.xml
+  # - jdt
   - pg_format
   - php-cs-fixer
   - prettier
