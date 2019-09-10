@@ -37,3 +37,7 @@ restylers:
   - google-java-format:
       include:
         - new-files/Enum.java
+
+  - rustfmt:
+      include:
+        - '!new-files/bug.rs'
