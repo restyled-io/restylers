@@ -4,11 +4,6 @@
 pg_format
 
   $ run_restyler pg_format ./bad.sql
-  diff --git i/bad.sql w/bad.sql
-  index d4cb666..71d12cc 100644
-  --- i/bad.sql
-  +++ w/bad.sql
-  @@ -1,3 +1,7 @@
   -SELECT * from
   -students
   -WHERE students.age > 10;

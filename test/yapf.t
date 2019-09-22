@@ -4,11 +4,6 @@
 yapf
 
   $ run_restyler yapf crazy.py
-  diff --git i/crazy.py w/crazy.py
-  index 9941de7..4ce75ab 100644
-  --- i/crazy.py
-  +++ w/crazy.py
-  @@ -1,9 +1,19 @@
   -import math, sys;
   +import math, sys
   +

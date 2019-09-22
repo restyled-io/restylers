@@ -38,22 +38,12 @@ jdt
   [INFO] Total time:  * (glob)
   [INFO] Finished at: * (glob)
   [INFO] ------------------------------------------------------------------------
-  diff --git i/ShouldFormat1.java w/ShouldFormat1.java
-  index c3123f9..6fafba6 100644
-  --- i/ShouldFormat1.java
-  +++ w/ShouldFormat1.java
-  @@ -1,5 +1,5 @@
    public class ShouldFormat1 {
   -int Foo(bool isBar) {
   +    int Foo(bool isBar) {
            if (isBar) {
                bar();
                return 1;
-  diff --git i/ShouldFormat2.java w/ShouldFormat2.java
-  index c7311a5..2df6745 100644
-  --- i/ShouldFormat2.java
-  +++ w/ShouldFormat2.java
-  @@ -6,7 +6,8 @@ public class ShouldFormat2 {
                bar();
    
                return 1;

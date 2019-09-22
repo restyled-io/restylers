@@ -7,11 +7,6 @@ black
   reformatted crazy.py
   All done! * (glob)
   1 file reformatted.
-  diff --git i/crazy.py w/crazy.py
-  index 9941de7..ab602ed 100644
-  --- i/crazy.py
-  +++ w/crazy.py
-  @@ -1,9 +1,22 @@
   -import math, sys;
   +import math, sys
   +

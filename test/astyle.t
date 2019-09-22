@@ -6,11 +6,6 @@ astyle
   $ run_restyler astyle ./Foo.java ./Foo.cpp
   Formatted  ./Foo.java
   Formatted  ./Foo.cpp
-  diff --git i/Foo.cpp w/Foo.cpp
-  index f5680da..df055a4 100644
-  --- i/Foo.cpp
-  +++ w/Foo.cpp
-  @@ -2,16 +2,16 @@
    #include <stdio.h>
    int main()
    {
@@ -39,11 +34,6 @@ astyle
   +    }
   +    return 0;
    }
-  diff --git i/Foo.java w/Foo.java
-  index 805238c..45b86bf 100644
-  --- i/Foo.java
-  +++ w/Foo.java
-  @@ -1,8 +1,9 @@
    int Foo(bool isBar)
   -    {
   +{

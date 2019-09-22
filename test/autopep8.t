@@ -4,11 +4,6 @@
 autopep8
 
   $ run_restyler autopep8 crazy.py
-  diff --git i/crazy.py w/crazy.py
-  index 9941de7..6451f03 100644
-  --- i/crazy.py
-  +++ w/crazy.py
-  @@ -1,9 +1,12 @@
   -import math, sys;
   +import math
   +import sys

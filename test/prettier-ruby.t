@@ -5,11 +5,6 @@ prettier for Ruby
 
   $ run_restyler prettier-ruby code-segment.rb
   * (glob)
-  diff --git i/code-segment.rb w/code-segment.rb
-  index 2a2f35a..499f8cf 100644
-  --- i/code-segment.rb
-  +++ w/code-segment.rb
-  @@ -1,13 +1,18 @@
   -        d=[30644250780,9003106878,
   -    30636278846,66641217692,4501790980,
   - 671_24_603036,131_61973916,66_606629_920,

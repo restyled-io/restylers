@@ -4,11 +4,6 @@
 stylish-haskell
 
   $ run_restyler stylish-haskell pragmas.hs
-  diff --git i/pragmas.hs w/pragmas.hs
-  index fd4c8c8..a07dc58 100644
-  --- i/pragmas.hs
-  +++ w/pragmas.hs
-  @@ -1,2 +1,2 @@
    {-# LANGUAGE OverloadedStrings #-}
   -{-# LANGUAGE RecordWildCards #-}
   +{-# LANGUAGE RecordWildCards   #-}
@@ -16,11 +11,6 @@ stylish-haskell
 MultiParam regression
 
   $ run_restyler stylish-haskell App.hs
-  diff --git i/App.hs w/App.hs
-  index 125bd49..2814620 100644
-  --- i/App.hs
-  +++ w/App.hs
-  @@ -1,9 +1,9 @@
   -{-# LANGUAGE FlexibleContexts #-}
   -{-# LANGUAGE FlexibleInstances #-}
   -{-# LANGUAGE GADTs #-}
@@ -35,7 +25,6 @@ MultiParam regression
    
    module Restyler.App
        (
-  @@ -18,37 +18,37 @@ module Restyler.App
        )
    where
    

@@ -4,11 +4,6 @@
 google-java-format
 
   $ run_restyler google-java-format ./Enum.java
-  diff --git i/Enum.java w/Enum.java
-  index dd9dfde..756608d 100644
-  --- i/Enum.java
-  +++ w/Enum.java
-  @@ -1,6 +1,10 @@
    private enum Answer {
   -  YES { @Override public String toString() { return "yes";
   +  YES {

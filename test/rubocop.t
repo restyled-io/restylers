@@ -17,11 +17,6 @@ rubocop
   ^^^^
   
   1 file inspected, 2 offenses detected, 2 offenses corrected
-  diff --git i/four.rb w/four.rb
-  index bcea85b..18db5ae 100644
-  --- i/four.rb
-  +++ w/four.rb
-  @@ -1,4 +1,6 @@
   +# frozen_string_literal: true
   +
    # bad - four spaces
@@ -64,17 +59,11 @@ rubocop with incorrectable offenses (anyw8 example)
                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   1 file inspected, 8 offenses detected, 5 offenses corrected
-  diff --git i/andyw8_user.rb w/andyw8_user.rb
-  index ba94afe..bea617c 100644
-  --- i/andyw8_user.rb
-  +++ w/andyw8_user.rb
-  @@ -1,3 +1,5 @@
   +# frozen_string_literal: true
   +
    class User < ApplicationRecord
      MissingAdminAccount = Class.new(RuntimeError)
    
-  @@ -7,8 +9,8 @@ class User < ApplicationRecord
      # :confirmable, :lockable, :timeoutable and :omniauthable
      devise :database_authenticatable, :registerable, :confirmable,
             :recoverable, :rememberable, :trackable, :validatable
@@ -85,7 +74,6 @@ rubocop with incorrectable offenses (anyw8 example)
      has_many :blips, through: :radars
    
      attr_accessor :login
-  @@ -24,7 +26,7 @@ class User < ApplicationRecord
      def self.find_for_database_authentication(warden_conditions)
        conditions = warden_conditions.dup
        if (login = conditions.delete(:login))

@@ -5,11 +5,6 @@ elm-format
 
   $ run_restyler elm-format case.elm
   Processing file case.elm
-  diff --git i/case.elm w/case.elm
-  index e4654af..65d084f 100644
-  --- i/case.elm
-  +++ w/case.elm
-  @@ -1,6 +1,20 @@
   -homeDirectory = "/root/files"
   -eval boolean = case boolean of
   -    Literal bool -> bool
