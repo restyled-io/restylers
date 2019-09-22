@@ -57,6 +57,25 @@
   documentation:
   - https://github.com/lspitzner/brittany
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
+- name: clang-format
+  image: restyled/restyler-clang-format:v3.8.0
+  command:
+  - clang-format
+  - "-i"
+  arguments: []
+  include:
+  - "**/*.c"
+  - "**/*.cpp"
+  - "**/*.cs"
+  - "**/*.h"
+  - "**/*.java"
+  - "**/*.js"
+  - "**/*.m"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: true
+  documentation:
+  - https://clang.llvm.org/docs/ClangFormat.html
 - name: dfmt
   image: restyled/restyler-dfmt:v0.8.2
   command:

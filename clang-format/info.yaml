@@ -1,0 +1,29 @@
+---
+name: clang-format
+image: restyled/restyler-clang-format:v3.8.0
+command:
+- clang-format
+- "-i"
+arguments: []
+include:
+- "**/*.c"
+- "**/*.cpp"
+- "**/*.cs"
+- "**/*.h"
+- "**/*.java"
+- "**/*.js"
+- "**/*.m"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: true
+documentation:
+- https://clang.llvm.org/docs/ClangFormat.html
+metadata:
+  languages:
+  - C
+  - C++
+  - Java
+  - JavaScript
+  - Objective-C
+  - Protobuf
+  - C#

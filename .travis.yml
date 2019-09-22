@@ -8,6 +8,7 @@ matrix:
     - env: TARGET=autopep8/Dockerfile.tested
     - env: TARGET=black/Dockerfile.tested
     - env: TARGET=brittany/Dockerfile.tested
+    - env: TARGET=clang-format/Dockerfile.tested
     - env: TARGET=dfmt/Dockerfile.tested
     - env: TARGET=elm-format/Dockerfile.tested
     - env: TARGET=google-java-format/Dockerfile.tested
