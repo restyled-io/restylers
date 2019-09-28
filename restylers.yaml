@@ -58,7 +58,7 @@
   - https://github.com/lspitzner/brittany
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
 - name: clang-format
-  image: restyled/restyler-clang-format:v3.8.0
+  image: restyled/restyler-clang-format:v9.0.0
   command:
   - clang-format
   - "-i"
