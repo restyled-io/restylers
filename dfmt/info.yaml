@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: dfmt
 image: restyled/restyler-dfmt:v0.8.2
 command:

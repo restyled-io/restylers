@@ -1,4 +1,5 @@
 ---
+enabled: false
 name: hlint
 image: restyled/restyler-hlint:v2.1.11
 command:

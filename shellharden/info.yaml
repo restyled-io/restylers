@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: shellharden
 image: restyled/restyler-shellharden:v4.1.1
 command:

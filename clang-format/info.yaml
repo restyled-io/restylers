@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: clang-format
 image: restyled/restyler-clang-format:v9.0.0
 command:

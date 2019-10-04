@@ -1,4 +1,5 @@
 ---
+enabled: false
 name: google-java-format
 image: restyled/restyler-google-java-format:v1.6
 command:

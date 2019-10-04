@@ -1,5 +1,6 @@
 ---
-- name: astyle
+- enabled: true
+  name: astyle
   image: restyled/restyler-astyle:v3.1
   command:
   - astyle
@@ -16,7 +17,8 @@
   supports_multiple_paths: true
   documentation:
   - http://astyle.sourceforge.net/astyle.html
-- name: autopep8
+- enabled: true
+  name: autopep8
   image: restyled/restyler-autopep8:v1.4.4
   command:
   - autopep8
@@ -30,7 +32,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/hhatto/autopep8
-- name: black
+- enabled: true
+  name: black
   image: restyled/restyler-black:v19.3b0
   command:
   - black
@@ -43,7 +46,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/python/black
-- name: brittany
+- enabled: false
+  name: brittany
   image: restyled/restyler-brittany:v0.12.0.0
   command:
   - brittany
@@ -57,7 +61,8 @@
   documentation:
   - https://github.com/lspitzner/brittany
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
-- name: clang-format
+- enabled: true
+  name: clang-format
   image: restyled/restyler-clang-format:v9.0.0
   command:
   - clang-format
@@ -76,7 +81,8 @@
   supports_multiple_paths: true
   documentation:
   - https://clang.llvm.org/docs/ClangFormat.html
-- name: dfmt
+- enabled: true
+  name: dfmt
   image: restyled/restyler-dfmt:v0.8.2
   command:
   - dfmt
@@ -89,7 +95,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/dlang-community/dfmt#readme
-- name: elm-format
+- enabled: true
+  name: elm-format
   image: restyled/restyler-elm-format:v0.6.1-alpha
   command:
   - elm-format
@@ -102,7 +109,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/avh4/elm-format
-- name: google-java-format
+- enabled: false
+  name: google-java-format
   image: restyled/restyler-google-java-format:v1.6
   command:
   - google-java-format
@@ -115,7 +123,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/google/google-java-format#readme
-- name: hindent
+- enabled: false
+  name: hindent
   image: restyled/restyler-hindent:v5.2.5
   command:
   - hindent
@@ -127,7 +136,8 @@
   supports_multiple_paths: false
   documentation:
   - https://github.com/commercialhaskell/hindent
-- name: hlint
+- enabled: false
+  name: hlint
   image: restyled/restyler-hlint:v2.1.11
   command:
   - hlint
@@ -143,7 +153,8 @@
   documentation:
   - https://github.com/ndmitchell/hlint#readme
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
-- name: jdt
+- enabled: false
+  name: jdt
   image: restyled/restyler-jdt:v2.10.0
   command:
   - formatter
@@ -159,7 +170,8 @@
   supports_multiple_paths: true
   documentation:
   - https://code.revelc.net/formatter-maven-plugin/
-- name: pg_format
+- enabled: true
+  name: pg_format
   image: restyled/restyler-pg_format:v3.3
   command:
   - pg_format-inplace
@@ -171,7 +183,8 @@
   supports_multiple_paths: false
   documentation:
   - https://github.com/darold/pgFormatter#readme
-- name: php-cs-fixer
+- enabled: true
+  name: php-cs-fixer
   image: restyled/restyler-php-cs-fixer:v2.14.2
   command:
   - php-cs-fixer
@@ -184,7 +197,8 @@
   supports_multiple_paths: false
   documentation:
   - https://github.com/FriendsOfPHP/PHP-CS-Fixer
-- name: prettier-markdown
+- enabled: true
+  name: prettier-markdown
   image: restyled/restyler-prettier:v1.18.2
   command:
   - prettier
@@ -202,7 +216,8 @@
   supports_multiple_paths: true
   documentation:
   - https://prettier.io/blog/2017/11/07/1.8.0.html
-- name: prettier-ruby
+- enabled: true
+  name: prettier-ruby
   image: restyled/restyler-prettier-ruby:v0.15.0
   command:
   - prettier
@@ -217,7 +232,8 @@
   documentation:
   - https://prettier.io/docs/en/
   - https://github.com/prettier/plugin-ruby
-- name: prettier-yaml
+- enabled: true
+  name: prettier-yaml
   image: restyled/restyler-prettier:v1.18.2
   command:
   - prettier
@@ -232,7 +248,8 @@
   documentation:
   - https://prettier.io/docs/en/
   - https://prettier.io/blog/2018/07/29/1.14.0.html
-- name: prettier
+- enabled: true
+  name: prettier
   image: restyled/restyler-prettier:v1.18.2
   command:
   - prettier
@@ -246,7 +263,8 @@
   supports_multiple_paths: true
   documentation:
   - https://prettier.io/docs/en/
-- name: reorder-python-imports
+- enabled: true
+  name: reorder-python-imports
   image: restyled/restyler-reorder-python-imports:v1.6.0
   command:
   - reorder-python-imports
@@ -260,7 +278,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/asottile/reorder_python_imports
-- name: rubocop
+- enabled: true
+  name: rubocop
   image: restyled/restyler-rubocop:v0.72.0
   command:
   - rubocop
@@ -276,7 +295,8 @@
   supports_multiple_paths: true
   documentation:
   - https://rubocop.readthedocs.io/en/latest/
-- name: rustfmt
+- enabled: true
+  name: rustfmt
   image: restyled/restyler-rustfmt:v1.4.6-nightly
   command:
   - rustfmt
@@ -289,7 +309,8 @@
   documentation:
   - https://github.com/rust-lang-nursery/rustfmt#readme
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
-- name: shellharden
+- enabled: true
+  name: shellharden
   image: restyled/restyler-shellharden:v4.1.1
   command:
   - shellharden
@@ -305,7 +326,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/anordal/shellharden#readme
-- name: shfmt
+- enabled: true
+  name: shfmt
   image: restyled/restyler-shfmt:v2.4.0-2
   command:
   - shfmt
@@ -324,7 +346,8 @@
   supports_multiple_paths: true
   documentation:
   - https://github.com/mvdan/sh#shfmt
-- name: stylish-haskell
+- enabled: true
+  name: stylish-haskell
   image: restyled/restyler-stylish-haskell:v0.9.2.2
   command:
   - stylish-haskell
@@ -338,7 +361,8 @@
   documentation:
   - https://github.com/jaspervdj/stylish-haskell
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
-- name: terraform
+- enabled: true
+  name: terraform
   image: restyled/restyler-terraform:v0.11.7
   command:
   - terraform
@@ -351,7 +375,8 @@
   supports_multiple_paths: false
   documentation:
   - https://www.terraform.io/docs/commands/fmt.html
-- name: yapf
+- enabled: true
+  name: yapf
   image: restyled/restyler-yapf:v0.27.0
   command:
   - yapf

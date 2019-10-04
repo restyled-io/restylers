@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: prettier-ruby
 image: restyled/restyler-prettier-ruby:v0.15.0
 command:

@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: astyle
 image: restyled/restyler-astyle:v3.1
 command:

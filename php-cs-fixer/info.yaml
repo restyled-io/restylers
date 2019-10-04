@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: php-cs-fixer
 image: restyled/restyler-php-cs-fixer:v2.14.2
 command:

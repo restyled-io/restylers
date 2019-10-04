@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: reorder-python-imports
 image: restyled/restyler-reorder-python-imports:v1.6.0
 command:

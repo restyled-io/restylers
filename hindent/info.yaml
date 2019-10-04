@@ -1,4 +1,5 @@
 ---
+enabled: false
 name: hindent
 image: restyled/restyler-hindent:v5.2.5
 command:

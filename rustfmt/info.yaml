@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: rustfmt
 image: restyled/restyler-rustfmt:v1.4.6-nightly
 command:

@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: pg_format
 image: restyled/restyler-pg_format:v3.3
 command:

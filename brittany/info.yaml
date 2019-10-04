@@ -1,4 +1,5 @@
 ---
+enabled: false
 name: brittany
 image: restyled/restyler-brittany:v0.12.0.0
 command:

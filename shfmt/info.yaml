@@ -1,4 +1,5 @@
 ---
+enabled: true
 name: shfmt
 image: restyled/restyler-shfmt:v2.4.0-2
 command:
