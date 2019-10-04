@@ -297,7 +297,7 @@
   - https://rubocop.readthedocs.io/en/latest/
 - enabled: true
   name: rustfmt
-  image: restyled/restyler-rustfmt:v1.4.6-nightly
+  image: restyled/restyler-rustfmt:v1.4.8-nightly
   command:
   - rustfmt
   arguments: []
