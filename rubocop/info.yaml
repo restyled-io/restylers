@@ -1,13 +1,13 @@
 ---
 enabled: true
 name: rubocop
-image: restyled/restyler-rubocop:v0.72.0
+image: restyled/restyler-rubocop:v0.72.0-2
 command:
 - rubocop
-- "--auto-correct"
-arguments:
-- "--fail-level"
+- --auto-correct
+- --fail-level
 - fatal
+arguments: []
 include:
 - "**/*.rb"
 interpreters:
