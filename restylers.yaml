@@ -188,6 +188,19 @@
   supports_multiple_paths: true
   documentation:
   - https://code.revelc.net/formatter-maven-plugin/
+- enabled: false
+  name: ormolu
+  image: restyled/restyler-ormolu:v0.0.1.0
+  command:
+  - ormolu
+  arguments: []
+  include:
+  - "**/*.hs"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+  - https://github.com/tweag/ormolu#readme
 - enabled: true
   name: pg_format
   image: restyled/restyler-pg_format:v3.3
