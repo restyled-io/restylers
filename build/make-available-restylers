@@ -1,0 +1,50 @@
+#!/bin/sh
+set -e
+
+tags() {
+  git tag | sort -n
+  echo master
+}
+
+comparison() {
+  tag=$1 last_tag=$2
+
+  printf -- \
+    "- **%s**: [\`restylers.yaml\`](https://github.com/restyled-io/restylers/blob/%s/restylers.yaml)" \
+    "$tag" \
+    "$tag"
+
+  if [ -n "$last_tag" ]; then
+    printf -- \
+      ", [changes](https://github.com/restyled-io/restylers/compare/%s...%s)\n" \
+      "$last_tag" \
+      "$tag"
+  else
+    echo
+  fi
+}
+
+comparisons() {
+  last_tag=
+
+  tags | while read -r tag; do
+    comparison "$tag" "$last_tag"
+    last_tag=$tag
+  done | tac
+}
+
+cat <<EOM
+$(build/restyler-meta wiki)
+
+## Restyler Sets
+
+$(comparisons)
+
+See [Restyler Versions](https://github.com/restyled-io/restyled.io/wiki/Restyler-Versions) for how to use these Sets in your configuration.
+
+## Adding Restylers
+
+If you know of something that would make a good Restyler, please [create an Issue](https://github.com/restyled-io/restylers/issues/new?title=some-auto-formatter&body=https://their-homepage.com).
+
+If you're interested in contributing, see [Adding a Restyler](https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler).
+EOM

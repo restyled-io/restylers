@@ -27,6 +27,15 @@ restylers.yaml: */info.yaml
 generate-travis:
 	build/generate-travis
 
+.PHONY:
+wiki:
+	./build/make-available-restylers \
+	  > ../restyled.io.wiki/Available-Restylers.md
+	(cd ../restyled.io.wiki && \
+	  git commit Available-Restylers.md -m "Update Available Restylers" && \
+	  git push)
+
+
 RELASE_TAG ?= $(shell date +'%Y%m%d')
 
 .PHONY: release
@@ -35,5 +44,6 @@ release: all
 	git commit -m 'Update restylers.yaml' || true
 	git tag -f -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
 	git push --follow-tags
+
 
 .SECONDARY:

@@ -91,6 +91,39 @@ module Restylers
             system("touch", File.join(name, "Dockerfile#{ext}"))
           end
         end
+      when "wiki"
+        INFO.each do |name, info|
+          if info.fetch("enabled")
+            puts "## #{name}"
+          else
+            puts "## #{name}\\*"
+          end
+
+          puts
+          puts info.
+            fetch("metadata").
+            fetch("languages").
+            map { |lang| lang.sub(/\*/, '\\*') }.
+            join(", ")
+          puts
+          puts "```yaml"
+          puts YAML.dump(
+            "image" => info.fetch("image"),
+            "command" => info.fetch("command"),
+            "arguments" => info.fetch("arguments"),
+            "include" => info.fetch("include"),
+            "interpreters" => info.fetch("interpreters"),
+          )
+          puts "```"
+          puts
+          info.fetch("documentation").each do |url|
+            puts "- #{url}"
+          end
+          puts
+        end
+
+        puts "\\**Must be explicitly enabled.*"
+        puts
       else
         $stderr.puts "Invalid usage"
         exit 64
