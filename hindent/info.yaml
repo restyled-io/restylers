@@ -14,4 +14,4 @@ documentation:
 - https://github.com/commercialhaskell/hindent
 metadata:
   languages:
-  - Haskell*
+  - Haskell
