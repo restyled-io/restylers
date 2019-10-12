@@ -35,15 +35,16 @@ wiki:
 	  git commit Available-Restylers.md -m "Update Available Restylers" && \
 	  git push)
 
-
 RELASE_TAG ?= $(shell date +'%Y%m%d')
 
-.PHONY: release
-release: all
+.PHONY: release_tag
+release_tag: all
 	git add restylers.yaml
 	git commit -m 'Update restylers.yaml' || true
 	git tag -f -s -m "$(RELASE_TAG)" "$(RELASE_TAG)"
 	git push --follow-tags
 
+.PHONY: release
+release: all release_tag wiki
 
 .SECONDARY:
