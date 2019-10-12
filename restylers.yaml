@@ -193,6 +193,8 @@
   image: restyled/restyler-ormolu:v0.0.1.0
   command:
   - ormolu
+  - "--mode"
+  - inplace
   arguments: []
   include:
   - "**/*.hs"
