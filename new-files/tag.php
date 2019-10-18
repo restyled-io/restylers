@@ -1,2 +1,2 @@
-<?PHP
+<?php
 $this->foo();
