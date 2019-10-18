@@ -1,6 +1,10 @@
 private enum Answer {
-  YES { @Override public String toString() { return "yes";
+  YES {
+    @Override
+    public String toString() {
+      return "yes";
     }
-  }, NO,
+  },
+  NO,
   MAYBE
 }
