@@ -1,8 +1,6 @@
-void main(string[] args) {
+void main(string[] args)
+{
     bool optionOne, optionTwo, optionThree;
 
-    getopt(args,
-        "optionOne", &optionOne,
-        "optionTwo", &optionTwo,
-        "optionThree", &optionThree);
+    getopt(args, "optionOne", &optionOne, "optionTwo", &optionTwo, "optionThree", &optionThree);
 }
