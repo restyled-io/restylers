@@ -1,3 +1,3 @@
 #!/bin/sh
 x=x
-var=`echo "$x"`
+var=$(echo "$x")
