@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 from argparse import ArgumentParser
 
 from foo import bar
