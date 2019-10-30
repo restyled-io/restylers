@@ -188,6 +188,19 @@
   supports_multiple_paths: true
   documentation:
   - https://code.revelc.net/formatter-maven-plugin/
+- enabled: true
+  name: jq
+  image: restyled/restyler-jq:v1.6
+  command:
+  - jq-write
+  arguments: []
+  include:
+  - "**/*.json"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  documentation:
+  - https://stedolan.github.io/jq/
 - enabled: false
   name: ormolu
   image: restyled/restyler-ormolu:v0.0.1.0
