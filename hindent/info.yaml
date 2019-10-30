@@ -15,3 +15,10 @@ documentation:
 metadata:
   languages:
   - Haskell
+  tests:
+  - contents: |
+      example = case x of Just p -> foo bar
+    restyled: |
+      example =
+        case x of
+          Just p -> foo bar

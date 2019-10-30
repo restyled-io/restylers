@@ -16,3 +16,23 @@ documentation:
 metadata:
   languages:
   - Java
+  tests:
+  - extension: java
+    contents: |
+      private enum Answer {
+        YES { @Override public String toString() { return "yes";
+          }
+        }, NO,
+        MAYBE
+      }
+    restyled: |
+      private enum Answer {
+        YES {
+          @Override
+          public String toString() {
+            return "yes";
+          }
+        },
+        NO,
+        MAYBE
+      }

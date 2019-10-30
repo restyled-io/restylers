@@ -1,6 +1,6 @@
 IMAGES := $(wildcard */Dockerfile)
 
-OVERRIDES := prettier-markdown prettier-yaml
+OVERRIDES := $(shell ./build/restyler-meta overrides)
 
 all: $(IMAGES:%=%.pushed) $(OVERRIDES:%=%.tested) restylers.yaml
 
@@ -11,8 +11,8 @@ restylers.yaml: */info.yaml
 	./build/restyler-meta get "$*" image | ./build/push-image
 	echo > $@
 
-%/Dockerfile.tested: %/Dockerfile.built test/%.t %/info.yaml
-	cram --shell=bash "test/$*.t"
+%/Dockerfile.tested: %/Dockerfile.built %/info.yaml
+	rspec --tag "$*"
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml
@@ -20,12 +20,8 @@ restylers.yaml: */info.yaml
 	echo > $@
 
 %.tested: %/info.yaml
-	cram --shell=bash "test/$*.t"
+	rspec --tag "$*"
 	echo > $@
-
-.PHONY: generate-travis
-generate-travis:
-	build/generate-travis
 
 .PHONY:
 wiki:

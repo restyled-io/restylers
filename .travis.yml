@@ -1,35 +1,46 @@
 git:
   depth: false  # fetch all branches
-language: python
+language: ruby
 services: [docker]
 matrix:
   include:
-    - env: TARGET=astyle/Dockerfile.tested
-    - env: TARGET=autopep8/Dockerfile.tested
-    - env: TARGET=black/Dockerfile.tested
-    - env: TARGET=brittany/Dockerfile.tested
-    - env: TARGET=clang-format/Dockerfile.tested
-    - env: TARGET=dfmt/Dockerfile.tested
-    - env: TARGET=elm-format/Dockerfile.tested
-    - env: TARGET=google-java-format/Dockerfile.tested
-    - env: TARGET=hindent/Dockerfile.tested
-    - env: TARGET=hlint/Dockerfile.tested
-    - env: TARGET=jdt/Dockerfile.tested
-    - env: TARGET=ormolu/Dockerfile.tested
-    - env: TARGET=pg_format/Dockerfile.tested
-    - env: TARGET=php-cs-fixer/Dockerfile.tested
-    - env: TARGET=prettier/Dockerfile.tested
-    - env: TARGET=prettier-markdown/Dockerfile.tested
-    - env: TARGET=prettier-ruby/Dockerfile.tested
-    - env: TARGET=prettier-yaml/Dockerfile.tested
-    - env: TARGET=reorder-python-imports/Dockerfile.tested
-    - env: TARGET=rubocop/Dockerfile.tested
-    - env: TARGET=rustfmt/Dockerfile.tested
-    - env: TARGET=shellharden/Dockerfile.tested
-    - env: TARGET=shfmt/Dockerfile.tested
-    - env: TARGET=stylish-haskell/Dockerfile.tested
-    - env: TARGET=terraform/Dockerfile.tested
-    - env: TARGET=yapf/Dockerfile.tested
-    - env: TARGET=generate-travis
-install: pip install cram
-script: build/make-if-target-changed "$TARGET"
+    - env: RESTYLER=astyle
+    - env: RESTYLER=autopep8
+    - env: RESTYLER=black
+    - env: RESTYLER=brittany
+    - env: RESTYLER=clang-format
+    - env: RESTYLER=dfmt
+    - env: RESTYLER=elm-format
+    - env: RESTYLER=google-java-format
+    - env: RESTYLER=hindent
+    - env: RESTYLER=hlint
+    - env: RESTYLER=jdt
+    - env: RESTYLER=ormolu
+    - env: RESTYLER=pg_format
+    - env: RESTYLER=php-cs-fixer
+    - env: RESTYLER=prettier
+    - env: RESTYLER=prettier-markdown
+    - env: RESTYLER=prettier-ruby
+    - env: RESTYLER=prettier-yaml
+    - env: RESTYLER=reorder-python-imports
+    - env: RESTYLER=rubocop
+    - env: RESTYLER=rustfmt
+    - env: RESTYLER=shellharden
+    - env: RESTYLER=shfmt
+    - env: RESTYLER=stylish-haskell
+    - env: RESTYLER=terraform
+    - env: RESTYLER=yapf
+install: gem install rspec
+script: |
+  if ! git diff --name-only "$(git merge-base master HEAD)" | grep -q "^${RESTYLER}/"; then
+    echo "$RESTYLER unchanged, skipping."
+    exit 0
+  fi
+
+  parent=$(./build/restyler-meta overrides "$RESTYLER")
+
+  if [ -n "$parent" ]; then
+    make "$parent"/Dockerfile.built "$RESTYLER".tested
+  else
+    make "$RESTYLER"/Dockerfile.tested
+  fi

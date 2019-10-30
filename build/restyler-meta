@@ -1,14 +1,19 @@
 #!/usr/bin/env ruby
+#
+# Read */info.yaml, account for overrides, and provide access to the data
+# contained therein.
+#
+###
 require "yaml"
 
-module Restylers
-  ROOT = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-  GLOB = Dir.glob(File.join(ROOT, "*", "info.yaml"))
-  INFO = GLOB.sort.each_with_object({}) do |path, infos|
+INFO = begin
+  root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+  glob = Dir.glob(File.join(root, "*", "info.yaml"))
+  glob.sort.each_with_object({}) do |path, infos|
     info = YAML.load_file(path)
     merged =
       if parent = info["overrides"]
-        parent_info = YAML.load_file(File.join(ROOT, parent, "info.yaml"))
+        parent_info = YAML.load_file(File.join(root, parent, "info.yaml"))
         parent_info.merge(info)
       else
         info
@@ -16,120 +21,78 @@ module Restylers
 
     infos[merged.fetch("name")] = merged
   end
-
-  class Run
-    DOCKER_RUN =
-      ["docker", "run", "--rm", "--net", "none", "--volume", "#{Dir.pwd}:/code"]
-
-    def initialize(name)
-      @name = name
-      @info = INFO.fetch(name)
-    end
-
-    def run(paths)
-      restyler_command = DOCKER_RUN.dup
-      restyler_command << info.fetch("image")
-      restyler_command += info.fetch("command")
-      restyler_command += info.fetch("arguments")
-      restyler_command << "--" if info.fetch("supports_arg_sep")
-
-      if info.fetch("supports_multiple_paths")
-        cmd = restyler_command + paths
-        run_restyler(cmd)
-      else
-        paths.each do |path|
-          cmd = restyler_command + [path]
-          run_restyler(cmd)
-        end
-      end
-    end
-
-    private
-
-    attr_reader :name, :info
-
-    def run_restyler(cmd)
-      unless system(*cmd)
-        $stderr.puts("Restyler #{name} exited #{$?.to_i}")
-        exit $?.to_i
-      end
-    end
-  end
-
-  class Main
-    def self.run(argv)
-      case argv.shift
-      when "dump"
-        infos = INFO.values
-        infos.each do |i|
-          i.delete("overrides")
-          i.delete("metadata")
-        end
-        puts YAML.dump(infos)
-      when "dump-table"
-        puts "| Name | Tag | Language(s) |"
-        puts "| --- | --- | --- |"
-
-        INFO.each do |name, info|
-          elems = [
-            "[#{name}](#{info.fetch("documentation").first})",
-            info.fetch("image").split(":").last,
-            info.fetch("metadata").fetch("languages").join(", "),
-          ]
-
-          puts "| #{elems.join(" | ")} |"
-        end
-      when "get"
-        name, key = argv.shift(2)
-        puts INFO.fetch(name).fetch(key)
-      when "run"
-        name, paths = argv.shift, argv
-        Run.new(name).run(paths)
-      when "cache-build"
-        INFO.each do |name, _|
-          ["", ".built", ".tested", ".pushed"].each do |ext|
-            system("touch", File.join(name, "Dockerfile#{ext}"))
-          end
-        end
-      when "wiki"
-        INFO.each do |name, info|
-          if info.fetch("enabled")
-            puts "## #{name}"
-          else
-            puts "## #{name}\\*"
-          end
-
-          puts
-          puts info.
-            fetch("metadata").
-            fetch("languages").
-            map { |lang| lang.sub(/\*/, '\\*') }.
-            join(", ")
-          puts
-          puts "```yaml"
-          puts YAML.dump(
-            "image" => info.fetch("image"),
-            "command" => info.fetch("command"),
-            "arguments" => info.fetch("arguments"),
-            "include" => info.fetch("include"),
-            "interpreters" => info.fetch("interpreters"),
-          )
-          puts "```"
-          puts
-          info.fetch("documentation").each do |url|
-            puts "- #{url}"
-          end
-          puts
-        end
-
-        puts "\\**Must be explicitly enabled.*"
-        puts
-      else
-        $stderr.puts "Invalid usage"
-        exit 64
-      end
-    end
-  end
 end
 
-Restylers::Main.run(ARGV)
+case ARGV.shift
+when "names"
+  INFO.keys.each(&method(:puts))
+
+when "overrides"
+  if name = ARGV.first
+    puts INFO.fetch(name)["overrides"]
+  else
+    INFO.values.filter { |x| x.key?("overrides") }.each do |x|
+      puts x.fetch("name")
+    end
+  end
+
+when "get"
+  name, key = ARGV.shift(2)
+  value = INFO.fetch(name)
+
+  key.split(".").each do |k|
+    value = value.fetch(k)
+  end
+
+  rendered =
+    case value
+    when Hash then YAML.dump(value)
+    when Array then YAML.dump(value)
+    else value
+    end
+
+  puts rendered
+
+when "dump"
+  infos = INFO.values
+  infos.each do |i|
+    i.delete("overrides")
+    i.delete("metadata")
+  end
+  puts YAML.dump(infos)
+
+# TODO: move elsewhere, mustache?
+when "wiki"
+  INFO.each do |name, info|
+    if info.fetch("enabled")
+      puts "## #{name}"
+    else
+      puts "## #{name}\\*"
+    end
+
+    puts
+    puts info.
+      fetch("metadata").
+      fetch("languages").
+      map { |lang| lang.sub(/\*/, '\\*') }.
+      join(", ")
+    puts
+    puts "```yaml"
+    puts YAML.dump(
+      "image" => info.fetch("image"),
+      "command" => info.fetch("command"),
+      "arguments" => info.fetch("arguments"),
+      "include" => info.fetch("include"),
+      "interpreters" => info.fetch("interpreters"),
+    )
+    puts "```"
+    puts
+    info.fetch("documentation").each do |url|
+      puts "- #{url}"
+    end
+    puts
+  end
+
+  puts "\\**Must be explicitly enabled.*"
+  puts
+end

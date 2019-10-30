@@ -19,3 +19,10 @@ documentation:
 metadata:
   languages:
   - Haskell
+  tests:
+  - contents: |
+      main :: IO ()
+      main = putStrLn $ "hello hlint"
+    restyled: |
+      main :: IO ()
+      main = putStrLn "hello hlint"

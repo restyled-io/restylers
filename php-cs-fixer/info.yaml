@@ -16,3 +16,10 @@ documentation:
 metadata:
   languages:
   - PHP
+  tests:
+  - contents: |
+      <?PHP
+      $this->foo();
+    restyled: |
+      <?php
+      $this->foo();

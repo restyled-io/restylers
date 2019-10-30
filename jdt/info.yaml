@@ -24,3 +24,79 @@ metadata:
   - HTML
   - JSON
   - XML
+  tests:
+  - extension: java
+    support:
+      path: pom.xml
+      contents: |
+        <project
+          xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+          <modelVersion>4.0.0</modelVersion>
+
+          <groupId>fooGroup</groupId>
+          <artifactId>fooArtifact</artifactId>
+          <version>0.0.0-SNAPSHOT</version>
+        </project>
+    contents: |
+      public class ShouldFormat1 {
+      int Foo(bool isBar) {
+              if (isBar) {
+                  bar();
+                  return 1;
+              } else
+                  return 0;
+          }
+      }
+    restyled: |
+      public class ShouldFormat1 {
+          int Foo(bool isBar) {
+              if (isBar) {
+                  bar();
+                  return 1;
+              } else
+                  return 0;
+          }
+      }
+  - extension: java
+    support:
+      path: pom.xml
+      contents: |
+        <project
+          xmlns="http://maven.apache.org/POM/4.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+          <modelVersion>4.0.0</modelVersion>
+
+          <groupId>fooGroup</groupId>
+          <artifactId>fooArtifact</artifactId>
+          <version>0.0.0-SNAPSHOT</version>
+        </project>
+    contents: |
+      public class ShouldFormat2 {
+          int Foo(bool isBar) {
+
+              if (isBar) {
+
+                  bar();
+
+                  return 1;
+         } else
+
+                  return 0;
+          }}
+    restyled: |
+      public class ShouldFormat2 {
+          int Foo(bool isBar) {
+
+              if (isBar) {
+
+                  bar();
+
+                  return 1;
+              } else
+
+                  return 0;
+          }
+      }

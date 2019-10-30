@@ -10,3 +10,11 @@ documentation:
 metadata:
   languages:
   - Yaml
+  tests:
+  - extension: yaml
+    contents: |
+      foo: bar
+      baz:   bat
+    restyled: |
+      foo: bar
+      baz: bat
