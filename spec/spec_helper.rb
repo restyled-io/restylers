@@ -2,11 +2,11 @@ require "tmpdir"
 require "yaml"
 
 class RestylerTests
-  DOCKER_RUN = %W[docker run --rm --net none]
+  DOCKER_RUN = %w[docker run --rm --net none].freeze
 
   def initialize(name)
     @name = name
-    @info = YAML.load(`build/restyler-meta get #{name} .`)
+    @info = YAML.safe_load(`build/restyler-meta get #{name} .`)
     @tests = @info.fetch("metadata").fetch("tests")
     @tempdir = Dir.mktmpdir
     @oldpwd = Dir.pwd
@@ -25,9 +25,7 @@ class RestylerTests
   end
 
   def act
-    paths = tests.map.with_index do |test, i|
-      testfile_path(test, i)
-    end
+    paths = tests.map.with_index { |test, i| testfile_path(test, i) }
 
     run_restyler(name, paths)
   end
@@ -67,11 +65,11 @@ class RestylerTests
 
     if info.fetch("supports_multiple_paths")
       cmd = restyler_command + paths
-      system(*cmd) or abort "#{name}: #{$?}"
+      system(*cmd) || abort("#{name}: #{$CHILD_STATUS}")
     else
       paths.each do |path|
         cmd = restyler_command + [path]
-        system(*cmd) or abort "#{name}: #{$?}"
+        system(*cmd) || abort("#{name}: #{$CHILD_STATUS}")
       end
     end
   end

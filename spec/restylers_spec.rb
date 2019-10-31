@@ -6,15 +6,11 @@ names.each do |name|
       @tests.setup
     end
 
-    after do
-      @tests.teardown
-    end
+    after { @tests.teardown }
 
     it "Restyles as expected" do
       @tests.act
-      @tests.assertions do |actual, expected|
-        expect(actual).to eq(expected)
-      end
+      @tests.assertions { |actual, expected| expect(actual).to eq(expected) }
     end
   end
 end

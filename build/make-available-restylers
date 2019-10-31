@@ -4,10 +4,10 @@ require "yaml"
 
 def restylers
   `build/restyler-meta names`.split("\n").map do |name|
-    info = YAML.load(`build/restyler-meta get #{name} .`)
-    languages = info.fetch("metadata").fetch("languages").
-      map { |lang| lang.sub(/\*/, '\\*') }
-    snippet = info.slice(*%w[image command arguments include interpreters])
+    info = YAML.safe_load(`build/restyler-meta get #{name} .`)
+    languages = info.fetch("metadata").fetch("languages")
+                    .map { |lang| lang.sub(/\*/, '\\*') }
+    snippet = info.slice("image", "command", "arguments", "include", "interpreters")
 
     {
       name: name,
@@ -30,39 +30,39 @@ def comparisons
   end.reverse
 end
 
-puts Mustache.render(<<EOM, restylers: restylers, comparisons: comparisons)
-{{#restylers}}
-{{#enabled}}
-## {{name}}
-{{/enabled}}
-{{^enabled}}
-## {{name}}\\*
-{{/enabled}}
+puts Mustache.render(<<~EOM, restylers: restylers, comparisons: comparisons)
+  {{#restylers}}
+  {{#enabled}}
+  ## {{name}}
+  {{/enabled}}
+  {{^enabled}}
+  ## {{name}}\\*
+  {{/enabled}}
 
-{{languages}}
+  {{languages}}
 
-```yaml
-{{{snippet}}}
-```
+  ```yaml
+  {{{snippet}}}
+  ```
 
-{{#documentation}}
-- {{url}}
-{{/documentation}}
+  {{#documentation}}
+  - {{url}}
+  {{/documentation}}
 
-{{/restylers}}
-\\**Must be explicitly enabled.*
+  {{/restylers}}
+  \\**Must be explicitly enabled.*
 
-## Restyler Sets
+  ## Restyler Sets
 
-{{#comparisons}}
-- **{{tag}}**: [`restylers.yaml`](https://github.com/restyled-io/restylers/blob/{{tag}}/restylers.yaml){{#last_tag}}, [changes](https://github.com/restyled-io/restylers/compare/{{last_tag}}...{{tag}}){{/last_tag}}
-{{/comparisons}}
+  {{#comparisons}}
+  - **{{tag}}**: [`restylers.yaml`](https://github.com/restyled-io/restylers/blob/{{tag}}/restylers.yaml){{#last_tag}}, [changes](https://github.com/restyled-io/restylers/compare/{{last_tag}}...{{tag}}){{/last_tag}}
+  {{/comparisons}}
 
-See [Restyler Versions](https://github.com/restyled-io/restyled.io/wiki/Restyler-Versions) for how to use these Sets in your configuration.
+  See [Restyler Versions](https://github.com/restyled-io/restyled.io/wiki/Restyler-Versions) for how to use these Sets in your configuration.
 
-## Adding Restylers
+  ## Adding Restylers
 
-If you know of something that would make a good Restyler, please [create an Issue](https://github.com/restyled-io/restylers/issues/new?title=some-auto-formatter&body=https://their-homepage.com).
+  If you know of something that would make a good Restyler, please [create an Issue](https://github.com/restyled-io/restylers/issues/new?title=some-auto-formatter&body=https://their-homepage.com).
 
-If you're interested in contributing, see [Adding a Restyler](https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler).
+  If you're interested in contributing, see [Adding a Restyler](https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler).
 EOM
