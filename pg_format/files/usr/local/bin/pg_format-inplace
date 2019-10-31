@@ -9,7 +9,7 @@ set -e
 identify_path_argument() {
   while [ $# -gt 0 ]; do
     case "$1" in
-      -o|--output)
+      -o | --output)
         echo "pg_format-inplace cannot accept -o|--output" >&2
         exit 1
         ;;
