@@ -3,46 +3,46 @@ enabled: true
 name: clang-format
 image: restyled/restyler-clang-format:v9.0.0
 command:
-- clang-format
-- "-i"
+  - clang-format
+  - "-i"
 arguments: []
 include:
-- "**/*.c"
-- "**/*.cc"
-- "**/*.cpp"
-- "**/*.cxx"
-- "**/*.c++"
-- "**/*.C"
-- "**/*.cs"
-- "**/*.h"
-- "**/*.hh"
-- "**/*.hpp"
-- "**/*.hxx"
-- "**/*.h++"
-- "**/*.H"
-- "**/*.java"
-- "**/*.js"
-- "**/*.m"
+  - "**/*.c"
+  - "**/*.cc"
+  - "**/*.cpp"
+  - "**/*.cxx"
+  - "**/*.c++"
+  - "**/*.C"
+  - "**/*.cs"
+  - "**/*.h"
+  - "**/*.hh"
+  - "**/*.hpp"
+  - "**/*.hxx"
+  - "**/*.h++"
+  - "**/*.H"
+  - "**/*.java"
+  - "**/*.js"
+  - "**/*.m"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
-- https://clang.llvm.org/docs/ClangFormat.html
+  - https://clang.llvm.org/docs/ClangFormat.html
 metadata:
   languages:
-  - C
-  - C++
-  - Java
-  - JavaScript
-  - Objective-C
-  - Protobuf
-  - C#
+    - C
+    - C++
+    - Java
+    - JavaScript
+    - Objective-C
+    - Protobuf
+    - C#
   tests:
-  - contents: |
-      int formatted_code;
-          void    unformatted_code  ;
-      void formatted_code_again;
-    restyled: |
-      int formatted_code;
-      void unformatted_code;
-      void formatted_code_again;
+    - contents: |
+        int formatted_code;
+            void    unformatted_code  ;
+        void formatted_code_again;
+      restyled: |
+        int formatted_code;
+        void unformatted_code;
+        void formatted_code_again;

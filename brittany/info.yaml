@@ -3,26 +3,26 @@ enabled: false
 name: brittany
 image: restyled/restyler-brittany:v0.12.0.0
 command:
-- brittany
-- "--write-mode=inplace"
+  - brittany
+  - "--write-mode=inplace"
 arguments: []
 include:
-- "**/*.hs"
+  - "**/*.hs"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
-- https://github.com/lspitzner/brittany
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
+  - https://github.com/lspitzner/brittany
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
 metadata:
   languages:
-  - Haskell
+    - Haskell
   tests:
-  - contents: |
-      func (MyLongFoo abc def) = 1
-      func (Bar a d) = 2
-      func _ = 3
-    restyled: |
-      func (MyLongFoo abc def) = 1
-      func (Bar       a   d  ) = 2
-      func _                   = 3
+    - contents: |
+        func (MyLongFoo abc def) = 1
+        func (Bar a d) = 2
+        func _ = 3
+      restyled: |
+        func (MyLongFoo abc def) = 1
+        func (Bar       a   d  ) = 2
+        func _                   = 3

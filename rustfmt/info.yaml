@@ -3,28 +3,28 @@ enabled: true
 name: rustfmt
 image: restyled/restyler-rustfmt:v1.4.8-nightly
 command:
-- rustfmt
+  - rustfmt
 arguments: []
 include:
-- "**/*.rs"
+  - "**/*.rs"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/rust-lang-nursery/rustfmt#readme
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
+  - https://github.com/rust-lang-nursery/rustfmt#readme
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
 metadata:
   languages:
-  - Rust
+    - Rust
   tests:
-  - contents: |
-      // Attributes should be on their own lines
-      struct CRepr {
-          x: f32,y: f32,
-      }
-    restyled: |
-      // Attributes should be on their own lines
-      struct CRepr {
-          x: f32,
-          y: f32,
-      }
+    - contents: |
+        // Attributes should be on their own lines
+        struct CRepr {
+            x: f32,y: f32,
+        }
+      restyled: |
+        // Attributes should be on their own lines
+        struct CRepr {
+            x: f32,
+            y: f32,
+        }

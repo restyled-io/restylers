@@ -3,46 +3,45 @@ enabled: true
 name: elm-format
 image: restyled/restyler-elm-format:v0.6.1-alpha
 command:
-- elm-format
-- "--yes"
+  - elm-format
+  - "--yes"
 arguments: []
 include:
-- "**/*.elm"
+  - "**/*.elm"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/avh4/elm-format
+  - https://github.com/avh4/elm-format
 metadata:
   languages:
-  - Elm
+    - Elm
   tests:
-  - contents: |
-      homeDirectory = "/root/files"
-      eval boolean = case boolean of
-          Literal bool -> bool
-          Not b        -> not (eval b)
-          And b b_     -> eval b && eval b_
-          Or b b_      -> eval b   || eval b_
-    restyled: |
-      module Main exposing (..)
+    - contents: |
+        homeDirectory = "/root/files"
+        eval boolean = case boolean of
+            Literal bool -> bool
+            Not b        -> not (eval b)
+            And b b_     -> eval b && eval b_
+            Or b b_      -> eval b   || eval b_
+      restyled: |
+        module Main exposing (..)
 
 
-      homeDirectory =
-          "/root/files"
+        homeDirectory =
+            "/root/files"
 
 
-      eval boolean =
-          case boolean of
-              Literal bool ->
-                  bool
+        eval boolean =
+            case boolean of
+                Literal bool ->
+                    bool
 
-              Not b ->
-                  not (eval b)
+                Not b ->
+                    not (eval b)
 
-              And b b_ ->
-                  eval b && eval b_
+                And b b_ ->
+                    eval b && eval b_
 
-              Or b b_ ->
-                  eval b || eval b_
-
+                Or b b_ ->
+                    eval b || eval b_

@@ -3,45 +3,44 @@ enabled: true
 name: terraform
 image: restyled/restyler-terraform:v0.11.7
 command:
-- terraform
-- fmt
+  - terraform
+  - fmt
 arguments: []
 include:
-- "**/*.tf"
+  - "**/*.tf"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: false
 documentation:
-- https://www.terraform.io/docs/commands/fmt.html
+  - https://www.terraform.io/docs/commands/fmt.html
 metadata:
   languages:
-  - Terraform
+    - Terraform
   tests:
-  - contents: |
-      output "ip_address" {
-        value = "${azurerm_container_group.aci-example.ip_address}"
-      }
+    - contents: |
+        output "ip_address" {
+          value = "${azurerm_container_group.aci-example.ip_address}"
+        }
 
-      output "fqdn"
-      {
+        output "fqdn"
+        {
+            value = "${azurerm_container_group.aci-example.fqdn}"
+        }
+      restyled: |
+        output "ip_address" {
+          value = "${azurerm_container_group.aci-example.ip_address}"
+        }
+
+        output "fqdn" {
           value = "${azurerm_container_group.aci-example.fqdn}"
-      }
-    restyled: |
-      output "ip_address" {
-        value = "${azurerm_container_group.aci-example.ip_address}"
-      }
-
-      output "fqdn" {
-        value = "${azurerm_container_group.aci-example.fqdn}"
-      }
-  - contents: |
-      variable "policy_definition_name" {
-          description  = "Policy definition name must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and is limited between 2 and 60 characters in length."
-          default    = "demoPolicy"
-      }
-    restyled: |
-      variable "policy_definition_name" {
-        description = "Policy definition name must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and is limited between 2 and 60 characters in length."
-        default     = "demoPolicy"
-      }
-
+        }
+    - contents: |
+        variable "policy_definition_name" {
+            description  = "Policy definition name must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and is limited between 2 and 60 characters in length."
+            default    = "demoPolicy"
+        }
+      restyled: |
+        variable "policy_definition_name" {
+          description = "Policy definition name must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and is limited between 2 and 60 characters in length."
+          default     = "demoPolicy"
+        }

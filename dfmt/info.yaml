@@ -3,31 +3,31 @@ enabled: true
 name: dfmt
 image: restyled/restyler-dfmt:v0.8.2
 command:
-- dfmt
-- "--inplace"
+  - dfmt
+  - "--inplace"
 arguments: []
 include:
-- "**/*.d"
+  - "**/*.d"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/dlang-community/dfmt#readme
+  - https://github.com/dlang-community/dfmt#readme
 metadata:
   languages:
-  - D
+    - D
   tests:
-  - contents: |
-      void main(string[] args) {
-          bool optionOne, optionTwo, optionThree;
-          getopt(args,
-              "optionOne", &optionOne,
-              "optionTwo", &optionTwo,
-              "optionThree", &optionThree);
-      }
-    restyled: |
-      void main(string[] args)
-      {
-          bool optionOne, optionTwo, optionThree;
-          getopt(args, "optionOne", &optionOne, "optionTwo", &optionTwo, "optionThree", &optionThree);
-      }
+    - contents: |
+        void main(string[] args) {
+            bool optionOne, optionTwo, optionThree;
+            getopt(args,
+                "optionOne", &optionOne,
+                "optionTwo", &optionTwo,
+                "optionThree", &optionThree);
+        }
+      restyled: |
+        void main(string[] args)
+        {
+            bool optionOne, optionTwo, optionThree;
+            getopt(args, "optionOne", &optionOne, "optionTwo", &optionTwo, "optionThree", &optionThree);
+        }

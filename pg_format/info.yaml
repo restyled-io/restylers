@@ -3,22 +3,21 @@ enabled: true
 name: pg_format
 image: restyled/restyler-pg_format:v3.3
 command:
-- pg_format-inplace
+  - pg_format-inplace
 arguments: []
 include:
-- "**/*.sql"
+  - "**/*.sql"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:
-- https://github.com/darold/pgFormatter#readme
+  - https://github.com/darold/pgFormatter#readme
 metadata:
   languages:
-  - PSQL
+    - PSQL
   tests:
-  - contents: |
-      SELECT * from
-      students
-      WHERE students.age > 10;
-    restyled:
-      "SELECT\n    *\nFROM\n    students\nWHERE\n    students.age > 10;\n\n"
+    - contents: |
+        SELECT * from
+        students
+        WHERE students.age > 10;
+      restyled: "SELECT\n    *\nFROM\n    students\nWHERE\n    students.age > 10;\n\n"

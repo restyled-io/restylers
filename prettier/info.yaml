@@ -3,27 +3,27 @@ enabled: true
 name: prettier
 image: restyled/restyler-prettier:v1.18.2
 command:
-- prettier
-- "--write"
+  - prettier
+  - "--write"
 arguments: []
 include:
-- "**/*.js"
-- "**/*.jsx"
+  - "**/*.js"
+  - "**/*.jsx"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://prettier.io/docs/en/
+  - https://prettier.io/docs/en/
 metadata:
   languages:
-  - JavaScript
+    - JavaScript
   tests:
-  - extension: js
-    contents: |
-      matrix(
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1
-      )
-    restyled: |
-      matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    - extension: js
+      contents: |
+        matrix(
+          1, 0, 0,
+          0, 1, 0,
+          0, 0, 1
+        )
+      restyled: |
+        matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);

@@ -3,36 +3,36 @@ enabled: true
 name: astyle
 image: restyled/restyler-astyle:v3.1
 command:
-- astyle
+  - astyle
 arguments: []
 include:
-- "**/*.c"
-- "**/*.cc"
-- "**/*.cpp"
-- "**/*.cxx"
-- "**/*.c++"
-- "**/*.C"
-- "**/*.cs"
-- "**/*.h"
-- "**/*.hh"
-- "**/*.hpp"
-- "**/*.hxx"
-- "**/*.h++"
-- "**/*.H"
-- "**/*.m"
-- "**/*.mm"
+  - "**/*.c"
+  - "**/*.cc"
+  - "**/*.cpp"
+  - "**/*.cxx"
+  - "**/*.c++"
+  - "**/*.C"
+  - "**/*.cs"
+  - "**/*.h"
+  - "**/*.hh"
+  - "**/*.hpp"
+  - "**/*.hxx"
+  - "**/*.h++"
+  - "**/*.H"
+  - "**/*.m"
+  - "**/*.mm"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
-- http://astyle.sourceforge.net/astyle.html
+  - http://astyle.sourceforge.net/astyle.html
 metadata:
   languages:
-  - C
-  - C++
-  - C#
-  - Java*
-  - Objective-C
+    - C
+    - C++
+    - C#
+    - Java*
+    - Objective-C
   tests:
     - contents: |
         int Foo(bool isBar)

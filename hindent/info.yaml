@@ -3,22 +3,22 @@ enabled: false
 name: hindent
 image: restyled/restyler-hindent:v5.2.5
 command:
-- hindent
+  - hindent
 arguments: []
 include:
-- "**/*.hs"
+  - "**/*.hs"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:
-- https://github.com/commercialhaskell/hindent
+  - https://github.com/commercialhaskell/hindent
 metadata:
   languages:
-  - Haskell
+    - Haskell
   tests:
-  - contents: |
-      example = case x of Just p -> foo bar
-    restyled: |
-      example =
-        case x of
-          Just p -> foo bar
+    - contents: |
+        example = case x of Just p -> foo bar
+      restyled: |
+        example =
+          case x of
+            Just p -> foo bar

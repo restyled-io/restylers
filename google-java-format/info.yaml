@@ -3,36 +3,36 @@ enabled: false
 name: google-java-format
 image: restyled/restyler-google-java-format:v1.6
 command:
-- google-java-format
-- "--replace"
+  - google-java-format
+  - "--replace"
 arguments: []
 include:
-- "**/*.java"
+  - "**/*.java"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: true
 documentation:
-- https://github.com/google/google-java-format#readme
+  - https://github.com/google/google-java-format#readme
 metadata:
   languages:
-  - Java
+    - Java
   tests:
-  - extension: java
-    contents: |
-      private enum Answer {
-        YES { @Override public String toString() { return "yes";
-          }
-        }, NO,
-        MAYBE
-      }
-    restyled: |
-      private enum Answer {
-        YES {
-          @Override
-          public String toString() {
-            return "yes";
-          }
-        },
-        NO,
-        MAYBE
-      }
+    - extension: java
+      contents: |
+        private enum Answer {
+          YES { @Override public String toString() { return "yes";
+            }
+          }, NO,
+          MAYBE
+        }
+      restyled: |
+        private enum Answer {
+          YES {
+            @Override
+            public String toString() {
+              return "yes";
+            }
+          },
+          NO,
+          MAYBE
+        }

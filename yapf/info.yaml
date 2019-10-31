@@ -3,52 +3,52 @@ enabled: true
 name: yapf
 image: restyled/restyler-yapf:v0.27.0
 command:
-- yapf
-- "--in-place"
+  - yapf
+  - "--in-place"
 arguments: []
 include:
-- "**/*.py"
+  - "**/*.py"
 interpreters:
-- python
+  - python
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/google/yapf
+  - https://github.com/google/yapf
 metadata:
   languages:
-  - Python
+    - Python
   tests:
-  - contents: |
-      import math, sys;
-      def example1():
-          ####This is a long comment. This should be wrapped to fit within 72 characters.
-          some_tuple=(   1,2, 3,'a'  );
-          some_variable={'long':'Long code lines should be wrapped within 79 characters.',
-          'other':[math.pi, 100,200,300,9876543210,'This is a long string that goes on'],
-          'more':{'inner':'This whole logical line should be wrapped.',some_tuple:[1,
-          20,300,40000,500000000,60000000000000000]}}
-          return (some_tuple, some_variable)
+    - contents: |
+        import math, sys;
+        def example1():
+            ####This is a long comment. This should be wrapped to fit within 72 characters.
+            some_tuple=(   1,2, 3,'a'  );
+            some_variable={'long':'Long code lines should be wrapped within 79 characters.',
+            'other':[math.pi, 100,200,300,9876543210,'This is a long string that goes on'],
+            'more':{'inner':'This whole logical line should be wrapped.',some_tuple:[1,
+            20,300,40000,500000000,60000000000000000]}}
+            return (some_tuple, some_variable)
 
-    # NB. This file was reused from the autopep8 tests, so some of the things it
-    # states within itself (such as wrapping the comment) aren't actually
-    # handled by yapf
-    restyled: |
-      import math, sys
+      # NB. This file was reused from the autopep8 tests, so some of the things it
+      # states within itself (such as wrapping the comment) aren't actually
+      # handled by yapf
+      restyled: |
+        import math, sys
 
 
-      def example1():
-          ####This is a long comment. This should be wrapped to fit within 72 characters.
-          some_tuple = (1, 2, 3, 'a')
-          some_variable = {
-              'long':
-              'Long code lines should be wrapped within 79 characters.',
-              'other': [
-                  math.pi, 100, 200, 300, 9876543210,
-                  'This is a long string that goes on'
-              ],
-              'more': {
-                  'inner': 'This whole logical line should be wrapped.',
-                  some_tuple: [1, 20, 300, 40000, 500000000, 60000000000000000]
-              }
-          }
-          return (some_tuple, some_variable)
+        def example1():
+            ####This is a long comment. This should be wrapped to fit within 72 characters.
+            some_tuple = (1, 2, 3, 'a')
+            some_variable = {
+                'long':
+                'Long code lines should be wrapped within 79 characters.',
+                'other': [
+                    math.pi, 100, 200, 300, 9876543210,
+                    'This is a long string that goes on'
+                ],
+                'more': {
+                    'inner': 'This whole logical line should be wrapped.',
+                    some_tuple: [1, 20, 300, 40000, 500000000, 60000000000000000]
+                }
+            }
+            return (some_tuple, some_variable)

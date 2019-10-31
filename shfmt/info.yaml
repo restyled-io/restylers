@@ -3,35 +3,35 @@ enabled: true
 name: shfmt
 image: restyled/restyler-shfmt:v2.4.0-2
 command:
-- shfmt
-- "-w"
+  - shfmt
+  - "-w"
 arguments:
-- "-i"
-- '2'
-- "-ci"
+  - "-i"
+  - "2"
+  - "-ci"
 include:
-- "**/*.sh"
-- "**/*.bash"
+  - "**/*.sh"
+  - "**/*.bash"
 interpreters:
-- sh
-- bash
+  - sh
+  - bash
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/mvdan/sh#shfmt
+  - https://github.com/mvdan/sh#shfmt
 metadata:
   languages:
-  - POSIX sh
-  - Bash
+    - POSIX sh
+    - Bash
   tests:
-  - contents: |
-      #!/bin/sh
-      if [ 2 -eq 2 ]
-          then
-              echo "yup"
-          fi
-    restyled: |
-      #!/bin/sh
-      if [ 2 -eq 2 ]; then
-        echo "yup"
-      fi
+    - contents: |
+        #!/bin/sh
+        if [ 2 -eq 2 ]
+            then
+                echo "yup"
+            fi
+      restyled: |
+        #!/bin/sh
+        if [ 2 -eq 2 ]; then
+          echo "yup"
+        fi

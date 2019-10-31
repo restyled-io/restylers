@@ -3,31 +3,31 @@ enabled: false
 name: ormolu
 image: restyled/restyler-ormolu:v0.0.1.0
 command:
-- ormolu
-- "--mode"
-- inplace
+  - ormolu
+  - "--mode"
+  - inplace
 arguments: []
 include:
-- "**/*.hs"
+  - "**/*.hs"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/tweag/ormolu#readme
+  - https://github.com/tweag/ormolu#readme
 metadata:
   languages:
-  - Haskell
+    - Haskell
   tests:
-  - contents: |
-      foo
-       :: MonadIO m
-       -> Text -> Text
-       -> SqlPersistT m ()
-       foo = undefined
-    restyled: |
-      foo ::
-        MonadIO m ->
-        Text ->
-        Text ->
-        SqlPersistT m ()
-          foo = undefined
+    - contents: |
+        foo
+         :: MonadIO m
+         -> Text -> Text
+         -> SqlPersistT m ()
+         foo = undefined
+      restyled: |
+        foo ::
+          MonadIO m ->
+          Text ->
+          Text ->
+          SqlPersistT m ()
+            foo = undefined

@@ -3,23 +3,23 @@ enabled: true
 name: php-cs-fixer
 image: restyled/restyler-php-cs-fixer:v2.14.2
 command:
-- php-cs-fixer
-- fix
+  - php-cs-fixer
+  - fix
 arguments: []
 include:
-- "**/*.php"
+  - "**/*.php"
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: false
 documentation:
-- https://github.com/FriendsOfPHP/PHP-CS-Fixer
+  - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 metadata:
   languages:
-  - PHP
+    - PHP
   tests:
-  - contents: |
-      <?PHP
-      $this->foo();
-    restyled: |
-      <?php
-      $this->foo();
+    - contents: |
+        <?PHP
+        $this->foo();
+      restyled: |
+        <?php
+        $this->foo();

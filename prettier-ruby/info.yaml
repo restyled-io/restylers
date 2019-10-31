@@ -3,53 +3,53 @@ enabled: true
 name: prettier-ruby
 image: restyled/restyler-prettier-ruby:v0.15.0
 command:
-- prettier
-- "--write"
+  - prettier
+  - "--write"
 arguments: []
 include:
-- "**/*.rb"
+  - "**/*.rb"
 interpreters:
-- ruby
+  - ruby
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://prettier.io/docs/en/
-- https://github.com/prettier/plugin-ruby
+  - https://prettier.io/docs/en/
+  - https://github.com/prettier/plugin-ruby
 metadata:
   languages:
-  - Ruby
+    - Ruby
   tests:
-  - extension: rb
-    contents: |2
-              d=[30644250780,9003106878,
-          30636278846,66641217692,4501790980,
-       671_24_603036,131_61973916,66_606629_920,
-         30642677916,30643069058];a,s=[],$*[0]
-            s.each_byte{|b|a<<("%036b"%d[b.
-               chr.to_i]).scan(/\d{6}/)}
-                a.transpose.each{ |a|
-                  a.join.each_byte{\
-                   |i|print i==49?\
-                     ($*[1]||"#")\
-                       :32.chr}
-                         puts
-                          }
-    restyled: |
-      d = [
-        30_644_250_780,
-        9_003_106_878,
-        30_636_278_846,
-        66_641_217_692,
-        4_501_790_980,
-        671_24_603036,
-        131_61973916,
-        66_606629_920,
-        30_642_677_916,
-        30_643_069_058
-      ]
-      a, s = [], $*[0]
-      s.each_byte { |b| a << ('%036b' % d[b.chr.to_i]).scan(/\d{6}/) }
-      a.transpose.each do |a|
-        a.join.each_byte { |i| print i == 49 ? ($*[1] || '#') : 32.chr }
-        puts
-      end
+    - extension: rb
+      contents: |2
+               d=[30644250780,9003106878,
+           30636278846,66641217692,4501790980,
+        671_24_603036,131_61973916,66_606629_920,
+          30642677916,30643069058];a,s=[],$*[0]
+             s.each_byte{|b|a<<("%036b"%d[b.
+                chr.to_i]).scan(/\d{6}/)}
+                 a.transpose.each{ |a|
+                   a.join.each_byte{\
+                    |i|print i==49?\
+                      ($*[1]||"#")\
+                        :32.chr}
+                          puts
+                           }
+      restyled: |
+        d = [
+          30_644_250_780,
+          9_003_106_878,
+          30_636_278_846,
+          66_641_217_692,
+          4_501_790_980,
+          671_24_603036,
+          131_61973916,
+          66_606629_920,
+          30_642_677_916,
+          30_643_069_058
+        ]
+        a, s = [], $*[0]
+        s.each_byte { |b| a << ('%036b' % d[b.chr.to_i]).scan(/\d{6}/) }
+        a.transpose.each do |a|
+          a.join.each_byte { |i| print i == 49 ? ($*[1] || '#') : 32.chr }
+          puts
+        end

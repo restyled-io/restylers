@@ -3,34 +3,34 @@ enabled: true
 name: reorder-python-imports
 image: restyled/restyler-reorder-python-imports:v1.6.0
 command:
-- reorder-python-imports
-- "--exit-zero-even-if-changed"
+  - reorder-python-imports
+  - "--exit-zero-even-if-changed"
 arguments: []
 include:
-- "**/*.py"
+  - "**/*.py"
 interpreters:
-- python
+  - python
 supports_arg_sep: true
 supports_multiple_paths: true
 documentation:
-- https://github.com/asottile/reorder_python_imports
+  - https://github.com/asottile/reorder_python_imports
 metadata:
   languages:
-  - Python
+    - Python
   tests:
-  - contents: |
-      import os, sys
-      from argparse import ArgumentParser
+    - contents: |
+        import os, sys
+        from argparse import ArgumentParser
 
-      from foo import bar
-      from baz import womp
+        from foo import bar
+        from baz import womp
 
-      from crazy import example1
-    restyled: |
-      import os
-      import sys
-      from argparse import ArgumentParser
+        from crazy import example1
+      restyled: |
+        import os
+        import sys
+        from argparse import ArgumentParser
 
-      from baz import womp
-      from crazy import example1
-      from foo import bar
+        from baz import womp
+        from crazy import example1
+        from foo import bar

@@ -3,26 +3,26 @@ enabled: false
 name: hlint
 image: restyled/restyler-hlint:v2.1.11
 command:
-- hlint
-- lint
-- "--refactor"
-- "--refactor-options=-i"
+  - hlint
+  - lint
+  - "--refactor"
+  - "--refactor-options=-i"
 arguments: []
 include:
-- "**/*.hs"
+  - "**/*.hs"
 interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:
-- https://github.com/ndmitchell/hlint#readme
-- https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
+  - https://github.com/ndmitchell/hlint#readme
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
 metadata:
   languages:
-  - Haskell
+    - Haskell
   tests:
-  - contents: |
-      main :: IO ()
-      main = putStrLn $ "hello hlint"
-    restyled: |
-      main :: IO ()
-      main = putStrLn "hello hlint"
+    - contents: |
+        main :: IO ()
+        main = putStrLn $ "hello hlint"
+      restyled: |
+        main :: IO ()
+        main = putStrLn "hello hlint"
