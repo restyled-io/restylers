@@ -6,9 +6,9 @@ command:
 - shfmt
 - "-w"
 arguments:
-- -i
-- "2"
-- -ci
+- "-i"
+- '2'
+- "-ci"
 include:
 - "**/*.sh"
 - "**/*.bash"
@@ -23,3 +23,15 @@ metadata:
   languages:
   - POSIX sh
   - Bash
+  tests:
+  - contents: |
+      #!/bin/sh
+      if [ 2 -eq 2 ]
+          then
+              echo "yup"
+          fi
+    restyled: |
+      #!/bin/sh
+      if [ 2 -eq 2 ]; then
+        echo "yup"
+      fi

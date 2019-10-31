@@ -4,7 +4,7 @@ name: ormolu
 image: restyled/restyler-ormolu:v0.0.1.0
 command:
 - ormolu
-- --mode
+- "--mode"
 - inplace
 arguments: []
 include:
@@ -17,3 +17,17 @@ documentation:
 metadata:
   languages:
   - Haskell
+  tests:
+  - contents: |
+      foo
+       :: MonadIO m
+       -> Text -> Text
+       -> SqlPersistT m ()
+       foo = undefined
+    restyled: |
+      foo ::
+        MonadIO m ->
+        Text ->
+        Text ->
+        SqlPersistT m ()
+          foo = undefined

@@ -16,3 +16,18 @@ documentation:
 metadata:
   languages:
   - D
+  tests:
+  - contents: |
+      void main(string[] args) {
+          bool optionOne, optionTwo, optionThree;
+          getopt(args,
+              "optionOne", &optionOne,
+              "optionTwo", &optionTwo,
+              "optionThree", &optionThree);
+      }
+    restyled: |
+      void main(string[] args)
+      {
+          bool optionOne, optionTwo, optionThree;
+          getopt(args, "optionOne", &optionOne, "optionTwo", &optionTwo, "optionThree", &optionThree);
+      }

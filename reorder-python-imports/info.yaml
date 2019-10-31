@@ -17,3 +17,20 @@ documentation:
 metadata:
   languages:
   - Python
+  tests:
+  - contents: |
+      import os, sys
+      from argparse import ArgumentParser
+
+      from foo import bar
+      from baz import womp
+
+      from crazy import example1
+    restyled: |
+      import os
+      import sys
+      from argparse import ArgumentParser
+
+      from baz import womp
+      from crazy import example1
+      from foo import bar

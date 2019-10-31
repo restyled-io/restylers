@@ -17,3 +17,12 @@ documentation:
 metadata:
   languages:
   - Haskell
+  tests:
+  - contents: |
+      func (MyLongFoo abc def) = 1
+      func (Bar a d) = 2
+      func _ = 3
+    restyled: |
+      func (MyLongFoo abc def) = 1
+      func (Bar       a   d  ) = 2
+      func _                   = 3

@@ -1,0 +1,29 @@
+---
+enabled: true
+name: jq
+image: restyled/restyler-jq:v1.6
+command:
+- jq-write
+arguments: []
+include:
+- "**/*.json"
+interpreters: []
+supports_arg_sep: false
+supports_multiple_paths: false
+documentation:
+- https://stedolan.github.io/jq/
+metadata:
+  languages:
+  - JSON
+
+  tests:
+  - contents: |
+     {
+        "foo": "bar"
+        , "baz":
+      "bat" }
+    restyled: |
+     {
+       "foo": "bar",
+       "baz": "bat"
+     }

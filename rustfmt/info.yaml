@@ -16,3 +16,15 @@ documentation:
 metadata:
   languages:
   - Rust
+  tests:
+  - contents: |
+      // Attributes should be on their own lines
+      struct CRepr {
+          x: f32,y: f32,
+      }
+    restyled: |
+      // Attributes should be on their own lines
+      struct CRepr {
+          x: f32,
+          y: f32,
+      }

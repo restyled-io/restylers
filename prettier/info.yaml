@@ -17,3 +17,13 @@ documentation:
 metadata:
   languages:
   - JavaScript
+  tests:
+  - extension: js
+    contents: |
+      matrix(
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1
+      )
+    restyled: |
+      matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);

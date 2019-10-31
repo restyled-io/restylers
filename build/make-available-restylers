@@ -1,44 +1,62 @@
-#!/bin/sh
-set -e
+#!/usr/bin/env ruby
+require "mustache"
+require "yaml"
 
-tags() {
-  git tag | sort -n
-  echo master
-}
+def restylers
+  `build/restyler-meta names`.split("\n").map do |name|
+    info = YAML.load(`build/restyler-meta get #{name} .`)
+    languages = info.fetch("metadata").fetch("languages").
+      map { |lang| lang.sub(/\*/, '\\*') }
+    snippet = info.slice(*%w[image command arguments include interpreters])
 
-comparison() {
-  tag=$1 last_tag=$2
+    {
+      name: name,
+      enabled: info.fetch("enabled"),
+      languages: languages.join(", "),
+      snippet: YAML.dump(snippet).chomp,
+      documentation: info.fetch("documentation").map { |url| { url: url } }
+    }
+  end
+end
 
-  printf -- \
-    "- **%s**: [\`restylers.yaml\`](https://github.com/restyled-io/restylers/blob/%s/restylers.yaml)" \
-    "$tag" \
-    "$tag"
+def comparisons
+  last_tag = nil
+  tags = `git tag | sort -n`.split("\n")
+  tags << "master"
+  tags.map do |tag|
+    comparison = { tag: tag, last_tag: last_tag }
+    last_tag = tag
+    comparison
+  end.reverse
+end
 
-  if [ -n "$last_tag" ]; then
-    printf -- \
-      ", [changes](https://github.com/restyled-io/restylers/compare/%s...%s)\n" \
-      "$last_tag" \
-      "$tag"
-  else
-    echo
-  fi
-}
+puts Mustache.render(<<EOM, restylers: restylers, comparisons: comparisons)
+{{#restylers}}
+{{#enabled}}
+## {{name}}
+{{/enabled}}
+{{^enabled}}
+## {{name}}\\*
+{{/enabled}}
 
-comparisons() {
-  last_tag=
+{{languages}}
 
-  tags | while read -r tag; do
-    comparison "$tag" "$last_tag"
-    last_tag=$tag
-  done | tac
-}
+```yaml
+{{{snippet}}}
+```
 
-cat <<EOM
-$(build/restyler-meta wiki)
+{{#documentation}}
+- {{url}}
+{{/documentation}}
+
+{{/restylers}}
+\\**Must be explicitly enabled.*
 
 ## Restyler Sets
 
-$(comparisons)
+{{#comparisons}}
+- **{{tag}}**: [`restylers.yaml`](https://github.com/restyled-io/restylers/blob/{{tag}}/restylers.yaml){{#last_tag}}, [changes](https://github.com/restyled-io/restylers/compare/{{last_tag}}...{{tag}}){{/last_tag}}
+{{/comparisons}}
 
 See [Restyler Versions](https://github.com/restyled-io/restyled.io/wiki/Restyler-Versions) for how to use these Sets in your configuration.
 
