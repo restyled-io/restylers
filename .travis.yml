@@ -32,7 +32,11 @@ matrix:
     - env: RESTYLER=yapf
 install: gem install rspec
 script: |
-  if ! git diff --name-only "$(git merge-base master HEAD)" | grep -q "^${RESTYLER}/"; then
+  # empty $mb means we're on master. we'll just try against parent
+  mb=$(git merge-base master HEAD)
+  mb=${mb:-HEAD^}
+
+  if ! git diff --name-only "$mb" | grep -q "^${RESTYLER}/"; then
     echo "$RESTYLER unchanged, skipping."
     exit 0
   fi
