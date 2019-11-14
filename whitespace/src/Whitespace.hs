@@ -1,11 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Whitespace
-    ( FormatOptions(..)
-    , formatPaths
-    , format
-    )
-where
+  ( FormatOptions(..)
+  , formatPaths
+  , format
+  ) where
 
 import Control.Exception (Exception, SomeException, handle, throwIO)
 import Control.Monad (when)
@@ -19,32 +18,36 @@ import System.Exit (ExitCode(ExitFailure), exitWith)
 import System.IO (hPrint, hPutStrLn, stderr)
 
 data FormatOptions = FormatOptions
-    { foSpaces :: Bool -- ^ Trim trailing whitespace from lines?
-    , foNewlines :: Bool -- ^ Fix newlines at end of file?
-    , foStrict :: Bool -- ^ Halt on errors reading files?
-    , foPaths :: [FilePath] -- ^ Files to process
-    }
+  { foSpaces :: Bool -- ^ Trim trailing whitespace from lines?
+  , foNewlines :: Bool -- ^ Fix newlines at end of file?
+  , foStrict :: Bool -- ^ Halt on errors reading files?
+  , foPaths :: [FilePath] -- ^ Files to process
+  }
 
 formatPaths :: FormatOptions -> IO ()
 formatPaths opts = traverse_ (formatPath opts) $ foPaths opts
 
-data UnableToFormat = UnableToFormatCRLF deriving Show
+data UnableToFormat =
+  UnableToFormatCRLF
+  deriving (Show)
 
 instance Exception UnableToFormat
 
 formatPath :: FormatOptions -> FilePath -> IO ()
-formatPath opts path = handle (onException (foStrict opts) path) $ do
+formatPath opts path =
+  handle (onException (foStrict opts) path) $ do
     content <- BS.readFile path
     if isCRLF content
-        then throwIO UnableToFormatCRLF
-        else BS.writeFile path $ format opts content
+      then throwIO UnableToFormatCRLF
+      else BS.writeFile path $ format opts content
 
 isCRLF :: ByteString -> Bool
 isCRLF = ("\r\n" `C8.isInfixOf`)
 
 format :: FormatOptions -> ByteString -> ByteString
 format opts = onOpt foNewlines newlines . onOpt foSpaces spaces
-    where onOpt attr f = bool id f $ attr opts
+  where
+    onOpt attr f = bool id f $ attr opts
 
 -- | Ensure a single trailing newline
 newlines :: ByteString -> ByteString
@@ -62,9 +65,8 @@ withEnd f = C8.reverse . f . C8.reverse
 
 onException :: Bool -> FilePath -> SomeException -> IO ()
 onException strict path ex = do
-    hPutStrLn stderr $ "Exception processing " <> path <> ":"
-    hPrint stderr ex
-
-    when strict $ do
-        hPutStrLn stderr "Aborting, disable strict mode to ignore."
-        exitWith $ ExitFailure 1
+  hPutStrLn stderr $ "Exception processing " <> path <> ":"
+  hPrint stderr ex
+  when strict $ do
+    hPutStrLn stderr "Aborting, disable strict mode to ignore."
+    exitWith $ ExitFailure 1
