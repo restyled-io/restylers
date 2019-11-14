@@ -1,25 +1,8 @@
-name:                whitespace
-version:             0.1.0.0
-github:              "pbrisbin/whitespace"
-license:             BSD3
-author:              "Patrick Brisbin"
-maintainer:          "pbrisbin@gmail.com"
-copyright:           "2018 Patrick Brisbin"
-
-extra-source-files:
-- README.md
-
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Network
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/pbrisbin/hspec#readme>
+name: whitespace
+version: 0.1.0.0
 
 dependencies:
-- base >= 4.7 && < 5
+  - base >= 4.7 && < 5
 
 library:
   source-dirs: src
@@ -28,24 +11,24 @@ library:
 
 executables:
   whitespace:
-    main:                Main.hs
-    source-dirs:         app
+    main: Main.hs
+    source-dirs: app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - optparse-applicative
-    - whitespace
+      - optparse-applicative
+      - whitespace
 
 tests:
   whitespace-test:
-    main:                Spec.hs
-    source-dirs:         test
+    main: Spec.hs
+    source-dirs: test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - hspec
-    - whitespace
+      - hspec
+      - whitespace
