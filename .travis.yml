@@ -31,6 +31,7 @@ matrix:
     - env: RESTYLER=shfmt
     - env: RESTYLER=stylish-haskell
     - env: RESTYLER=terraform
+    - env: RESTYLER=whitespace
     - env: RESTYLER=yapf
 install: gem install rspec
 script: |
