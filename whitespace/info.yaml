@@ -1,0 +1,41 @@
+---
+enabled: true
+name: whitespace
+image: restyled/restyler-whitespace:v0.1.0.0
+command:
+  - whitespace
+arguments: []
+include:
+  - "**/*"
+interpreters: []
+supports_arg_sep: true
+supports_multiple_paths: true
+documentation:
+  - https://github.com/restyled-io/restylers/blob/master/whitespace/README.md
+metadata:
+  languages:
+    - "*"
+  tests:
+    - contents: |
+        line one  
+        line two 
+          
+        line three \
+        line four
+
+      restyled: |
+        line one
+        line two
+
+        line three \
+        line four
+
+    - contents: "line one\nline two\n\nline three\n\n\n"
+      restyled: "line one\nline two\n\nline three\n"
+
+    - contents: "line one\nline two\n\nline three"
+      restyled: "line one\nline two\n\nline three\n"
+
+    # Assert CRLF doesn't blow up
+    - contents: "line one\r\nline two\r\nline three\r\n"
+      restyled: "line one\r\nline two\r\nline three\r\n"
