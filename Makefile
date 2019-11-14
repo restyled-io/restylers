@@ -6,6 +6,7 @@ all: $(IMAGES:%=%.pushed) $(OVERRIDES:%=%.tested) restylers.yaml
 
 restylers.yaml: */info.yaml
 	./build/restyler-meta dump > $@
+	restyle-path $@
 
 %/Dockerfile.pushed: %/Dockerfile.tested %/info.yaml
 	./build/restyler-meta get "$*" image | ./build/push-image
