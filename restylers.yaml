@@ -422,6 +422,19 @@
   documentation:
     - https://www.terraform.io/docs/commands/fmt.html
 - enabled: true
+  name: whitespace
+  image: restyled/restyler-whitespace:v0.1.0.0
+  command:
+    - whitespace
+  arguments: []
+  include:
+    - "**/*"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://github.com/restyled-io/restylers/blob/master/whitespace/README.md
+- enabled: true
   name: yapf
   image: restyled/restyler-yapf:v0.27.0
   command:
