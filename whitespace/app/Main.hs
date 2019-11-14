@@ -11,9 +11,10 @@ main = do
 -- brittany-disable-next-binding
 options :: Parser FormatOptions
 options =
-  FormatOptions <$>
-  (not <$>
-   switch (long "no-remove-spaces" <> help "Don't remove trailing spaces")) <*>
-  (not <$> switch (long "no-fix-newlines" <> help "Don't fix ending newlines")) <*>
-  switch (long "strict" <> help "Abort on exceptions") <*>
-  some (argument str (metavar "PATH" <> help "File to fix (inplace)"))
+  FormatOptions
+    <$> ( not
+            <$> switch (long "no-remove-spaces" <> help "Don't remove trailing spaces")
+        )
+    <*> (not <$> switch (long "no-fix-newlines" <> help "Don't fix ending newlines"))
+    <*> switch (long "strict" <> help "Abort on exceptions")
+    <*> some (argument str (metavar "PATH" <> help "File to fix (inplace)"))

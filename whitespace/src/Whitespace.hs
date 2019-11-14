@@ -1,10 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Whitespace
-  ( FormatOptions(..)
-  , formatPaths
-  , format
-  ) where
+  ( FormatOptions (..),
+    formatPaths,
+    format,
+  )
+where
 
 import Control.Exception (Exception, SomeException, handle, throwIO)
 import Control.Monad (when)
@@ -14,21 +15,26 @@ import qualified Data.ByteString as BS
 import qualified Data.ByteString.Char8 as C8
 import Data.Char (isSpace)
 import Data.Foldable (traverse_)
-import System.Exit (ExitCode(ExitFailure), exitWith)
+import System.Exit (ExitCode (ExitFailure), exitWith)
 import System.IO (hPrint, hPutStrLn, stderr)
 
-data FormatOptions = FormatOptions
-  { foSpaces :: Bool -- ^ Trim trailing whitespace from lines?
-  , foNewlines :: Bool -- ^ Fix newlines at end of file?
-  , foStrict :: Bool -- ^ Halt on errors reading files?
-  , foPaths :: [FilePath] -- ^ Files to process
-  }
+data FormatOptions
+  = FormatOptions
+      { -- | Trim trailing whitespace from lines?
+        foSpaces :: Bool,
+        -- | Fix newlines at end of file?
+        foNewlines :: Bool,
+        -- | Halt on errors reading files?
+        foStrict :: Bool,
+        -- | Files to process
+        foPaths :: [FilePath]
+      }
 
 formatPaths :: FormatOptions -> IO ()
 formatPaths opts = traverse_ (formatPath opts) $ foPaths opts
 
-data UnableToFormat =
-  UnableToFormatCRLF
+data UnableToFormat
+  = UnableToFormatCRLF
   deriving (Show)
 
 instance Exception UnableToFormat
