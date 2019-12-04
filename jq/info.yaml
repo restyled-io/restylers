@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: jq
-image: restyled/restyler-jq:v1.6
+image: restyled/restyler-jq:v1.6-2
 command:
   - jq-write
 arguments: []
