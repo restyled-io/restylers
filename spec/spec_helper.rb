@@ -2,7 +2,7 @@ require "tmpdir"
 require "yaml"
 
 class RestylerTests
-  DOCKER_RUN = %w[docker run --rm --net none].freeze
+  DOCKER_RUN = %w[docker run --interactive --rm --net none].freeze
 
   def initialize(name)
     @name = name
