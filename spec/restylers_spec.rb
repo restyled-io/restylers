@@ -9,7 +9,7 @@ names.each do |name|
     after { @tests.teardown }
 
     it "Restyles as expected" do
-      @tests.act
+      expect(@tests.act).to eq(true), "Restyler should exit successfully"
       @tests.assertions { |actual, expected| expect(actual).to eq(expected) }
     end
   end

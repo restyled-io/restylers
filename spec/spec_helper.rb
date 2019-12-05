@@ -65,12 +65,14 @@ class RestylerTests
 
     if info.fetch("supports_multiple_paths")
       cmd = restyler_command + paths
-      system(*cmd) || abort("#{name}: #{$CHILD_STATUS}")
+      system(*cmd) or return false
     else
       paths.each do |path|
         cmd = restyler_command + [path]
-        system(*cmd) || abort("#{name}: #{$CHILD_STATUS}")
+        system(*cmd) or return false
       end
     end
+
+    return true
   end
 end
