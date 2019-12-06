@@ -41,8 +41,12 @@ wiki:
 	  git commit Available-Restylers.md -m "Update Available Restylers" && \
 	  git push)
 
+.PHONY: restyler
+restyler:
+	$(MAKE) -C ../restyler restylers_version \
+	  RESTYLERS_VERSION=$(RELEASE_TAG)
 
 .PHONY: release
-release: all release_tag wiki
+release: all release_tag wiki restyler
 
 .SECONDARY:
