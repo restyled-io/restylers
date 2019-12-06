@@ -326,7 +326,7 @@
     - https://github.com/asottile/reorder_python_imports
 - enabled: true
   name: rubocop
-  image: restyled/restyler-rubocop:v0.72.0-2
+  image: restyled/restyler-rubocop:v0.72.0-3
   command:
     - rubocop
     - "--auto-correct"
