@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: rubocop
-image: restyled/restyler-rubocop:v0.72.0-2
+image: restyled/restyler-rubocop:v0.72.0-3
 command:
   - rubocop
   - "--auto-correct"
@@ -32,7 +32,21 @@ metadata:
           do_something
         end
 
-    # incorrectable offenses (anyw8 example)
+    # rails cops
+    - extension: rb
+      support:
+        path: .rubocop.yml
+        contents: |
+          require:
+            - rubocop-rails
+      contents: |
+        puts x unless x.nil? || x.empty?
+      restyled: |
+        # frozen_string_literal: true
+
+        puts x if x.present?
+
+    # incorrectable offenses (andyw8 example)
     - extension: rb
       contents: |
         class User < ApplicationRecord
