@@ -1,1 +1,3 @@
-puts x unless x.nil? || x.empty?
+# frozen_string_literal: true
+
+puts x if x.present?

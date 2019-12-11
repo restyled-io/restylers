@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   MissingAdminAccount = Class.new(RuntimeError)
 
@@ -7,8 +9,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :radars, foreign_key: "owner_id", dependent: :destroy
-  has_many :created_topics, foreign_key: "creator_id", class_name: "Topic", dependent: :nullify
+  has_many :radars, foreign_key: 'owner_id', dependent: :destroy
+  has_many :created_topics, foreign_key: 'creator_id', class_name: 'Topic', dependent: :nullify
   has_many :blips, through: :radars
 
   attr_accessor :login
@@ -24,7 +26,7 @@ class User < ApplicationRecord
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
-      where(conditions).find_by(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }])
+      where(conditions).find_by(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }])
     else
       # :nocov:
       find_by(conditions)
