@@ -6,7 +6,8 @@ public class ShouldFormat2 {
             bar();
 
             return 1;
-   } else
+        } else
 
             return 0;
-    }}
+    }
+}
