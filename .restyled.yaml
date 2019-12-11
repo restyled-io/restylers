@@ -1,37 +1,113 @@
-# yamllint disable-line rule:line-length
-remote_files:
-  - url: https://raw.githubusercontent.com/pbrisbin/dotfiles/master/config/brittany/config.yaml
-    path: brittany.yaml
-  - url: https://raw.githubusercontent.com/pbrisbin/dotfiles/master/hlint.yaml
-    path: .hlint.yaml
-  - url: https://raw.githubusercontent.com/pbrisbin/dotfiles/master/stylish-haskell.yaml
-    path: .stylish-haskell.yaml
-
-restylers:
-  - astyle
-  - autopep8
-  - black
-  - brittany
-  - clang-format
-  - dfmt
-  - elm-format
-  - google-java-format
-  #- hindent
-  - hlint
-  - jdt
-  #- jq
-  #- ormolu
-  - pg_format
-  - php-cs-fixer
-  - prettier
-  - prettier-markdown
-  #- prettier-ruby
-  - prettier-yaml
-  - reorder-python-imports
-  - rubocop
-  - rustfmt
-  - shellharden
-  - shfmt
-  - stylish-haskell
-  - terraform
-  - yapf
+---
+- astyle:
+    enabled: true
+    include:
+    - test/integration/astyle/**/*
+- autopep8:
+    enabled: true
+    include:
+    - test/integration/autopep8/**/*
+- black:
+    enabled: true
+    include:
+    - test/integration/black/**/*
+- brittany:
+    enabled: true
+    include:
+    - test/integration/brittany/**/*
+- clang-format:
+    enabled: true
+    include:
+    - test/integration/clang-format/**/*
+- dfmt:
+    enabled: true
+    include:
+    - test/integration/dfmt/**/*
+- elm-format:
+    enabled: true
+    include:
+    - test/integration/elm-format/**/*
+- google-java-format:
+    enabled: true
+    include:
+    - test/integration/google-java-format/**/*
+- hindent:
+    enabled: true
+    include:
+    - test/integration/hindent/**/*
+- hlint:
+    enabled: true
+    include:
+    - test/integration/hlint/**/*
+- jdt:
+    enabled: true
+    include:
+    - test/integration/jdt/**/*
+- jq:
+    enabled: true
+    include:
+    - test/integration/jq/**/*
+- ormolu:
+    enabled: true
+    include:
+    - test/integration/ormolu/**/*
+- pg_format:
+    enabled: true
+    include:
+    - test/integration/pg_format/**/*
+- php-cs-fixer:
+    enabled: true
+    include:
+    - test/integration/php-cs-fixer/**/*
+- prettier-markdown:
+    enabled: true
+    include:
+    - test/integration/prettier-markdown/**/*
+- prettier-ruby:
+    enabled: true
+    include:
+    - test/integration/prettier-ruby/**/*
+- prettier-yaml:
+    enabled: true
+    include:
+    - test/integration/prettier-yaml/**/*
+- prettier:
+    enabled: true
+    include:
+    - test/integration/prettier/**/*
+- reorder-python-imports:
+    enabled: true
+    include:
+    - test/integration/reorder-python-imports/**/*
+- rubocop:
+    enabled: true
+    include:
+    - test/integration/rubocop/**/*
+- rustfmt:
+    enabled: true
+    include:
+    - test/integration/rustfmt/**/*
+- shellharden:
+    enabled: true
+    include:
+    - test/integration/shellharden/**/*
+- shfmt:
+    enabled: true
+    include:
+    - test/integration/shfmt/**/*
+- stylish-haskell:
+    enabled: true
+    include:
+    - test/integration/stylish-haskell/**/*
+- terraform:
+    enabled: true
+    include:
+    - test/integration/terraform/**/*
+- whitespace:
+    enabled: true
+    include:
+    - test/integration/whitespace/**/*
+- yapf:
+    enabled: true
+    include:
+    - test/integration/yapf/**/*
