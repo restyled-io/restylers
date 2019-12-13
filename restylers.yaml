@@ -262,7 +262,7 @@
   supports_multiple_paths: true
   documentation:
     - https://prettier.io/blog/2017/11/07/1.8.0.html
-- enabled: true
+- enabled: false
   name: prettier-ruby
   image: restyled/restyler-prettier-ruby:v0.15.0
   command:
