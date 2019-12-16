@@ -245,7 +245,7 @@
     - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 - enabled: true
   name: prettier-markdown
-  image: restyled/restyler-prettier:v1.18.2
+  image: restyled/restyler-prettier:v1.19.1
   command:
     - prettier
     - "--write"
@@ -280,7 +280,7 @@
     - https://github.com/prettier/plugin-ruby
 - enabled: true
   name: prettier-yaml
-  image: restyled/restyler-prettier:v1.18.2
+  image: restyled/restyler-prettier:v1.19.1
   command:
     - prettier
     - "--write"
@@ -296,7 +296,7 @@
     - https://prettier.io/blog/2018/07/29/1.14.0.html
 - enabled: true
   name: prettier
-  image: restyled/restyler-prettier:v1.18.2
+  image: restyled/restyler-prettier:v1.19.1
   command:
     - prettier
     - "--write"
