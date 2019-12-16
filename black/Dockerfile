@@ -1,7 +1,7 @@
 FROM python:3.7-alpine
 LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
-RUN pip install black==19.3b0
+RUN pip install black==19.10b0
 WORKDIR /code
 ENTRYPOINT []
 CMD ["black", "--help"]
