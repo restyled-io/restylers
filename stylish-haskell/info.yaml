@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: stylish-haskell
-image: restyled/restyler-stylish-haskell:v0.9.2.2
+image: restyled/restyler-stylish-haskell:v0.9.2.2-2
 command:
   - stylish-haskell
   - "--inplace"
