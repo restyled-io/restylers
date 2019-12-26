@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: elm-format
-image: restyled/restyler-elm-format:v0.6.1-alpha
+image: restyled/restyler-elm-format:v0.6.1-alpha-2
 command:
   - elm-format
   - "--yes"
