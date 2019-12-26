@@ -17,7 +17,14 @@ class RestylerTests
 
     tests.each.with_index do |test, i|
       if support = test["support"]
-        File.write(support.fetch("path"), support.fetch("contents"))
+        support_path = support.fetch("path")
+
+        if File.exist?(support_path)
+          # TODO: figure out a Real Fix here
+          raise "#{name}:#{i} test would clobber #{support_path}. Refusing."
+        end
+
+        File.write(support_path, support.fetch("contents"))
       end
 
       File.write(testfile_path(test, i), test.fetch("contents"))
