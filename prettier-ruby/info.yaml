@@ -1,7 +1,7 @@
 ---
 enabled: false
 name: prettier-ruby
-image: restyled/restyler-prettier-ruby:v0.15.0
+image: restyled/restyler-prettier-ruby:v0.15.0-3
 command:
   - prettier
   - "--write"
