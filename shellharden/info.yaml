@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: shellharden
-image: restyled/restyler-shellharden:v4.1.1
+image: restyled/restyler-shellharden:v4.1.1-2
 command:
   - shellharden
   - "--replace"
