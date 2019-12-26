@@ -115,7 +115,7 @@
     - https://github.com/dlang-community/dfmt#readme
 - enabled: true
   name: elm-format
-  image: restyled/restyler-elm-format:v0.6.1-alpha
+  image: restyled/restyler-elm-format:v0.6.1-alpha-2
   command:
     - elm-format
     - "--yes"
@@ -143,7 +143,7 @@
     - https://github.com/google/google-java-format#readme
 - enabled: false
   name: hindent
-  image: restyled/restyler-hindent:v5.2.5
+  image: restyled/restyler-hindent:v5.3.1
   command:
     - hindent
   arguments: []
@@ -245,7 +245,7 @@
     - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 - enabled: true
   name: prettier-markdown
-  image: restyled/restyler-prettier:v1.19.1
+  image: restyled/restyler-prettier:v1.19.1-2
   command:
     - prettier
     - "--write"
@@ -264,7 +264,7 @@
     - https://prettier.io/blog/2017/11/07/1.8.0.html
 - enabled: false
   name: prettier-ruby
-  image: restyled/restyler-prettier-ruby:v0.15.0
+  image: restyled/restyler-prettier-ruby:v0.15.0-3
   command:
     - prettier
     - "--write"
@@ -280,7 +280,7 @@
     - https://github.com/prettier/plugin-ruby
 - enabled: true
   name: prettier-yaml
-  image: restyled/restyler-prettier:v1.19.1
+  image: restyled/restyler-prettier:v1.19.1-2
   command:
     - prettier
     - "--write"
@@ -296,7 +296,7 @@
     - https://prettier.io/blog/2018/07/29/1.14.0.html
 - enabled: true
   name: prettier
-  image: restyled/restyler-prettier:v1.19.1
+  image: restyled/restyler-prettier:v1.19.1-2
   command:
     - prettier
     - "--write"
@@ -326,7 +326,7 @@
     - https://github.com/asottile/reorder_python_imports
 - enabled: true
   name: rubocop
-  image: restyled/restyler-rubocop:v0.72.0-3
+  image: restyled/restyler-rubocop:v0.72.0-4
   command:
     - rubocop
     - "--auto-correct"
@@ -343,7 +343,7 @@
     - https://rubocop.readthedocs.io/en/latest/
 - enabled: true
   name: rustfmt
-  image: restyled/restyler-rustfmt:v1.4.8-nightly
+  image: restyled/restyler-rustfmt:v1.4.11-nightly
   command:
     - rustfmt
   arguments: []
@@ -357,7 +357,7 @@
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
 - enabled: true
   name: shellharden
-  image: restyled/restyler-shellharden:v4.1.1
+  image: restyled/restyler-shellharden:v4.1.1-2
   command:
     - shellharden
     - "--replace"
@@ -394,7 +394,7 @@
     - https://github.com/mvdan/sh#shfmt
 - enabled: true
   name: stylish-haskell
-  image: restyled/restyler-stylish-haskell:v0.9.2.2
+  image: restyled/restyler-stylish-haskell:v0.9.2.2-2
   command:
     - stylish-haskell
     - "--inplace"
