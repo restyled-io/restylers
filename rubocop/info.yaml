@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: rubocop
-image: restyled/restyler-rubocop:v0.72.0-3
+image: restyled/restyler-rubocop:v0.72.0-4
 command:
   - rubocop
   - "--auto-correct"
@@ -39,12 +39,32 @@ metadata:
         contents: |
           require:
             - rubocop-rails
+            - rubocop-performance
       contents: |
         puts x unless x.nil? || x.empty?
       restyled: |
         # frozen_string_literal: true
 
         puts x if x.present?
+
+    # performance
+    - extension: rb
+      contents: |
+        case foo
+        when *[1, 2, 3, 4]
+          bar
+        when 5
+          baz
+        end
+      restyled: |
+        # frozen_string_literal: true
+
+        case foo
+        when 1, 2, 3, 4
+          bar
+        when 5
+          baz
+        end
 
     # incorrectable offenses (andyw8 example)
     - extension: rb
