@@ -1,7 +1,7 @@
 ---
 enabled: false
 name: hindent
-image: restyled/restyler-hindent:v5.2.5
+image: restyled/restyler-hindent:v5.3.1
 command:
   - hindent
 arguments: []
