@@ -374,7 +374,7 @@
     - https://github.com/anordal/shellharden#readme
 - enabled: true
   name: shfmt
-  image: restyled/restyler-shfmt:v2.4.0-2
+  image: restyled/restyler-shfmt:v3.0.1
   command:
     - shfmt
     - "-w"
