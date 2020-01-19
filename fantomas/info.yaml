@@ -8,7 +8,7 @@
   # always be passed for things to function (e.g. --inplace), they would be
   # included here (that's why it's an Array).
   command:
-    - echo
+    - fantomas
   
   # We won't default any additional arguments. This is more for end-users, but
   # the "schema" is the same as what they'll configure in this regard, so we
@@ -25,7 +25,7 @@
   supports_arg_sep: false
   
   # But we do support multiple paths in one invocation
-  supports_multiple_paths: true
+  supports_multiple_paths: false
   
   # If you wanted to run on extension-less files based on their
   # shebang, you could list interpreter executables (sh, ruby,
