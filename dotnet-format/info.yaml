@@ -9,6 +9,7 @@ image: restyled/restyler-dotnet-format:v0.0.1
 # included here (that's why it's an Array).
 command:
   - dotnet-format
+  - --files
 
 # We won't default any additional arguments. This is more for end-users, but
 # the "schema" is the same as what they'll configure in this regard, so we
