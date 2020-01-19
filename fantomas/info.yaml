@@ -8,7 +8,7 @@
   # always be passed for things to function (e.g. --inplace), they would be
   # included here (that's why it's an Array).
   command:
-    - fantomas
+    - echo
   
   # We won't default any additional arguments. This is more for end-users, but
   # the "schema" is the same as what they'll configure in this regard, so we
