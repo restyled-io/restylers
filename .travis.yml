@@ -13,6 +13,7 @@ matrix:
     - env: RESTYLER=clang-format
     - env: RESTYLER=dfmt
     - env: RESTYLER=elm-format
+    - env: RESTYLER=fantomas
     - env: RESTYLER=google-java-format
     - env: RESTYLER=hindent
     - env: RESTYLER=hlint
