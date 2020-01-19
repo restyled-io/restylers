@@ -1,0 +1,57 @@
+---
+name: dotnet-format
+
+# We'll build to a conventionally-named image and tag it with a made-up version
+image: restyled/restyler-dotnet-format:v0.0.1
+
+# The command to run is our banana script. If there were arguments that must
+# always be passed for things to function (e.g. --inplace), they would be
+# included here (that's why it's an Array).
+command:
+  - dotnet-format
+
+# We won't default any additional arguments. This is more for end-users, but
+# the "schema" is the same as what they'll configure in this regard, so we
+# have to do something here.
+arguments: []
+
+# We can (apparently) fix up any kind of file!
+include:
+  - "**/*.cs"
+  - "**/*.vb"
+
+# We don't support "--" between arguments and paths
+supports_arg_sep: false
+
+# But we do support multiple paths in one invocation
+supports_multiple_paths: true
+
+# If you wanted to run on extension-less files based on their
+# shebang, you could list interpreter executables (sh, ruby,
+# python2, etc) here.
+interpreters: []
+
+# A list of URLs that will be displayed with any exceptions this Restyler
+# generates.
+documentation: ["https://github.com/dotnet/format"]
+
+# This key contains any data that we need in the build process, but that users
+# would not interact with within their configuration.
+metadata:
+  # Again, we run on any kind of file.
+  languages:
+    - C#
+    - VB.NET
+
+  # Tests declare how the Restyler should impact mis-styled files. You can make
+  # as many as you like. There is more test-related functionality available, but
+  # this is the bare minimum:
+  tests:
+    - contents: |
+        int formatted_code;
+            void    unformatted_code  ;
+        void formatted_code_again;
+      restyled: |
+        int formatted_code;
+        void unformatted_code;
+        void formatted_code_again;
