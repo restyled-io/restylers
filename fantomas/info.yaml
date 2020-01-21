@@ -45,7 +45,8 @@
   
     # Examples are from: https://github.com/fsprojects/fantomas#use-cases 
     tests:
-      - contents: |
+      - extension: fs
+        contents: |
           type Type
           = TyLam of Type * Type
           | TyVar of string
@@ -65,7 +66,8 @@
               | TyLam(t1, t2) -> sprintf "(%s -> %s)" (t1.ToString()) (t2.ToString())
               | TyVar a -> a
               | TyCon(s, ts) -> s
-      - contents: |
+      - extension: fs
+        contents: |
           let Multiple9x9 () =
               for i in 1 .. 9 do
                   printf "\n";
