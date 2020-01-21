@@ -1,88 +1,88 @@
 ---
-  name: fantomas
-  
-  # We'll build to a conventionally-named image and tag it with a made-up version
-  image: restyled/restyler-fantomas:v0.0.1
-  
-  # The command to run is our banana script. If there were arguments that must
-  # always be passed for things to function (e.g. --inplace), they would be
-  # included here (that's why it's an Array).
-  command:
-    - fantomas
-  
-  # We won't default any additional arguments. This is more for end-users, but
-  # the "schema" is the same as what they'll configure in this regard, so we
-  # have to do something here.
-  arguments: []
-  
-  # We can (apparently) fix up any kind of file!
-  include:
-    - "**/*.fs"
-    - "**/*.fsi"
-    - "**/*.fsx"
-  
-  # We don't support "--" between arguments and paths
-  supports_arg_sep: false
-  
-  # But we do support multiple paths in one invocation
-  supports_multiple_paths: false
-  
-  # If you wanted to run on extension-less files based on their
-  # shebang, you could list interpreter executables (sh, ruby,
-  # python2, etc) here.
-  interpreters: []
-  
-  # A list of URLs that will be displayed with any exceptions this Restyler
-  # generates.
-  documentation: ["https://github.com/fsprojects/fantomas"]
-  
-  # This key contains any data that we need in the build process, but that users
-  # would not interact with within their configuration.
-  metadata:
-    # Again, we run on any kind of file.
-    languages:
-      - F#
-  
-    # Examples are from: https://github.com/fsprojects/fantomas#use-cases 
-    tests:
-      - extension: fs
-        contents: |
-          type Type
-          = TyLam of Type * Type
-          | TyVar of string
-          | TyCon of string * Type list
-          with override this.ToString () =
-                  match this with
-                  | TyLam (t1, t2) -> sprintf "(%s -> %s)" (t1.ToString()) (t2.ToString())
-                  | TyVar a -> a
-                  | TyCon (s, ts) -> s
-        restyled: |
-          type Type =
-          | TyLam of Type * Type
-          | TyVar of string
-          | TyCon of string * Type list
-          override this.ToString() =
-              match this with
-              | TyLam(t1, t2) -> sprintf "(%s -> %s)" (t1.ToString()) (t2.ToString())
-              | TyVar a -> a
-              | TyCon(s, ts) -> s
-      - extension: fs
-        contents: |
-          let Multiple9x9 () =
-              for i in 1 .. 9 do
-                  printf "\n";
-                  for j in 1 .. 9 do
-                      let k = i * j in
-                      printf "%d x %d = %2d " i j k;
-                  done;
-              done;;
-          Multiple9x9 ();;
-        restyled: |
-          let Multiple9x9() =
-              for i in 1..9 do
-                  printf "\n"
-                  for j in 1..9 do
-                      let k = i * j
-                      printf "%d x %d = %2d " i j k
+name: fantomas
 
-          Multiple9x9()
+# We'll build to a conventionally-named image and tag it with a made-up version
+image: restyled/restyler-fantomas:v0.0.1
+
+# The command to run is our banana script. If there were arguments that must
+# always be passed for things to function (e.g. --inplace), they would be
+# included here (that's why it's an Array).
+command:
+  - fantomas
+
+# We won't default any additional arguments. This is more for end-users, but
+# the "schema" is the same as what they'll configure in this regard, so we
+# have to do something here.
+arguments: []
+
+# We can (apparently) fix up any kind of file!
+include:
+  - "**/*.fs"
+  - "**/*.fsi"
+  - "**/*.fsx"
+
+# We don't support "--" between arguments and paths
+supports_arg_sep: false
+
+# But we do support multiple paths in one invocation
+supports_multiple_paths: false
+
+# If you wanted to run on extension-less files based on their
+# shebang, you could list interpreter executables (sh, ruby,
+# python2, etc) here.
+interpreters: []
+
+# A list of URLs that will be displayed with any exceptions this Restyler
+# generates.
+documentation: ["https://github.com/fsprojects/fantomas"]
+
+# This key contains any data that we need in the build process, but that users
+# would not interact with within their configuration.
+metadata:
+  # Again, we run on any kind of file.
+  languages:
+    - F#
+
+  # Examples are from: https://github.com/fsprojects/fantomas#use-cases
+  tests:
+    - extension: fs
+      contents: |
+        type Type
+        = TyLam of Type * Type
+        | TyVar of string
+        | TyCon of string * Type list
+        with override this.ToString () =
+                match this with
+                | TyLam (t1, t2) -> sprintf "(%s -> %s)" (t1.ToString()) (t2.ToString())
+                | TyVar a -> a
+                | TyCon (s, ts) -> s
+      restyled: |
+        type Type =
+        | TyLam of Type * Type
+        | TyVar of string
+        | TyCon of string * Type list
+        override this.ToString() =
+            match this with
+            | TyLam(t1, t2) -> sprintf "(%s -> %s)" (t1.ToString()) (t2.ToString())
+            | TyVar a -> a
+            | TyCon(s, ts) -> s
+    - extension: fs
+      contents: |
+        let Multiple9x9 () =
+            for i in 1 .. 9 do
+                printf "\n";
+                for j in 1 .. 9 do
+                    let k = i * j in
+                    printf "%d x %d = %2d " i j k;
+                done;
+            done;;
+        Multiple9x9 ();;
+      restyled: |
+        let Multiple9x9() =
+            for i in 1..9 do
+                printf "\n"
+                for j in 1..9 do
+                    let k = i * j
+                    printf "%d x %d = %2d " i j k
+
+        Multiple9x9()
