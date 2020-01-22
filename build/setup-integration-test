@@ -6,7 +6,12 @@
 #
 ###
 require "fileutils"
+require "tmpdir"
 require "yaml"
+
+REPO = "git@github.com:restyled-io/demo"
+BRANCH = "testing/all"
+FILES = {}
 
 def system_(*args)
   system(*args) or raise "system error: #{args.inspect}"
@@ -15,36 +20,49 @@ end
 restylers = `./build/restyler-meta names`.each_line.map do |ln|
   restyler = ln.chomp
 
-  FileUtils.mkdir_p "test/integration/#{restyler}"
   tests = YAML.load(`./build/restyler-meta get #{restyler} metadata.tests`)
   tests.each.with_index do |test, n|
     # N.B. if different cases need the same support file this won't work.
     # If/when that happens we can consider some kind of workaround.
     if support = test["support"]
       support_path = support.fetch("path")
-      File.write(support_path, support.fetch("contents"))
-      system_("git", "add", support_path)
+      FILES[support_path] = support.fetch("contents")
     end
 
     ext = test["extension"] || "example"
-    path = "test/integration/#{restyler}/test-file-#{n}.#{ext}"
+    path = "#{restyler}/test-file-#{n}.#{ext}"
     contents = test.fetch("contents")
 
     # Can't commit CRLF, so skip that test case
     unless contents.include?("\r\n")
-      File.write(path, contents)
-      system_("git", "add", path)
+      FILES[path] = contents
     end
   end
 
   {
     restyler => {
       "enabled" => true,
-      "include" => ["test/integration/#{restyler}/**/*"]
+      "include" => ["#{restyler}/**/*"]
     }
   }
 end
 
-File.write(".restyled.yaml", YAML.dump(restylers))
-system_("git", "add", ".restyled.yaml")
-system_("git", "commit", "-m", "Update test/integration files")
+FILES[".restyled.yaml"] = YAML.dump(restylers)
+
+Dir.mktmpdir do |dir|
+  system_("git", "clone", REPO, dir)
+
+  Dir.chdir(dir) do
+    system("git", "checkout", "--quiet", BRANCH) or
+      system_("git", "checkout", "--quiet", "-b", BRANCH)
+
+    FILES.each do |path, contents|
+      FileUtils.mkdir_p(File.dirname(path))
+      File.write(path, contents)
+    end
+
+    system_("git", "add", ".")
+    system_("git", "commit", "-m", "Update test case files")
+    system_("git", "push")
+  end
+end
