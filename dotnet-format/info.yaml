@@ -1,0 +1,38 @@
+---
+name: dotnet-format
+image: restyled/restyler-dotnet-format:v0.0.1
+command:
+  - dotnet-format
+  - --files
+arguments: []
+include:
+  - "**/*.cs"
+  - "**/*.vb"
+supports_arg_sep: false
+# It is supported, but only comma separated
+supports_multiple_paths: false
+interpreters: []
+documentation: ["https://github.com/dotnet/format"]
+metadata:
+  languages:
+    - C#
+    - VB.NET
+  tests:
+    - contents: |
+        int formatted_code;
+            void    unformatted_code  ;
+        void formatted_code_again;
+      restyled: |
+        int formatted_code;
+        void unformatted_code;
+        void formatted_code_again;
+      extension: cs
+      support:
+        path: project.csproj
+        contents: |
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <OutputType>Exe</OutputType>
+              <TargetFramework>netcoreapp3.1</TargetFramework>
+            </PropertyGroup>
+          </Project>
