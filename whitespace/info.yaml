@@ -1,12 +1,23 @@
 ---
 enabled: true
 name: whitespace
-image: restyled/restyler-whitespace:v0.1.0.0
+image: restyled/restyler-whitespace:v0.1.0.0-2
 command:
   - whitespace
 arguments: []
+
+# Attempt to exclude some obvious non-text files that would commonly see edits
+# in a Pull Request. This list is not exhaustive or robust, and we would rather
+# accidently run on something we shouldn't than not run on something we should.
 include:
   - "**/*"
+  - "!**/*.gif"
+  - "!**/*.ico"
+  - "!**/*.jpeg"
+  - "!**/*.jpg"
+  - "!**/*.pdf"
+  - "!**/*.png"
+
 interpreters: []
 supports_arg_sep: true
 supports_multiple_paths: true
