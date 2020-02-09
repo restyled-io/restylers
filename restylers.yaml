@@ -113,7 +113,8 @@
   supports_multiple_paths: true
   documentation:
     - https://github.com/dlang-community/dfmt#readme
-- name: dotnet-format
+- enabled: false
+  name: dotnet-format
   image: restyled/restyler-dotnet-format:v0.0.1
   command:
     - dotnet-format
