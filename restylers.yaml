@@ -113,6 +113,20 @@
   supports_multiple_paths: true
   documentation:
     - https://github.com/dlang-community/dfmt#readme
+- name: dotnet-format
+  image: restyled/restyler-dotnet-format:v0.0.1
+  command:
+    - dotnet-format
+    - "--files"
+  arguments: []
+  include:
+    - "**/*.cs"
+    - "**/*.vb"
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  interpreters: []
+  documentation:
+    - https://github.com/dotnet/format
 - enabled: true
   name: elm-format
   image: restyled/restyler-elm-format:v0.6.1-alpha-2
@@ -423,12 +437,18 @@
     - https://www.terraform.io/docs/commands/fmt.html
 - enabled: true
   name: whitespace
-  image: restyled/restyler-whitespace:v0.1.0.0
+  image: restyled/restyler-whitespace:v0.1.0.0-2
   command:
     - whitespace
   arguments: []
   include:
     - "**/*"
+    - "!**/*.gif"
+    - "!**/*.ico"
+    - "!**/*.jpeg"
+    - "!**/*.jpg"
+    - "!**/*.pdf"
+    - "!**/*.png"
   interpreters: []
   supports_arg_sep: true
   supports_multiple_paths: true
