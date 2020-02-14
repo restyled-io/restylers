@@ -6,6 +6,31 @@
 ###
 require "yaml"
 
+def normalize(input)
+  name = input.fetch("name")
+
+  defaults = {
+    "enabled" => false,
+    "name" => name,
+    "image" => input.fetch("image") do
+      "restyled/restyler-#{name}:#{input.fetch("version")}"
+    end,
+    "command" => [name],
+    "arguments" => [],
+    "include" => [],
+    "interpreters" => [],
+    "supports_arg_sep" => true,
+    "supports_multiple_paths" => true,
+    "documentation" => [],
+    "metadata" => {
+      "languages" => [],
+      "tests" => []
+    }.merge(input.fetch("metadata") { {} })
+  }
+
+  defaults.merge(input)
+end
+
 INFO = begin
   root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
   glob = Dir.glob(File.join(root, "*", "info.yaml"))
@@ -13,10 +38,11 @@ INFO = begin
     info = YAML.load_file(path)
     merged =
       if parent = info["overrides"]
+        # NB. must normalize parent before override *and* merged after
         parent_info = YAML.load_file(File.join(root, parent, "info.yaml"))
-        parent_info.merge(info)
+        normalize(normalize(parent_info).merge(info))
       else
-        info
+        normalize(info)
       end
 
     infos[merged.fetch("name")] = merged
@@ -57,6 +83,7 @@ when "dump"
   infos = INFO.values
   infos.each do |i|
     i.delete("overrides")
+    i.delete("version")
     i.delete("metadata")
   end
   puts YAML.dump(infos)
