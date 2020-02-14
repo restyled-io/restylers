@@ -1,16 +1,12 @@
 ---
 enabled: true
 name: stylish-haskell
-image: restyled/restyler-stylish-haskell:v0.9.2.2-2
+version: v0.9.2.2-2
 command:
   - stylish-haskell
   - "--inplace"
-arguments: []
 include:
   - "**/*.hs"
-interpreters: []
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/jaspervdj/stylish-haskell
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell

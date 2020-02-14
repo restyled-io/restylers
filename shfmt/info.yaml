@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: shfmt
-image: restyled/restyler-shfmt:v3.0.1
+version: v3.0.1
 command:
   - shfmt
   - "-w"
@@ -15,8 +15,6 @@ include:
 interpreters:
   - sh
   - bash
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/mvdan/sh#shfmt
 metadata:

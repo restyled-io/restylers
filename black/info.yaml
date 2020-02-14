@@ -1,16 +1,11 @@
 ---
 enabled: true
 name: black
-image: restyled/restyler-black:v19.10b0
-command:
-  - black
-arguments: []
+version: v19.10b0
 include:
   - "**/*.py"
 interpreters:
   - python
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/python/black
 metadata:

@@ -1,11 +1,10 @@
 ---
 enabled: true
 name: clang-format
-image: restyled/restyler-clang-format:v9.0.0
+version: v9.0.0
 command:
   - clang-format
   - "-i"
-arguments: []
 include:
   - "**/*.c"
   - "**/*.cc"
@@ -23,9 +22,7 @@ include:
   - "**/*.java"
   - "**/*.js"
   - "**/*.m"
-interpreters: []
 supports_arg_sep: false
-supports_multiple_paths: true
 documentation:
   - https://clang.llvm.org/docs/ClangFormat.html
 metadata:

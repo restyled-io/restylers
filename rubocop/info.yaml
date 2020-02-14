@@ -1,19 +1,16 @@
 ---
 enabled: true
 name: rubocop
-image: restyled/restyler-rubocop:v0.72.0-4
+version: v0.72.0-4
 command:
   - rubocop
   - "--auto-correct"
   - "--fail-level"
   - fatal
-arguments: []
 include:
   - "**/*.rb"
 interpreters:
   - ruby
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://rubocop.readthedocs.io/en/latest/
 metadata:

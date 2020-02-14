@@ -1,15 +1,12 @@
 ---
 enabled: true
 name: terraform
-image: restyled/restyler-terraform:v0.11.7
+version: v0.11.7
 command:
   - terraform
   - fmt
-arguments: []
 include:
   - "**/*.tf"
-interpreters: []
-supports_arg_sep: true
 supports_multiple_paths: false
 documentation:
   - https://www.terraform.io/docs/commands/fmt.html

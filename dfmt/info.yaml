@@ -1,16 +1,12 @@
 ---
 enabled: true
 name: dfmt
-image: restyled/restyler-dfmt:v0.8.2
+version: v0.8.2
 command:
   - dfmt
   - "--inplace"
-arguments: []
 include:
   - "**/*.d"
-interpreters: []
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/dlang-community/dfmt#readme
 metadata:

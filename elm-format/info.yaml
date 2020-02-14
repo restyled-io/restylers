@@ -1,16 +1,12 @@
 ---
 enabled: true
 name: elm-format
-image: restyled/restyler-elm-format:v0.6.1-alpha-2
+version: v0.6.1-alpha-2
 command:
   - elm-format
   - "--yes"
-arguments: []
 include:
   - "**/*.elm"
-interpreters: []
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/avh4/elm-format
 metadata:

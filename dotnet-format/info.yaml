@@ -1,15 +1,12 @@
 ---
-enabled: false
 name: dotnet-format
-image: restyled/restyler-dotnet-format:v0.0.1
+version: v0.0.1
 command:
   - dotnet-format
   - --files
-arguments: []
 include:
   - "**/*.cs"
   - "**/*.vb"
-interpreters: []
 supports_arg_sep: false
 # It is supported, but only comma separated
 supports_multiple_paths: false

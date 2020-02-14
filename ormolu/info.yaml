@@ -1,17 +1,12 @@
 ---
-enabled: false
 name: ormolu
-image: restyled/restyler-ormolu:v0.0.1.0
+version: v0.0.1.0
 command:
   - ormolu
   - "--mode"
   - inplace
-arguments: []
 include:
   - "**/*.hs"
-interpreters: []
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/tweag/ormolu#readme
 metadata:

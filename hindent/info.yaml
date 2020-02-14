@@ -1,13 +1,8 @@
 ---
-enabled: false
 name: hindent
-image: restyled/restyler-hindent:v5.3.1
-command:
-  - hindent
-arguments: []
+version: v5.3.1
 include:
   - "**/*.hs"
-interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:

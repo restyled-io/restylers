@@ -1,10 +1,7 @@
 ---
 enabled: true
 name: whitespace
-image: restyled/restyler-whitespace:v0.1.0.0-2
-command:
-  - whitespace
-arguments: []
+version: v0.1.0.0-2
 
 # Attempt to exclude some obvious non-text files that would commonly see edits
 # in a Pull Request. This list is not exhaustive or robust, and we would rather
@@ -18,9 +15,6 @@ include:
   - "!**/*.pdf"
   - "!**/*.png"
 
-interpreters: []
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/restyled-io/restylers/blob/master/whitespace/README.md
 metadata:

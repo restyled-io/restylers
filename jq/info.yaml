@@ -1,13 +1,11 @@
 ---
 enabled: true
 name: jq
-image: restyled/restyler-jq:v1.6-2
+version: v1.6-2
 command:
   - jq-write
-arguments: []
 include:
   - "**/*.json"
-interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:

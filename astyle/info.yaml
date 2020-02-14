@@ -1,10 +1,7 @@
 ---
 enabled: true
 name: astyle
-image: restyled/restyler-astyle:v3.1
-command:
-  - astyle
-arguments: []
+version: v3.1
 include:
   - "**/*.c"
   - "**/*.cc"
@@ -21,9 +18,7 @@ include:
   - "**/*.H"
   - "**/*.m"
   - "**/*.mm"
-interpreters: []
 supports_arg_sep: false
-supports_multiple_paths: true
 documentation:
   - http://astyle.sourceforge.net/astyle.html
 metadata:

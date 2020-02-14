@@ -1,17 +1,14 @@
 ---
 enabled: true
 name: reorder-python-imports
-image: restyled/restyler-reorder-python-imports:v1.6.0
+version: v1.6.0
 command:
   - reorder-python-imports
   - "--exit-zero-even-if-changed"
-arguments: []
 include:
   - "**/*.py"
 interpreters:
   - python
-supports_arg_sep: true
-supports_multiple_paths: true
 documentation:
   - https://github.com/asottile/reorder_python_imports
 metadata:

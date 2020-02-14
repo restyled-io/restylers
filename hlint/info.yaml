@@ -1,16 +1,13 @@
 ---
-enabled: false
 name: hlint
-image: restyled/restyler-hlint:v2.1.11
+version: v2.1.11
 command:
   - hlint
   - lint
   - "--refactor"
   - "--refactor-options=-i"
-arguments: []
 include:
   - "**/*.hs"
-interpreters: []
 supports_arg_sep: false
 supports_multiple_paths: false
 documentation:

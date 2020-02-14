@@ -1,16 +1,12 @@
 ---
-enabled: false
 name: google-java-format
-image: restyled/restyler-google-java-format:v1.6
+version: v1.6
 command:
   - google-java-format
   - "--replace"
-arguments: []
 include:
   - "**/*.java"
-interpreters: []
 supports_arg_sep: false
-supports_multiple_paths: true
 documentation:
   - https://github.com/google/google-java-format#readme
 metadata:
