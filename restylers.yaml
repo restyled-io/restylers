@@ -123,9 +123,9 @@
   include:
     - "**/*.cs"
     - "**/*.vb"
+  interpreters: []
   supports_arg_sep: false
   supports_multiple_paths: false
-  interpreters: []
   documentation:
     - https://github.com/dotnet/format
 - enabled: true

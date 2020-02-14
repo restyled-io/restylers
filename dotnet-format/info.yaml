@@ -9,10 +9,10 @@ arguments: []
 include:
   - "**/*.cs"
   - "**/*.vb"
+interpreters: []
 supports_arg_sep: false
 # It is supported, but only comma separated
 supports_multiple_paths: false
-interpreters: []
 documentation: ["https://github.com/dotnet/format"]
 metadata:
   languages:
