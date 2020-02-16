@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -eu
+
+is_project=0
+
+for _ in *.csproj; do
+  is_project=1
+done
+
+if ((!is_project)); then
+  echo "Workspace file not found. Exiting."
+  exit
+fi
+
+options=()
+files=()
+
+for arg; do
+  case "$arg" in
+    --)
+      shift
+      files+=("$@")
+      break
+      ;;
+    *)
+      if [ -f "$arg" ]; then
+        files+=("$arg")
+      else
+        options+=("$arg")
+      fi
+      ;;
+  esac
+done
+
+csv_files=$(printf '%s\n' "${files[@]}" | paste -s -d, -)
+echo dotnet format --files="$csv_files" "${options[@]}"
+exec dotnet format --files="$csv_files" "${options[@]}"
