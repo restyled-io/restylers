@@ -62,7 +62,7 @@ class RestylerTests
     "#{name}-test-#{i}.#{ext}"
   end
 
-  def run_restyler(name, paths)
+  def run_restyler(_name, paths)
     restyler_command = DOCKER_RUN.dup
     restyler_command += %W[--volume #{Dir.pwd}:/code]
     restyler_command << info.fetch("image")
@@ -75,14 +75,14 @@ class RestylerTests
 
     if info.fetch("supports_multiple_paths")
       cmd = restyler_command + paths
-      system(*cmd) or return false
+      system(*cmd) || (return false)
     else
       paths.each do |path|
         cmd = restyler_command + [path]
-        system(*cmd) or return false
+        system(*cmd) || (return false)
       end
     end
 
-    return true
+    true
   end
 end
