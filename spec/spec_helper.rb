@@ -20,12 +20,14 @@ class RestylerTests
         support_path = support.fetch("path")
         support_contents = support.fetch("contents")
 
-        if File.exist?(support_path) && File.read(support_path) != support_contents
-          # TODO: figure out a Real Fix here
-          raise "#{name}:#{i} test would clobber #{support_path}. Refusing."
+        if File.exist?(support_path)
+          if File.read(support_path) != support_contents
+            # TODO: figure out a Real Fix here
+            raise "#{name}:#{i} test would clobber #{support_path}. Refusing."
+          end
+        else
+          File.write(support_path, support_contents)
         end
-
-        File.write(support_path, support_contents)
       end
 
       File.write(testfile_path(test, i), test.fetch("contents"))
