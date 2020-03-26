@@ -27,7 +27,7 @@ restylers.yaml: */info.yaml
 RELEASE_TAG ?= $(shell date +'%Y%m%d')
 
 .PHONY: release_tag
-release_tag: all
+release_tag:
 	git add restylers.yaml
 	git commit -m 'Update restylers.yaml' || true
 	git tag -f -s -m "$(RELEASE_TAG)" "$(RELEASE_TAG)"
