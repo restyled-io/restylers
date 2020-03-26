@@ -115,17 +115,16 @@
     - https://github.com/dlang-community/dfmt#readme
 - enabled: false
   name: dotnet-format
-  image: restyled/restyler-dotnet-format:v0.0.1
+  image: restyled/restyler-dotnet-format:v0.0.1-2
   command:
-    - dotnet-format
-    - "--files"
+    - dotnet-format-files
   arguments: []
   include:
     - "**/*.cs"
     - "**/*.vb"
   interpreters: []
-  supports_arg_sep: false
-  supports_multiple_paths: false
+  supports_arg_sep: true
+  supports_multiple_paths: true
   documentation:
     - https://github.com/dotnet/format
 - enabled: true
