@@ -5,7 +5,7 @@ RUN stack upgrade
 # Dumb cache-buster. Bump this to force a build
 ENV _DOCKERFILE_VERSION 0
 
-ENV BRITTANY_VERSION 0.12.0.0
+ENV BRITTANY_VERSION 0.12.1.1
 RUN \
   git clone https://github.com/lspitzner/brittany.git && cd brittany && \
   git reset --hard "$BRITTANY_VERSION" && \
