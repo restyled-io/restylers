@@ -1,5 +1,5 @@
 git:
-  depth: false  # fetch all branches
+  depth: false # fetch all branches
 language: ruby
 rvm:
   - 2.6
@@ -22,6 +22,7 @@ matrix:
     - env: RESTYLER=pg_format
     - env: RESTYLER=php-cs-fixer
     - env: RESTYLER=prettier
+    - env: RESTYLER=prettier-json
     - env: RESTYLER=prettier-markdown
     - env: RESTYLER=prettier-ruby
     - env: RESTYLER=prettier-yaml
