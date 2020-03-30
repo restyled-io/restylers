@@ -3,7 +3,7 @@ overrides: prettier
 name: prettier-json
 arguments:
 include:
-  - '**/*.json'
+  - "**/*.json"
 documentation:
   - https://prettier.io/docs/en/options.html#parser
 metadata:
