@@ -11,13 +11,12 @@ metadata:
     - JSON
   tests:
     - contents: |
-      {
-        "foo": "bar"
-        , "baz":
-        "bat" }
-     restyled: |
-      {
-        "foo": "bar",
-        "baz": "bat"
-      }
-    
+        {
+           "foo": "bar"
+           , "baz":
+         "bat" }
+      restyled: |
+        {
+          "foo": "bar",
+          "baz": "bat"
+        }
