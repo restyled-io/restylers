@@ -1,0 +1,23 @@
+---
+overrides: prettier
+name: prettier-json
+arguments:
+include:
+  - '**/*.json'
+documentation:
+  - https://prettier.io/docs/en/options.html#parser
+metadata:
+  languages:
+    - JSON
+  tests:
+    - contents: |
+      {
+        "foo": "bar"
+        , "baz":
+        "bat" }
+     restyled: |
+      {
+        "foo": "bar",
+        "baz": "bat"
+      }
+    
