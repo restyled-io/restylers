@@ -258,6 +258,20 @@
   documentation:
     - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 - enabled: true
+  name: prettier-json
+  image: restyled/restyler-prettier:v1.19.1-2
+  command:
+    - prettier
+    - "--write"
+  arguments: []
+  include:
+    - "**/*.json"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://prettier.io/docs/en/options.html#parser
+- enabled: true
   name: prettier-markdown
   image: restyled/restyler-prettier:v1.19.1-2
   command:
