@@ -39,6 +39,7 @@ wiki:
 	  > ../restyled.io.wiki/Available-Restylers.md
 	(cd ../restyled.io.wiki && \
 	  git commit Available-Restylers.md -m "Update Available Restylers" && \
+	  git pull --rebase && \
 	  git push)
 
 .PHONY: restyler
