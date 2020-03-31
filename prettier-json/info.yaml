@@ -1,7 +1,6 @@
 ---
 overrides: prettier
 name: prettier-json
-arguments:
 include:
   - "**/*.json"
 documentation:
