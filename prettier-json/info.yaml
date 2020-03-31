@@ -9,7 +9,8 @@ metadata:
   languages:
     - JSON
   tests:
-    - contents: |
+    - extension: json
+      contents: |
         {
            "foo": "bar"
            , "baz":
