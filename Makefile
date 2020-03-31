@@ -47,6 +47,7 @@ restyler:
 	$(MAKE) -C ../restyler restylers_version \
 	  RESTYLERS_VERSION=$(RELEASE_TAG)
 
+.NOTPARALLEL: release
 .PHONY: release
 release: all release_tag wiki restyler
 
