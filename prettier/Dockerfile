@@ -1,4 +1,4 @@
-FROM node:6.9.1-slim
+FROM node:6.17.1-slim
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 ENV PRETTIER_VERSION 1.19.1
