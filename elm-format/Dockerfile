@@ -1,4 +1,4 @@
-FROM node:9.9.0-slim
+FROM node:9.11.2-slim
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 ENV ELM_VERSION 0.18
