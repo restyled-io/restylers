@@ -6,7 +6,7 @@ RUN stack upgrade
 RUN stack setup
 RUN stack install stylish-haskell-0.9.2.2
 
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \

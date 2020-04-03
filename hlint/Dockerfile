@@ -6,7 +6,7 @@ RUN stack upgrade
 ENV STACKAGE_RESOLVER lts-13.2
 RUN stack --resolver "$STACKAGE_RESOLVER" install hlint apply-refact
 
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \

@@ -6,7 +6,7 @@ RUN stack upgrade
 RUN stack setup
 RUN stack install hindent-5.3.1
 
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \

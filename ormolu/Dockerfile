@@ -12,7 +12,7 @@ RUN \
   stack setup && \
   stack install
 
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
