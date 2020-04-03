@@ -1,4 +1,4 @@
-FROM php:7.2.3-cli-alpine3.7
+FROM php:7.2.11-cli-alpine3.7
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 
