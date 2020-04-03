@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.11
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 RUN apk add --update bash curl unzip
