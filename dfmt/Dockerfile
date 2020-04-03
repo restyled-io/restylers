@@ -12,7 +12,7 @@ RUN git reset --hard "$DFMT_VERSION"
 RUN git submodule update --init
 RUN make
 
-FROM ubuntu:16.04
+FROM ubuntu:16.10
 MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
 ENV LANG en_US.UTF-8
 COPY --from=builder /dfmt/bin/dfmt /usr/bin/dfmt
