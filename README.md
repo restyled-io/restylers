@@ -2,8 +2,12 @@
 
 Language-specific restylers.
 
-See [the wiki](https://github.com/restyled-io/restyled.io/wiki) for more
-details.
+## Contributing
+
+See:
+
+- https://github.com/restyled-io/restyled.io/wiki/Contributing-to-Restyled
+- https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler
 
 ## LICENSE
 
