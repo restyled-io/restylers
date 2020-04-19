@@ -186,6 +186,20 @@
     - https://github.com/ndmitchell/hlint#readme
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
 - enabled: false
+  name: isort
+  image: restyled/restyler-isort:4.3.21
+  command:
+    - isort
+  arguments: []
+  include:
+    - "**/*.py"
+  interpreters:
+    - python
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://github.com/timothycrosley/isort
+- enabled: false
   name: jdt
   image: restyled/restyler-jdt:v2.10.0
   command:
