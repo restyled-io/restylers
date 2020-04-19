@@ -38,6 +38,7 @@ metadata:
         import sys
 
         from my_lib import Object, Object2, Object3
+        from third_party import lib3
 
         print("Hey")
         print("yo")
