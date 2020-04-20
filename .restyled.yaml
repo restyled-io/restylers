@@ -8,31 +8,10 @@ remote_files:
     path: .stylish-haskell.yaml
 
 restylers:
-  - astyle
-  - autopep8
-  - black
   - brittany
-  - clang-format
-  - dfmt
-  - elm-format
-  - google-java-format
-  #- hindent
   - hlint
-  - isort
-  - jdt
-  #- jq
-  #- ormolu
-  - pg_format
-  - php-cs-fixer
-  - prettier
   - prettier-markdown
-  #- prettier-ruby
   - prettier-yaml
-  - reorder-python-imports
   - rubocop
-  - rustfmt
-  - shellharden
   - shfmt
   - stylish-haskell
-  - terraform
-  - yapf
