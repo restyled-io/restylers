@@ -200,9 +200,9 @@
   documentation:
     - https://github.com/ndmitchell/hlint#readme
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
-- enabled: false
+- enabled: true
   name: isort
-  image: restyled/restyler-isort:4.3.21
+  image: restyled/restyler-isort:v4.3.21
   command:
     - isort
   arguments: []
@@ -213,7 +213,7 @@
   supports_arg_sep: true
   supports_multiple_paths: true
   documentation:
-    - https://github.com/timothycrosley/isort
+    - https://github.com/timothycrosley/isort/
 - enabled: false
   name: jdt
   image: restyled/restyler-jdt:v2.10.0
