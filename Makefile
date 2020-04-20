@@ -17,7 +17,12 @@ restylers.yaml: */info.yaml
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml
-	docker build --tag "$$(./build/restyler-meta get "$*" image)" "$*"
+	image="$$(./build/restyler-meta get "$*" image)"; \
+	  if build/image-exists "$$image"; then \
+	    docker pull "$$image"; \
+	  else \
+	    docker build --tag "$$image" "$*"; \
+	  fi
 	echo > $@
 
 %.tested: %/info.yaml
