@@ -18,6 +18,7 @@ restylers:
   - google-java-format
   #- hindent
   - hlint
+  - isort
   - jdt
   #- jq
   #- ormolu

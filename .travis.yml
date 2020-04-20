@@ -18,6 +18,7 @@ matrix:
     - env: RESTYLER=google-java-format
     - env: RESTYLER=hindent
     - env: RESTYLER=hlint
+    - env: RESTYLER=isort
     - env: RESTYLER=jdt
     - env: RESTYLER=ormolu
     - env: RESTYLER=pg_format
