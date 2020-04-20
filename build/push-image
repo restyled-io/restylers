@@ -5,15 +5,10 @@
 ###
 set -e
 
-image_exists() {
-  curl --silent --fail --location --show-error \
-    "https://index.docker.io/v1/repositories/$1/tags/$2"
-}
+read -r image
 
-IFS=: read -r image tag
-
-if image_exists "$image" "$tag" >/dev/null 2>&1; then
-  echo "Refusing: $image:$tag already exists on Docker Hub" >&2
+if ./build/image-exists "$image"; then
+  echo "Refusing: $image already exists on Docker Hub" >&2
 else
-  docker push "$image:$tag"
+  docker push "$image"
 fi

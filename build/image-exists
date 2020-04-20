@@ -1,0 +1,14 @@
+#!/bin/sh
+case "$1" in
+  *:*)
+    img=${1%:*}
+    tag=${1##*:}
+    url="https://index.docker.io/v1/repositories/$img/tags/$tag"
+    ;;
+  *)
+    echo "usage: image-exists NAME:TAG" >&2
+    exit 64
+    ;;
+esac
+
+curl --silent --fail --location --show-error "$url" >/dev/null 2>&1
