@@ -141,6 +141,21 @@
   supports_multiple_paths: true
   documentation:
     - https://github.com/avh4/elm-format
+- enabled: true
+  name: fantomas
+  image: restyled/restyler-fantomas:v3.3.0
+  command:
+    - fantomas
+  arguments: []
+  include:
+    - "**/*.fs"
+    - "**/*.fsi"
+    - "**/*.fsx"
+  interpreters: []
+  supports_arg_sep: false
+  supports_multiple_paths: false
+  documentation:
+    - https://github.com/fsprojects/fantomas
 - enabled: false
   name: google-java-format
   image: restyled/restyler-google-java-format:v1.6
