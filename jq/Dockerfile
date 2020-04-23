@@ -1,4 +1,4 @@
-FROM alpine:3.11.5
+FROM alpine:3.11.6
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 RUN apk add --update bash curl
 ENV JQ_VERSION=1.6
