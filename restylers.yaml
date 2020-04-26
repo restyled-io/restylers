@@ -466,7 +466,7 @@
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
 - enabled: true
   name: terraform
-  image: restyled/restyler-terraform:v0.11.7
+  image: restyled/restyler-terraform:v0.12.24
   command:
     - terraform
     - fmt
