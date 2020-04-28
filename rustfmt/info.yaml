@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: rustfmt
-version: v1.4.11-nightly
+version: v1.4.14-nightly
 command:
   - rustfmt
 include:
@@ -13,7 +13,11 @@ metadata:
   languages:
     - Rust
   tests:
-    - contents: |
+    - support:
+        path: rust-toolchain
+        contents: |
+          nightly-2019-12-20
+      contents: |
         // Attributes should be on their own lines
         struct CRepr {
             x: f32,y: f32,
