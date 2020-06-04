@@ -1,5 +1,11 @@
 {
   "extends": [
     "config:base"
+  ],
+  "automerge": true,
+  "automergeType": "pr",
+  "requiredStatusChecks": [
+    "continuous-integration/travis-ci/pr",
+    "continuous-integration/travis-ci/push"
   ]
 }
