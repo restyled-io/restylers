@@ -22,6 +22,17 @@ documentation:
 metadata:
   languages:
     - JavaScript
+    - JSX
+    - Angular
+    - Vue
+    - Flow
+    - TypeScript
+    - CSS, Less, and SCSS
+    - HTML
+    - JSON
+    - GraphQL
+    - Markdown, including GFM and MDX
+    - YAML
   tests:
     - extension: js
       contents: |
