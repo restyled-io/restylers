@@ -8,6 +8,15 @@ command:
 include:
   - "**/*.js"
   - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.ng"
+  - "**/*.hbs"
+  - "**/*.vue"
+  - "**/*.mjml"
+  - "**/*.less"
+  - "**/*.scss"
+  - "**/*.graphql"
 documentation:
   - https://prettier.io/docs/en/
 metadata:
