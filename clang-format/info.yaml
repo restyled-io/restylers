@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: clang-format
-version: v9.0.0
+version: v10.0.0
 command:
   - clang-format
   - "-i"
