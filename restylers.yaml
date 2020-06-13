@@ -72,7 +72,7 @@
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
 - enabled: true
   name: clang-format
-  image: restyled/restyler-clang-format:v9.0.0
+  image: restyled/restyler-clang-format:v10.0.0
   command:
     - clang-format
     - "-i"
