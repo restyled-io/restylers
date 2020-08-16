@@ -1,0 +1,24 @@
+---
+enabled: true
+name: gn
+version: v1
+command:
+  - gn
+  - "format"
+include:
+  - "**/*.gn"
+  - "**/*.gni"
+documentation:
+  - https://gn.googlesource.com/gn/+/master/docs/reference.md#cmd_format
+metadata:
+  languages:
+    - GN
+  tests:
+    - extension: gn
+      contents: |
+        sources = ["b", "a"]
+      restyled: |
+        sources = [
+          "a",
+          "b",
+        ]
