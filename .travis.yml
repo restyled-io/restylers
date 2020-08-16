@@ -15,6 +15,7 @@ matrix:
     - env: RESTYLER=dotnet-format
     - env: RESTYLER=elm-format
     - env: RESTYLER=fantomas
+    - env: RESTYLER=gn
     - env: RESTYLER=google-java-format
     - env: RESTYLER=hindent
     - env: RESTYLER=hlint
