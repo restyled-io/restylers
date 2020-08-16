@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-LABEL maintainer="Michael Spang <spang@google.com"
+LABEL maintainer="Michael Spang <spang@google.com>"
 ENV LANG en_US.UTF-8
 RUN apt-get update && \
     apt-get install -y wget unzip
