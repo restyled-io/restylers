@@ -156,6 +156,21 @@
   supports_multiple_paths: false
   documentation:
     - https://github.com/fsprojects/fantomas
+- enabled: true
+  name: gn
+  image: restyled/restyler-gn:v1
+  command:
+    - gn
+    - format
+  arguments: []
+  include:
+    - "**/*.gn"
+    - "**/*.gni"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://gn.googlesource.com/gn/+/master/docs/reference.md#cmd_format
 - enabled: false
   name: google-java-format
   image: restyled/restyler-google-java-format:v1.6
@@ -202,7 +217,7 @@
     - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
 - enabled: true
   name: isort
-  image: restyled/restyler-isort:v4.3.21
+  image: restyled/restyler-isort:v5.4.2
   command:
     - isort
   arguments: []
