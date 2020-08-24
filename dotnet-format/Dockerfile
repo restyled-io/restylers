@@ -1,3 +1,4 @@
+# hadolint ignore=DL3006
 FROM mcr.microsoft.com/dotnet/core/sdk
 RUN dotnet tool install -g dotnet-format
 ENV PATH="/root/.dotnet/tools:${PATH}"

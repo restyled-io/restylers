@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: shfmt
-version: v3.0.1
+version: v3.0.1-2
 command:
   - shfmt
   - "-w"

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eu
+
+# failure means we're on the "push" job. we'll just diff against parent
+mb=$(git merge-base master HEAD 2>/dev/null || echo "HEAD^")
+
+if ! git diff --name-only "$mb" | grep -q "^${RESTYLER}/"; then
+  echo "$RESTYLER unchanged, skipping."
+  exit 0
+fi
+
+parent=$(./build/restyler-meta overrides "$RESTYLER")
+
+if [ -n "$parent" ]; then
+  make "$parent"/Dockerfile.built "$RESTYLER".tested
+else
+  make \
+    "$RESTYLER"/Dockerfile.linted \
+    "$RESTYLER"/Dockerfile.tested
+fi

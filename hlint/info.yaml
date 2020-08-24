@@ -1,6 +1,6 @@
 ---
 name: hlint
-version: v2.1.11
+version: v2.1.11-2
 command:
   - hlint
   - lint

@@ -1,5 +1,5 @@
 FROM java:openjdk-9-jre
-MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
+LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 ENV GOOGLE_JAVA_FORMAT_JAR \
   https://github.com/google/google-java-format/releases/download/google-java-format-1.6/google-java-format-1.6-all-deps.jar

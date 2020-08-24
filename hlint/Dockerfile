@@ -1,5 +1,5 @@
 FROM quay.io/haskell_works/stack-build-minimal:18.04 as builder
-MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
+LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
 # Determines HLint version. lts-13.2 -> hlint-2.1.11 (apply-refact-0.6.0.0)
@@ -7,13 +7,13 @@ ENV STACKAGE_RESOLVER lts-13.2
 RUN stack --resolver "$STACKAGE_RESOLVER" install hlint apply-refact
 
 FROM ubuntu:18.04
-MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
+LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
   apt-get update && \
-  apt-get -y install \
-    gcc \
-    locales && \
+  apt-get -y install --no-install-recommends \
+    gcc=4:7.4.0-1ubuntu2.3 \
+    locales=2.27-3ubuntu1 && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 COPY --from=builder /root/.local/bin/hlint /usr/bin/hlint

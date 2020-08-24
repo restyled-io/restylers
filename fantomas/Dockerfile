@@ -1,3 +1,4 @@
+# hadolint ignore=DL3006
 FROM mcr.microsoft.com/dotnet/core/sdk
 LABEL maintainer="Jozef Hollý <j2.00ghz@gmail.com>"
 ENV PATH="/root/.dotnet/tools:${PATH}"

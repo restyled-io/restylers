@@ -4,6 +4,8 @@ OVERRIDES := $(shell ./build/restyler-meta overrides)
 
 all: $(IMAGES:%=%.pushed) $(OVERRIDES:%=%.tested)
 
+lint: $(IMAGES:%=%.linted)
+
 restylers.yaml: */info.yaml
 	./build/restyler-meta dump > $@
 	restyle-path $@
@@ -15,6 +17,10 @@ restylers.yaml: */info.yaml
 
 %/Dockerfile.tested: %/Dockerfile.built %/info.yaml
 	rspec --tag "$*"
+	echo > $@
+
+%/Dockerfile.linted: %/Dockerfile
+	@build/hadolint-pretty "$*/Dockerfile"
 	echo > $@
 
 %/Dockerfile.built: %/Dockerfile %/info.yaml

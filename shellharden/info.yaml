@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: shellharden
-version: v4.1.1-2
+version: v4.1.1-3
 command:
   - shellharden
   - "--replace"
