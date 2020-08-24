@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: rubocop
-version: v0.72.0-4
+version: v0.72.0-5
 command:
   - rubocop
   - "--auto-correct"

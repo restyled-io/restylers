@@ -2,6 +2,7 @@ FROM node:lts-alpine3.11 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 
+# hadolint ignore=DL3018,DL3019
 RUN \
   apk --update add bash g++ linux-headers make && \
   cd /tmp && \

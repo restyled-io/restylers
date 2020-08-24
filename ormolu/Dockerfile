@@ -13,12 +13,12 @@ RUN \
   stack install
 
 FROM ubuntu:18.04
-MAINTAINER Pat Brisbin <pbrisbin@gmail.com>
+LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
   apt-get update && \
-  apt-get -y install \
-    locales && \
+  apt-get --no-install-recommends -y install \
+    locales=2.27-3ubuntu1 && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 

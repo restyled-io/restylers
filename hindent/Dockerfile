@@ -3,14 +3,14 @@ LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
 RUN stack upgrade
-RUN stack setup
-RUN stack install hindent-5.3.1
+RUN stack setup --resolver lts-11.22
+RUN stack install --resolver lts-11.22 hindent-5.3.1
 
 FROM ubuntu:18.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \
-  apt-get -y install locales && \
+  apt-get -y install --no-install-recommends locales=2.27-3ubuntu1 && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 ENV LANG en_US.UTF-8

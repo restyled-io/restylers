@@ -1,6 +1,6 @@
 ---
 name: brittany
-version: v0.12.1.1
+version: v0.12.1.1-2
 command:
   - brittany
   - "--write-mode=inplace"

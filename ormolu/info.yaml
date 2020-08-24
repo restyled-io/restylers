@@ -1,6 +1,6 @@
 ---
 name: ormolu
-version: v0.0.1.0
+version: v0.0.1.0-2
 command:
   - ormolu
   - "--mode"

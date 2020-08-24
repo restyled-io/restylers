@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: black
-version: v19.10b0
+version: v19.10b0-3
 include:
   - "**/*.py"
 interpreters:

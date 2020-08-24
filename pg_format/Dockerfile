@@ -1,11 +1,14 @@
-FROM alpine
-MAINTAINER pbrisbin@gmail.com
+FROM alpine:3.9
+LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
 ENV PG_FORMAT_VERSION 3.3
 ENV PG_FORMAT_RELEASE \
   https://github.com/darold/pgFormatter/archive/v$PG_FORMAT_VERSION.tar.gz
 
-RUN apk add -u curl perl make
+RUN apk add --no-cache \
+  curl=7.64.0-r3 \
+  perl=5.26.3-r1 \
+  make=4.2.1-r2
 
 RUN \
   cd /tmp && \
