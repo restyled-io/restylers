@@ -49,3 +49,6 @@ spec = do
 
         format opts content `shouldBe` expected
         format opts { foNewlines = False } content `shouldBe` content
+
+    it "does not affect completely empty files" $ do
+        format opts "" `shouldBe` ""

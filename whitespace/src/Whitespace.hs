@@ -43,7 +43,9 @@ isCRLF :: ByteString -> Bool
 isCRLF = ("\r\n" `C8.isInfixOf`)
 
 format :: FormatOptions -> ByteString -> ByteString
-format opts = onOpt foNewlines newlines . onOpt foSpaces spaces
+format opts bs
+    | BS.null bs = bs
+    | otherwise = onOpt foNewlines newlines $ onOpt foSpaces spaces bs
     where onOpt attr f = bool id f $ attr opts
 
 -- | Ensure a single trailing newline
