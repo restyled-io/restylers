@@ -52,11 +52,16 @@ release.wiki:
 	  git pull --rebase && \
 	  git push)
 
+# TODO: Give restyled-ci permissions
+AWS ?= aws --profile restyled
+RELEASE_ENV ?= prod
+
 .PHONY: release.restyler
 release.restyler:
-	$(MAKE) -C ../restyler restylers_version \
-	  RESTYLERS_VERSION=$(RELEASE_TAG)
-
+	$(AWS) ssm put-parameter \
+	  --name /restyled/$(RELEASE_ENV)/restylers-version \
+	  --type String \
+	  --value "$(RELEASE_TAG)"
 
 .PHONY: release.prep
 release.prep: all restylers.yaml
