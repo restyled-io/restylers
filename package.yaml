@@ -1,0 +1,67 @@
+name: restylers
+version: 0.0.0.0
+license: MIT
+
+dependencies:
+  - base
+  - rio
+
+default-extensions:
+  - BangPatterns
+  - DataKinds
+  - DeriveAnyClass
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveLift
+  - DeriveTraversable
+  - DerivingStrategies
+  - FlexibleContexts
+  - FlexibleInstances
+  - GADTs
+  - GeneralizedNewtypeDeriving
+  - LambdaCase
+  - MultiParamTypeClasses
+  - NoImplicitPrelude
+  - NoMonomorphismRestriction
+  - OverloadedStrings
+  - RankNTypes
+  - RecordWildCards
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TypeApplications
+  - TypeFamilies
+
+library:
+  source-dirs: src
+  dependencies:
+    - aeson
+    - hspec
+    - http-conduit
+    - http-types
+    - lens
+    - optparse-applicative
+    - semigroups
+    - yaml
+
+executables:
+  restylers:
+    main: Main.hs
+    source-dirs: app
+    dependencies:
+      - Glob
+      - restylers
+
+tests:
+  doctest:
+    main: Main.hs
+    source-dirs: doctest
+    dependencies:
+      - doctest
+  spec:
+    main: Spec.hs
+    source-dirs: test
+    dependencies:
+      - aeson
+      - hspec
+      - restylers

@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+#
+# We want a specific order of keys in restylers.yaml, since it's effectively
+# documentation. This helper uses Ruby, which preserves Hash insertion order
+# through to the resulting YAML, as a way to re-order the keys to what we want
+# after we've processed everything in a better (gasp!) language.
+#
+# Examples:
+#
+#   % cat something.yaml
+#   bar: false
+#   foo:
+#     - true
+#
+#   % build/sort-yaml something.yaml foo bar && cat something.yaml
+#   foo:
+#     - true
+#   bar: false
+#
+# We only support re-sorting a top-level Object's keys, or an Array of such.
+#
+###
+require 'yaml'
+
+def sort_object(object, keys)
+  case object
+  when Array
+    object.map do |x|
+      sort_object(x, keys)
+    end
+  when Hash
+    KEYS.each_with_object({}) do |key, h|
+      h[key] = object.fetch(key)
+    end
+  else
+    object
+  end
+end
+
+PATH = ARGV.shift or raise "Usage: sort-yaml <path> [key...]"
+KEYS = ARGV
+
+object = YAML.load_file(PATH)
+sorted = sort_object(object, KEYS)
+File.write(PATH, YAML.dump(sorted))

@@ -2,12 +2,19 @@
 require "mustache"
 require "yaml"
 
+SNIPPET_KEYS = %w[
+  image
+  command
+  arguments
+  include
+  interpreters
+]
+
 def restylers
-  `build/restyler-meta names`.split("\n").map do |name|
-    info = YAML.safe_load(`build/restyler-meta get #{name} .`)
-    languages = info.fetch("metadata").fetch("languages")
-                    .map { |lang| lang.sub(/\*/, '\\*') }
-    snippet = info.slice("image", "command", "arguments", "include", "interpreters")
+  YAML.load_file("restylers.yaml").map do |info|
+    name = info.fetch("name")
+    languages = restyler_languages(name)
+    snippet = info.slice(*SNIPPET_KEYS)
 
     {
       name: name,
@@ -17,6 +24,14 @@ def restylers
       documentation: info.fetch("documentation").map { |url| { url: url } }
     }
   end
+end
+
+def restyler_languages(name)
+  info = YAML.load_file("restylers/#{name}/info.yaml")
+  info
+    .fetch("metadata")
+    .fetch("languages")
+    .map { |lang| lang.sub(/\*/, '\\*') }
 end
 
 def comparisons

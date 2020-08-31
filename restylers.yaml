@@ -302,6 +302,21 @@
   documentation:
     - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 - enabled: true
+  name: prettier
+  image: restyled/restyler-prettier:v2.0.2-2
+  command:
+    - prettier
+    - "--write"
+  arguments: []
+  include:
+    - "**/*.js"
+    - "**/*.jsx"
+  interpreters: []
+  supports_arg_sep: true
+  supports_multiple_paths: true
+  documentation:
+    - https://prettier.io/docs/en/
+- enabled: true
   name: prettier-json
   image: restyled/restyler-prettier:v2.0.2-2
   command:
@@ -366,21 +381,6 @@
   documentation:
     - https://prettier.io/docs/en/
     - https://prettier.io/blog/2018/07/29/1.14.0.html
-- enabled: true
-  name: prettier
-  image: restyled/restyler-prettier:v2.0.2-2
-  command:
-    - prettier
-    - "--write"
-  arguments: []
-  include:
-    - "**/*.js"
-    - "**/*.jsx"
-  interpreters: []
-  supports_arg_sep: true
-  supports_multiple_paths: true
-  documentation:
-    - https://prettier.io/docs/en/
 - enabled: true
   name: reorder-python-imports
   image: restyled/restyler-reorder-python-imports:v1.6.0
