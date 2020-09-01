@@ -4,7 +4,8 @@ module Restylers.Manifest
     , load
     , lookup
     , writeUpdated
-    , Restyler(..)
+    , Restyler
+    , image
     )
 where
 
@@ -29,8 +30,16 @@ class HasRestylerManifest env where
     manifestL :: Lens' env RestylerManifest
 
 data Restyler = Restyler
-    { name :: RestylerName
+    { enabled :: Bool
+    , name :: RestylerName
     , image :: RestylerImage
+    , command :: [Text]
+    , arguments :: [Text]
+    , include :: [Text]
+    , interpreters :: [Text]
+    , supports_arg_sep :: Bool
+    , supports_multiple_paths :: Bool
+    , documentation :: [Text]
     }
     deriving stock Generic
     deriving anyclass (FromJSON, ToJSON)
@@ -65,5 +74,15 @@ unionInfos registry infos (RestylerManifest hm) =
         $ HashMap.union (loadRestylers $ map (fromInfo registry) infos) hm
 
 fromInfo :: Registry -> RestylerInfo -> Restyler
-fromInfo registry info =
-    Restyler { name = Info.name info, image = Info.image info registry }
+fromInfo registry info = Restyler
+    { enabled = Info.enabled info
+    , name = Info.name info
+    , image = Info.image info registry
+    , command = Info.command info
+    , arguments = Info.arguments info
+    , include = Info.include info
+    , interpreters = Info.interpreters info
+    , supports_arg_sep = Info.supports_arg_sep info
+    , supports_multiple_paths = Info.supports_multiple_paths info
+    , documentation = Info.documentation info
+    }

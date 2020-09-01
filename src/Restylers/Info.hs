@@ -13,6 +13,7 @@ where
 import RIO
 
 import Data.Aeson
+import Data.Aeson.Types (Parser)
 import qualified Data.Yaml as Yaml
 import Restylers.Image
 import Restylers.Name
@@ -22,36 +23,56 @@ import qualified RIO.HashMap as HashMap
 import RIO.Text (unpack)
 
 data RestylerInfo = RestylerInfo
-    { name :: RestylerName
+    { enabled :: Bool
+    , name :: RestylerName
     , image :: Registry -> RestylerImage
     , command :: [Text]
     , arguments :: [Text]
+    , include :: [Text]
+    , interpreters :: [Text]
     , supports_arg_sep :: Bool
     , supports_multiple_paths :: Bool
+    , documentation :: [Text]
     , metadata :: Metadata
     }
 
 instance FromJSON RestylerInfo where
     parseJSON = withObject "RestylerInfo" $ \o -> do
+        enabled <- o .:? "enabled" .!= False
         name <- o .: "name"
-        mVersion <- o .:? "version"
-        mImage <- o .:? "image"
-        image <- case (mVersion, mImage) of
-            (Nothing, Nothing) -> fail "One of version or image is required"
-            (_, Just i) -> pure $ const i
-            (Just v, _) -> pure $ \registry ->
-                RestylerImage
-                    $ unRegistry registry
-                    <> "/restyler-"
-                    <> unRestylerName name
-                    <> ":"
-                    <> v
+        image <- parseImage name o
         command <- o .:? "command" .!= [unRestylerName name]
         arguments <- o .:? "arguments" .!= []
+        include <- o .:? "include" .!= []
+        interpreters <- o .:? "interpreters" .!= []
         supports_arg_sep <- o .:? "supports_arg_sep" .!= True
         supports_multiple_paths <- o .:? "supports_multiple_paths" .!= True
+        documentation <- o .:? "documentation" .!= []
         metadata <- o .:? "metadata" .!= emptyMetadata
         pure RestylerInfo { .. }
+
+-- | Parse a /function/ for producing a 'RestylerImage'
+--
+-- If the @image@ key is given, you get back a constant function of it.
+--
+-- Otherwise, we require @version@ (and we have @name) and you get back a
+-- function that will build an image using that and the 'Registry' you call it
+-- with.
+--
+parseImage :: RestylerName -> Object -> Parser (Registry -> RestylerImage)
+parseImage name o = do
+    mVersion <- o .:? "version"
+    mImage <- o .:? "image"
+    case (mVersion, mImage) of
+        (Nothing, Nothing) -> fail "One of version or image is required"
+        (_, Just i) -> pure $ const i
+        (Just v, _) -> pure $ \registry ->
+            RestylerImage
+                $ unRegistry registry
+                <> "/restyler-"
+                <> unRestylerName name
+                <> ":"
+                <> v
 
 data RestylerOverride = RestylerOverride
     { overrides :: RestylerName
