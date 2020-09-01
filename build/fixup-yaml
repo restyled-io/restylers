@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require 'yaml'
+
+RESTYLERS_YAML = "restylers.yaml"
+RESTYLERS_KEYS = %w[
+  enabled
+  name
+  image
+  command
+  arguments
+  include
+  interpreters
+  supports_arg_sep
+  supports_multiple_paths
+  documentation
+]
+
+restylers = YAML.load_file(RESTYLERS_YAML)
+restylers_sorted = restylers.map do |restyler|
+  RESTYLERS_KEYS.each_with_object({}) do |key, h|
+    h[key] = restyler.fetch(key)
+  end
+end
+
+
+File.write(RESTYLERS_YAML, YAML.dump(restylers_sorted))
+system("restyle-path", RESTYLERS_YAML)
