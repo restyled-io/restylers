@@ -9,7 +9,7 @@ import Restylers.App
 import Restylers.Build
 import qualified Restylers.Info as Info
 import Restylers.Options
-import RIO.Process
+import Restylers.Test
 
 main :: IO ()
 main = do
@@ -21,4 +21,6 @@ main = do
             logDebug $ "Options: " <> displayShow opts
 
             info <- Info.load "black/info.yaml"
+
             buildRestylerImage info
+            testRestylerImage info

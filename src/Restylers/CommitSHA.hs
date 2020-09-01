@@ -5,4 +5,7 @@ where
 
 import RIO
 
-newtype CommitSHA = CommitSHA { unCommitSHA :: Text }
+newtype CommitSHA = CommitSHA
+    { unCommitSHA :: Text
+    }
+    deriving stock Show

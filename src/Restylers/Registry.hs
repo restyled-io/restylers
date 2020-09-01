@@ -5,4 +5,7 @@ where
 
 import RIO
 
-newtype Registry = Registry { unRegistry :: Text }
+newtype Registry = Registry
+    { unRegistry :: Text
+    }
+    deriving stock Show

@@ -38,6 +38,7 @@ library:
     - aeson
     - aeson-casing
     - bytestring
+    - hspec
     - lens
     - lens-aeson
     - load-env
@@ -47,7 +48,7 @@ library:
     - yaml
 
 executables:
-  agent:
+  restylers:
     main: Main.hs
     source-dirs: app
     dependencies:
