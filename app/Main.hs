@@ -7,12 +7,17 @@ import RIO
 
 import Restylers.App
 import Restylers.Build
-import Restylers.Info (restylerInfoYaml)
+import Restylers.CommitSHA
+import Restylers.Image
+import Restylers.Info (RestylerInfo, restylerInfoYaml)
 import qualified Restylers.Info as Info
 import qualified Restylers.Manifest as Manifest
+import Restylers.Name
 import Restylers.Options
+import Restylers.Registry
 import Restylers.Release
 import Restylers.Test
+import qualified RIO.Text as T
 import System.FilePath.Glob (globDir1)
 
 main :: IO ()
@@ -24,33 +29,60 @@ main = do
         runRIO app $ do
             logDebug $ "Options: " <> displayShow opts
 
-            case oName of
-                Nothing -> do
+            case oCommand of
+                Release -> do
                     yamls <- liftIO $ globDir1 "*/info.yaml" "."
-                    infos <- fmap concat $ for yamls $ \yaml -> do
-                        logDebug $ "Releasing from " <> fromString yaml
+                    updates <- fmap concat $ for yamls $ \yaml -> do
+                        logDebug $ "Reading " <> fromString yaml
                         info <- Info.load yaml
-                        exists <- releaseRestylerImageExists info
+                        let image = Info.image info oRegistry
+
+                        -- This bit is coupled to DockerHub for now
+                        exists <- do
+                            when (unRegistry oRegistry /= "restyled")
+                                $ throwString "TODO: Explain this"
+                            dockerHubImageExists image
 
                         if exists
                             then do
                                 logInfo
                                     $ "Skipping "
-                                    <> fromString yaml
-                                    <> ", released imaged exists"
+                                    <> display (Info.name info)
+                                    <> ", "
+                                    <> display image
+                                    <> " exists"
                                 pure []
                             else do
-                                buildRestylerImage info
-                                testRestylerImage info
-                                releaseRestylerImage info
+                                logInfo
+                                    $ "Releasing "
+                                    <> display (Info.name info)
+                                    <> " to "
+                                    <> display image
+                                buildRestylerImage info image
+                                testRestylerImage info image
+                                releaseRestylerImage info image
                                 pure [info]
 
-                    unless (null infos) $ do
-                        logInfo "Re-writing manifest"
-                        Manifest.writeUpdated oManifest infos
+                    logInfo "Re-writing manifest"
+                    Manifest.writeUpdated oManifest updates
 
-                Just name -> do
-                    logDebug $ "Building and testing " <> display name
-                    info <- Info.load $ restylerInfoYaml name
-                    buildRestylerImage info
-                    testRestylerImage info
+                Build names sha -> do
+                    for_ names $ \name -> do
+                        info <- Info.load $ restylerInfoYaml name
+                        let image = buildImage oRegistry info sha
+                        logDebug
+                            $ "Building and testing "
+                            <> display name
+                            <> " as "
+                            <> display image
+                        buildRestylerImage info image
+                        testRestylerImage info image
+
+buildImage :: Registry -> RestylerInfo -> CommitSHA -> RestylerImage
+buildImage registry info sha =
+    RestylerImage
+        $ unRegistry registry
+        <> "/restyler-"
+        <> unRestylerName (Info.name info)
+        <> ":"
+        <> T.take 7 (unCommitSHA sha)

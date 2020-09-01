@@ -76,7 +76,7 @@ data Test = Test
     , contents :: Text
     , restyled :: Text
     }
-    deriving stock Generic
+    deriving stock (Show, Generic)
     deriving anyclass FromJSON
 
 restylerInfoYaml :: RestylerName -> FilePath
