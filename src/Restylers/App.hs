@@ -31,7 +31,10 @@ instance HasOptions App where
 instance HasRestylerManifest App where
     manifestL = lens appManifest $ \x y -> x { appManifest = y }
 
+-- brittany-disable-next-binding
+
 loadApp :: Options -> LogFunc -> IO App
-loadApp opts lf =
-    App lf <$> mkDefaultProcessContext <*> pure opts <*> Manifest.load
-        "restylers.yaml"
+loadApp opts lf = App lf
+    <$> mkDefaultProcessContext
+    <*> pure opts
+    <*> Manifest.load (oManifest opts)

@@ -11,4 +11,5 @@ case "$1" in
     ;;
 esac
 
+echo "$url"
 curl --silent --fail --location --show-error "$url" >/dev/null 2>&1

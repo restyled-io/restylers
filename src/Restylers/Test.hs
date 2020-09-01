@@ -5,7 +5,7 @@ where
 
 import RIO
 
-import Restylers.Image
+import Restylers.Build (buildTag)
 import Restylers.Info (RestylerInfo, Test)
 import qualified Restylers.Info as Info
 import Restylers.Name
@@ -58,23 +58,23 @@ runRestyler info tests = do
         writeFileUtf8 (testPath info nt) $ Info.contents $ ntTest nt
 
     cwd <- getCurrentDirectory
-    registry <- oRegistry <$> view optionsL
+    options <- view optionsL
 
     if Info.supports_multiple_paths info
-        then dockerRun cwd registry relativePaths
-        else traverse_ (dockerRun cwd registry . pure) relativePaths
+        then dockerRun options cwd relativePaths
+        else traverse_ (dockerRun options cwd . pure) relativePaths
   where
     -- Restyler prepends ./, so we do too
     relativePaths = map (("./" <>) . testPath info) tests
 
     -- Restyler uniques the created arguments, so we do too
-    dockerRun cwd registry paths = proc
+    dockerRun Options {..} cwd paths = proc
         "docker"
         (nub $ concat
             [ ["run", "--interactive", "--rm"]
             , ["--net", "none"]
             , ["--volume", cwd <> ":/code"]
-            , [unpack $ unRestylerImage $ Info.image info registry]
+            , [buildTag oRegistry info oCommitSHA]
             , map unpack $ Info.command info
             , map unpack $ Info.arguments info
             , [ "--" | Info.supports_arg_sep info ]

@@ -1,5 +1,9 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE NamedFieldPuns #-}
+
 module Restylers.Info
     ( RestylerInfo(..)
+    , restylerInfoYaml
     , Metadata(..)
     , Test(..)
     , load
@@ -13,6 +17,9 @@ import qualified Data.Yaml as Yaml
 import Restylers.Image
 import Restylers.Name
 import Restylers.Registry
+import RIO.FilePath ((</>))
+import qualified RIO.HashMap as HashMap
+import RIO.Text (unpack)
 
 data RestylerInfo = RestylerInfo
     { name :: RestylerName
@@ -23,7 +30,6 @@ data RestylerInfo = RestylerInfo
     , supports_multiple_paths :: Bool
     , metadata :: Metadata
     }
-    deriving stock Generic
 
 instance FromJSON RestylerInfo where
     parseJSON = withObject "RestylerInfo" $ \o -> do
@@ -47,15 +53,23 @@ instance FromJSON RestylerInfo where
         metadata <- o .:? "metadata" .!= emptyMetadata
         pure RestylerInfo { .. }
 
+data RestylerOverride = RestylerOverride
+    { overrides :: RestylerName
+    , details :: Value
+    }
+
+instance FromJSON RestylerOverride where
+    parseJSON = withObject "RestylerOverride" $ \o -> do
+        overrides <- o .: "overrides"
+        let details = Object o
+        pure RestylerOverride { .. }
+
 data Metadata = Metadata
     { languages :: [Text]
     , tests :: [Test]
     }
     deriving stock Generic
     deriving anyclass FromJSON
-
-emptyMetadata :: Metadata
-emptyMetadata = Metadata [] []
 
 data Test = Test
     { extension :: Maybe Text
@@ -65,5 +79,28 @@ data Test = Test
     deriving stock Generic
     deriving anyclass FromJSON
 
+restylerInfoYaml :: RestylerName -> FilePath
+restylerInfoYaml = (</> "info.yaml") . unpack . unRestylerName
+
 load :: MonadIO m => FilePath -> m RestylerInfo
-load = Yaml.decodeFileThrow
+load path = liftIO $ do
+    eOverride <- Yaml.decodeFileEither path
+
+    case eOverride of
+        Left _ -> Yaml.decodeFileThrow path
+        Right RestylerOverride { overrides, details } -> do
+            base <- Yaml.decodeFileThrow $ restylerInfoYaml overrides
+            case fromJSON $ unionValues base details of
+                Error msg ->
+                    throwString
+                        $ "Failed to parse overridden Restyler Value as JSON: "
+                        <> msg
+                Success x -> pure x
+
+unionValues :: Value -> Value -> Value
+unionValues (Object hm1) (Object hm2) =
+    Object $ HashMap.unionWith unionValues hm1 hm2
+unionValues x _ = x
+
+emptyMetadata :: Metadata
+emptyMetadata = Metadata [] []

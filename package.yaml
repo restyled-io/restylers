@@ -36,15 +36,11 @@ library:
   source-dirs: src
   dependencies:
     - aeson
-    - aeson-casing
-    - bytestring
     - hspec
     - lens
-    - lens-aeson
-    - load-env
-    - optparse-applicative
-    - parsec
-    - random
+    - http-conduit
+    - http-types
+    # - optparse-applicative
     - yaml
 
 executables:
@@ -52,6 +48,7 @@ executables:
     main: Main.hs
     source-dirs: app
     dependencies:
+      - Glob
       - restylers
 
 # tests:

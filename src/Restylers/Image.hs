@@ -10,4 +10,4 @@ import Data.Aeson
 newtype RestylerImage = RestylerImage
     { unRestylerImage :: Text
     }
-    deriving newtype FromJSON
+    deriving newtype (FromJSON, ToJSON)
