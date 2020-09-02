@@ -43,7 +43,7 @@
     - https://github.com/hhatto/autopep8
 - enabled: true
   name: black
-  image: restyled/restyler-black:v19.10b0-3
+  image: restyled/restyler-black:v20.8b1
   command:
     - black
   arguments: []
