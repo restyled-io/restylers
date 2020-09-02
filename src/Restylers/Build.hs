@@ -6,11 +6,12 @@ where
 import RIO
 
 import Restylers.Image
+import Restylers.Info (restylerInfoYaml)
 import Restylers.Manifest (HasRestylerManifest(..))
 import qualified Restylers.Manifest as Manifest
-import Restylers.Name
 import Restylers.Restyler (Restyler)
 import qualified Restylers.Restyler as Restyler
+import RIO.FilePath (takeDirectory)
 import RIO.Process
 import RIO.Text (unpack)
 
@@ -41,4 +42,4 @@ unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage
 
 buildPath :: Restyler -> FilePath
-buildPath = unpack . unRestylerName . Restyler.name
+buildPath = takeDirectory . restylerInfoYaml . Restyler.name
