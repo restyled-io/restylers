@@ -4,17 +4,25 @@ set -eu
 # failure means we're on the "push" job. we'll just diff against parent
 mb=$(git merge-base master HEAD 2>/dev/null || echo "HEAD^")
 
-if ! git diff --name-only "$mb" | grep -q "^${RESTYLER}/"; then
+if ! git diff --name-only "$mb" | grep -q "^restylers/${RESTYLER}/"; then
   echo "$RESTYLER unchanged, skipping."
   exit 0
 fi
 
-parent=$(./build/restyler-meta overrides "$RESTYLER")
+docker run --rm \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /tmp:/tmp \
+  --volume "$PWD":/code:ro \
+  restyled/restylers:v1 \
+  restylers build "restylers/$RESTYLER/info.yaml"
 
-if [ -n "$parent" ]; then
-  make "$parent"/Dockerfile.built "$RESTYLER".tested
-else
-  make \
-    "$RESTYLER"/Dockerfile.linted \
-    "$RESTYLER"/Dockerfile.tested
+docker run --rm \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /tmp:/tmp \
+  --volume "$PWD":/code:ro \
+  restyled/restylers:v1 \
+  restylers test "restylers/$RESTYLER/info.yaml"
+
+if [ -f "restylers/$RESTYLER/Dockerfile" ]; then
+  ./build/hadolint-pretty "restylers/$RESTYLER/Dockerfile"
 fi

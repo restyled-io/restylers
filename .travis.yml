@@ -1,9 +1,7 @@
 git:
   depth: false # fetch all branches
-language: ruby
-rvm:
-  - 2.6
-services: [docker]
+services:
+  - docker
 matrix:
   include:
     - env: RESTYLER=astyle
@@ -39,6 +37,6 @@ matrix:
     - env: RESTYLER=whitespace
     - env: RESTYLER=yapf
 install:
-  - gem install rspec
   - docker pull hadolint/hadolint
+  - docker pull restyled/restylers:v1
 script: ./build/ci
