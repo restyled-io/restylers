@@ -42,7 +42,7 @@ main = do
                 Test yamls -> do
                     restylers <- loadRestylers oRegistry yamls
                     traverse_ testRestylerImage restylers
-                Release yamls -> do
+                Release build test yamls -> do
                     restylers <- loadRestylers oRegistry yamls
 
                     for_ restylers $ \restyler -> do
@@ -56,7 +56,10 @@ main = do
                                 <> display (Restyler.image restyler)
                                 <> " exists"
                                 )
-                            else releaseRestylerImage restyler
+                            else do
+                                when build $ buildRestylerImage restyler
+                                when test $ testRestylerImage restyler
+                                releaseRestylerImage restyler
 
                     logInfo "Updating manifest"
                     Manifest.writeUpdated oManifest $ NE.toList restylers

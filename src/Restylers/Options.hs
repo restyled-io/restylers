@@ -16,7 +16,7 @@ data Command
     = List
     | Build (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
-    | Release (NonEmpty FilePath)
+    | Release Bool Bool (NonEmpty FilePath)
     deriving Show
 
 data Options = Options
@@ -57,10 +57,18 @@ options = Options
         )
     <*> subparser
         (  command "list" (parse (pure List) "List known Restyler names")
-        <> command "build" (parse (Build <$> yamlsArgument) "Release un-released Manifest images")
+        <> command "build" (parse (Build <$> yamlsArgument) "Build Restylers")
         <> command "test" (parse (Test <$> yamlsArgument) "Test Restylers")
-        <> command "release" (parse (Release <$> yamlsArgument) "Test all Restylers")
+        <> command "release" (parse releaseOptions "Release Restylers")
         )
+
+-- brittany-disable-next-binding
+
+releaseOptions :: Parser Command
+releaseOptions = Release
+    <$> (not <$> switch (long "no-build" <> help "Release without [re-]building"))
+    <*> (not <$> switch (long "no-test" <> help "Release without testing"))
+    <*> yamlsArgument
 
 yamlsArgument :: Parser (NonEmpty FilePath)
 yamlsArgument =
