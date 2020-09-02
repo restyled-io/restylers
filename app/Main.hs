@@ -8,13 +8,13 @@ import RIO
 import Restylers.App
 import Restylers.Build
 import Restylers.Image
-import Restylers.Info (RestylerInfo)
-import qualified Restylers.Info as Info
 import Restylers.Manifest (HasRestylerManifest)
 import qualified Restylers.Manifest as Manifest
 import Restylers.Options
 import Restylers.Registry
 import Restylers.Release
+import Restylers.Restyler (Restyler)
+import qualified Restylers.Restyler as Restyler
 import Restylers.Test
 import qualified RIO.NonEmpty as NE
 import RIO.Process
@@ -32,31 +32,32 @@ main = do
             case oCommand of
                 List -> do
                     yamls <- liftIO $ globDir1 "*/info.yaml" "."
-                    void $ withEachInfoImage oRegistry yamls $ \info _ ->
-                        logInfo $ display $ Info.name info
+                    void $ withEachRestyler oRegistry yamls $ \restyler ->
+                        logInfo $ display $ Restyler.name restyler
                 Build yamls -> void
-                    $ withEachInfoImage oRegistry yamls buildRestylerImage
+                    $ withEachRestyler oRegistry yamls buildRestylerImage
                 Test yamls ->
-                    void $ withEachInfoImage oRegistry yamls testRestylerImage
+                    void $ withEachRestyler oRegistry yamls testRestylerImage
                 Release yamls -> do
-                    updates <-
-                        withEachInfoImage oRegistry yamls $ \info image -> do
-                            exists <- dockerHubImageExists image
+                    updates <- withEachRestyler oRegistry yamls $ \restyler ->
+                        do
+                            exists <- dockerHubImageExists
+                                $ Restyler.image restyler
 
                             if exists
                                 then [] <$ logInfo
                                     ("Skipping "
-                                    <> display (Info.name info)
+                                    <> display (Restyler.name restyler)
                                     <> ", "
-                                    <> display image
+                                    <> display (Restyler.image restyler)
                                     <> " exists"
                                     )
-                                else [info] <$ releaseRestylerImage info image
+                                else [restyler] <$ releaseRestylerImage restyler
 
                     logInfo "Re-writing manifest"
                     Manifest.writeUpdated oManifest $ concat $ NE.toList updates
 
-withEachInfoImage
+withEachRestyler
     :: ( MonadUnliftIO m
        , MonadReader env m
        , HasLogFunc env
@@ -66,15 +67,14 @@ withEachInfoImage
        )
     => Maybe Registry
     -> t FilePath
-    -> (RestylerInfo -> RestylerImage -> m a)
+    -> (Restyler -> m a)
     -> m (t a)
-withEachInfoImage registry yamls f = for yamls $ \yaml -> do
+withEachRestyler registry yamls f = for yamls $ \yaml -> do
     logDebug $ "Reading " <> fromString yaml
-    info <- Info.load yaml
-    let image = Info.image info registry
+    restyler <- Restyler.loadInfo registry yaml
     logDebug
         $ "Processing "
-        <> display (Info.name info)
+        <> display (Restyler.name restyler)
         <> " as "
-        <> display image
-    f info image
+        <> display (Restyler.image restyler)
+    f restyler

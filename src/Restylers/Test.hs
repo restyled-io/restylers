@@ -6,21 +6,17 @@ where
 import RIO
 
 import Restylers.Image
-import Restylers.Info (RestylerInfo, Test)
-import qualified Restylers.Info as Info
+import Restylers.Info (restylerInfoYaml)
+import qualified Restylers.Info.Metadata as Metadata
+import Restylers.Info.Test
+    (Test, assertTestRestyled, testFilePath, writeTestFiles)
 import Restylers.Name
+import Restylers.Restyler (Restyler)
+import qualified Restylers.Restyler as Restyler
 import RIO.Directory (getCurrentDirectory, withCurrentDirectory)
 import RIO.List (nub)
 import RIO.Process
 import RIO.Text (unpack)
-
-data ExpectationFailure = ExpectationFailure
-    { efName :: RestylerName
-    , efTest :: NumberedTest
-    , efActual :: Text
-    }
-    deriving stock Show
-    deriving anyclass Exception
 
 testRestylerImage
     :: ( MonadUnliftIO m
@@ -28,27 +24,21 @@ testRestylerImage
        , HasLogFunc env
        , HasProcessContext env
        )
-    => RestylerInfo
-    -> RestylerImage
+    => Restyler
     -> m ()
-testRestylerImage info image = do
-    let name = unpack $ unRestylerName $ Info.name info
-        tests = numberTests $ Info.tests $ Info.metadata info
+testRestylerImage restyler = do
+    metadata <- Metadata.load $ restylerInfoYaml $ Restyler.name restyler
+
+    let name = unpack $ unRestylerName $ Restyler.name restyler
+        tests = zip [1 ..] $ Metadata.tests metadata
 
     inTempDir $ do
         logInfo $ "Setting up " <> fromString name <> " test cases"
-        runRestyler info image tests
+        runRestyler restyler tests
 
         logInfo $ "Running " <> displayShow (length tests) <> " assertion(s)"
-        for_ tests $ \nt -> do
-            actual <- readFileUtf8 $ testPath info nt
-            when (actual /= Info.restyled (ntTest nt))
-                $ throwIO
-                $ ExpectationFailure
-                      { efName = Info.name info
-                      , efTest = nt
-                      , efActual = actual
-                      }
+        for_ tests $ \(number, test) -> do
+            assertTestRestyled number (Restyler.name restyler) test
             logInfo "Passed"
 
 inTempDir :: MonadUnliftIO m => m a -> m a
@@ -57,22 +47,26 @@ inTempDir f = withSystemTempDirectory "restylers-tests"
 
 runRestyler
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
-    => RestylerInfo
-    -> RestylerImage
-    -> [NumberedTest]
+    => Restyler
+    -> [(Int, Test)]
     -> m ()
-runRestyler info image tests = do
-    for_ tests $ \nt ->
-        writeFileUtf8 (testPath info nt) $ Info.contents $ ntTest nt
+runRestyler restyler tests = do
+    -- TODO: This might clobber support files between cases, so, heads-up
+    for_ tests $ \(number, test) -> do
+        writeTestFiles number (Restyler.name restyler) test
 
     cwd <- getCurrentDirectory
 
-    if Info.supports_multiple_paths info
+    if Restyler.supports_multiple_paths restyler
         then dockerRun cwd relativePaths
         else traverse_ (dockerRun cwd . pure) relativePaths
   where
     -- Restyler prepends ./, so we do too
-    relativePaths = map (("./" <>) . testPath info) tests
+    relativePaths = map
+        (\(number, test) ->
+            "./" <> testFilePath number (Restyler.name restyler) test
+        )
+        tests
 
     -- Restyler uniques the created arguments, so we do too
     dockerRun cwd paths = proc
@@ -81,29 +75,11 @@ runRestyler info image tests = do
             [ ["run", "--interactive", "--rm"]
             , ["--net", "none"]
             , ["--volume", cwd <> ":/code"]
-            , [unpack $ unRestylerImage image]
-            , map unpack $ Info.command info
-            , map unpack $ Info.arguments info
-            , [ "--" | Info.supports_arg_sep info ]
+            , [unpack $ unRestylerImage $ Restyler.image restyler]
+            , map unpack $ Restyler.command restyler
+            , map unpack $ Restyler.arguments restyler
+            , [ "--" | Restyler.supports_arg_sep restyler ]
             , paths
             ]
         )
         runProcess_
-
-data NumberedTest = NumberedTest
-    { ntNumber :: Int
-    , ntTest :: Test
-    }
-    deriving stock Show
-
-numberTests :: [Test] -> [NumberedTest]
-numberTests = zipWith NumberedTest [1 ..]
-
-testPath :: RestylerInfo -> NumberedTest -> FilePath
-testPath info NumberedTest {..} =
-    unpack
-        $ unRestylerName (Info.name info)
-        <> "-test-"
-        <> tshow ntNumber
-        <> "."
-        <> fromMaybe "tmp" (Info.extension ntTest)

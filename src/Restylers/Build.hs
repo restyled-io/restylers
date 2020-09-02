@@ -6,11 +6,11 @@ where
 import RIO
 
 import Restylers.Image
-import Restylers.Info (RestylerInfo)
-import qualified Restylers.Info as Info
 import Restylers.Manifest (HasRestylerManifest(..))
 import qualified Restylers.Manifest as Manifest
 import Restylers.Name
+import Restylers.Restyler (Restyler)
+import qualified Restylers.Restyler as Restyler
 import RIO.Process
 import RIO.Text (unpack)
 
@@ -21,19 +21,24 @@ buildRestylerImage
        , HasProcessContext env
        , HasRestylerManifest env
        )
-    => RestylerInfo
-    -> RestylerImage
+    => Restyler
     -> m ()
-buildRestylerImage info image = do
+buildRestylerImage restyler = do
     manifest <- view manifestL
 
-    for_ (Manifest.lookup (Info.name info) manifest) $ \restyler -> do
+    for_ (Manifest.lookup (Restyler.name restyler) manifest) $ \released -> do
         logInfo "Pulling currently-released image"
-        proc "docker" ["pull", unImage $ Manifest.image restyler] runProcess_
+        proc "docker" ["pull", unImage $ Restyler.image released] runProcess_
 
     logInfo $ "Building updated image as " <> display image
-    proc "docker" ["build", "--tag", unImage image, buildPath info] runProcess_
-    where unImage = unpack . unRestylerImage
+    proc
+        "docker"
+        ["build", "--tag", unImage image, buildPath restyler]
+        runProcess_
+    where image = Restyler.image restyler
 
-buildPath :: RestylerInfo -> FilePath
-buildPath = unpack . unRestylerName . Info.name
+unImage :: RestylerImage -> String
+unImage = unpack . unRestylerImage
+
+buildPath :: Restyler -> FilePath
+buildPath = unpack . unRestylerName . Restyler.name

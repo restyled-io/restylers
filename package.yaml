@@ -37,10 +37,11 @@ library:
   dependencies:
     - aeson
     - hspec
-    - lens
     - http-conduit
     - http-types
+    - lens
     - optparse-applicative
+    - semigroups
     - yaml
 
 executables:

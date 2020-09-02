@@ -1,20 +1,19 @@
 module Restylers.Release
     ( releaseRestylerImage
-    , dockerHubImageExists
     )
 where
 
 import RIO
 
 import Restylers.Image
-import Restylers.Info (RestylerInfo)
+import Restylers.Restyler (Restyler)
+import qualified Restylers.Restyler as Restyler
 import RIO.Process
 import RIO.Text (unpack)
 
 releaseRestylerImage
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
-    => RestylerInfo
-    -> RestylerImage
+    => Restyler
     -> m ()
-releaseRestylerImage _info image =
-    proc "docker" ["push", unpack $ unRestylerImage image] runProcess_
+releaseRestylerImage restyler = proc "docker" ["push", image] runProcess_
+    where image = unpack $ unRestylerImage $ Restyler.image restyler
