@@ -9,18 +9,18 @@ where
 import RIO
 
 import Options.Applicative
-import Restylers.CommitSHA
-import Restylers.Name
 import Restylers.Registry
 import RIO.NonEmpty (some1)
 
 data Command
-    = Release
-    | Build (NonEmpty RestylerName) CommitSHA
+    = List
+    | Build (NonEmpty FilePath)
+    | Test (NonEmpty FilePath)
+    | Release (NonEmpty FilePath)
     deriving Show
 
 data Options = Options
-    { oRegistry :: Registry
+    { oRegistry :: Maybe Registry
     , oManifest :: FilePath
     , oDebug :: Bool
     , oCommand :: Command
@@ -37,12 +37,11 @@ parseOptions = execParser $ parse options "Process Restylers"
 
 options :: Parser Options
 options = Options
-    <$> (Registry <$> strOption
+    <$> optional (Registry <$> strOption
         (  short 'r'
         <> long "registry"
         <> help "Registry to prefix all Docker images"
         <> metavar "PREFIX"
-        <> value "restyled"
         ))
     <*> strOption
         (  short 'm'
@@ -57,27 +56,15 @@ options = Options
         <> help "Log more verbosity"
         )
     <*> subparser
-        (  command "release" (parse (pure Release) "Release un-released Manifest images")
-        <> command "build" (parse buildCommand "Build and test Restylers")
+        (  command "list" (parse (pure List) "List known Restyler names")
+        <> command "build" (parse (Build <$> yamlsArgument) "Release un-released Manifest images")
+        <> command "test" (parse (Test <$> yamlsArgument) "Test Restylers")
+        <> command "release" (parse (Release <$> yamlsArgument) "Test all Restylers")
         )
 
--- brittany-disable-next-binding
-
-buildCommand :: Parser Command
-buildCommand = Build
-    <$> some1 (RestylerName <$> strOption
-        (  short 'n'
-        <> long "name"
-        <> help "Restyler name to build and test"
-        <> metavar "NAME"
-        ))
-    <*> (CommitSHA <$> strOption
-        (  short 'c'
-        <> long "commit"
-        <> help "Commit SHA to tag test builds"
-        <> metavar "SHA"
-        <> value "8d2a6e854a51ed2f0139675538ff002a214837f1" -- TODO
-        ))
+yamlsArgument :: Parser (NonEmpty FilePath)
+yamlsArgument =
+    some1 (argument str (help "Path to Restyler info.yaml" <> metavar "PATH"))
 
 parse :: Parser a -> String -> ParserInfo a
 parse p d = info (p <**> helper) $ fullDesc <> progDesc d

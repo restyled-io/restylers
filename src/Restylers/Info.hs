@@ -25,7 +25,7 @@ import RIO.Text (unpack)
 data RestylerInfo = RestylerInfo
     { enabled :: Bool
     , name :: RestylerName
-    , image :: Registry -> RestylerImage
+    , image :: Maybe Registry -> RestylerImage
     , command :: [Text]
     , arguments :: [Text]
     , include :: [Text]
@@ -59,20 +59,14 @@ instance FromJSON RestylerInfo where
 -- function that will build an image using that and the 'Registry' you call it
 -- with.
 --
-parseImage :: RestylerName -> Object -> Parser (Registry -> RestylerImage)
+parseImage :: RestylerName -> Object -> Parser (Maybe Registry -> RestylerImage)
 parseImage name o = do
     mVersion <- o .:? "version"
     mImage <- o .:? "image"
     case (mVersion, mImage) of
         (Nothing, Nothing) -> fail "One of version or image is required"
         (_, Just i) -> pure $ const i
-        (Just v, _) -> pure $ \registry ->
-            RestylerImage
-                $ unRegistry registry
-                <> "/restyler-"
-                <> unRestylerName name
-                <> ":"
-                <> v
+        (Just v, _) -> pure $ \registry -> mkRestylerImage registry name v
 
 data RestylerOverride = RestylerOverride
     { overrides :: RestylerName
@@ -121,7 +115,7 @@ load path = liftIO $ do
 unionValues :: Value -> Value -> Value
 unionValues (Object hm1) (Object hm2) =
     Object $ HashMap.unionWith unionValues hm1 hm2
-unionValues x _ = x
+unionValues _ x = x
 
 emptyMetadata :: Metadata
 emptyMetadata = Metadata [] []

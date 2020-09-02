@@ -68,12 +68,13 @@ writeUpdated path infos = do
             $ HashMap.elems
             $ unRestylerManifest manifest
 
-unionInfos :: Registry -> [RestylerInfo] -> RestylerManifest -> RestylerManifest
+unionInfos
+    :: Maybe Registry -> [RestylerInfo] -> RestylerManifest -> RestylerManifest
 unionInfos registry infos (RestylerManifest hm) =
     RestylerManifest
         $ HashMap.union (loadRestylers $ map (fromInfo registry) infos) hm
 
-fromInfo :: Registry -> RestylerInfo -> Restyler
+fromInfo :: Maybe Registry -> RestylerInfo -> Restyler
 fromInfo registry info = Restyler
     { enabled = Info.enabled info
     , name = Info.name info

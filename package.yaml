@@ -51,15 +51,16 @@ executables:
       - Glob
       - restylers
 
-# tests:
-#   doctest:
-#     main: Main.hs
-#     source-dirs: doctest
-#     dependencies:
-#       - doctest
-#   spec:
-#     main: Spec.hs
-#     source-dirs: test
-#     dependencies:
-#       - hspec
-#       - agent
+tests:
+  doctest:
+    main: Main.hs
+    source-dirs: doctest
+    dependencies:
+      - doctest
+  spec:
+    main: Spec.hs
+    source-dirs: test
+    dependencies:
+      - aeson
+      - hspec
+      - restylers

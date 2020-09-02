@@ -8,4 +8,4 @@ import RIO
 newtype Registry = Registry
     { unRegistry :: Text
     }
-    deriving stock Show
+    deriving stock (Eq, Show)
