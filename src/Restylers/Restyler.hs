@@ -1,5 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
+-- | A fully resolved Restyler, as you would find in @restylers.yaml@
 module Restylers.Restyler
     ( Restyler(..)
     , loadInfo
@@ -36,6 +37,7 @@ data Restyler = Restyler
     deriving stock Generic
     deriving anyclass (FromJSON, ToJSON)
 
+-- | Load @info.yaml@, resolve overrides, and set defaults
 loadInfo :: MonadIO m => Maybe Registry -> FilePath -> m Restyler
 loadInfo registry path = liftIO $ do
     eOverride <- Yaml.decodeFileEither path

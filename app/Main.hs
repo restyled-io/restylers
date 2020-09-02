@@ -16,6 +16,7 @@ import Restylers.Release
 import Restylers.Restyler (Restyler)
 import qualified Restylers.Restyler as Restyler
 import Restylers.Test
+import RIO.List (sort)
 import qualified RIO.NonEmpty as NE
 import RIO.Process
 import System.FilePath.Glob (globDir1)
@@ -32,32 +33,35 @@ main = do
             case oCommand of
                 List -> do
                     yamls <- liftIO $ globDir1 "*/info.yaml" "."
-                    void $ withEachRestyler oRegistry yamls $ \restyler ->
-                        logInfo $ display $ Restyler.name restyler
-                Build yamls -> void
-                    $ withEachRestyler oRegistry yamls buildRestylerImage
-                Test yamls ->
-                    void $ withEachRestyler oRegistry yamls testRestylerImage
+                    restylers <- loadRestylers oRegistry yamls
+                    let names = sort $ map Restyler.name restylers
+                    traverse_ (logInfo . display) names
+                Build yamls -> do
+                    restylers <- loadRestylers oRegistry yamls
+                    traverse_ buildRestylerImage restylers
+                Test yamls -> do
+                    restylers <- loadRestylers oRegistry yamls
+                    traverse_ testRestylerImage restylers
                 Release yamls -> do
-                    updates <- withEachRestyler oRegistry yamls $ \restyler ->
-                        do
-                            exists <- dockerHubImageExists
-                                $ Restyler.image restyler
+                    restylers <- loadRestylers oRegistry yamls
 
-                            if exists
-                                then [] <$ logInfo
-                                    ("Skipping "
-                                    <> display (Restyler.name restyler)
-                                    <> ", "
-                                    <> display (Restyler.image restyler)
-                                    <> " exists"
-                                    )
-                                else [restyler] <$ releaseRestylerImage restyler
+                    for_ restylers $ \restyler -> do
+                        exists <- dockerHubImageExists $ Restyler.image restyler
 
-                    logInfo "Re-writing manifest"
-                    Manifest.writeUpdated oManifest $ concat $ NE.toList updates
+                        if exists
+                            then logInfo
+                                ("Skipping "
+                                <> display (Restyler.name restyler)
+                                <> ", "
+                                <> display (Restyler.image restyler)
+                                <> " exists"
+                                )
+                            else releaseRestylerImage restyler
 
-withEachRestyler
+                    logInfo "Updating manifest"
+                    Manifest.writeUpdated oManifest $ NE.toList restylers
+
+loadRestylers
     :: ( MonadUnliftIO m
        , MonadReader env m
        , HasLogFunc env
@@ -67,14 +71,11 @@ withEachRestyler
        )
     => Maybe Registry
     -> t FilePath
-    -> (Restyler -> m a)
-    -> m (t a)
-withEachRestyler registry yamls f = for yamls $ \yaml -> do
+    -> m (t Restyler)
+loadRestylers registry yamls = for yamls $ \yaml -> do
     logDebug $ "Reading " <> fromString yaml
     restyler <- Restyler.loadInfo registry yaml
-    logDebug
-        $ "Processing "
-        <> display (Restyler.name restyler)
-        <> " as "
-        <> display (Restyler.image restyler)
-    f restyler
+    restyler <$ logDebug
+        ("Processing " <> display (Restyler.name restyler) <> " as " <> display
+            (Restyler.image restyler)
+        )
