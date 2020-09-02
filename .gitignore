@@ -1,7 +1,3 @@
-*.t.err
-*.tested
-*/Dockerfile.*
-.shake
-
 *.cabal
 .stack-work
+.released

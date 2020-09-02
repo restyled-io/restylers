@@ -1,15 +1,25 @@
-AWS ?= aws --profile restyled
+AWS ?= aws --profile restyled-ci
 RELEASE_ENV ?= prod
-RELEASE_TAG ?= $(shell date +'%Y%m%d')
+RELEASE_TAG ?= $(shell date +'%Y-%m-%d.%s')
 
 .PHONY: release
-release: restylers.yaml
+release: .released
+
+.released: restylers.yaml
 	git tag -f -s -m "$(RELEASE_TAG)" "$(RELEASE_TAG)"
 	git push --follow-tags
-	$(AWS) ssm put-parameter \
-	  --name /restyled/$(RELEASE_ENV)/restylers-version \
-	  --type String \
-	  --value "$(RELEASE_TAG)"
+	$(AWS) cloudformation update-stack \
+	  --stack-name $(RELEASE_ENV)-services \
+	  --use-previous-template \
+	  --parameters \
+	    "ParameterKey=Environment,UsePreviousValue=true" \
+	    "ParameterKey=RestylerImage,UsePreviousValue=true" \
+	    "ParameterKey=RestyledImage,UsePreviousValue=true" \
+	    "ParameterKey=AppsWebhooksDesiredCount,UsePreviousValue=true" \
+	    "ParameterKey=RestylersVersion,ParameterValue=$(RELEASE_TAG)" \
+	  --capabilities CAPABILITY_NAMED_IAM
+	aws cloudformation wait stack-update-complete \
+	  --stack-name $(RELEASE_ENV)-services
 	./build/make-available-restylers \
 	  > ../restyled.io.wiki/Available-Restylers.md
 	(cd ../restyled.io.wiki && \
@@ -31,7 +41,7 @@ restylers.yaml: */info.yaml
 	  supports_multiple_paths \
 	  documentation
 	restyle-path $@
-	#git commit -m 'Update restylers.yaml' $@
+	./build/check-commit 'Update $@' $@
 
 # %/Dockerfile.linted: %/Dockerfile
 # 	@build/hadolint-pretty "$*/Dockerfile"
