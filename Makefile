@@ -43,10 +43,6 @@ restylers.yaml: restylers/*/info.yaml
 	restyle-path $@
 	./build/check-commit 'Update $@' $@
 
-# %/Dockerfile.linted: %/Dockerfile
-# 	@build/hadolint-pretty "$*/Dockerfile"
-# 	echo > $@
-
 .PHONY: mark-released
 mark-released:
 	touch restylers/*/info.yaml
