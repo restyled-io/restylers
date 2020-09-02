@@ -46,3 +46,9 @@ restylers.yaml: */info.yaml
 # %/Dockerfile.linted: %/Dockerfile
 # 	@build/hadolint-pretty "$*/Dockerfile"
 # 	echo > $@
+
+.PHONY: mark-released
+mark-released:
+	touch */info.yaml
+	touch restylers.yaml
+	touch .released
