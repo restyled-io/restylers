@@ -1,7 +1,17 @@
-.PHONY: release.images
-release.images:
-	stack exec restylers -- release
-	./build/fixup-yaml
+restylers.yaml: */info.yaml
+	stack exec restylers -- --manifest $@ release $?
+	./build/sort-yaml $@ \
+	  enabled \
+	  name \
+	  image \
+	  command \
+	  arguments \
+	  include \
+	  interpreters \
+	  supports_arg_sep \
+	  supports_multiple_paths \
+	  documentation
+	restyle-path $@
 
 RELEASE_TAG ?= $(shell date +'%Y%m%d')
 
