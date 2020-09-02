@@ -23,7 +23,7 @@ import Data.Semigroup.Generic
 import Restylers.Image
 import Restylers.Name
 import Restylers.Version
-import RIO.FilePath ((</>))
+import RIO.FilePath ((<.>), (</>))
 import RIO.Text (unpack)
 
 data RestylerInfo = RestylerInfo
@@ -44,4 +44,5 @@ data RestylerInfo = RestylerInfo
     deriving Semigroup via (GenericSemigroupMonoid RestylerInfo)
 
 restylerInfoYaml :: RestylerName -> FilePath
-restylerInfoYaml = (</> "info.yaml") . unpack . unRestylerName
+restylerInfoYaml name =
+    "restylers" </> unpack (unRestylerName name) </> "info" <.> "yaml"
