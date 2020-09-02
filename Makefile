@@ -18,7 +18,7 @@ release: .released
 	    "ParameterKey=AppsWebhooksDesiredCount,UsePreviousValue=true" \
 	    "ParameterKey=RestylersVersion,ParameterValue=$(RELEASE_TAG)" \
 	  --capabilities CAPABILITY_NAMED_IAM
-	aws cloudformation wait stack-update-complete \
+	$(AWS) cloudformation wait stack-update-complete \
 	  --stack-name $(RELEASE_ENV)-services
 	./build/make-available-restylers \
 	  > ../restyled.io.wiki/Available-Restylers.md
