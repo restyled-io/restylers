@@ -27,7 +27,7 @@ release: .released
 	  git pull --rebase && \
 	  git push)
 
-restylers.yaml: */info.yaml
+restylers.yaml: restylers/*/info.yaml
 	stack exec restylers -- --manifest $@ release $?
 	./build/sort-yaml $@ \
 	  enabled \
@@ -49,6 +49,6 @@ restylers.yaml: */info.yaml
 
 .PHONY: mark-released
 mark-released:
-	touch */info.yaml
+	touch restylers/*/info.yaml
 	touch restylers.yaml
 	touch .released

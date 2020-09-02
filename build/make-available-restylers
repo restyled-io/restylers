@@ -27,7 +27,7 @@ def restylers
 end
 
 def restyler_languages(name)
-  info = YAML.load_file("#{name}/info.yaml")
+  info = YAML.load_file("restylers/#{name}/info.yaml")
   info
     .fetch("metadata")
     .fetch("languages")
