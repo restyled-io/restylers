@@ -1,0 +1,4 @@
+*.cabal
+.git
+.released
+.stack-work

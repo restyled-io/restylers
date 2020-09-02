@@ -52,3 +52,12 @@ mark-released:
 	touch restylers/*/info.yaml
 	touch restylers.yaml
 	touch .released
+
+.PHONY: image.build
+image.build:
+	docker build --tag restyled/restylers .
+
+.PHONY: image.push
+image.push:
+	docker tag restyled/restylers restyled/restylers:v1
+	docker push restyled/restylers:v1
