@@ -35,6 +35,7 @@ default-extensions:
 library:
   source-dirs: src
   dependencies:
+    - Diff
     - aeson
     - errors
     - hspec

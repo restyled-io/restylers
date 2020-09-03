@@ -11,8 +11,12 @@ import Restylers.Info (restylerMetadata)
 import qualified Restylers.Info as Info
 import qualified Restylers.Info.Metadata as Metadata
 import Restylers.Info.Test
-    (Test, assertTestRestyled, testFilePath, writeTestFiles)
-import Restylers.Name
+    ( ExpectationFailure
+    , Test
+    , assertTestRestyled
+    , testFilePath
+    , writeTestFiles
+    )
 import Restylers.Options
 import Restylers.Restyler (Restyler, loadRestylerInfo, mkDevImage, mkRestyler)
 import qualified Restylers.Restyler as Restyler
@@ -37,18 +41,25 @@ testRestylerImage
 testRestylerImage yaml = do
     (info, image) <- loadRestylerInfo yaml mkDevImage
 
-    let name = unpack $ unRestylerName $ getLast $ Info.name info
+    let name = getLast $ Info.name info
         tests = zip [1 ..] $ Metadata.tests $ restylerMetadata info
         restyler = mkRestyler info image
 
     inTempDir $ do
-        logInfo $ "Setting up " <> fromString name <> " test cases"
+        logInfo $ "Setting up " <> display name <> " test cases"
         runRestyler restyler tests
 
         logInfo $ "Running " <> displayShow (length tests) <> " assertion(s)"
         for_ tests $ \(number, test) -> do
-            assertTestRestyled number (Restyler.name restyler) test
-            logInfo "Passed"
+            eResult <- try $ assertTestRestyled number name test
+            either
+                (\ex -> do
+                    logError "Failed"
+                    logError $ display @ExpectationFailure ex
+                    exitFailure
+                )
+                (\_ -> logInfo "Passed")
+                eResult
 
 inTempDir :: MonadUnliftIO m => m a -> m a
 inTempDir f = withSystemTempDirectory "restylers-tests"

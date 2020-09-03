@@ -12,9 +12,12 @@ where
 import RIO
 
 import Data.Aeson
+import Data.Algorithm.Diff (Diff, PolyDiff(..))
+import qualified Data.Algorithm.Diff as Diff
 import Restylers.Info.Test.Support (Support, writeSupportFile)
 import Restylers.Name
 import RIO.Text (unpack)
+import qualified RIO.Text as T
 
 data Test = Test
     { extension :: Maybe Text
@@ -37,6 +40,24 @@ data ExpectationFailure = ExpectationFailure
     }
     deriving stock Show
     deriving anyclass Exception
+
+instance Display ExpectationFailure where
+    display ExpectationFailure {..} =
+        "Test case failed for "
+            <> display efName
+            <> ":\n"
+            <> display (renderDiff (restyled efTest) efActual)
+            <> "\n"
+
+renderDiff :: Text -> Text -> Text
+renderDiff a b =
+    T.unlines $ map renderDiffLine $ Diff.getDiff (T.lines a) (T.lines b)
+
+renderDiffLine :: Diff Text -> Text
+renderDiffLine = \case
+    First removed -> "- " <> removed
+    Second added -> "+ " <> added
+    Both same _ -> "  " <> same
 
 assertTestRestyled :: MonadIO m => Int -> RestylerName -> Test -> m ()
 assertTestRestyled number name test@Test { restyled } = do
