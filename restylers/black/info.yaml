@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: black
-version: v20.8b1
+version_cmd: |
+  black --version | awk '{print $NF}' | sed 's/^/v/'
 include:
   - "**/*.py"
 interpreters:
