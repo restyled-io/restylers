@@ -31,7 +31,6 @@ main = do
         app <- loadApp opts lf
         runRIO app $ do
             logDebug $ "Options: " <> displayShow opts
-
             case oCommand of
                 Build yamls -> traverse_ buildRestylerImage yamls
                 Test yamls -> traverse_ testRestylerImage yamls
