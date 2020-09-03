@@ -148,7 +148,13 @@ mkReleaseImage info devImage = do
                     )
                 $ pure
                 $ mkRestylerImage registry name version
-        (_name, Nothing, Nothing, Nothing) -> undefined -- TODO
+        (name, Nothing, Nothing, Nothing) -> do
+            logError
+                $ display name
+                <> " Restyler is invalid for release."
+                <> " one of image, version_cmd, or version is required"
+                <> " to determine the release image."
+            exitFailure
 
 dockerRunSh
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
