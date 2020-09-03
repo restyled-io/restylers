@@ -62,8 +62,31 @@ runCheck manifest write yamls = do
                 logInfo "Updating manifest..."
                 Manifest.writeUpdated manifest
                     $ map restylersCheckErrorRestyler errors
+
+                logInfo "Cleaning up manifest..."
+                cleanupManifest manifest
             else do
                 traverse_ (logError . display) errors
-                logError
-                    "If this is intentional, re-run check with the --write option to write this change to the manifest."
+                logError "Use --write to store this change"
                 exitFailure
+
+cleanupManifest
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => FilePath
+    -> m ()
+cleanupManifest manifest = do
+    proc "./build/sort-yaml" (manifest : keys) runProcess_
+    proc "./build/restyle-path" [manifest] runProcess_
+  where
+    keys =
+        [ "enabled"
+        , "name"
+        , "image"
+        , "command"
+        , "arguments"
+        , "include"
+        , "interpreters"
+        , "supports_arg_sep"
+        , "supports_multiple_paths"
+        , "documentation"
+        ]
