@@ -9,7 +9,7 @@ if [ "$BUILD" -eq 1 ]; then
   docker build --tag "restyled/restylers:$TAG" .
 
   if [ "$PUSH" -eq 1 ]; then
-    docker push "restyled/restylers:$TAG" .
+    docker push "restyled/restylers:$TAG"
   fi
 fi
 
