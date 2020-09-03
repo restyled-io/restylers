@@ -3,8 +3,8 @@ LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
 RUN \
   apk add --no-cache --virtual .build-deps \
-    gcc=9.3.0-r0 \
-    musl-dev=1.1.24-r2 && \
+    gcc \
+    musl-dev && \
   pip install black==20.8b1 && \
   apk del .build-deps
 WORKDIR /code
