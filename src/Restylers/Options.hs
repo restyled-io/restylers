@@ -56,10 +56,24 @@ options = Options
         <> help "Log more verbosity"
         )
     <*> subparser
-        (  command "build" (parse (Build <$> yamlsArgument) "Build Restylers")
-        <> command "test" (parse (Test <$> yamlsArgument) "Test Restylers")
-        <> command "check" (parse (Check <$> switch (long "write") <*> yamlsArgument) "Check Restylers")
-        <> command "release" (parse (Release <$> yamlsArgument) "Release Restylers")
+        (  command "build" (parse
+            (Build <$> yamlsArgument)
+            "Build an image for Restylers described in info.yaml files")
+        <> command "test" (parse
+            (Test <$> yamlsArgument)
+            "Run tests for Restylers described in info.yaml files")
+        <> command "check" (parse
+            (Check
+                <$> switch
+                    (  short 'w'
+                    <> long "write"
+                    <> help "Write changes to manifest, rather then erroring"
+                    )
+                <*> yamlsArgument)
+            "Check that described Restylers match the manifest")
+        <> command "release" (parse
+            (Release <$> yamlsArgument)
+            "Released (push) versioned images, as per manifest")
         )
 
 yamlsArgument :: Parser (NonEmpty FilePath)
