@@ -81,8 +81,7 @@ mkDevImage
 mkDevImage info = do
     Options {..} <- view optionsL
     let name = getLast $ Info.name info
-    pure $ mkRestylerImage oRegistry name "dev" -- TODO: oTag
-
+    pure $ mkRestylerImage oRegistry name oTag
 
 mkRestyler :: RestylerInfo -> RestylerImage -> Restyler
 mkRestyler info image = do
