@@ -22,6 +22,7 @@ data Command
 data Options = Options
     { oRegistry :: Maybe Registry
     , oManifest :: FilePath
+    , oTag :: Text
     , oDebug :: Bool
     , oCommand :: Command
     }
@@ -49,6 +50,13 @@ options = Options
         <> help "File to read/write released Restylers manifest"
         <> metavar "PATH"
         <> value "restylers.yaml"
+        )
+    <*> strOption
+        (  short 't'
+        <> long "tag"
+        <> help "Tag to use for development images"
+        <> metavar "TAG"
+        <> value "dev"
         )
     <*> switch
         (  short 'd'
