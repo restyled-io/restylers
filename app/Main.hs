@@ -16,10 +16,8 @@ import Restylers.Release
 import Restylers.Restyler (Restyler)
 import qualified Restylers.Restyler as Restyler
 import Restylers.Test
-import RIO.List (sort)
 import qualified RIO.NonEmpty as NE
 import RIO.Process
-import System.FilePath.Glob (globDir1)
 
 main :: IO ()
 main = do
@@ -31,11 +29,6 @@ main = do
             logDebug $ "Options: " <> displayShow opts
 
             case oCommand of
-                List -> do
-                    yamls <- liftIO $ globDir1 "*/info.yaml" "."
-                    restylers <- loadRestylers oRegistry yamls
-                    let names = sort $ map Restyler.name restylers
-                    traverse_ (logInfo . display) names
                 Build yamls -> do
                     restylers <- loadRestylers oRegistry yamls
                     traverse_ buildRestylerImage restylers

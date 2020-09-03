@@ -13,8 +13,7 @@ import Restylers.Registry
 import RIO.NonEmpty (some1)
 
 data Command
-    = List
-    | Build (NonEmpty FilePath)
+    = Build (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
     | Release Bool Bool (NonEmpty FilePath)
     deriving Show
@@ -56,8 +55,7 @@ options = Options
         <> help "Log more verbosity"
         )
     <*> subparser
-        (  command "list" (parse (pure List) "List known Restyler names")
-        <> command "build" (parse (Build <$> yamlsArgument) "Build Restylers")
+        (  command "build" (parse (Build <$> yamlsArgument) "Build Restylers")
         <> command "test" (parse (Test <$> yamlsArgument) "Test Restylers")
         <> command "release" (parse releaseOptions "Release Restylers")
         )
