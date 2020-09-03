@@ -7,12 +7,15 @@ where
 import RIO
 
 import Data.Semigroup (getLast)
+import Restylers.Build (buildRestylerImage)
 import Restylers.Image
 import Restylers.Info (RestylerInfo)
 import qualified Restylers.Info as Info
+import Restylers.Manifest (HasRestylerManifest)
 import Restylers.Name
 import Restylers.Options
 import Restylers.Restyler (Restyler, loadRestylerInfo, mkDevImage, mkRestyler)
+import Restylers.Test (testRestylerImage)
 import Restylers.Version
 import qualified RIO.ByteString.Lazy as BSL
 import RIO.Process
@@ -36,12 +39,16 @@ tagRestylerImage yaml = do
     pure $ mkRestyler info image
 
 -- | Promote a development tagged image to the release version
+--
+-- Skips any already-released tags, and builds/tests before pushing what isn't.
+--
 releaseRestylerImage
-    :: ( MonadIO m
+    :: ( MonadUnliftIO m
        , MonadReader env m
        , HasLogFunc env
        , HasProcessContext env
        , HasOptions env
+       , HasRestylerManifest env
        )
     => FilePath
     -> m Restyler
@@ -56,7 +63,10 @@ releaseRestylerImage yaml = do
 
     if released
         then skipRelease name releaseImage
-        else promoteRelease name devImage releaseImage
+        else do
+            buildRestylerImage yaml
+            testRestylerImage yaml
+            promoteRelease name devImage releaseImage
 
     pure $ mkRestyler info releaseImage
 
