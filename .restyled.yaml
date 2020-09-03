@@ -12,6 +12,5 @@ restylers:
   - hlint
   - prettier-markdown
   - prettier-yaml
-  - rubocop
   - shfmt
   - stylish-haskell
