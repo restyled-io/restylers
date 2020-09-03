@@ -3,7 +3,9 @@
 -- | A fully resolved Restyler, as you would find in @restylers.yaml@
 module Restylers.Restyler
     ( Restyler(..)
-    , loadInfo
+    , loadRestylerInfo
+    , mkDevImage
+    , mkRestyler
     )
 where
 
@@ -11,16 +13,12 @@ import RIO
 
 import Data.Aeson
 import Data.Semigroup (Last(..))
-import qualified Data.Yaml as Yaml
 import Restylers.Image
-import Restylers.Info (RestylerInfo, restylerInfoYaml)
+import Restylers.Info (RestylerInfo)
 import qualified Restylers.Info as Info
 import Restylers.Name
-import Restylers.Override (RestylerOverride)
+import Restylers.Options
 import qualified Restylers.Override as Override
-import Restylers.Registry
-import Restylers.Version
-import RIO.Text (unpack)
 
 data Restyler = Restyler
     { enabled :: Bool
@@ -34,43 +32,61 @@ data Restyler = Restyler
     , supports_multiple_paths :: Bool
     , documentation :: [Text]
     }
-    deriving stock Generic
+    deriving stock (Eq, Show, Generic)
     deriving anyclass (FromJSON, ToJSON)
 
--- | Load @info.yaml@, resolve overrides, and set defaults
-loadInfo :: MonadIO m => Maybe Registry -> FilePath -> m Restyler
-loadInfo registry path = liftIO $ do
-    eOverride <- Yaml.decodeFileEither path
-    either
-        (\_ -> do
-            info <- Yaml.decodeFileThrow path
-            inflateInfo registry info Nothing
-        )
-        (\override -> do
-            base <- loadOverriddenInfo override
-            let info = base <> Override.overridingInfo override
-            inflateInfo registry info $ Just $ Override.overrides override
-        )
-        eOverride
+instance Display Restyler where
+    display Restyler { enabled, name, image, command, arguments, include, interpreters, supports_arg_sep, supports_multiple_paths, documentation }
+        = display name
+            <> " ("
+            <> (if enabled then "enabled)" else "disabled)")
+            <> ": "
+            <> display image
+            <> "\n"
+            <> displayShow command
+            <> " "
+            <> displayShow arguments
+            <> (if supports_arg_sep then " -- " else " ")
+            <> (if supports_multiple_paths then "<path...>" else "<path>")
+            <> "\n"
+            <> displayShow (length include)
+            <> " include pattern(s)"
+            <> "\n"
+            <> displayShow (length interpreters)
+            <> " interpreters(s)"
+            <> "\n"
+            <> displayShow (length documentation)
+            <> " link(s)"
 
-loadOverriddenInfo :: MonadIO m => RestylerOverride -> m RestylerInfo
-loadOverriddenInfo override =
-    Yaml.decodeFileThrow $ restylerInfoYaml $ Override.overrides override
+loadRestylerInfo
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasOptions env)
+    => FilePath
+    -> (RestylerInfo -> m a)
+    -> m (RestylerInfo, a)
+loadRestylerInfo path mkMeta = do
+    mOverride <- Override.load path
 
-inflateInfo
-    :: MonadIO m
-    => Maybe Registry
-    -> RestylerInfo
-    -> Maybe RestylerName
-    -> m Restyler
-inflateInfo registry info overridden = do
-    image <- either (throwString . prefixError) pure $ mkImplicitImage
-        registry
-        nameForImplicitImage
-        (getLast <$> Info.version info)
-        (getLast <$> Info.image info)
+    case mOverride of
+        Nothing -> do
+            info <- Info.load path
+            meta <- mkMeta info
+            pure (info, meta)
+        Just override -> do
+            info <- Override.loadInfo override
+            meta <- mkMeta info
+            pure (info <> Override.toInfo override, meta)
 
-    pure Restyler
+mkDevImage
+    :: (MonadReader env m, HasOptions env) => RestylerInfo -> m RestylerImage
+mkDevImage info = do
+    Options {..} <- view optionsL
+    let name = getLast $ Info.name info
+    pure $ mkRestylerImage oRegistry name "dev" -- TODO: oTag
+
+
+mkRestyler :: RestylerInfo -> RestylerImage -> Restyler
+mkRestyler info image = do
+    Restyler
         { enabled = fromMaybeLast False $ Info.enabled info
         , name
         , image
@@ -83,22 +99,7 @@ inflateInfo registry info overridden = do
             $ Info.supports_multiple_paths info
         , documentation = fromMaybeLast [] $ Info.documentation info
         }
-  where
-    name = getLast $ Info.name info
-    nameForImplicitImage = fromMaybe name overridden
-    prefixError msg = restylerInfoYaml name <> ": " <> unpack msg
-
-mkImplicitImage
-    :: Maybe Registry
-    -> RestylerName
-    -> Maybe RestylerVersion
-    -> Maybe RestylerImage
-    -> Either Text RestylerImage
-mkImplicitImage _ _ Nothing Nothing =
-    Left "one of version or image is required"
-mkImplicitImage _ _ _ (Just image) = pure image
-mkImplicitImage registry name (Just version) Nothing =
-    Right $ mkRestylerImage registry name $ unRestylerVersion version
+    where name = getLast $ Info.name info
 
 fromMaybeLast :: a -> Maybe (Last a) -> a
 fromMaybeLast def = getLast . fromMaybe (Last def)

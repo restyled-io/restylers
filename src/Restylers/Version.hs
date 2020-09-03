@@ -10,4 +10,4 @@ import Data.Aeson
 newtype RestylerVersion = RestylerVersion
     { unRestylerVersion :: Text
     }
-    deriving newtype FromJSON
+    deriving newtype (Display, FromJSON)

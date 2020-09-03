@@ -5,32 +5,41 @@ where
 
 import RIO
 
+import Data.Semigroup (getLast)
 import Restylers.Image
-import Restylers.Info (restylerInfoYaml)
+import Restylers.Info (restylerMetadata)
+import qualified Restylers.Info as Info
 import qualified Restylers.Info.Metadata as Metadata
 import Restylers.Info.Test
     (Test, assertTestRestyled, testFilePath, writeTestFiles)
 import Restylers.Name
-import Restylers.Restyler (Restyler)
+import Restylers.Options
+import Restylers.Restyler (Restyler, loadRestylerInfo, mkDevImage, mkRestyler)
 import qualified Restylers.Restyler as Restyler
 import RIO.Directory (getCurrentDirectory, withCurrentDirectory)
 import RIO.List (nub)
 import RIO.Process
 import RIO.Text (unpack)
 
+-- | Test an image at the development tag
+--
+-- Image is expected to exist locally already.
+--
 testRestylerImage
     :: ( MonadUnliftIO m
        , MonadReader env m
        , HasLogFunc env
        , HasProcessContext env
+       , HasOptions env
        )
-    => Restyler
+    => FilePath
     -> m ()
-testRestylerImage restyler = do
-    metadata <- Metadata.load $ restylerInfoYaml $ Restyler.name restyler
+testRestylerImage yaml = do
+    (info, image) <- loadRestylerInfo yaml mkDevImage
 
-    let name = unpack $ unRestylerName $ Restyler.name restyler
-        tests = zip [1 ..] $ Metadata.tests metadata
+    let name = unpack $ unRestylerName $ getLast $ Info.name info
+        tests = zip [1 ..] $ Metadata.tests $ restylerMetadata info
+        restyler = mkRestyler info image
 
     inTempDir $ do
         logInfo $ "Setting up " <> fromString name <> " test cases"

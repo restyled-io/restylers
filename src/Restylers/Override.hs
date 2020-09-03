@@ -11,15 +11,21 @@
 --
 module Restylers.Override
     ( RestylerOverride(..)
-    , overridingInfo
+    , load
+    , loadInfo
+    , toInfo
     )
 where
 
 import RIO
 
+import Control.Error.Util (hush)
 import Data.Aeson
 import Data.Semigroup (Last)
-import Restylers.Info (RestylerInfo(..))
+import qualified Data.Yaml as Yaml
+import Restylers.Info (RestylerInfo(..), restylerInfoYaml)
+import qualified Restylers.Info as Info
+import Restylers.Info.Metadata (Metadata)
 import Restylers.Name
 
 data RestylerOverride = RestylerOverride
@@ -33,16 +39,33 @@ data RestylerOverride = RestylerOverride
     , supports_arg_sep :: Maybe (Last Bool)
     , supports_multiple_paths :: Maybe (Last Bool)
     , documentation :: Maybe (Last [Text])
+    , metadata :: Maybe (Last Metadata)
     }
     deriving stock Generic
     deriving anyclass FromJSON
 
-overridingInfo :: RestylerOverride -> RestylerInfo
-overridingInfo RestylerOverride { enabled, name, command, arguments, include, interpreters, supports_arg_sep, supports_multiple_paths, documentation }
+load
+    :: (MonadIO m, MonadReader env m, HasLogFunc env)
+    => FilePath
+    -> m (Maybe RestylerOverride)
+load path = do
+    logDebug $ "Reading " <> fromString path <> " (as override)"
+    liftIO $ hush <$> Yaml.decodeFileEither path
+
+loadInfo
+    :: (MonadIO m, MonadReader env m, HasLogFunc env)
+    => RestylerOverride
+    -> m RestylerInfo
+loadInfo RestylerOverride { overrides } =
+    Info.load $ restylerInfoYaml overrides
+
+toInfo :: RestylerOverride -> RestylerInfo
+toInfo RestylerOverride { enabled, name, command, arguments, include, interpreters, supports_arg_sep, supports_multiple_paths, documentation, metadata }
     = RestylerInfo
         { enabled
         , name
         , version = Nothing
+        , version_cmd = Nothing
         , image = Nothing
         , command
         , arguments
@@ -51,4 +74,5 @@ overridingInfo RestylerOverride { enabled, name, command, arguments, include, in
         , supports_arg_sep
         , supports_multiple_paths
         , documentation
+        , metadata
         }

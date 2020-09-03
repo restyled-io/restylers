@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 module Restylers.RestylerSpec
     ( spec
     )
@@ -8,15 +10,28 @@ import RIO
 import Restylers.Image
 import Restylers.Info (restylerInfoYaml)
 import Restylers.Name
+import Restylers.Options
+import Restylers.Restyler (loadRestylerInfo, mkDevImage, mkRestyler)
 import qualified Restylers.Restyler as Restyler
 import RIO.Directory (createDirectoryIfMissing, withCurrentDirectory)
 import RIO.FilePath (takeDirectory)
 import qualified RIO.Text as T
 import Test.Hspec
 
+instance HasOptions SimpleApp where
+    optionsL = lens testOptions undefined
+
+testOptions :: a -> Options
+testOptions _ = Options
+    { oRegistry = Nothing
+    , oManifest = "restylers.yaml"
+    , oDebug = False
+    , oCommand = Test ("example/info.yaml" :| [])
+    }
+
 spec :: Spec
 spec = do
-    describe "load" $ do
+    describe "loadRestylerInfo" $ do
         it "can load an override restyler" $ inTempDirectory $ do
             let base = restylerInfoYaml $ RestylerName "prettier"
                 override = restylerInfoYaml $ RestylerName "prettier-json"
@@ -42,13 +57,16 @@ spec = do
                 , "  - https://prettier.io/docs/en/options.html#parser"
                 ]
 
-            restyler <- Restyler.loadInfo Nothing override
+            (info, image) <- runSimpleApp $ loadRestylerInfo override mkDevImage
 
+            let restyler = mkRestyler info image
             Restyler.name restyler `shouldBe` RestylerName "prettier-json"
             Restyler.image restyler `shouldBe` mkRestylerImage
                 Nothing
                 (RestylerName "prettier")
-                "v2.0.2-2"
+                "dev"
+            Restyler.command restyler `shouldBe` ["prettier", "--write"]
+            Restyler.include restyler `shouldBe` ["**/*.json"]
 
 inTempDirectory :: MonadUnliftIO m => m a -> m a
 inTempDirectory f =

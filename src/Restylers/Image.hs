@@ -1,7 +1,7 @@
 module Restylers.Image
     ( RestylerImage
-    , mkRestylerImage
     , unRestylerImage
+    , mkRestylerImage
     , dockerHubImageExists
     )
 where

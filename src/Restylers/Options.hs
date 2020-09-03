@@ -15,7 +15,8 @@ import RIO.NonEmpty (some1)
 data Command
     = Build (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
-    | Release Bool Bool (NonEmpty FilePath)
+    | Check Bool (NonEmpty FilePath)
+    | Release (NonEmpty FilePath)
     deriving Show
 
 data Options = Options
@@ -57,16 +58,9 @@ options = Options
     <*> subparser
         (  command "build" (parse (Build <$> yamlsArgument) "Build Restylers")
         <> command "test" (parse (Test <$> yamlsArgument) "Test Restylers")
-        <> command "release" (parse releaseOptions "Release Restylers")
+        <> command "check" (parse (Check <$> switch (long "write") <*> yamlsArgument) "Check Restylers")
+        <> command "release" (parse (Release <$> yamlsArgument) "Release Restylers")
         )
-
--- brittany-disable-next-binding
-
-releaseOptions :: Parser Command
-releaseOptions = Release
-    <$> (not <$> switch (long "no-build" <> help "Release without [re-]building"))
-    <*> (not <$> switch (long "no-test" <> help "Release without testing"))
-    <*> yamlsArgument
 
 yamlsArgument :: Parser (NonEmpty FilePath)
 yamlsArgument =
