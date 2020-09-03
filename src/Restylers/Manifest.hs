@@ -29,8 +29,14 @@ load = fmap (RestylerManifest . loadRestylers) . Yaml.decodeFileThrow
 loadRestylers :: [Restyler] -> HashMap RestylerName Restyler
 loadRestylers = HashMap.fromList . map (Restyler.name &&& id)
 
-lookup :: RestylerName -> RestylerManifest -> Maybe Restyler
-lookup name = HashMap.lookup name . unRestylerManifest
+lookup
+    :: (MonadReader env m, HasRestylerManifest env)
+    => RestylerName
+    -> m (Maybe Restyler)
+lookup name = lookup' name <$> view manifestL
+
+lookup' :: RestylerName -> RestylerManifest -> Maybe Restyler
+lookup' name = HashMap.lookup name . unRestylerManifest
 
 writeUpdated
     :: (MonadIO m, MonadReader env m, HasRestylerManifest env)

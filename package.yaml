@@ -36,6 +36,7 @@ library:
   source-dirs: src
   dependencies:
     - aeson
+    - errors
     - hspec
     - http-conduit
     - http-types
@@ -49,7 +50,6 @@ executables:
     main: Main.hs
     source-dirs: app
     dependencies:
-      - Glob
       - restylers
 
 tests:

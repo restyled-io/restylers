@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+
+: "${TAG:=v1}"
+: "${BUILD:=0}" # Build the image from local sources first
+: "${PUSH:=0}"  # Push that image back after building
+
+if [ "$BUILD" -eq 1 ]; then
+  docker build --tag "restyled/restylers:$TAG" .
+
+  if [ "$PUSH" -eq 1 ]; then
+    docker push "restyled/restylers:$TAG" .
+  fi
+fi
+
+exec docker run --rm --interactive --tty \
+  --volume "$PWD":/code:ro \
+  --volume /tmp:/tmp \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  "restyled/restylers:$TAG" restylers "$@"

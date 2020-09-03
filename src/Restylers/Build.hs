@@ -1,3 +1,5 @@
+
+
 module Restylers.Build
     ( buildRestylerImage
     )
@@ -5,41 +7,52 @@ where
 
 import RIO
 
+import Data.Semigroup (getLast)
 import Restylers.Image
-import Restylers.Info (restylerInfoYaml)
+import Restylers.Info (RestylerInfo, restylerInfoYaml)
+import qualified Restylers.Info as Info
 import Restylers.Manifest (HasRestylerManifest(..))
 import qualified Restylers.Manifest as Manifest
-import Restylers.Restyler (Restyler)
+import Restylers.Options
+import Restylers.Restyler (loadRestylerInfo, mkDevImage)
 import qualified Restylers.Restyler as Restyler
 import RIO.FilePath (takeDirectory)
 import RIO.Process
 import RIO.Text (unpack)
 
+-- | [Re]build an image at the development tag
+--
+-- - Pulls currenty-released tag to start, if known
+-- - Attempst to pull existing development tag
+-- - Builds, tags and pushes at development tag
+--
 buildRestylerImage
     :: ( MonadIO m
        , MonadReader env m
        , HasLogFunc env
        , HasProcessContext env
+       , HasOptions env
        , HasRestylerManifest env
        )
-    => Restyler
+    => FilePath
     -> m ()
-buildRestylerImage restyler = do
-    manifest <- view manifestL
+buildRestylerImage yaml = do
+    (info, (image, buildPath)) <- loadRestylerInfo yaml
+        $ \info -> (,) <$> mkDevImage info <*> pure (mkBuildPath info)
 
-    for_ (Manifest.lookup (Restyler.name restyler) manifest) $ \released -> do
+    mReleased <- Manifest.lookup $ getLast $ Info.name info
+    for_ mReleased $ \released -> do
         logInfo "Pulling currently-released image"
         proc "docker" ["pull", unImage $ Restyler.image released] runProcess_
 
+    logInfo "Pulling previous build image"
+    void $ proc "docker" ["pull", unImage image] runProcess
+
     logInfo $ "Building updated image as " <> display image
-    proc
-        "docker"
-        ["build", "--tag", unImage image, buildPath restyler]
-        runProcess_
-    where image = Restyler.image restyler
+    proc "docker" ["build", "-t", unImage image, buildPath] runProcess_
+
+mkBuildPath :: RestylerInfo -> FilePath
+mkBuildPath = takeDirectory . restylerInfoYaml . getLast . Info.name
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage
-
-buildPath :: Restyler -> FilePath
-buildPath = takeDirectory . restylerInfoYaml . Restyler.name
