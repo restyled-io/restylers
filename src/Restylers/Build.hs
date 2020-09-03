@@ -34,9 +34,10 @@ buildRestylerImage
        , HasOptions env
        , HasRestylerManifest env
        )
-    => FilePath
+    => Bool -- ^ No cache?
+    -> FilePath
     -> m ()
-buildRestylerImage yaml = do
+buildRestylerImage noCache yaml = do
     (info, (image, buildPath)) <- loadRestylerInfo yaml
         $ \info -> (,) <$> mkDevImage info <*> pure (mkBuildPath info)
 
@@ -49,7 +50,16 @@ buildRestylerImage yaml = do
     void $ proc "docker" ["pull", unImage image] runProcess
 
     logInfo $ "Building updated image as " <> display image
-    proc "docker" ["build", "-t", unImage image, buildPath] runProcess_
+    proc
+        "docker"
+        (concat
+            [ ["build"]
+            , ["--tag", unImage image]
+            , [ "--no-cache" | noCache ]
+            , [buildPath]
+            ]
+        )
+        runProcess_
 
 mkBuildPath :: RestylerInfo -> FilePath
 mkBuildPath = takeDirectory . restylerInfoYaml . getLast . Info.name

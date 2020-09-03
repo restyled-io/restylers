@@ -64,7 +64,7 @@ releaseRestylerImage yaml = do
     if released
         then skipRelease name releaseImage
         else do
-            buildRestylerImage yaml
+            buildRestylerImage False yaml
             testRestylerImage yaml
             promoteRelease name devImage releaseImage
 

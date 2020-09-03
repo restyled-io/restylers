@@ -13,7 +13,7 @@ import Restylers.Registry
 import RIO.NonEmpty (some1)
 
 data Command
-    = Build (NonEmpty FilePath)
+    = Build Bool (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
     | Check Bool (NonEmpty FilePath)
     | Release (NonEmpty FilePath)
@@ -57,7 +57,13 @@ options = Options
         )
     <*> subparser
         (  command "build" (parse
-            (Build <$> yamlsArgument)
+            (Build
+                <$> switch
+                    (  long "no-cache"
+                    <> help "Pass --no-cache to docker-build"
+                    )
+                <*> yamlsArgument
+                )
             "Build an image for Restylers described in info.yaml files")
         <> command "test" (parse
             (Test <$> yamlsArgument)
