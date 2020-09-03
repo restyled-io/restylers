@@ -3,9 +3,9 @@ RELEASE_ENV ?= prod
 RELEASE_TAG ?= $(shell date +'%Y-%m-%d.%s')
 
 .PHONY: release
-release: .released
-
-.released: restylers.yaml
+release:
+	stack exec restylers -- check restylers/*/info.yaml
+	stack exec restylers -- release restylers/*/info.yaml
 	git tag -f -s -m "$(RELEASE_TAG)" "$(RELEASE_TAG)"
 	git push --follow-tags
 	$(AWS) cloudformation update-stack \
@@ -26,34 +26,3 @@ release: .released
 	  git commit Available-Restylers.md -m "Update Available Restylers" && \
 	  git pull --rebase && \
 	  git push)
-
-restylers.yaml: restylers/*/info.yaml
-	stack exec restylers -- --manifest $@ release $?
-	./build/sort-yaml $@ \
-	  enabled \
-	  name \
-	  image \
-	  command \
-	  arguments \
-	  include \
-	  interpreters \
-	  supports_arg_sep \
-	  supports_multiple_paths \
-	  documentation
-	restyle-path $@
-	./build/check-commit 'Update $@' $@
-
-.PHONY: mark-released
-mark-released:
-	touch restylers/*/info.yaml
-	touch restylers.yaml
-	touch .released
-
-.PHONY: image.build
-image.build:
-	docker build --tag restyled/restylers .
-
-.PHONY: image.push
-image.push:
-	docker tag restyled/restylers restyled/restylers:v1
-	docker push restyled/restylers:v1
