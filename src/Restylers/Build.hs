@@ -43,10 +43,11 @@ buildRestylerImage noCache yaml = do
 
     mReleased <- Manifest.lookup $ getLast $ Info.name info
     for_ mReleased $ \released -> do
-        logInfo "Pulling currently-released image"
-        proc "docker" ["pull", unImage $ Restyler.image released] runProcess_
+        let releasedImage = Restyler.image released
+        logInfo $ "Pulling currently-released image, " <> display releasedImage
+        void $ proc "docker" ["pull", unImage releasedImage] runProcess
 
-    logInfo "Pulling previous build image"
+    logInfo $ "Pulling previous build image, " <> display image
     void $ proc "docker" ["pull", unImage image] runProcess
 
     logInfo $ "Building updated image as " <> display image
