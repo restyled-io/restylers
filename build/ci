@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 set -eu
 
-# TEMPORARY, build all the things!
-# # failure means we're on the "push" job. we'll just diff against parent
-# mb=$(git merge-base master HEAD 2>/dev/null || echo "HEAD^")
+# failure means we're on the "push" job. we'll just diff against parent
+mb=$(git merge-base master HEAD 2>/dev/null || echo "HEAD^")
 
-# if ! git diff --name-only "$mb" | grep -q "^restylers/${RESTYLER}/"; then
-#   echo "$RESTYLER unchanged, skipping."
-#   exit 0
-# fi
+if ! git diff --name-only "$mb" | grep -q "^restylers/$RESTYLER/"; then
+  echo "$RESTYLER unchanged, skipping."
+  exit 0
+fi
 
 if [ -f "restylers/$RESTYLER/Dockerfile" ]; then
   # TODO: ./build/restylers lint
