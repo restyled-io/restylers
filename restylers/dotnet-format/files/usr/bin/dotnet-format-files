@@ -32,6 +32,5 @@ for arg; do
   esac
 done
 
-csv_files=$(printf '%s\n' "${files[@]}" | paste -s -d, -)
-echo dotnet format --files="$csv_files" "${options[@]}"
-exec dotnet format --files="$csv_files" "${options[@]}"
+echo dotnet format --include "${files[@]}" "${options[@]}"
+exec dotnet format --include "${files[@]}" "${options[@]}"

@@ -115,7 +115,7 @@
     - https://github.com/dlang-community/dfmt#readme
 - enabled: false
   name: dotnet-format
-  image: restyled/restyler-dotnet-format:v0.0.1-2
+  image: restyled/restyler-dotnet-format:v4.1.131201
   command:
     - dotnet-format-files
   arguments: []
