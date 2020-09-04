@@ -20,7 +20,8 @@ default-extensions:
   - FlexibleInstances
   - GADTs
   - GeneralizedNewtypeDeriving
-  - LambdaCase
+  # Force using a pragma for this, because otherwise apply-fact barfs
+  # - LambdaCase
   - MultiParamTypeClasses
   - NoImplicitPrelude
   - NoMonomorphismRestriction
