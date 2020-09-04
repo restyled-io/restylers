@@ -200,17 +200,16 @@
     - https://github.com/commercialhaskell/hindent
 - enabled: false
   name: hlint
-  image: restyled/restyler-hlint:v2.1.11-2
+  image: restyled/restyler-hlint:v3.1.6
   command:
     - hlint
-    - lint
     - "--refactor"
     - "--refactor-options=-i"
   arguments: []
   include:
     - "**/*.hs"
   interpreters: []
-  supports_arg_sep: false
+  supports_arg_sep: true
   supports_multiple_paths: false
   documentation:
     - https://github.com/ndmitchell/hlint#readme
