@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: rustfmt
-version: v1.4.14-nightly
+version_cmd: |
+  rustfmt --version | awk '{print $2}' | sed 's/^/v/'
 command:
   - rustfmt
 include:
