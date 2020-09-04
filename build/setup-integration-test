@@ -17,10 +17,21 @@ def system_(*args)
   system(*args) or raise "system error: #{args.inspect}"
 end
 
-restylers = `./build/restyler-meta names`.each_line.map do |ln|
-  restyler = ln.chomp
+channel = ARGV.first || "dev"
+local_manifest = "/tmp/restylers-#{channel}.yaml"
+remote_manifest = "https://docs.restyled.io/data-files/restylers/manifests/#{channel}/restylers.yaml"
+system(
+  "curl", "--silent", "--fail", "--show-error",
+  "--output", local_manifest, remote_manifest
+)
 
-  tests = YAML.load(`./build/restyler-meta get #{restyler} metadata.tests`)
+restylers = YAML.load_file(local_manifest).map do |restyler|
+  name = restyler.fetch("name")
+  tests = YAML.
+    load_file("restylers/#{name}/info.yaml").
+    fetch("metadata", {}).
+    fetch("tests", [])
+
   tests.each.with_index do |test, n|
     # N.B. if different cases need the same support file this won't work.
     # If/when that happens we can consider some kind of workaround.
@@ -30,7 +41,7 @@ restylers = `./build/restyler-meta names`.each_line.map do |ln|
     end
 
     ext = test["extension"] || "example"
-    path = "#{restyler}/test-file-#{n}.#{ext}"
+    path = "#{name}/test-file-#{n}.#{ext}"
     contents = test.fetch("contents")
 
     # Can't commit CRLF, so skip that test case
@@ -40,9 +51,9 @@ restylers = `./build/restyler-meta names`.each_line.map do |ln|
   end
 
   {
-    restyler => {
+    name => {
       "enabled" => true,
-      "include" => ["#{restyler}/**/*"]
+      "include" => ["#{name}/**/*"]
     }
   }
 end
@@ -55,6 +66,13 @@ Dir.mktmpdir do |dir|
   Dir.chdir(dir) do
     system("git", "checkout", "--quiet", BRANCH) or
       system_("git", "checkout", "--quiet", "-b", BRANCH)
+
+    # Clean directories, to be recreated
+    FILES.keys.map { |p| File.dirname(p) }.uniq.each do |d|
+      if d != '.'
+        FileUtils.rm_rf d
+      end
+    end
 
     FILES.each do |path, contents|
       FileUtils.mkdir_p(File.dirname(path))
