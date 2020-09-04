@@ -32,8 +32,9 @@ main = do
         runRIO app $ do
             logDebug $ "Options: " <> displayShow opts
             case oCommand of
-                Build noCache yamls ->
-                    traverse_ (buildRestylerImage noCache) yamls
+                Build noCache test yamls -> for_ yamls $ \yaml -> do
+                    buildRestylerImage noCache yaml
+                    when test $ testRestylerImage yaml
                 Test yamls -> traverse_ testRestylerImage yamls
                 Check write yamls -> runCheck oManifest write yamls
                 Release yamls -> traverse_ releaseRestylerImage yamls
