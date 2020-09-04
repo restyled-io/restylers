@@ -1,0 +1,98 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 8594690fedcbe6839837be5f2e349cd918fc777a37f1c1fc9c2a748533627400
+
+name:           restylers
+version:        0.0.0.0
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      Restylers.App
+      Restylers.Build
+      Restylers.Check
+      Restylers.CommitSHA
+      Restylers.Image
+      Restylers.Info
+      Restylers.Info.Metadata
+      Restylers.Info.Test
+      Restylers.Info.Test.Support
+      Restylers.Manifest
+      Restylers.Name
+      Restylers.Options
+      Restylers.Override
+      Restylers.Registry
+      Restylers.Release
+      Restylers.Restyler
+      Restylers.Test
+      Restylers.Version
+  other-modules:
+      Paths_restylers
+  hs-source-dirs:
+      src
+  default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  build-depends:
+      Diff
+    , aeson
+    , base
+    , errors
+    , hspec
+    , http-conduit
+    , http-types
+    , lens
+    , optparse-applicative
+    , rio
+    , semigroups
+    , yaml
+  default-language: Haskell2010
+
+executable restylers
+  main-is: Main.hs
+  other-modules:
+      Paths_restylers
+  hs-source-dirs:
+      app
+  default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  build-depends:
+      base
+    , restylers
+    , rio
+  default-language: Haskell2010
+
+test-suite doctest
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_restylers
+  hs-source-dirs:
+      doctest
+  default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  build-depends:
+      base
+    , doctest
+    , rio
+  default-language: Haskell2010
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Restylers.ImageSpec
+      Restylers.RestylerSpec
+      Paths_restylers
+  hs-source-dirs:
+      test
+  default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  build-depends:
+      aeson
+    , base
+    , hspec
+    , restylers
+    , rio
+  default-language: Haskell2010
