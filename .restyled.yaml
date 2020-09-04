@@ -11,6 +11,10 @@ restylers:
   - brittany
   - hlint:
       image: restyled/restyler-hlint:v3.1.6
+      command:
+        - hlint
+        - "--refactor"
+        - "--refactor-options=-i"
   - prettier-markdown
   - prettier-yaml
   - shfmt
