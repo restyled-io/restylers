@@ -1,3 +1,5 @@
+{-# LANGUAGE LambdaCase #-}
+
 module Restylers.Check
     ( RestylersCheckError
     , restylersCheckErrorRestyler
