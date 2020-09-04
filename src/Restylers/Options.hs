@@ -13,7 +13,7 @@ import Restylers.Registry
 import RIO.NonEmpty (some1)
 
 data Command
-    = Build Bool (NonEmpty FilePath)
+    = Build Bool Bool (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
     | Check Bool (NonEmpty FilePath)
     | Release (NonEmpty FilePath)
@@ -69,6 +69,10 @@ options = Options
                 <$> switch
                     (  long "no-cache"
                     <> help "Pass --no-cache to docker-build"
+                    )
+                <*> switch
+                    (  long "test"
+                    <> help "Test the build image "
                     )
                 <*> yamlsArgument
                 )
