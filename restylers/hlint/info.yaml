@@ -1,14 +1,13 @@
 ---
 name: hlint
-version: v2.1.11-2
+version_cmd: |
+  hlint --version | awk '{print $2}' | sed 's/,$//'
 command:
   - hlint
-  - lint
   - "--refactor"
   - "--refactor-options=-i"
 include:
   - "**/*.hs"
-supports_arg_sep: false
 supports_multiple_paths: false
 documentation:
   - https://github.com/ndmitchell/hlint#readme

@@ -2,9 +2,23 @@ FROM quay.io/haskell_works/stack-build-minimal:18.04 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
-# Determines HLint version. lts-13.2 -> hlint-2.1.11 (apply-refact-0.6.0.0)
-ENV STACKAGE_RESOLVER lts-13.2
-RUN stack --resolver "$STACKAGE_RESOLVER" install hlint apply-refact
+COPY stack.yaml /root/.stack/global-project/stack.yaml
+RUN stack install hlint apply-refact
+
+# The following support files' locations are brittle. Use this RUN command to
+# re-discover them when we update anything.
+# RUN find /root/.stack/programs/x86_64-linux \
+#   \( \
+#     -name hlint.yaml -o \
+#     -name settings -o \
+#     -name platformConstants -o \
+#     -name llvm-targets -o \
+#     -name llvm-passes -o \
+#     -name package.conf.d -o \
+#     -name ghcversion.h \
+#   \) \
+#   -printf "COPY --from=builder %p %p\n"
+# RUN exit 1
 
 FROM ubuntu:18.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
@@ -16,28 +30,15 @@ RUN \
     locales=2.27-3ubuntu1 && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
+# BEGIN copy from RUN-find
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/include/ghcversion.h
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/platformConstants
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/settings /root/.stack/programs/x86_64-linux/ghc-8.8.4/lib/ghc-8.8.4/settings
+# END copy from RUN-find
 COPY --from=builder /root/.local/bin/hlint /usr/bin/hlint
-COPY --from=builder \
-  /root/.stack/snapshots/x86_64-linux/0cbf610d531020dd8e254d24dc26dfd7ca5e62bbeff9dbc6edb86f54b5f6809a/8.6.3/share/x86_64-linux-ghc-8.6.3/hlint-2.1.11/hlint.yaml \
-  /root/.stack/snapshots/x86_64-linux/0cbf610d531020dd8e254d24dc26dfd7ca5e62bbeff9dbc6edb86f54b5f6809a/8.6.3/share/x86_64-linux-ghc-8.6.3/hlint-2.1.11/hlint.yaml
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/settings \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/settings
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/platformConstants \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/platformConstants
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/llvm-targets \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/llvm-targets
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/llvm-passes \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/llvm-passes
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/package.conf.d \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/package.conf.d
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/include/ghcversion.h \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.3/lib/ghc-8.6.3/include/ghcversion.h
 COPY --from=builder /root/.local/bin/refactor /usr/bin/refactor
 RUN mkdir -p /code
 WORKDIR /code
