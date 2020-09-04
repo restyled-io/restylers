@@ -1,6 +1,7 @@
 ---
 name: dotnet-format
-version: v0.0.1-2
+version_cmd: |
+  dotnet format --version | cut -d+ -f1 | sed 's/^/v/'
 command:
   - dotnet-format-files
 include:
