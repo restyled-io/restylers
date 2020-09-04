@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8594690fedcbe6839837be5f2e349cd918fc777a37f1c1fc9c2a748533627400
+-- hash: 8e2df34f7d38156476919d3cb7c57a634977fe2ff1f6a8fb620ad45fdd5d1ff2
 
 name:           restylers
 version:        0.0.0.0
@@ -16,14 +16,12 @@ library
   exposed-modules:
       Restylers.App
       Restylers.Build
-      Restylers.Check
       Restylers.CommitSHA
       Restylers.Image
       Restylers.Info
       Restylers.Info.Metadata
       Restylers.Info.Test
       Restylers.Info.Test.Support
-      Restylers.Manifest
       Restylers.Name
       Restylers.Options
       Restylers.Override
@@ -63,6 +61,7 @@ executable restylers
       base
     , restylers
     , rio
+    , yaml
   default-language: Haskell2010
 
 test-suite doctest

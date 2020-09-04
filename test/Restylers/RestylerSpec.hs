@@ -24,7 +24,6 @@ instance HasOptions SimpleApp where
 testOptions :: a -> Options
 testOptions _ = Options
     { oRegistry = Nothing
-    , oManifest = "restylers.yaml"
     , oTag = "dev"
     , oDebug = False
     , oCommand = Test ("example/info.yaml" :| [])
