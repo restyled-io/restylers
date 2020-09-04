@@ -52,6 +52,7 @@ executables:
     source-dirs: app
     dependencies:
       - restylers
+      - yaml
 
 tests:
   doctest:

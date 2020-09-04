@@ -1,25 +1,51 @@
 AWS ?= aws --profile restyled-ci
-RELEASE_ENV ?= prod
-RELEASE_TAG ?= $(shell date +'%Y-%m-%d.%s')
+ENV ?= prod
+
+BUCKET = $(shell \
+  $(AWS) cloudformation describe-stacks \
+    --stack-name $(ENV)-docs \
+    --query 'Stacks[*].Outputs[?OutputKey==`BucketName`].OutputValue' \
+    --output text \
+)
+
+DISTRIBUTION_ID = $(shell \
+  $(AWS) cloudformation describe-stacks \
+    --stack-name $(ENV)-docs \
+    --query 'Stacks[*].Outputs[?OutputKey==`DistributionId`].OutputValue' \
+    --output text \
+)
+
+PREFIX = /data-files/restylers/manifests
+DEV_MANIFEST = $(PREFIX)/dev/restylers.yaml
+LTS_MANIFEST = $(PREFIX)/stable/restylers.yaml
 
 .PHONY: release
 release:
-	stack exec restylers -- check restylers/*/info.yaml
-	stack exec restylers -- release restylers/*/info.yaml
-	git tag -f -s -m "$(RELEASE_TAG)" "$(RELEASE_TAG)"
-	git push --follow-tags
-	$(AWS) cloudformation update-stack \
-	  --stack-name $(RELEASE_ENV)-services \
-	  --use-previous-template \
-	  --parameters \
-	    "ParameterKey=Environment,UsePreviousValue=true" \
-	    "ParameterKey=RestylerImage,UsePreviousValue=true" \
-	    "ParameterKey=RestyledImage,UsePreviousValue=true" \
-	    "ParameterKey=AppsWebhooksDesiredCount,UsePreviousValue=true" \
-	    "ParameterKey=RestylersVersion,ParameterValue=$(RELEASE_TAG)" \
-	  --capabilities CAPABILITY_NAMED_IAM
-	$(AWS) cloudformation wait stack-update-complete \
-	  --stack-name $(RELEASE_ENV)-services
+	stack exec restylers -- release \
+	  --write /tmp/restylers.yaml restylers/*/info.yaml
+	$(AWS) s3 cp \
+	  --acl public-read \
+	  --content-type text/plain \
+	  /tmp/restylers.yaml \
+	  s3://$(BUCKET)$(DEV_MANIFEST)
+	$(AWS) cloudfront create-invalidation \
+	  --distribution-id $(DISTRIBUTION_ID) \
+	  --paths $(DEV_MANIFEST)
+
+.PHONY: release.promote
+release.promote:
+	$(AWS) s3 cp \
+	  --acl public-read \
+	  --content-type text/plain \
+	  s3://$(BUCKET)$(DEV_MANIFEST) \
+	  s3://$(BUCKET)$(LTS_MANIFEST)
+	$(AWS) cloudfront create-invalidation \
+	  --distribution-id $(DISTRIBUTION_ID) \
+	  --paths $(LTS_MANIFEST)
+
+# TODO: Broken with git-tag to S3 manifest transition
+.PHONY: wiki
+wiki:
 	./build/make-available-restylers \
 	  > ../restyled.io.wiki/Available-Restylers.md
 	(cd ../restyled.io.wiki && \

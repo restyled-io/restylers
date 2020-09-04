@@ -15,13 +15,11 @@ import RIO.NonEmpty (some1)
 data Command
     = Build Bool Bool (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
-    | Check Bool (NonEmpty FilePath)
-    | Release (NonEmpty FilePath)
+    | Release FilePath (NonEmpty FilePath)
     deriving Show
 
 data Options = Options
     { oRegistry :: Maybe Registry
-    , oManifest :: FilePath
     , oTag :: Text
     , oDebug :: Bool
     , oCommand :: Command
@@ -44,13 +42,6 @@ options = Options
         <> help "Registry to prefix all Docker images"
         <> metavar "PREFIX"
         ))
-    <*> strOption
-        (  short 'm'
-        <> long "manifest"
-        <> help "File to read/write released Restylers manifest"
-        <> metavar "PATH"
-        <> value "restylers.yaml"
-        )
     <*> strOption
         (  short 't'
         <> long "tag"
@@ -80,18 +71,17 @@ options = Options
         <> command "test" (parse
             (Test <$> yamlsArgument)
             "Run tests for Restylers described in info.yaml files")
-        <> command "check" (parse
-            (Check
-                <$> switch
+        <> command "release" (parse
+            (Release
+                <$> strOption
                     (  short 'w'
                     <> long "write"
-                    <> help "Write changes to manifest, rather then erroring"
+                    <> help "File released Restylers to file"
+                    <> metavar "PATH"
+                    <> value "restylers.yaml"
                     )
                 <*> yamlsArgument)
-            "Check that described Restylers match the manifest")
-        <> command "release" (parse
-            (Release <$> yamlsArgument)
-            "Released (push) versioned images, as per manifest")
+            "Released (push) versioned images")
         )
 
 yamlsArgument :: Parser (NonEmpty FilePath)

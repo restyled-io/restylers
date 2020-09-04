@@ -11,7 +11,6 @@ import Restylers.Build (buildRestylerImage)
 import Restylers.Image
 import Restylers.Info (RestylerInfo)
 import qualified Restylers.Info as Info
-import Restylers.Manifest (HasRestylerManifest)
 import Restylers.Name
 import Restylers.Options
 import Restylers.Restyler (Restyler, loadRestylerInfo, mkDevImage, mkRestyler)
@@ -22,7 +21,7 @@ import RIO.Process
 import RIO.Text (unpack)
 import qualified RIO.Text as T
 
--- | Produce a versioned 'Restyler' as you would store in the 'RestylerManifest'
+-- | Produce a versioned 'Restyler'
 tagRestylerImage
     :: ( MonadIO m
        , MonadReader env m
@@ -48,7 +47,6 @@ releaseRestylerImage
        , HasLogFunc env
        , HasProcessContext env
        , HasOptions env
-       , HasRestylerManifest env
        )
     => FilePath
     -> m Restyler
@@ -62,26 +60,13 @@ releaseRestylerImage yaml = do
     released <- dockerHubImageExists releaseImage
 
     if released
-        then skipRelease name releaseImage
+        then logInfo $ display releaseImage <> " exists"
         else do
             buildRestylerImage False yaml
             testRestylerImage yaml
             promoteRelease name devImage releaseImage
 
     pure $ mkRestyler info releaseImage
-
-skipRelease
-    :: (MonadIO m, MonadReader env m, HasLogFunc env)
-    => RestylerName
-    -> RestylerImage
-    -> m ()
-skipRelease name releaseImage =
-    logInfo
-        $ "Skipping "
-        <> display name
-        <> ", "
-        <> display releaseImage
-        <> " exists"
 
 promoteRelease
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
