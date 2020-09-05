@@ -8,6 +8,7 @@ import RIO
 import Data.Yaml as Yaml
 import Restylers.App
 import Restylers.Build
+import Restylers.Lint
 import Restylers.Options
 import Restylers.Release
 import Restylers.Restyler (Restyler)
@@ -32,6 +33,9 @@ main = do
                     buildRestylerImage noCache yaml
                     when test $ testRestylerImage yaml
                 Test yamls -> traverse_ testRestylerImage yamls
+                Lint yamls -> do
+                    errors <- or <$> traverse lintRestylerImage yamls
+                    when errors exitFailure
                 Release manifest yamls -> do
                     restylers <- traverse releaseRestylerImage yamls
                     logInfo

@@ -15,6 +15,7 @@ import RIO.NonEmpty (some1)
 data Command
     = Build Bool Bool (NonEmpty FilePath)
     | Test (NonEmpty FilePath)
+    | Lint (NonEmpty FilePath)
     | Release FilePath (NonEmpty FilePath)
     deriving Show
 
@@ -71,6 +72,9 @@ options = Options
         <> command "test" (parse
             (Test <$> yamlsArgument)
             "Run tests for Restylers described in info.yaml files")
+        <> command "lint" (parse
+            (Lint <$> yamlsArgument)
+            "Lint Restylers' Dockerfiles with hadolint")
         <> command "release" (parse
             (Release
                 <$> strOption

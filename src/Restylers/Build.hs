@@ -1,5 +1,6 @@
 module Restylers.Build
     ( buildRestylerImage
+    , mkBuildPath
     )
 where
 
