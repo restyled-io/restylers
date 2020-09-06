@@ -1,20 +1,7 @@
 {-# LANGUAGE DerivingVia #-}
-{-# LANGUAGE DuplicateRecordFields #-}
-{-# LANGUAGE NamedFieldPuns #-}
 
--- | A Faithful representation of the @info.yaml@ format
---
--- All merging and defaulting happens /with/ a value of this type, not (e.g.)
--- within its parsing mechanisms. See "Restylers.Restyler".
---
--- Use of 'Last' means that '(<>)' can be used to combined things, useful with
--- fields of an 'Override' value.
---
 module Restylers.Info
     ( RestylerInfo(..)
-    , restylerInfoYaml
-    , restylerMetadata
-    , load
     )
 where
 
@@ -23,13 +10,10 @@ import RIO
 import Data.Aeson
 import Data.Semigroup (Last(..))
 import Data.Semigroup.Generic
-import qualified Data.Yaml as Yaml
 import Restylers.Image
-import Restylers.Info.Metadata (Metadata, emptyMetadata)
+import Restylers.Info.Metadata (Metadata)
 import Restylers.Name
 import Restylers.Version
-import RIO.FilePath ((<.>), (</>))
-import RIO.Text (unpack)
 
 data RestylerInfo = RestylerInfo
     { enabled :: Maybe (Last Bool)
@@ -49,19 +33,3 @@ data RestylerInfo = RestylerInfo
     deriving stock Generic
     deriving anyclass FromJSON
     deriving Semigroup via (GenericSemigroupMonoid RestylerInfo)
-
-load
-    :: (MonadIO m, MonadReader env m, HasLogFunc env)
-    => FilePath
-    -> m RestylerInfo
-load path = do
-    logDebug $ "Reading " <> fromString path
-    liftIO $ Yaml.decodeFileThrow path
-
-restylerInfoYaml :: RestylerName -> FilePath
-restylerInfoYaml name =
-    "restylers" </> unpack (unRestylerName name) </> "info" <.> "yaml"
-
-restylerMetadata :: RestylerInfo -> Metadata
-restylerMetadata RestylerInfo { metadata } =
-    maybe emptyMetadata getLast metadata

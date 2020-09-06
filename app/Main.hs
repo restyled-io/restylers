@@ -5,20 +5,14 @@ where
 
 import RIO
 
-import Data.Yaml as Yaml
 import Restylers.App
 import Restylers.Build
+import qualified Restylers.Info.Resolved as Info
 import Restylers.Lint
+import Restylers.Manifest (toRestyler)
+import qualified Restylers.Manifest as Manifest
 import Restylers.Options
-import Restylers.Release
-import Restylers.Restyler (Restyler)
 import Restylers.Test
-
-data RestylersCheckError
-    = UnexpectedRestyler Restyler
-    | RestylerChangedFrom Restyler Restyler
-    deriving stock Show
-    deriving anyclass Exception
 
 main :: IO ()
 main = do
@@ -29,18 +23,20 @@ main = do
         runRIO app $ do
             logDebug $ "Options: " <> displayShow opts
             case oCommand of
-                Build noCache test yamls -> for_ yamls $ \yaml -> do
-                    buildRestylerImage noCache yaml
-                    when test $ testRestylerImage yaml
-                Test yamls -> traverse_ testRestylerImage yamls
-                Lint yamls -> do
-                    errors <- or <$> traverse lintRestylerImage yamls
-                    when errors exitFailure
+                Build noCache lint test yaml -> do
+                    info <- Info.load yaml
+                    whenLintDockerfile lint $ lintRestyler info
+                    image <- buildRestylerImage noCache info
+                    whenRunTests test $ testRestylerImage info image
+
                 Release manifest yamls -> do
-                    restylers <- traverse releaseRestylerImage yamls
+                    restylers <- for yamls $ \yaml -> do
+                        info <- Info.load yaml
+                        image <- pullRestylerImage info
+                        pure $ toRestyler info image
                     logInfo
                         $ "Writing "
                         <> displayShow (length restylers)
                         <> " Restyler(s) to "
                         <> fromString manifest
-                    liftIO $ Yaml.encodeFile manifest restylers
+                    liftIO $ Manifest.write manifest restylers

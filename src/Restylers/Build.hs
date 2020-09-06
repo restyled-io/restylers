@@ -1,26 +1,23 @@
 module Restylers.Build
     ( buildRestylerImage
-    , mkBuildPath
+    , pullRestylerImage
     )
 where
 
-import RIO
+import RIO hiding (to)
 
-import Data.Semigroup (getLast)
 import Restylers.Image
-import Restylers.Info (RestylerInfo, restylerInfoYaml)
-import qualified Restylers.Info as Info
+import qualified Restylers.Info.Build as Build
+import Restylers.Info.Resolved (ImageSource(..), RestylerInfo)
+import qualified Restylers.Info.Resolved as Info
 import Restylers.Options
-import Restylers.Restyler (loadRestylerInfo, mkDevImage)
-import RIO.FilePath (takeDirectory)
+import Restylers.Version
+import qualified RIO.ByteString.Lazy as BSL
+import RIO.Directory (doesFileExist)
 import RIO.Process
 import RIO.Text (unpack)
+import qualified RIO.Text as T
 
--- | [Re]build an image at the development tag
---
--- - Attempst to pull existing development tag
--- - Builds, tags and pushes at development tag
---
 buildRestylerImage
     :: ( MonadIO m
        , MonadReader env m
@@ -28,30 +25,87 @@ buildRestylerImage
        , HasProcessContext env
        , HasOptions env
        )
-    => Bool -- ^ No cache?
-    -> FilePath
-    -> m ()
-buildRestylerImage noCache yaml = do
-    (_, (image, buildPath)) <- loadRestylerInfo yaml
-        $ \info -> (,) <$> mkDevImage info <*> pure (mkBuildPath info)
+    => NoCache
+    -> RestylerInfo
+    -> m RestylerImage
+buildRestylerImage noCache info = do
+    registry <- oRegistry <$> view optionsL
+    case Info.imageSource info of
+        Explicit image -> do
+            logInfo $ "Pulling explicit image, " <> display image
+            image <$ proc "docker" ["pull", unImage image] runProcess
+        BuildVersionCmd name cmd options -> do
+            tag <- oTag <$> view optionsL
+            image <- Build.build noCache options
+                $ mkRestylerImage registry name tag
+            version <- dockerRunSh image cmd
+            let versioned = mkRestylerImage registry name version
+            logInfo $ "Tagging " <> display image <> " => " <> display versioned
+            dockerTag image versioned
+            writeFileUtf8 (Info.restylerVersionCache name) $ version <> "\n"
+            pure versioned
+        BuildVersion name version options ->
+            Build.build noCache options
+                $ mkRestylerImage registry name
+                $ unRestylerVersion version
 
-    logInfo $ "Pulling previous build image, " <> display image
-    void $ proc "docker" ["pull", unImage image] runProcess
+pullRestylerImage
+    :: ( MonadIO m
+       , MonadReader env m
+       , HasLogFunc env
+       , HasProcessContext env
+       , HasOptions env
+       )
+    => RestylerInfo
+    -> m RestylerImage
+pullRestylerImage info = do
+    registry <- oRegistry <$> view optionsL
+    image <- case Info.imageSource info of
+        Explicit image -> pure image
+        BuildVersionCmd name _ _ -> do
+            let cache = Info.restylerVersionCache name
+            exists <- doesFileExist cache
+            if exists
+                then do
+                    version <- T.strip <$> readFileUtf8 cache
+                    pure $ mkRestylerImage registry name version
+                else do
+                    logWarn
+                        $ "Restyler "
+                        <> display info
+                        <> " uses version_cmd, but "
+                        <> fromString cache
+                        <> " does not exist."
+                        <> " Building now..."
+                    buildRestylerImage (NoCache False) info
+        BuildVersion name version _ -> do
+            pure $ mkRestylerImage registry name $ unRestylerVersion version
+    image <$ proc "docker" ["pull", unImage image] runProcess_
 
-    logInfo $ "Building updated image as " <> display image
-    proc
+dockerRunSh
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => RestylerImage
+    -> String
+    -> m Text
+dockerRunSh image cmd = do
+    bs <- proc
         "docker"
         (concat
-            [ ["build"]
-            , ["--tag", unImage image]
-            , [ "--no-cache" | noCache ]
-            , [buildPath]
+            [ ["run", "--rm"]
+            , ["--entrypoint", "sh"]
+            , [unpack $ unRestylerImage image]
+            , ["-c", cmd]
             ]
         )
-        runProcess_
+        readProcessStdout_
+    pure $ T.strip $ decodeUtf8With lenientDecode $ BSL.toStrict bs
 
-mkBuildPath :: RestylerInfo -> FilePath
-mkBuildPath = takeDirectory . restylerInfoYaml . getLast . Info.name
+dockerTag
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => RestylerImage
+    -> RestylerImage
+    -> m ()
+dockerTag from to = proc "docker" ["tag", unImage from, unImage to] runProcess_
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage

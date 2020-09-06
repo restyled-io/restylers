@@ -1,5 +1,11 @@
 module Restylers.Options
     ( Command(..)
+    , NoCache(..)
+    , addNoCache
+    , LintDockerfile(..)
+    , whenLintDockerfile
+    , RunTests(..)
+    , whenRunTests
     , Options(..)
     , HasOptions(..)
     , parseOptions
@@ -12,10 +18,26 @@ import Options.Applicative
 import Restylers.Registry
 import RIO.NonEmpty (some1)
 
+newtype NoCache = NoCache Bool
+    deriving newtype Show
+
+addNoCache :: NoCache -> [String] -> [String]
+addNoCache (NoCache b) = if b then ("--no-cache" :) else id
+
+newtype LintDockerfile = LintDockerfile Bool
+    deriving newtype Show
+
+whenLintDockerfile :: Applicative m => LintDockerfile -> m () -> m ()
+whenLintDockerfile (LintDockerfile b) = when b
+
+newtype RunTests = RunTests Bool
+    deriving newtype Show
+
+whenRunTests :: Applicative m => RunTests -> m () -> m ()
+whenRunTests (RunTests b) = when b
+
 data Command
-    = Build Bool Bool (NonEmpty FilePath)
-    | Test (NonEmpty FilePath)
-    | Lint (NonEmpty FilePath)
+    = Build NoCache LintDockerfile RunTests FilePath
     | Release FilePath (NonEmpty FilePath)
     deriving Show
 
@@ -58,23 +80,21 @@ options = Options
     <*> subparser
         (  command "build" (parse
             (Build
-                <$> switch
+                <$> (NoCache <$> switch
                     (  long "no-cache"
                     <> help "Pass --no-cache to docker-build"
-                    )
-                <*> switch
+                    ))
+                <*> (LintDockerfile <$> switch
+                    (  long "lint"
+                    <> help "Lint the build Dockerfile"
+                    ))
+                <*> (RunTests <$> switch
                     (  long "test"
-                    <> help "Test the build image "
-                    )
-                <*> yamlsArgument
+                    <> help "Test the build image"
+                    ))
+                <*> yamlArgument
                 )
             "Build an image for Restylers described in info.yaml files")
-        <> command "test" (parse
-            (Test <$> yamlsArgument)
-            "Run tests for Restylers described in info.yaml files")
-        <> command "lint" (parse
-            (Lint <$> yamlsArgument)
-            "Lint Restylers' Dockerfiles with hadolint")
         <> command "release" (parse
             (Release
                 <$> strOption
@@ -84,13 +104,13 @@ options = Options
                     <> metavar "PATH"
                     <> value "restylers.yaml"
                     )
-                <*> yamlsArgument)
+                <*> some1 yamlArgument)
             "Released (push) versioned images")
         )
 
-yamlsArgument :: Parser (NonEmpty FilePath)
-yamlsArgument =
-    some1 (argument str (help "Path to Restyler info.yaml" <> metavar "PATH"))
+yamlArgument :: Parser FilePath
+yamlArgument =
+    argument str (help "Path to Restyler info.yaml" <> metavar "PATH")
 
 parse :: Parser a -> String -> ParserInfo a
 parse p d = info (p <**> helper) $ fullDesc <> progDesc d
