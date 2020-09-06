@@ -5,11 +5,10 @@ where
 
 import RIO
 
-import Data.Semigroup (getLast)
 import Restylers.Image
-import Restylers.Info (restylerMetadata)
-import qualified Restylers.Info as Info
 import qualified Restylers.Info.Metadata as Metadata
+import Restylers.Info.Resolved (RestylerInfo)
+import qualified Restylers.Info.Resolved as Info
 import Restylers.Info.Test
     ( ExpectationFailure
     , Test
@@ -18,17 +17,11 @@ import Restylers.Info.Test
     , writeTestFiles
     )
 import Restylers.Options
-import Restylers.Restyler (Restyler, loadRestylerInfo, mkDevImage, mkRestyler)
-import qualified Restylers.Restyler as Restyler
 import RIO.Directory (getCurrentDirectory, withCurrentDirectory)
 import RIO.List (nub)
 import RIO.Process
 import RIO.Text (unpack)
 
--- | Test an image at the development tag
---
--- Image is expected to exist locally already.
---
 testRestylerImage
     :: ( MonadUnliftIO m
        , MonadReader env m
@@ -36,22 +29,25 @@ testRestylerImage
        , HasProcessContext env
        , HasOptions env
        )
-    => FilePath
+    => RestylerInfo
+    -> RestylerImage
     -> m ()
-testRestylerImage yaml = do
-    (info, image) <- loadRestylerInfo yaml mkDevImage
+testRestylerImage info image = do
+    let tests = zip [1 ..] $ Metadata.tests $ Info.metadata info
 
-    let name = getLast $ Info.name info
-        tests = zip [1 ..] $ Metadata.tests $ restylerMetadata info
-        restyler = mkRestyler info image
+    logInfo
+        $ "Running "
+        <> displayShow (length tests)
+        <> " test(s) for "
+        <> display info
+        <> " with "
+        <> display image
 
     inTempDir $ do
-        logInfo $ "Setting up " <> display name <> " test cases"
-        runRestyler restyler tests
+        runRestyler info image tests
 
-        logInfo $ "Running " <> displayShow (length tests) <> " assertion(s)"
         for_ tests $ \(number, test) -> do
-            eResult <- try $ assertTestRestyled number name test
+            eResult <- try $ assertTestRestyled number (Info.name info) test
             either
                 (\ex -> do
                     logError "Failed"
@@ -67,25 +63,23 @@ inTempDir f = withSystemTempDirectory "restylers-tests"
 
 runRestyler
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
-    => Restyler
+    => RestylerInfo
+    -> RestylerImage
     -> [(Int, Test)]
     -> m ()
-runRestyler restyler tests = do
-    -- TODO: This might clobber support files between cases, so, heads-up
+runRestyler info image tests = do
     for_ tests $ \(number, test) -> do
-        writeTestFiles number (Restyler.name restyler) test
+        writeTestFiles number (Info.name info) test
 
     cwd <- getCurrentDirectory
 
-    if Restyler.supports_multiple_paths restyler
+    if Info.supports_multiple_paths info
         then dockerRun cwd relativePaths
         else traverse_ (dockerRun cwd . pure) relativePaths
   where
     -- Restyler prepends ./, so we do too
     relativePaths = map
-        (\(number, test) ->
-            "./" <> testFilePath number (Restyler.name restyler) test
-        )
+        (\(number, test) -> "./" <> testFilePath number (Info.name info) test)
         tests
 
     -- Restyler uniques the created arguments, so we do too
@@ -95,10 +89,10 @@ runRestyler restyler tests = do
             [ ["run", "--interactive", "--rm"]
             , ["--net", "none"]
             , ["--volume", cwd <> ":/code"]
-            , [unpack $ unRestylerImage $ Restyler.image restyler]
-            , map unpack $ Restyler.command restyler
-            , map unpack $ Restyler.arguments restyler
-            , [ "--" | Restyler.supports_arg_sep restyler ]
+            , [unpack $ unRestylerImage image]
+            , map unpack $ Info.command info
+            , map unpack $ Info.arguments info
+            , [ "--" | Info.supports_arg_sep info ]
             , paths
             ]
         )

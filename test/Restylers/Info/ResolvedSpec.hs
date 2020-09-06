@@ -1,18 +1,18 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Restylers.RestylerSpec
+module Restylers.Info.ResolvedSpec
     ( spec
     )
 where
 
 import RIO
 
-import Restylers.Image
-import Restylers.Info (restylerInfoYaml)
+import Restylers.Info.Build (restylerBuild)
+import Restylers.Info.Resolved (ImageSource(..), restylerInfoYaml)
+import qualified Restylers.Info.Resolved as Info
 import Restylers.Name
 import Restylers.Options
-import Restylers.Restyler (loadRestylerInfo, mkDevImage, mkRestyler)
-import qualified Restylers.Restyler as Restyler
+import Restylers.Version
 import RIO.Directory (createDirectoryIfMissing, withCurrentDirectory)
 import RIO.FilePath (takeDirectory)
 import qualified RIO.Text as T
@@ -26,15 +26,14 @@ testOptions _ = Options
     { oRegistry = Nothing
     , oTag = "dev"
     , oDebug = False
-    , oCommand = Test ("example/info.yaml" :| [])
+    , oCommand = undefined
     }
 
 spec :: Spec
 spec = do
-    describe "loadRestylerInfo" $ do
-        it "can load an override restyler" $ inTempDirectory $ do
+    describe "load" $ do
+        it "can load an override with versioned image" $ inTempDirectory $ do
             let base = restylerInfoYaml $ RestylerName "prettier"
-                override = restylerInfoYaml $ RestylerName "prettier-json"
             addFile base $ T.unlines
                 [ "enabled: true"
                 , "name: prettier"
@@ -48,6 +47,7 @@ spec = do
                 , "documentation:"
                 , "  - https://prettier.io/docs/en/"
                 ]
+            let override = restylerInfoYaml $ RestylerName "prettier-json"
             addFile override $ T.unlines
                 [ "overrides: prettier"
                 , "name: prettier-json"
@@ -57,16 +57,15 @@ spec = do
                 , "  - https://prettier.io/docs/en/options.html#parser"
                 ]
 
-            (info, image) <- runSimpleApp $ loadRestylerInfo override mkDevImage
+            info <- runSimpleApp $ Info.load override
 
-            let restyler = mkRestyler info image
-            Restyler.name restyler `shouldBe` RestylerName "prettier-json"
-            Restyler.image restyler `shouldBe` mkRestylerImage
-                Nothing
+            Info.name info `shouldBe` RestylerName "prettier-json"
+            Info.imageSource info `shouldBe` BuildVersion
                 (RestylerName "prettier")
-                "dev"
-            Restyler.command restyler `shouldBe` ["prettier", "--write"]
-            Restyler.include restyler `shouldBe` ["**/*.json"]
+                (RestylerVersion "v2.0.2-2")
+                (restylerBuild base)
+            Info.command info `shouldBe` ["prettier", "--write"]
+            Info.include info `shouldBe` ["**/*.json"]
 
 inTempDirectory :: MonadUnliftIO m => m a -> m a
 inTempDirectory f =

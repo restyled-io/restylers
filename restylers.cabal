@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ffc00ff9e3f0450f516561fe8de0693e256482c3b49d735e3722fc8bfca82c6c
+-- hash: 70c8da10167a1d0fd8642ed1a49d42d97bf7250250b1e0337190d79a13f3ede3
 
 name:           restylers
 version:        0.0.0.0
@@ -19,16 +19,17 @@ library
       Restylers.CommitSHA
       Restylers.Image
       Restylers.Info
+      Restylers.Info.Build
       Restylers.Info.Metadata
+      Restylers.Info.Resolved
       Restylers.Info.Test
       Restylers.Info.Test.Support
       Restylers.Lint
+      Restylers.Manifest
       Restylers.Name
       Restylers.Options
       Restylers.Override
       Restylers.Registry
-      Restylers.Release
-      Restylers.Restyler
       Restylers.Test
       Restylers.Version
   other-modules:
@@ -45,6 +46,7 @@ library
     , http-conduit
     , http-types
     , lens
+    , mtl
     , optparse-applicative
     , rio
     , semigroups
@@ -84,7 +86,7 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       Restylers.ImageSpec
-      Restylers.RestylerSpec
+      Restylers.Info.ResolvedSpec
       Paths_restylers
   hs-source-dirs:
       test

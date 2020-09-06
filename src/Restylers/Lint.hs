@@ -1,18 +1,14 @@
-
-
 module Restylers.Lint
-    ( lintRestylerImage
+    ( lintRestyler
     )
 where
 
 import RIO
 
 import Data.Aeson
-import Data.Semigroup (getLast)
-import Restylers.Build (mkBuildPath)
-import qualified Restylers.Info as Info
-import Restylers.Options
-import Restylers.Restyler (loadRestylerInfo)
+import qualified Restylers.Info.Build as Build
+import Restylers.Info.Resolved (ImageSource(..), RestylerInfo)
+import qualified Restylers.Info.Resolved as Info
 import RIO.Directory (getCurrentDirectory)
 import RIO.FilePath ((</>))
 import RIO.Process
@@ -51,25 +47,23 @@ wiki code
     | otherwise
     = Nothing
 
-lintRestylerImage
-    :: ( MonadIO m
-       , MonadReader env m
-       , HasLogFunc env
-       , HasProcessContext env
-       , HasOptions env
-       )
-    => FilePath
-    -> m Bool
-lintRestylerImage yaml = do
-    (info, dockerfile) <- loadRestylerInfo yaml
-        $ \info -> pure $ mkBuildPath info </> "Dockerfile"
+lintRestyler
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => RestylerInfo
+    -> m ()
+lintRestyler info = do
+    case Info.imageSource info of
+        Explicit{} -> logWarn "Not linting explicit image"
+        BuildVersionCmd _ _ options ->
+            lintDockerfile $ Build.dockerfile options
+        BuildVersion _ _ options -> lintDockerfile $ Build.dockerfile options
 
-    logDebug
-        $ "Linting Dockerfile for "
-        <> display (getLast $ Info.name info)
-        <> " ("
-        <> displayShow dockerfile
-        <> ")"
+lintDockerfile
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => FilePath
+    -> m ()
+lintDockerfile dockerfile = do
+    logInfo $ "Linting " <> fromString dockerfile
 
     cwd <- getCurrentDirectory
     (ec, bs) <- proc
@@ -98,4 +92,4 @@ lintRestylerImage yaml = do
                 <> fromString dockerfile
             traverse_ (logError . display) errors
 
-    pure $ ec /= ExitSuccess
+    when (ec /= ExitSuccess) $ exitWith ec

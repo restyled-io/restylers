@@ -42,6 +42,7 @@ library:
     - http-conduit
     - http-types
     - lens
+    - mtl
     - optparse-applicative
     - semigroups
     - yaml
