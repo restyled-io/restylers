@@ -9,6 +9,4 @@ if ! git diff --name-only "$mb" | grep -q "^restylers/$RESTYLER/"; then
   exit 0
 fi
 
-./build/restylers build "restylers/$RESTYLER/info.yaml"
-./build/restylers test "restylers/$RESTYLER/info.yaml"
-./build/restylers lint "restylers/$RESTYLER/info.yaml"
+./build/restylers build --lint --test "restylers/$RESTYLER/info.yaml"
