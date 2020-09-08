@@ -13,6 +13,7 @@ import RIO.Directory (getCurrentDirectory)
 import RIO.FilePath ((</>))
 import RIO.Process
 import qualified RIO.Text as T
+import System.Environment (lookupEnv)
 
 data LintError = LintError
     { code :: Text
@@ -65,7 +66,11 @@ lintDockerfile
 lintDockerfile dockerfile = do
     logInfo $ "Linting " <> fromString dockerfile
 
-    cwd <- getCurrentDirectory
+    -- On CI, we are docker-within-docker, which means our PWD is "/code", but
+    -- we need to mount these files using the non-containerized PWD, which we
+    -- can (only) figure out if we're told (e.g. via ENV)
+    cwd <- maybe getCurrentDirectory pure =<< liftIO (lookupEnv "REALPWD")
+
     (ec, bs) <- proc
         "docker"
         (concat
