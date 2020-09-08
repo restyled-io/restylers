@@ -15,7 +15,7 @@ fi
 
 exec docker run --rm --interactive --tty \
   --env "REALPWD=$PWD" \
-  --volume "$PWD":/code:ro \
+  --volume "$PWD":/code \
   --volume /tmp:/tmp \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   "restyled/restylers:$TAG" restylers "$@"
