@@ -11,6 +11,7 @@ import Data.Aeson
 import Data.Semigroup (Last(..))
 import Data.Semigroup.Generic
 import Restylers.Image
+import Restylers.Info.Build (RestylerBuild)
 import Restylers.Info.Metadata (Metadata)
 import Restylers.Name
 import Restylers.Version
@@ -21,6 +22,7 @@ data RestylerInfo = RestylerInfo
     , version :: Maybe (Last RestylerVersion)
     , version_cmd :: Maybe (Last String)
     , image :: Maybe (Last RestylerImage)
+    , build :: Maybe (Last RestylerBuild)
     , command :: Maybe (Last [Text])
     , arguments :: Maybe (Last [Text])
     , include :: Maybe (Last [Text])

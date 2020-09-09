@@ -1,10 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
 -- | Details about how to build a Restyler Docker image
---
--- TODO: We should load this from info.yaml along with everything else, and
--- default it to this current behavior.
---
 module Restylers.Info.Build
     ( RestylerBuild(..)
     , restylerBuild
@@ -14,6 +10,7 @@ where
 
 import RIO
 
+import Data.Aeson
 import Restylers.Image
 import Restylers.Options (NoCache, addNoCache)
 import RIO.FilePath (takeDirectory, (</>))
@@ -25,7 +22,8 @@ data RestylerBuild = RestylerBuild
     , dockerfile :: FilePath
     , options :: [String]
     }
-    deriving (Eq, Show)
+    deriving stock (Eq, Show, Generic)
+    deriving anyclass FromJSON
 
 restylerBuild :: FilePath -> RestylerBuild
 restylerBuild yaml =

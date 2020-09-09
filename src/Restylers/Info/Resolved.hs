@@ -16,7 +16,7 @@ import Data.Semigroup (Last(..))
 import qualified Data.Yaml as Yaml
 import Restylers.Image
 import qualified Restylers.Info as Info
-import Restylers.Info.Build
+import Restylers.Info.Build (RestylerBuild, restylerBuild)
 import Restylers.Info.Metadata (Metadata)
 import qualified Restylers.Info.Metadata as Metadata
 import Restylers.Name
@@ -49,8 +49,8 @@ data ImageSource
     | BuildVersion RestylerName RestylerVersion RestylerBuild
     deriving (Eq, Show)
 
-getImageSource :: MonadIO m => Info.RestylerInfo -> m ImageSource
-getImageSource info =
+getImageSource :: MonadIO m => FilePath -> Info.RestylerInfo -> m ImageSource
+getImageSource yaml info =
     case
             ( getLast $ Info.name info
             , getLast <$> Info.version info
@@ -64,15 +64,10 @@ getImageSource info =
                     <> ": one of image, version_cmd, or version must be specified"
             (_, Nothing, Nothing, Just image) -> pure $ Explicit image
             (name, Nothing, Just cmd, _) ->
-                pure
-                    $ BuildVersionCmd name cmd
-                    $ restylerBuild
-                    $ restylerInfoYaml name
+                pure $ BuildVersionCmd name cmd build
             (name, Just version, _, _) ->
-                pure
-                    $ BuildVersion name version
-                    $ restylerBuild
-                    $ restylerInfoYaml name
+                pure $ BuildVersion name version build
+    where build = fromMaybeLast (restylerBuild yaml) $ Info.build info
 
 load
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasOptions env)
@@ -84,12 +79,13 @@ load yaml = do
     case eOverride of
         Left _ -> do
             info <- decodeYaml yaml
-            imageSource <- getImageSource info
+            imageSource <- getImageSource yaml info
             pure $ fromInfo info imageSource
 
         Right override -> do
-            info <- decodeYaml $ restylerInfoYaml $ Override.overrides override
-            imageSource <- getImageSource info
+            let overridesYaml = restylerInfoYaml $ Override.overrides override
+            info <- decodeYaml overridesYaml
+            imageSource <- getImageSource overridesYaml info
             pure $ fromInfo (info <> overrideToInfo override) imageSource
 
 fromInfo :: Info.RestylerInfo -> ImageSource -> RestylerInfo
@@ -117,6 +113,7 @@ overrideToInfo Override.RestylerOverride { enabled, name, command, arguments, in
         , Info.version = Nothing
         , Info.version_cmd = Nothing
         , Info.image = Nothing
+        , build = Nothing
         , command
         , arguments
         , include
