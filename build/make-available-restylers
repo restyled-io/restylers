@@ -2,6 +2,9 @@
 require "mustache"
 require "yaml"
 
+RESTYLERS_YAML = ARGV.first or raise "<path> is required"
+RESTYLERS = YAML.load_file(RESTYLERS_YAML)
+
 SNIPPET_KEYS = %w[
   image
   command
@@ -11,7 +14,7 @@ SNIPPET_KEYS = %w[
 ]
 
 def restylers
-  YAML.load_file("restylers.yaml").map do |info|
+  RESTYLERS.map do |info|
     name = info.fetch("name")
     languages = restyler_languages(name)
     snippet = info.slice(*SNIPPET_KEYS)
@@ -34,18 +37,7 @@ def restyler_languages(name)
     .map { |lang| lang.sub(/\*/, '\\*') }
 end
 
-def comparisons
-  last_tag = nil
-  tags = `git tag | sort -n`.split("\n")
-  tags << "master"
-  tags.map do |tag|
-    comparison = { tag: tag, last_tag: last_tag }
-    last_tag = tag
-    comparison
-  end.reverse
-end
-
-puts Mustache.render(<<~EOM, restylers: restylers, comparisons: comparisons)
+puts Mustache.render(<<~EOM, restylers: restylers)
   {{#restylers}}
   {{#enabled}}
   ## {{name}}
@@ -69,9 +61,8 @@ puts Mustache.render(<<~EOM, restylers: restylers, comparisons: comparisons)
 
   ## Restyler Sets
 
-  {{#comparisons}}
-  - **{{tag}}**: [`restylers.yaml`](https://github.com/restyled-io/restylers/blob/{{tag}}/restylers.yaml){{#last_tag}}, [changes](https://github.com/restyled-io/restylers/compare/{{last_tag}}...{{tag}}){{/last_tag}}
-  {{/comparisons}}
+  - **dev**: [`restylers.yaml`](https://docs.restyled.io/data-files/restylers/manifests/dev/restylers.yaml)
+  - **stable**: [`restylers.yaml`](https://docs.restyled.io/data-files/restylers/manifests/stable/restylers.yaml)
 
   See [Restyler Versions](https://github.com/restyled-io/restyled.io/wiki/Restyler-Versions) for how to use these Sets in your configuration.
 

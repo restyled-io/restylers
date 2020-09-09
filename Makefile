@@ -43,10 +43,10 @@ release.promote:
 	  --distribution-id $(DISTRIBUTION_ID) \
 	  --paths $(LTS_MANIFEST)
 
-# TODO: Broken with git-tag to S3 manifest transition
 .PHONY: wiki
 wiki:
-	./build/make-available-restylers \
+	$(AWS) s3 cp s3://$(BUCKET)$(LTS_MANIFEST) /tmp/restylers.yaml
+	./build/make-available-restylers /tmp/restylers.yaml \
 	  > ../restyled.io.wiki/Available-Restylers.md
 	(cd ../restyled.io.wiki && \
 	  git commit Available-Restylers.md -m "Update Available Restylers" && \
