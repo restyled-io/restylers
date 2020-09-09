@@ -2,15 +2,12 @@ module Restylers.Image
     ( RestylerImage
     , unRestylerImage
     , mkRestylerImage
-    , dockerHubImageExists
     )
 where
 
 import RIO
 
 import Data.Aeson
-import Network.HTTP.Simple
-import Network.HTTP.Types.Status (status200)
 import Restylers.Name
 import Restylers.Registry
 import RIO.Text (unpack)
@@ -102,29 +99,6 @@ unRestylerImage RestylerImage {..} =
         <> unRestylerImageName riName
         <> ":"
         <> unRestylerImageTag riTag
-
-dockerHubImageExists
-    :: (MonadIO m, MonadReader env m, HasLogFunc env) => RestylerImage -> m Bool
-dockerHubImageExists RestylerImage {..} = do
-    when (isJust riRegistry)
-        $ throwString
-        $ "Unable to use dockerHubImageExists with explicit Registry."
-        <> " If we're moving to a new registry, we have to figure out how to"
-        <> " check for existence on it."
-
-    logDebug $ "Checking " <> fromString indexUrl
-    let req = parseRequest_ indexUrl
-    resp <- httpNoBody $ setRequestIgnoreStatus req
-    let status = getResponseStatus resp
-    logDebug $ "Status " <> displayShow status
-    pure $ status == status200
-  where
-    indexUrl =
-        unpack
-            $ "https://index.docker.io/v1/repositories/"
-            <> unRestylerImageName riName
-            <> "/tags/"
-            <> unRestylerImageTag riTag
 
 guarded :: Alternative f => (t -> Bool) -> t -> f t
 guarded p x = x <$ guard (p x)
