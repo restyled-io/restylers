@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: whitespace
-version: v0.1.0.1
+image: restyled/restyler-whitespace:v0.1.0.1
 
 # Attempt to exclude some obvious non-text files that would commonly see edits
 # in a Pull Request. This list is not exhaustive or robust, and we would rather
@@ -17,7 +17,7 @@ include:
   - "!**/fonts/**/*"
 
 documentation:
-  - https://github.com/restyled-io/restylers/blob/master/whitespace/README.md
+  - https://github.com/restyled-io/restyler-whitespace/blob/master/README.md
 metadata:
   languages:
     - "*"
