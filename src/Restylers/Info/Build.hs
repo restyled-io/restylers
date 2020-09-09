@@ -26,9 +26,12 @@ data RestylerBuild = RestylerBuild
     deriving anyclass FromJSON
 
 restylerBuild :: FilePath -> RestylerBuild
-restylerBuild yaml =
-    let path = takeDirectory yaml
-    in RestylerBuild { path, dockerfile = path </> "Dockerfile", options = [] }
+restylerBuild yaml = RestylerBuild
+    { path
+    , dockerfile = path </> "Dockerfile"
+    , options = []
+    }
+    where path = takeDirectory yaml
 
 build
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
@@ -38,18 +41,17 @@ build
     -> m RestylerImage
 build noCache RestylerBuild {..} image = do
     logInfo $ "Building " <> display image
-    image
-        <$ proc
-               "docker"
-               (concat
-                   [ ["build"]
-                   , ["--tag", unImage image]
-                   , ["--file", dockerfile]
-                   , addNoCache noCache options
-                   , [path]
-                   ]
-               )
-               runProcess_
+
+    let
+        args = concat
+            [ ["build"]
+            , ["--tag", unImage image]
+            , ["--file", dockerfile]
+            , addNoCache noCache options
+            , [path]
+            ]
+
+    image <$ proc "docker" args runProcess_
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage
