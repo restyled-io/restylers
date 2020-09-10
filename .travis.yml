@@ -9,6 +9,7 @@ matrix:
     - env: RESTYLER=black
     - env: RESTYLER=brittany
     - env: RESTYLER=clang-format
+    - env: RESTYLER=dhall-format
     - env: RESTYLER=dfmt
     - env: RESTYLER=dotnet-format
     - env: RESTYLER=elm-format
