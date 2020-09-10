@@ -2,7 +2,7 @@
 enabled: true
 name: dhall-format
 version_cmd: |
-    dhall --version
+  dhall --version
 command:
   - dhall
 arguments:
@@ -48,4 +48,3 @@ metadata:
                           }
 
                     in  x ⫽ { fruit1 = f.fruitToText (f.Fruit.Orange {=}) }
-
