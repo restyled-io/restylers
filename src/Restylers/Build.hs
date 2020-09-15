@@ -26,9 +26,10 @@ buildRestylerImage
        , HasOptions env
        )
     => NoCache
+    -> Push
     -> RestylerInfo
     -> m RestylerImage
-buildRestylerImage noCache info = do
+buildRestylerImage noCache push info = do
     registry <- oRegistry <$> view optionsL
     case Info.imageSource info of
         Explicit image -> do
@@ -43,11 +44,13 @@ buildRestylerImage noCache info = do
             logInfo $ "Tagging " <> display image <> " => " <> display versioned
             dockerTag image versioned
             writeFileUtf8 (Info.restylerVersionCache name) $ version <> "\n"
-            pure versioned
-        BuildVersion name version options ->
-            Build.build noCache options
+            versioned <$ whenPush push (dockerPush versioned)
+        BuildVersion name version options -> do
+            image <-
+                Build.build noCache options
                 $ mkRestylerImage registry name
                 $ unRestylerVersion version
+            image <$ whenPush push (dockerPush image)
 
 pullRestylerImage
     :: ( MonadIO m
@@ -77,7 +80,7 @@ pullRestylerImage info = do
                         <> fromString cache
                         <> " does not exist."
                         <> " Building now..."
-                    buildRestylerImage (NoCache False) info
+                    buildRestylerImage (NoCache False) (Push True) info
         BuildVersion name version _ -> do
             pure $ mkRestylerImage registry name $ unRestylerVersion version
     image <$ proc "docker" ["pull", unImage image] runProcess_
@@ -106,6 +109,12 @@ dockerTag
     -> RestylerImage
     -> m ()
 dockerTag from to = proc "docker" ["tag", unImage from, unImage to] runProcess_
+
+dockerPush
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => RestylerImage
+    -> m ()
+dockerPush image = proc "docker" ["push", unImage image] runProcess_
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage

@@ -6,6 +6,8 @@ module Restylers.Options
     , whenLintDockerfile
     , RunTests(..)
     , whenRunTests
+    , Push(..)
+    , whenPush
     , Options(..)
     , HasOptions(..)
     , parseOptions
@@ -36,8 +38,14 @@ newtype RunTests = RunTests Bool
 whenRunTests :: Applicative m => RunTests -> m () -> m ()
 whenRunTests (RunTests b) = when b
 
+newtype Push = Push Bool
+    deriving newtype Show
+
+whenPush :: Applicative m => Push -> m () -> m ()
+whenPush (Push b) = when b
+
 data Command
-    = Build NoCache LintDockerfile RunTests FilePath
+    = Build NoCache LintDockerfile RunTests Push FilePath
     | Release FilePath (NonEmpty FilePath)
     deriving stock Show
 
@@ -91,6 +99,10 @@ options = Options
                 <*> (RunTests <$> switch
                     (  long "test"
                     <> help "Test the build image"
+                    ))
+                <*> (Push <$> switch
+                    (  long "push"
+                    <> help "Push the build image"
                     ))
                 <*> yamlArgument
                 )

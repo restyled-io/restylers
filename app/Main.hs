@@ -23,10 +23,10 @@ main = do
         runRIO app $ do
             logDebug $ "Options: " <> displayShow opts
             case oCommand of
-                Build noCache lint test yaml -> do
+                Build noCache lint test push yaml -> do
                     info <- Info.load yaml
                     whenLintDockerfile lint $ lintRestyler info
-                    image <- buildRestylerImage noCache info
+                    image <- buildRestylerImage noCache push info
                     whenRunTests test $ testRestylerImage info image
 
                 Release manifest yamls -> do
