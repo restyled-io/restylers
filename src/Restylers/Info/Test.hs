@@ -25,8 +25,8 @@ data Test = Test
     , restyled :: Text
     , support :: Maybe Support
     }
-    deriving stock (Show, Generic)
-    deriving anyclass FromJSON
+    deriving stock (Eq, Show, Generic)
+    deriving anyclass (FromJSON, ToJSON)
 
 writeTestFiles :: MonadIO m => Int -> RestylerName -> Test -> m ()
 writeTestFiles number name test@Test { contents, support } = do

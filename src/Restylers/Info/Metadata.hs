@@ -13,8 +13,8 @@ data Metadata = Metadata
     { languages :: [Text]
     , tests :: [Test]
     }
-    deriving stock Generic
-    deriving anyclass FromJSON
+    deriving stock (Eq, Show, Generic)
+    deriving anyclass (FromJSON, ToJSON)
 
 emptyMetadata :: Metadata
 emptyMetadata = Metadata { languages = [], tests = [] }

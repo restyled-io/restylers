@@ -12,6 +12,7 @@ import RIO
 import Data.Aeson
 import qualified Data.Yaml as Yaml
 import Restylers.Image
+import Restylers.Info.Metadata (Metadata)
 import qualified Restylers.Info.Resolved as Info
 import Restylers.Name
 
@@ -26,12 +27,13 @@ data Restyler = Restyler
     , supports_arg_sep :: Bool
     , supports_multiple_paths :: Bool
     , documentation :: [Text]
+    , metadata :: Metadata
     }
     deriving stock (Eq, Show, Generic)
     deriving anyclass (ToJSON)
 
 toRestyler :: Info.RestylerInfo -> RestylerImage -> Restyler
-toRestyler Info.RestylerInfo { enabled, name, command, arguments, include, interpreters, supports_arg_sep, supports_multiple_paths, documentation } image
+toRestyler Info.RestylerInfo { enabled, name, command, arguments, include, interpreters, supports_arg_sep, supports_multiple_paths, documentation, metadata } image
     = Restyler
         { enabled
         , name
@@ -43,6 +45,7 @@ toRestyler Info.RestylerInfo { enabled, name, command, arguments, include, inter
         , supports_arg_sep
         , supports_multiple_paths
         , documentation
+        , metadata
         }
 
 write :: MonadIO m => FilePath -> NonEmpty Restyler -> m ()
