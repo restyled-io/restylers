@@ -20,7 +20,6 @@ import Restylers.Info.Build (RestylerBuild, restylerBuild)
 import Restylers.Info.Metadata (Metadata)
 import qualified Restylers.Info.Metadata as Metadata
 import Restylers.Name
-import Restylers.Options
 import qualified Restylers.Override as Override
 import Restylers.Version
 import RIO.FilePath ((<.>), (</>))
@@ -47,7 +46,7 @@ data ImageSource
     = Explicit RestylerImage
     | BuildVersionCmd RestylerName String RestylerBuild
     | BuildVersion RestylerName RestylerVersion RestylerBuild
-    deriving (Eq, Show)
+    deriving stock (Eq, Show)
 
 getImageSource :: MonadIO m => FilePath -> Info.RestylerInfo -> m ImageSource
 getImageSource yaml info =
@@ -69,10 +68,7 @@ getImageSource yaml info =
                 pure $ BuildVersion name version build
     where build = fromMaybeLast (restylerBuild yaml) $ Info.build info
 
-load
-    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasOptions env)
-    => FilePath
-    -> m RestylerInfo
+load :: MonadIO m => FilePath -> m RestylerInfo
 load yaml = do
     eOverride <- liftIO $ Yaml.decodeFileEither yaml
 

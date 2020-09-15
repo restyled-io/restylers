@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0133ae5391ff32e80e1595d2542d962bef8a7792c146a8b71ee309325df5bd56
+-- hash: cb21444c83639a65186e197c6e72bc397971903a3da63101fcbcc4d7675bc544
 
 name:           restylers
 version:        0.0.0.0
@@ -36,6 +36,7 @@ library
   hs-source-dirs:
       src
   default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  ghc-options: -Weverything -Wno-unsafe -Wno-missing-import-lists
   build-depends:
       Diff
     , aeson
@@ -59,6 +60,7 @@ executable restylers
   hs-source-dirs:
       app
   default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  ghc-options: -Weverything -Wno-unsafe -Wno-missing-import-lists
   build-depends:
       base
     , restylers
@@ -74,6 +76,7 @@ test-suite doctest
   hs-source-dirs:
       doctest
   default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  ghc-options: -Weverything -Wno-unsafe -Wno-missing-import-lists
   build-depends:
       base
     , doctest
@@ -90,6 +93,7 @@ test-suite spec
   hs-source-dirs:
       test
   default-extensions: BangPatterns DataKinds DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies FlexibleContexts FlexibleInstances GADTs GeneralizedNewtypeDeriving LambdaCase MultiParamTypeClasses NoImplicitPrelude NoMonomorphismRestriction OverloadedStrings RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TypeApplications TypeFamilies
+  ghc-options: -Weverything -Wno-unsafe -Wno-missing-import-lists
   build-depends:
       aeson
     , base

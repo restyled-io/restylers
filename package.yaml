@@ -32,6 +32,10 @@ default-extensions:
   - TypeApplications
   - TypeFamilies
 
+ghc-options: -Weverything
+  -Wno-unsafe
+  -Wno-missing-import-lists
+
 library:
   source-dirs: src
   dependencies:

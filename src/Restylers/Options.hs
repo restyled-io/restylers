@@ -39,7 +39,7 @@ whenRunTests (RunTests b) = when b
 data Command
     = Build NoCache LintDockerfile RunTests FilePath
     | Release FilePath (NonEmpty FilePath)
-    deriving Show
+    deriving stock Show
 
 data Options = Options
     { oRegistry :: Maybe Registry
@@ -47,7 +47,7 @@ data Options = Options
     , oDebug :: Bool
     , oCommand :: Command
     }
-    deriving Show
+    deriving stock Show
 
 class HasOptions env where
     optionsL :: Lens' env Options

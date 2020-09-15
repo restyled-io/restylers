@@ -47,6 +47,7 @@ instance FromJSON RestylerImage where
             }
 
       where
+        invalidImage :: MonadFail m => Text -> String -> Maybe a -> m a
         invalidImage x msg = maybe
             (fail
             $ "Image was not well-formed. Expected "

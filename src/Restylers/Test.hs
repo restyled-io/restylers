@@ -16,7 +16,6 @@ import Restylers.Info.Test
     , testFilePath
     , writeTestFiles
     )
-import Restylers.Options
 import RIO.Directory (getCurrentDirectory, withCurrentDirectory)
 import RIO.List (nub)
 import RIO.Process
@@ -27,7 +26,6 @@ testRestylerImage
        , MonadReader env m
        , HasLogFunc env
        , HasProcessContext env
-       , HasOptions env
        )
     => RestylerInfo
     -> RestylerImage
