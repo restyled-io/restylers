@@ -1,0 +1,48 @@
+enabled: true
+name: gofmt
+version_cmd: |
+  go version | cut -d ' ' -f 3
+command:
+  - gofmt
+  - -w
+include:
+  - "**/*.go"
+documentation:
+  - https://golang.org/cmd/gofmt/
+metadata:
+  languages:
+    - Go
+  tests:
+    # https://www.tothenew.com/blog/gofmt-formatting-the-go-code/
+    - contents: |
+        package main
+                  import "fmt"
+        // this is demo to format code
+                    // with gofmt command
+         var a int=2;
+                      var b int=5;
+                                          var c string= `hello world`;
+               func print(){
+                          fmt.Println("Value for a,b and c is : ");
+                                  fmt.Println(a);
+                                      fmt.Println((b));
+                                         fmt.Println(c);
+                                }
+
+      restyled: |
+        package main
+
+        import "fmt"
+
+        // this is demo to format code
+        // with gofmt command
+        var a int = 2
+        var b int = 5
+        var c string = `hello world`
+
+        func print() {
+        	fmt.Println("Value for a,b and c is : ")
+        	fmt.Println(a)
+        	fmt.Println((b))
+        	fmt.Println(c)
+        }
