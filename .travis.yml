@@ -15,6 +15,7 @@ matrix:
     - env: RESTYLER=elm-format
     - env: RESTYLER=fantomas
     - env: RESTYLER=gn
+    - env: RESTYLER=gofmt
     - env: RESTYLER=google-java-format
     - env: RESTYLER=hindent
     - env: RESTYLER=hlint
