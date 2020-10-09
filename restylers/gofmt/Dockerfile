@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine AS build
+FROM golang:1.14-alpine
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 WORKDIR /code
 ENTRYPOINT []
