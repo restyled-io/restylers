@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.9-alpine
 LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
 RUN \
