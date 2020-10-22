@@ -5,7 +5,7 @@
   "automerge": true,
   "automergeType": "pr",
   "requiredStatusChecks": [
-    "continuous-integration/travis-ci/pr",
-    "continuous-integration/travis-ci/push"
+    "continuous-integration/Travis CI - Branch",
+    "continuous-integration/Travis CI - Pull Request"
   ]
 }
