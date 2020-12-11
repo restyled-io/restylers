@@ -5,7 +5,7 @@ RUN \
   apk add --no-cache --virtual .build-deps \
     gcc \
     musl-dev && \
-  pip install isort==5.4.2 && \
+  pip install --no-cache-dir isort==5.6.4 && \
   apk del .build-deps
 WORKDIR /code
 ENTRYPOINT []
