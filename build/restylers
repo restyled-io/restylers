@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-: "${TAG:=v1}"
+: "${TAG:=v2}"
 : "${BUILD:=0}" # Build the image from local sources first
 : "${PUSH:=0}"  # Push that image back after building
 
