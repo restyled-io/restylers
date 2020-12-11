@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: yapf
-version: v0.27.0
+version: v0.30.0
 command:
   - yapf
   - "--in-place"
