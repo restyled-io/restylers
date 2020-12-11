@@ -1,4 +1,4 @@
-FROM java:openjdk-15.0.1-jre
+FROM openjdk:15.0.1
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 ENV GOOGLE_JAVA_FORMAT_JAR \
