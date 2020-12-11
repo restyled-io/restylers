@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: autopep8
-version: v1.4.4-2
+version: v1.5.4
 command:
   - autopep8
   - "--in-place"
