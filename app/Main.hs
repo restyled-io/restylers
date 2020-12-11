@@ -32,7 +32,13 @@ main = do
                 Release manifest yamls -> do
                     restylers <- for yamls $ \yaml -> do
                         info <- Info.load yaml
-                        image <- pullRestylerImage info
+                        image <- pullRestylerImage info `catchAny` \ex -> do
+                            logWarn $ display ex
+                            logInfo "Attempting build and re-pull..."
+                            image <- buildRestylerImage (NoCache False) info
+                            testRestylerImage info image
+                            pushRestylerImage image
+                            pullRestylerImage info
                         pure $ toRestyler info image
                     logInfo
                         $ "Writing "
