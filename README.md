@@ -8,6 +8,7 @@ See:
 
 - https://github.com/restyled-io/restyled.io/wiki/Contributing-to-Restyled
 - https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler
+- https://github.com/restyled-io/restyled.io/wiki/Restyler-Info-Yaml
 
 ## Releasing
 
