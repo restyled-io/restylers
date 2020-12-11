@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: reorder-python-imports
-version: v2.3.6
+version_cmd: |
+  pip show reorder-python-imports | sed '/^Version: \(.*\)$/!d; s//v\1/'
 command:
   - reorder-python-imports
   - "--exit-zero-even-if-changed"
