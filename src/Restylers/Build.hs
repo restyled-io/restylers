@@ -1,8 +1,8 @@
 module Restylers.Build
     ( buildRestylerImage
     , pullRestylerImage
-    )
-where
+    , pushRestylerImage
+    ) where
 
 import RIO hiding (to)
 
@@ -26,10 +26,9 @@ buildRestylerImage
        , HasOptions env
        )
     => NoCache
-    -> Push
     -> RestylerInfo
     -> m RestylerImage
-buildRestylerImage noCache push info = do
+buildRestylerImage noCache info = do
     registry <- oRegistry <$> view optionsL
     case Info.imageSource info of
         Explicit image -> do
@@ -41,16 +40,13 @@ buildRestylerImage noCache push info = do
                 $ mkRestylerImage registry name tag
             version <- dockerRunSh image cmd
             let versioned = mkRestylerImage registry name version
-            logInfo $ "Tagging " <> display image <> " => " <> display versioned
-            dockerTag image versioned
             writeFileUtf8 (Info.restylerVersionCache name) $ version <> "\n"
-            versioned <$ whenPush push (dockerPush versioned)
+            logInfo $ "Tagging " <> display image <> " => " <> display versioned
+            versioned <$ dockerTag image versioned
         BuildVersion name version options -> do
-            image <-
-                Build.build noCache options
+            Build.build noCache options
                 $ mkRestylerImage registry name
                 $ unRestylerVersion version
-            image <$ whenPush push (dockerPush image)
 
 pullRestylerImage
     :: ( MonadIO m
@@ -80,10 +76,16 @@ pullRestylerImage info = do
                         <> fromString cache
                         <> " does not exist."
                         <> " Building now..."
-                    buildRestylerImage (NoCache False) (Push True) info
+                    buildRestylerImage (NoCache False) info
         BuildVersion name version _ -> do
             pure $ mkRestylerImage registry name $ unRestylerVersion version
     image <$ proc "docker" ["pull", unImage image] runProcess_
+
+pushRestylerImage
+    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
+    => RestylerImage
+    -> m ()
+pushRestylerImage image = proc "docker" ["push", unImage image] runProcess_
 
 dockerRunSh
     :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
@@ -109,12 +111,6 @@ dockerTag
     -> RestylerImage
     -> m ()
 dockerTag from to = proc "docker" ["tag", unImage from, unImage to] runProcess_
-
-dockerPush
-    :: (MonadIO m, MonadReader env m, HasLogFunc env, HasProcessContext env)
-    => RestylerImage
-    -> m ()
-dockerPush image = proc "docker" ["push", unImage image] runProcess_
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage

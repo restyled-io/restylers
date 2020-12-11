@@ -1,7 +1,6 @@
 module Main
     ( main
-    )
-where
+    ) where
 
 import RIO
 
@@ -26,8 +25,9 @@ main = do
                 Build noCache lint test push yaml -> do
                     info <- Info.load yaml
                     whenLintDockerfile lint $ lintRestyler info
-                    image <- buildRestylerImage noCache push info
+                    image <- buildRestylerImage noCache info
                     whenRunTests test $ testRestylerImage info image
+                    whenPush push $ pushRestylerImage image
 
                 Release manifest yamls -> do
                     restylers <- for yamls $ \yaml -> do
