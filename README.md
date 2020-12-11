@@ -9,6 +9,26 @@ See:
 - https://github.com/restyled-io/restyled.io/wiki/Contributing-to-Restyled
 - https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler
 
+## Releasing
+
+Build, test, lint, and push any new images:
+
+```console
+./build/restylers build --test --lint --push restylers/{name}/info.yaml
+```
+
+Update the `dev` channel:
+
+```console
+make release.dev
+```
+
+Promote `dev` to `stable`:
+
+```console
+cd ../ops && ./tools/promote --yes dev stable
+```
+
 ## LICENSE
 
 What minimal code and configuration there is in this repository is itself
