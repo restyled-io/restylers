@@ -3,9 +3,5 @@
     "config:base"
   ],
   "automerge": true,
-  "automergeType": "pr",
-  "requiredStatusChecks": [
-    "continuous-integration/Travis CI - Branch",
-    "continuous-integration/Travis CI - Pull Request"
-  ]
+  "automergeType": "pr"
 }
