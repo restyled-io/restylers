@@ -1,6 +1,6 @@
 ---
 name: google-java-format
-version: v1.6
+version: v1.9
 command:
   - google-java-format
   - "--replace"
