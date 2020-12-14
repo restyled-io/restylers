@@ -11,40 +11,40 @@ jobs:
         restyler:
           # :r !ls -1 restylers/ | sort | sed 's/^/          - /'
           - astyle
-          # - autopep8
-          # - black
-          # - brittany
-          # - clang-format
-          # - dfmt
-          # - dhall-format
-          # - dotnet-format
-          # - elm-format
-          # - fantomas
-          # - gn
-          # - gofmt
-          # - google-java-format
-          # - hindent
-          # - hlint
-          # - isort
-          # - jdt
-          # - jq
-          # - ormolu
-          # - pg_format
-          # - php-cs-fixer
-          # - prettier
-          # - prettier-json
-          # - prettier-markdown
-          # - prettier-ruby
-          # - prettier-yaml
-          # - reorder-python-imports
-          # - rubocop
-          # - rustfmt
-          # - shellharden
-          # - shfmt
-          # - stylish-haskell
-          # - terraform
-          # - whitespace
-          # - yapf
+          - autopep8
+          - black
+          - brittany
+          - clang-format
+          - dfmt
+          - dhall-format
+          - dotnet-format
+          - elm-format
+          - fantomas
+          - gn
+          - gofmt
+          - google-java-format
+          - hindent
+          - hlint
+          - isort
+          - jdt
+          - jq
+          - ormolu
+          - pg_format
+          - php-cs-fixer
+          - prettier
+          - prettier-json
+          - prettier-markdown
+          - prettier-ruby
+          - prettier-yaml
+          - reorder-python-imports
+          - rubocop
+          - rustfmt
+          - shellharden
+          - shfmt
+          - stylish-haskell
+          - terraform
+          - whitespace
+          - yapf
 
     steps:
       - uses: actions/checkout@v2
