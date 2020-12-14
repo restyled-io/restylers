@@ -1,0 +1,80 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        restyler:
+          # :r !ls -1 restylers/ | sort | sed 's/^/          - /'
+          - astyle
+          # - autopep8
+          # - black
+          # - brittany
+          # - clang-format
+          # - dfmt
+          # - dhall-format
+          # - dotnet-format
+          # - elm-format
+          # - fantomas
+          # - gn
+          # - gofmt
+          # - google-java-format
+          # - hindent
+          # - hlint
+          # - isort
+          # - jdt
+          # - jq
+          # - ormolu
+          # - pg_format
+          # - php-cs-fixer
+          # - prettier
+          # - prettier-json
+          # - prettier-markdown
+          # - prettier-ruby
+          # - prettier-yaml
+          # - reorder-python-imports
+          # - rubocop
+          # - rustfmt
+          # - shellharden
+          # - shfmt
+          # - stylish-haskell
+          # - terraform
+          # - whitespace
+          # - yapf
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+        with:
+          key: |
+            docker-layer-caching-${{ github.workflow }}-${{ matrix.restyler }}-{hash}
+          restore-keys: |
+            docker-layer-caching-${{ github.workflow }}-${{ matrix.restyler }}-
+
+      - name: Setup
+        run: |
+          docker pull hadolint/hadolint
+          docker pull restyled/restylers:v2
+
+      - name: Build & Test
+        run: |
+          docker run --rm \
+            --env "REALPWD=$PWD" \
+            --volume "$PWD":/code \
+            --volume /tmp:/tmp \
+            --volume /var/run/docker.sock:/var/run/docker.sock \
+            restyled/restylers:v2 restylers \
+            build --lint --test "restylers/${{ matrix.restyler }}/info.yaml"
+
+
+  status:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Job to act as our overall required PR Status"
