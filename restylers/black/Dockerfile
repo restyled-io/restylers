@@ -5,7 +5,7 @@ RUN \
   apk add --no-cache --virtual .build-deps \
     gcc \
     musl-dev && \
-  pip install black==20.8b1 && \
+  pip install --no-cache-dir black==20.8b1 && \
   apk del .build-deps
 WORKDIR /code
 ENTRYPOINT []
