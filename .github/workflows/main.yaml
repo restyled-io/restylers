@@ -27,7 +27,7 @@ jobs:
           - hlint
           - isort
           - jdt
-          # - jq
+          - jq
           - ormolu
           - pg_format
           - php-cs-fixer
@@ -42,7 +42,7 @@ jobs:
           - shellharden
           - shfmt
           - stylish-haskell
-          # - terraform
+          - terraform
           - whitespace
           - yapf
 
