@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: isort
-version: v5.6.4
+version_cmd: |
+  pip show isort | sed '/^Version: \(.*\)$/!d; s//v\1/'
 include:
   - "**/*.py"
 interpreters:
