@@ -1,7 +1,8 @@
 FROM python:3.9-alpine
 LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
-RUN pip install --no-cache-dir yapf==0.30.0
+COPY requirements.txt .
+RUN pip install --no-cache-dir --requirement requirements.txt
 WORKDIR /code
 ENTRYPOINT []
 CMD ["yapf", "--help"]
