@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: autopep8
-version: v1.5.4
+version_cmd: |
+  pip show autopep8 | sed '/^Version: \(.*\)$/!d; s//v\1/'
 command:
   - autopep8
   - "--in-place"
