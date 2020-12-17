@@ -1,0 +1,8 @@
+{
+  "name": "@restyled/restyler-prettier-ruby",
+  "version": "0.0.0",
+  "dependencies": {
+    "prettier": "1.18.2",
+    "@prettier/plugin-ruby": "0.15.0"
+  }
+}

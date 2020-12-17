@@ -1,8 +1,9 @@
 ---
 name: prettier-ruby
-version: v0.15.0-3
+version_cmd: |
+  cd /app &&  bundle info prettier | sed '/.*prettier (\(.*\))$/!d; s//v\1/'
 command:
-  - prettier
+  - rbprettier
   - "--write"
 include:
   - "**/*.rb"
