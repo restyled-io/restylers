@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: prettier
-version: v2.2.1
+version_cmd: |
+  prettier --version | sed 's/^/v/'
 command:
   - prettier
   - "--write"

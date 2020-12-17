@@ -1,8 +1,11 @@
 FROM node:12.17-slim
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
-ENV PRETTIER_VERSION 2.2.1
-RUN npm install -g "prettier@$PRETTIER_VERSION"
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json .
+RUN npm install
+ENV PATH=/app/node_modules/.bin:$PATH
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
