@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: rubocop
-version: v0.72.0-5
+version_cmd: |
+  cd /app &&  bundle info rubocop | sed '/.*rubocop (\(.*\))$/!d; s//v\1/'
 command:
   - rubocop
   - "--auto-correct"

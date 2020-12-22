@@ -6,10 +6,12 @@ RUN apk add --no-cache \
   g++=8.3.0-r0 \
   linux-headers=4.19.36-r0 \
   make=4.2.1-r2
-RUN gem install \
-  rubocop:0.72.0 \
-  rubocop-performance:1.5.2 \
-  rubocop-rails:2.4.0
+RUN mkdir -p /app
+WORKDIR /app
+COPY Gemfile .
+RUN bundle
+RUN bundle binstubs rubocop
+ENV PATH=/app/bin:$PATH
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
