@@ -1,15 +1,14 @@
 FROM php:7.2.11-cli-alpine3.7
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
-
-# Increment to force update
-ENV DOCKERFILE_VERSION 1
-
-ENV PHAR_SRC http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar
-RUN wget "$PHAR_SRC" -O /usr/bin/php-cs-fixer
-RUN chmod +x /usr/bin/php-cs-fixer
-RUN apk add --no-cache \
-  bash=4.4.19-r1
+ENV COMPOSER_INSTALL=https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer
+RUN mkdir -p /app
+WORKDIR /app
+# hadolint ignore=DL3008,DL4006
+RUN curl -sL "$COMPOSER_INSTALL" | php -- --quiet
+COPY composer.json .
+RUN php composer.phar install
+ENV PATH=/app/vendor/bin:$PATH
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []

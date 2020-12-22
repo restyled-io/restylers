@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: php-cs-fixer
-version: v2.14.2-2
+version_cmd: |
+  php-cs-fixer --no-ansi --version | cut -d' ' -f 4 | sed 's/^/v/'
 command:
   - php-cs-fixer
   - fix
