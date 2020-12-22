@@ -24,8 +24,6 @@ metadata:
             do_something
         end
       restyled: |
-        # frozen_string_literal: true
-
         def some_method
           do_something
         end
@@ -41,8 +39,6 @@ metadata:
       contents: |
         puts x unless x.nil? || x.empty?
       restyled: |
-        # frozen_string_literal: true
-
         puts x if x.present?
 
     # performance
@@ -55,8 +51,6 @@ metadata:
           baz
         end
       restyled: |
-        # frozen_string_literal: true
-
         case foo
         when 1, 2, 3, 4
           bar
@@ -133,8 +127,6 @@ metadata:
           end
         end
       restyled: |
-        # frozen_string_literal: true
-
         class User < ApplicationRecord
           MissingAdminAccount = Class.new(RuntimeError)
 
