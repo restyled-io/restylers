@@ -60,17 +60,12 @@ jobs:
       - name: Setup
         run: |
           docker pull hadolint/hadolint
-          docker pull restyled/restylers:v2
+          docker pull restyled/sdk:main
+          curl -sL -O \
+            https://raw.githubusercontent.com/restyled-io/sdk/master/restyled-docker
 
-      - name: Build & Test
-        run: |
-          docker run --rm \
-            --env "REALPWD=$PWD" \
-            --volume "$PWD":/code \
-            --volume /tmp:/tmp \
-            --volume /var/run/docker.sock:/var/run/docker.sock \
-            restyled/restylers:v2 restylers \
-            build --lint --test "restylers/${{ matrix.restyler }}/info.yaml"
+      - name: Build
+        run: restyled-docker build --lint --test "restylers/${{ matrix.restyler }}/info.yaml"
 
 
   status:
