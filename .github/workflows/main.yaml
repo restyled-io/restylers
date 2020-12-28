@@ -7,6 +7,46 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        restyler:
+          # :r !ls -1 restylers/ | sort | sed 's/^/          - /'
+          - astyle
+          - autopep8
+          - black
+          - brittany
+          - clang-format
+          - dfmt
+          - dhall-format
+          - dotnet-format
+          - elm-format
+          - fantomas
+          - gn
+          - gofmt
+          - google-java-format
+          - hindent
+          - hlint
+          - isort
+          - jdt
+          - jq
+          - ormolu
+          - pg_format
+          - php-cs-fixer
+          - prettier
+          - prettier-json
+          - prettier-markdown
+          - prettier-ruby
+          - prettier-yaml
+          - reorder-python-imports
+          - rubocop
+          - rustfmt
+          - shellharden
+          - shfmt
+          - stylish-haskell
+          - terraform
+          - whitespace
+          - yapf
+
     steps:
       - uses: actions/checkout@v2
       - uses: satackey/action-docker-layer-caching@v0.0.11
@@ -21,32 +61,52 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKERHUB_PASSWORD: ${{ secrets.dockerhub_password }}
-        run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+        run: |
+          docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
 
       - name: Release
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-          DOCKERHUB_USERNAME: ${{ secrets.dockerhub_username }}
-          DOCKERHUB_PASSWORD: ${{ secrets.dockerhub_password }}
         run: |
           docker run --rm \
-            --env AWS_ACCESS_KEY_ID \
-            --env AWS_SECRET_ACCESS_KEY \
-            --env AWS_DEFAULT_REGION=us-east-1 \
             --env "REALPWD=$PWD" \
             --volume "$PWD":/code \
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
             --volume "$HOME"/.docker/config.json:/root/.docker/config.json:ro \
-            --entrypoint sh \
-            restyled/sdk:main -c '
-              restyled restylers release --write /tmp/restylers.yaml ./*/info.yaml
-              restyled promote --no-test --file /tmp/restylers.yaml dev
-            '
+            restyled/sdk:main restylers release --write /tmp/restyler.yaml ${{ matrix.restyler }}/info.yaml
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.restyler }}
+          path: /tmp/restyler.yaml
+
+  manifest:
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v2
+
+      - name: Promote
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+        run: |
+          ls -l
+
+          cat **/*.yaml > restylers.yaml
+
+          cat restylers.yaml
+
+          # docker run --rm \
+          #   --env AWS_ACCESS_KEY_ID \
+          #   --env AWS_SECRET_ACCESS_KEY \
+          #   --env AWS_DEFAULT_REGION=us-east-1 \
+          #   --volume "$PWD"/restylers.yaml:/restylers.yaml:ro \
+          #   restyled/sdk:main promote --no-test --file /restylers.yaml dev
 
   status:
     runs-on: ubuntu-latest
-    needs: release
+    needs: manifest
     steps:
       - run: echo "Job to act as our overall required PR Status"
