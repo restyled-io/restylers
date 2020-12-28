@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         restyler:
-          # :r !ls -1 restylers/ | sort | sed 's/^/          - /'
           - astyle
           - autopep8
           - black
@@ -70,7 +69,7 @@ jobs:
             --volume "$PWD":/code \
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
-            restyled/sdk:main restylers build "${{ matrix.restyler }}/info.yaml"
+            restyled/sdk:main restylers "${{ matrix.restyler }}/info.yaml"
 
   status:
     runs-on: ubuntu-latest

@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         restyler:
-          # :r !ls -1 restylers/ | sort | sed 's/^/          - /'
           - astyle
           - autopep8
           - black
@@ -77,7 +76,7 @@ jobs:
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
             --volume "$HOME"/.docker/config.json:/root/.docker/config.json:ro \
-            restyled/sdk:main restylers release --write /tmp/restyler.yaml ${{ matrix.restyler }}/info.yaml
+            restyled/sdk:main restylers --push --write /tmp/restyler.yaml ${{ matrix.restyler }}/info.yaml
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v2
@@ -96,19 +95,13 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-1
         run: |
-          ls -l
-
-          cat **/*.yaml > restylers.yaml
-
-          cat restylers.yaml
-
-          # docker run --rm \
-          #   --env AWS_ACCESS_KEY_ID \
-          #   --env AWS_SECRET_ACCESS_KEY \
-          #   --env AWS_DEFAULT_REGION=us-east-1 \
-          #   --volume "$PWD"/restylers.yaml:/restylers.yaml:ro \
-          #   restyled/sdk:main promote --no-test --file /restylers.yaml dev
+          cat **/*.yaml | docker run --rm --interactive \
+            --env AWS_ACCESS_KEY_ID \
+            --env AWS_SECRET_ACCESS_KEY \
+            --env AWS_DEFAULT_REGION \
+            restyled/sdk:main promote --no-test --file - dev
 
   status:
     runs-on: ubuntu-latest
