@@ -18,7 +18,9 @@ jobs:
             docker-layer-caching-${{ github.workflow }}-${{ matrix.restyler }}-
 
       - name: Setup
-        run: docker pull restyled/sdk:main
+        run: |
+          docker pull hadolint/hadolint
+          docker pull restyled/sdk:main
 
       - name: Login
         env:
@@ -37,6 +39,7 @@ jobs:
             --env AWS_ACCESS_KEY_ID \
             --env AWS_SECRET_ACCESS_KEY \
             --env AWS_DEFAULT_REGION=us-east-1 \
+            --env "REALPWD=$PWD" \
             --volume "$PWD":/code \
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
