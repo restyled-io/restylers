@@ -2,7 +2,7 @@ name: Release to dev channel manifest
 
 on:
   push:
-    branches: master
+    branches: main
 
 jobs:
   release:

@@ -2,7 +2,7 @@ name: Build and test Restylers
 
 on:
   push:
-    branches-ignore: master
+    branches-ignore: main
 
 jobs:
   build:
