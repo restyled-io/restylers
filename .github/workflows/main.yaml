@@ -51,10 +51,8 @@ jobs:
       - uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
         with:
-          key: |
-            docker-layer-caching-${{ matrix.restyler }}-{hash}
-          restore-keys: |
-            docker-layer-caching-${{ matrix.restyler }}-
+          key: docker-layer-caching-${{ matrix.restyler }}-{hash}
+          restore-keys: docker-layer-caching-${{ matrix.restyler }}-
 
       - name: Setup
         run: |
@@ -76,7 +74,8 @@ jobs:
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
             --volume "$HOME"/.docker/config.json:/root/.docker/config.json:ro \
-            restyled/sdk:main restylers --push --write /tmp/restyler.yaml ${{ matrix.restyler }}/info.yaml
+            restyled/sdk:main restylers \
+              --push --write /tmp/restyler.yaml ${{ matrix.restyler }}/info.yaml
 
       - name: Upload as artifact
         uses: actions/upload-artifact@v2
