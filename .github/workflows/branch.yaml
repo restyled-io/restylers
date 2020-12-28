@@ -54,9 +54,9 @@ jobs:
         continue-on-error: true
         with:
           key: |
-            docker-layer-caching-${{ github.workflow }}-${{ matrix.restyler }}-{hash}
+            docker-layer-caching-${{ matrix.restyler }}-{hash}
           restore-keys: |
-            docker-layer-caching-${{ github.workflow }}-${{ matrix.restyler }}-
+            docker-layer-caching-${{ matrix.restyler }}-
 
       - name: Setup
         run: |
