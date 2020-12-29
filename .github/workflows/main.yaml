@@ -64,7 +64,8 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.dockerhub_username }}
           DOCKERHUB_PASSWORD: ${{ secrets.dockerhub_password }}
         run: |
-          docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+          echo "$DOCKERHUB_PASSWORD" |
+            docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 
       - name: Release
         run: |
