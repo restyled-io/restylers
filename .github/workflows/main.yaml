@@ -90,6 +90,10 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v2
 
+      - name: Setup
+        run: |
+          docker pull restyled/sdk:main
+
       - name: Promote
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
