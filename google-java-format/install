@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+# renovate-bot will keep the dependency as listed in build.gradle up to date,
+# but we just need the executable, so we'll "parse" the version from that file
+# and download it directly.
+version=$(sed '/^ *compile '"'\([^']*\)'"' *$/!d; s//\1/' "$1" | awk -F: '{ print $3 }')
+url="https://github.com/google/google-java-format/releases/download/google-java-format-$version/google-java-format-$version-all-deps.jar"
+jar=google-java-format.jar
+
+curl --location --output "$jar" "$url"
+
+mkdir -p ./bin
+cat >./bin/google-java-format <<EOM
+#!/bin/sh
+exec java -jar "$PWD/$jar" "\$@"
+EOM
+
+chmod +x ./bin/google-java-format
