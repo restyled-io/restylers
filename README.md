@@ -17,7 +17,7 @@ Requires the [Restyled SDK](https://github.com/restyled-io/sdk#installation).
 Build, test, lint, and push any new images:
 
 ```console
-restyled restylers build --test --lint --push restylers/{name}/info.yaml
+restyled restylers {name}/info.yaml
 ```
 
 Update the `dev` channel:
