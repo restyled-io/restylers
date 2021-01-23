@@ -3,5 +3,7 @@
     "config:base"
   ],
   "automerge": true,
-  "automergeType": "pr"
+  "automergeType": "pr",
+  "semanticCommitScope": "{{baseDir}}",
+  "semanticCommitType": "feat"
 }
