@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.13
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN apk add --no-cache \
