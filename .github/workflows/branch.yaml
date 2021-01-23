@@ -3,6 +3,12 @@ name: Build and test Restylers
 on:
   push:
     branches-ignore: main
+    paths-ignore:
+      - ".hadolint"
+      - ".restyled.yaml"
+      - "LICENSE"
+      - "README.md"
+      - "renovate.json"
 
 jobs:
   build:
