@@ -39,4 +39,4 @@ jobs:
             --env AWS_DEFAULT_REGION \
             --volume /tmp:/tmp \
             --volume /var/run/docker.sock:/var/run/docker.sock \
-            restyled/sdk:main promote "${{ steps.setup.outputs.tag }}" stable
+            restyled/sdk:main promote --yes "${{ steps.setup.outputs.tag }}" stable

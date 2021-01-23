@@ -111,7 +111,7 @@ jobs:
             --env AWS_ACCESS_KEY_ID \
             --env AWS_SECRET_ACCESS_KEY \
             --env AWS_DEFAULT_REGION \
-            restyled/sdk:main promote --no-test --file - dev
+            restyled/sdk:main promote --yes --no-test --file - dev
 
       - uses: actions/checkout@v2
       - name: Bump version and push tag
@@ -138,7 +138,7 @@ jobs:
             --env AWS_ACCESS_KEY_ID \
             --env AWS_SECRET_ACCESS_KEY \
             --env AWS_DEFAULT_REGION \
-            restyled/sdk:main promote --no-test dev ${{ steps.tag-version.outputs.new_tag }}
+            restyled/sdk:main promote --yes --no-test dev ${{ steps.tag-version.outputs.new_tag }}
 
   status:
     runs-on: ubuntu-latest
