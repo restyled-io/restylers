@@ -1,4 +1,4 @@
-name: Release to dev channel manifest
+name: Release to dev channel
 
 on:
   push:
@@ -106,6 +106,33 @@ jobs:
             --env AWS_SECRET_ACCESS_KEY \
             --env AWS_DEFAULT_REGION \
             restyled/sdk:main promote --no-test --file - dev
+
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag-version
+        uses: mathieudutour/github-tag-action@v5.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag-version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag-version.outputs.new_tag }}
+          body: ${{ steps.tag-version.outputs.changelog }}
+
+      - name: Promote tag
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          docker run --rm \
+            --env AWS_ACCESS_KEY_ID \
+            --env AWS_SECRET_ACCESS_KEY \
+            --env AWS_DEFAULT_REGION \
+            restyled/sdk:main promote --no-test dev ${{ steps.tag-version.outputs.new_tag }}
 
   status:
     runs-on: ubuntu-latest
