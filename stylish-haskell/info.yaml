@@ -481,3 +481,13 @@ metadata:
 
         queryParts :: QueryString -> [Text]
         queryParts = map $ \(k, mv) -> decodeUtf8 k <> "=" <> maybe "" decodeUtf8 mv
+    - contents: |
+        module Foo where
+        import FrontRow.Renaissance.RenaissancePlatform
+        import FrontRow.Renaissance.RPID
+        import FrontRow.Renaissance.RPIdentifier
+      restyled: |
+        module Foo where
+        import           FrontRow.Renaissance.RPID
+        import           FrontRow.Renaissance.RPIdentifier
+        import           FrontRow.Renaissance.RenaissancePlatform

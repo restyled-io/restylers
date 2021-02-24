@@ -1,3 +1,2 @@
-# https://www.stackage.org/lts-16.12/package/stylish-haskell-0.11.0.3
-resolver: lts-16.12
+resolver: lts-17.4
 packages: []
