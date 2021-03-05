@@ -1,5 +1,5 @@
 ---
-enabled: true
+enabled: false
 name: rubocop
 version_cmd: |
   cd /app &&  bundle info rubocop | sed '/.*rubocop (\(.*\))$/!d; s//v\1/'
