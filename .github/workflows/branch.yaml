@@ -48,6 +48,7 @@ jobs:
           - rustfmt
           - shellharden
           - shfmt
+          - standardrb
           - stylish-haskell
           - terraform
           - whitespace
