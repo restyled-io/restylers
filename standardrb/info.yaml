@@ -1,0 +1,27 @@
+---
+enabled: true
+name: standardrb
+version_cmd: |
+  cd /app &&  bundle info standard | sed '/.*standard (\(.*\))$/!d; s//v\1/'
+command:
+  - standardrb
+  - "--fix"
+include:
+  - "**/*.rb"
+interpreters:
+  - ruby
+documentation:
+  - https://github.com/testdouble/standard
+metadata:
+  languages:
+    - Ruby
+  tests:
+    - extension: rb
+      contents: |
+        def some_method
+            do_something
+        end
+      restyled: |
+        def some_method
+          do_something
+        end
