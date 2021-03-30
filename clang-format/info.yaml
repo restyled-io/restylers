@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: clang-format
-version: v10.0.0-2
+version_cmd: |
+  clang-format --version | sed 's/.*clang-format version \([0-9.]*\).*$/\1/'
 command:
   - clang-format
   - "-i"
