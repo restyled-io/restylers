@@ -9,4 +9,4 @@ RUN \
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-CMD ["clang-format", "-help"]
+CMD ["clang-format", "--help"]
