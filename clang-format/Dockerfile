@@ -8,7 +8,7 @@ RUN \
     echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main"; \
     echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main"; \
   } >>/etc/apt/sources.list && \
-  wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+  wget --quiet -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
   apt-get update -y && \
   apt-get install -y --no-install-recommends clang-format-12 && \
   rm -rf /var/lib/apt/lists/*
