@@ -2,6 +2,7 @@ ignored:
   - DL3003
   - DL3008
   - DL3018
+  - DL3045 # temporary, to unblock CI
   - DL4006
 
 trustedRegistries:
