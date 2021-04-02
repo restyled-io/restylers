@@ -32,14 +32,14 @@ metadata:
         let Fruit_ = < Apple : {} | Banana : {} | Orange : {} >
 
         in  let fruiteHandler_ =
-                  { Apple = λ(_ : {}) → "Apple"
-                  , Banana = λ(_ : {}) → "Banana"
-                  , Orange = λ(_ : {}) → "Orange"
+                  { Apple = \(_ : {}) -> "Apple"
+                  , Banana = \(_ : {}) -> "Banana"
+                  , Orange = \(_ : {}) -> "Orange"
                   }
 
             in  let f =
                       { Fruit = Fruit_
-                      , fruitToText = λ(f : Fruit_) → merge fruiteHandler_ f
+                      , fruitToText = \(f : Fruit_) -> merge fruiteHandler_ f
                       }
 
                 in  let x =
@@ -47,4 +47,4 @@ metadata:
                           , fruit2 = f.fruitToText (f.Fruit.Banana {=})
                           }
 
-                    in  x ⫽ { fruit1 = f.fruitToText (f.Fruit.Orange {=}) }
+                    in  x // { fruit1 = f.fruitToText (f.Fruit.Orange {=}) }
