@@ -53,10 +53,14 @@ jobs:
           - terraform
           - whitespace
           - yapf
+        include:
+          - restyler: hlint
+            disable-layer-caching: true
 
     steps:
       - uses: actions/checkout@v2
       - uses: satackey/action-docker-layer-caching@v0.0.11
+        if: ${{ ! matrix.disable-layer-caching }}
         continue-on-error: true
         with:
           key: docker-layer-caching-${{ matrix.restyler }}-{hash}
