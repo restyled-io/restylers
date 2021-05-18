@@ -1,4 +1,4 @@
-FROM nixos/nix:2.3.10
+FROM nixos/nix:2.3.11
 LABEL maintainer="Roki <falgon53@gmail.com>"
 RUN nix-env --install dhall
 RUN mkdir -p /code
