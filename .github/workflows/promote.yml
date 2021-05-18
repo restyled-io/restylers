@@ -1,0 +1,28 @@
+name: Promote a tag to another tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      from:
+        description: Tag to promote from
+        required: true
+        default: dev
+      to:
+        description: Tag to promote to
+        required: true
+        default: stable
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+      - uses: restyled-io/sdk@pb/action
+        with:
+          command: >
+            promote --yes ${{ github.event.from }} ${{ github.event.to }}

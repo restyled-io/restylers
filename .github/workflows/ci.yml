@@ -1,0 +1,216 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        restyler:
+          - astyle
+          - autopep8
+          - black
+          - brittany
+          - clang-format
+          - dfmt
+          - dhall-format
+          - dotnet-format
+          - elm-format
+          - fantomas
+          - gn
+          - gofmt
+          - google-java-format
+          - hindent
+          - hlint
+          - isort
+          - jdt
+          - jq
+          - ormolu
+          - pg_format
+          - php-cs-fixer
+          - prettier
+          - prettier-ruby
+          - reorder-python-imports
+          - rubocop
+          - rustfmt
+          - shellharden
+          - shfmt
+          - standardrb
+          - stylish-haskell
+          - terraform
+          - yapf
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: prep
+        name: Prepare
+        run: |
+          image=restyled/restyler-${{ matrix.restyler }}:${{ github.sha }}
+          echo "::set-output name=image::${image}"
+
+      - name: Lint
+        uses: hadolint/hadolint-action@v1.5.0
+        with:
+          dockerfile: ${{ matrix.restyler }}/Dockerfile
+        continue-on-error: true
+
+      - id: buildx
+        name: Setup buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-${{ matrix.restyler }}-image-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.restyler }}-image-
+
+      - name: Registry login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: ${{ matrix.restyler }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          push: true
+          tags: ${{ steps.prep.outputs.image }}
+
+      - name: Cache cleanup
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Test
+        uses: restyled-io/sdk@pb/action
+        with:
+          command: >-
+            restylers
+            --sha ${{ github.sha }}
+            --no-build
+            --push
+            --write restyler.yaml
+            ${{ matrix.restyler }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.restyler }}
+          path: restyler.yaml
+
+  # Restylers that rely on an external image; either fully external, or one of
+  # ours via "overrides" (hence waiting for [test])
+  test-external:
+    needs: [test]
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        restyler:
+          - prettier-json
+          - prettier-markdown
+          - prettier-yaml
+          - whitespace
+
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Test
+        uses: restyled-io/sdk@pb/action
+        with:
+          command: >-
+            restylers
+            --sha ${{ github.sha }}
+            --no-build
+            --write restyler.yaml
+            ${{ matrix.restyler }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.restyler }}
+          path: restyler.yaml
+
+  manifest:
+    needs: [test, test-external]
+
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+      - uses: actions/download-artifact@v2
+      - name: Build manifest
+        run: |
+          cat **/*.yaml > restylers.yaml
+
+      - name: Promote to sha tag
+        uses: restyled-io/sdk@pb/action
+        with:
+          command: >-
+            promote --yes --no-test --file restylers.yaml ${{ github.sha }}
+
+  status:
+    needs: manifest
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job to act as our overall required PR Status"
+
+  release:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [manifest]
+
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+      AWS_DEFAULT_REGION: us-east-1
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: tag
+        name: Tag
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.new_tag }}
+          release_name: Release ${{ steps.tag.outputs.new_tag }}
+          body: ${{ steps.tag.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Promote to version tag
+        uses: restyled-io/sdk@pb/action
+        with:
+          command: >-
+            promote --yes --no-test ${{ github.sha }} ${{ steps.tag.outputs.new_tag }}
+
+      - name: Promote to dev
+        uses: restyled-io/sdk@pb/action
+        with:
+          command: >-
+            promote --yes --no-test ${{ github.sha }} dev
