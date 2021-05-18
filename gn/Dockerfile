@@ -8,7 +8,7 @@ RUN apt-get update && \
       unzip=6.0-25ubuntu1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN wget -O gn.zip https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/Z6cz3BKAP2GgVlujo5D6CFdrLE3B1hXFwVwraB6QBnUC && \
+RUN wget -q -O gn.zip https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/Z6cz3BKAP2GgVlujo5D6CFdrLE3B1hXFwVwraB6QBnUC && \
     unzip -d /usr/local/bin gn.zip gn && \
     rm gn.zip
 FROM ubuntu:20.04
