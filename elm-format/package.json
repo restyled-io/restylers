@@ -1,0 +1,8 @@
+{
+  "name": "@restyled/restyler-elm-format",
+  "version": "0.0.0",
+  "dependencies": {
+    "elm": "0.19.1-5",
+    "elm-format": "0.8.5"
+  }
+}
