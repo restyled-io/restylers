@@ -21,7 +21,7 @@ metadata:
             And b b_     -> eval b && eval b_
             Or b b_      -> eval b   || eval b_
       restyled: |
-        module Main exposing (..)
+        module Main exposing (eval, homeDirectory)
 
 
         homeDirectory =

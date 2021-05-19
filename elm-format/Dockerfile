@@ -1,9 +1,11 @@
-FROM node:16.1.0-slim
+FROM node:12
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
-ENV ELM_VERSION 0.18
-ENV ELM_FORMAT_VERSION 0.6.1-alpha
-RUN yarn global add elm@0.18 elm-format@$ELM_FORMAT_VERSION
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json .
+RUN npm install
+ENV PATH=/app/node_modules/.bin:$PATH
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
