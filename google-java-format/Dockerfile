@@ -1,4 +1,4 @@
-FROM openjdk:15.0.2
+FROM openjdk:16.0.1
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN mkdir -p /app
