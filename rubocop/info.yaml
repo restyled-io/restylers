@@ -29,17 +29,20 @@ metadata:
         end
 
     # rails cops
-    - extension: rb
-      support:
-        path: .rubocop.yml
-        contents: |
-          require:
-            - rubocop-rails
-            - rubocop-performance
-      contents: |
-        puts x unless x.nil? || x.empty?
-      restyled: |
-        puts x if x.present?
+    #
+    # For some reason this now shows as [Correctable] but not [Corrected]
+    #
+    # - extension: rb
+    #   support:
+    #     path: .rubocop.yml
+    #     contents: |
+    #       require:
+    #         - rubocop-rails
+    #         - rubocop-performance
+    #   contents: |
+    #     puts x unless x.nil? || x.empty?
+    #   restyled: |
+    #     puts x if x.present?
 
     # performance
     - extension: rb
