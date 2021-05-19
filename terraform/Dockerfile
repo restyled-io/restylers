@@ -1,10 +1,7 @@
 FROM alpine:3.13
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
-RUN apk add --no-cache \
-    bash=5.0.17-r0 \
-    curl=7.69.1-r3 \
-    unzip=6.0-r8
+RUN apk add --no-cache bash curl unzip
 
 ENV TERRAFORM_VERSION 0.12.24
 ENV TERRAFORM_ARCHIVE terraform_${TERRAFORM_VERSION}_linux_amd64.zip
