@@ -12,25 +12,11 @@ See:
 
 ## Releasing
 
-Requires the [Restyled SDK](https://github.com/restyled-io/sdk#installation).
+Merges to `main` automatically tag versions, release a manifest at that
+tag, and update the `dev` manifest.
 
-Build, test, lint, and push any new images:
-
-```console
-restyled restylers {name}/info.yaml
-```
-
-Update the `dev` channel:
-
-```console
-restyled restylers-release-dev
-```
-
-Promote `dev` to `stable`:
-
-```console
-restyled promote --yes dev stable
-```
+The Promote workflow can be run manually to promote any tag to another,
+typically to promote `dev` to `stable`.
 
 ## LICENSE
 
