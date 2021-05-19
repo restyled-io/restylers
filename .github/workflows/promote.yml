@@ -1,4 +1,4 @@
-name: Promote a tag to another tag
+name: Promote
 
 on:
   workflow_dispatch:
