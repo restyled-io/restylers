@@ -1,4 +1,4 @@
-FROM quay.io/haskell_works/stack-build-minimal:18.04 as builder
+FROM restyled/stack-build-minimal:20.04 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
