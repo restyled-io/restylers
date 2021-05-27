@@ -10,7 +10,7 @@ FROM ubuntu:20.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \
-  apt-get -y install --no-install-recommends locales=2.27-3ubuntu1 && \
+  apt-get -y install --no-install-recommends locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 ENV LANG en_US.UTF-8

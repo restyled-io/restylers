@@ -26,8 +26,8 @@ ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
   apt-get update && \
   apt-get -y install --no-install-recommends \
-    gcc=4:7.4.0-1ubuntu2.3 \
-    locales=2.27-3ubuntu1 && \
+    gcc \
+    locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 # BEGIN copy from RUN-find

@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
   apt-get update && \
   apt-get --no-install-recommends -y install \
-    locales=2.27-3ubuntu1 && \
+    locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 
