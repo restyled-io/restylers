@@ -20,4 +20,5 @@ metadata:
         $this->foo();
       restyled: |
         <?php
+
         $this->foo();
