@@ -12,38 +12,38 @@ jobs:
     strategy:
       matrix:
         restyler:
-          - astyle
-          - autopep8
-          - black
-          - brittany
-          - clang-format
-          - dfmt
-          - dhall-format
-          - dotnet-format
-          - elm-format
-          - fantomas
-          - gn
-          - gofmt
-          - google-java-format
-          - hindent
-          - hlint
-          - isort
-          - jdt
-          - jq
+          # - astyle
+          # - autopep8
+          # - black
+          # - brittany
+          # - clang-format
+          # - dfmt
+          # - dhall-format
+          # - dotnet-format
+          # - elm-format
+          # - fantomas
+          # - gn
+          # - gofmt
+          # - google-java-format
+          # - hindent
+          # - hlint
+          # - isort
+          # - jdt
+          # - jq
           - ormolu
-          - pg_format
-          - php-cs-fixer
-          - prettier
-          - prettier-ruby
-          - reorder-python-imports
-          - rubocop
-          - rustfmt
-          - shellharden
-          - shfmt
-          - standardrb
-          - stylish-haskell
-          - terraform
-          - yapf
+          # - pg_format
+          # - php-cs-fixer
+          # - prettier
+          # - prettier-ruby
+          # - reorder-python-imports
+          # - rubocop
+          # - rustfmt
+          # - shellharden
+          # - shfmt
+          # - standardrb
+          # - stylish-haskell
+          # - terraform
+          # - yapf
 
       fail-fast: false
 
@@ -94,6 +94,12 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Investigation
+        run: |
+          echo $HOME
+          cat ~/docker/config.json
+          exit 1
 
       - name: Test
         uses: restyled-io/sdk@main
