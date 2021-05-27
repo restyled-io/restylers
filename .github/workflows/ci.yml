@@ -99,8 +99,7 @@ jobs:
       - name: Investigation
         run: |
           echo $HOME
-          cat ~/docker/config.json
-          exit 1
+          cat ~/.docker/config.json
 
       - name: Test
         uses: restyled-io/sdk@main
