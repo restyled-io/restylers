@@ -102,13 +102,12 @@ jobs:
           cat ~/.docker/config.json
 
       - name: Test
-        uses: restyled-io/sdk@main
+        uses: restyled-io/sdk@pb/investigate
         with:
           command: >-
             restylers
-            --sha ${{ github.sha }}
+            --sha 871bc3433489d45e1895632ffed4be5b86f4162b
             --no-build
-            --push
             --write restyler.yaml
             ${{ matrix.restyler }}
 
