@@ -1,16 +1,9 @@
-FROM quay.io/haskell_works/stack-build-minimal:18.04 as builder
+FROM restyled/stack-build-minimal:20.04 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
-# Dumb cache-buster. Bump this to force a build
-ENV _DOCKERFILE_VERSION 0
-
-ENV BRITTANY_VERSION 0.13.1.0
-RUN \
-  git clone https://github.com/lspitzner/brittany.git && cd brittany && \
-  git reset --hard "$BRITTANY_VERSION" && \
-  stack setup && \
-  stack install
+COPY stack.yaml /root/.stack/global-project/stack.yaml
+RUN stack install brittany
 
 # The following support files' locations are brittle. Use this RUN command to
 # re-discover them when we update anything.
@@ -36,13 +29,14 @@ RUN \
     locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
+ENV LANG=en_US.UTF-8
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/llvm-targets /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/package.conf.d /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/package.conf.d
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/include/ghcversion.h
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/llvm-passes /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/platformConstants /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/platformConstants
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/settings /root/.stack/programs/x86_64-linux/ghc-8.10.2/lib/ghc-8.10.2/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/include/ghcversion.h
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/brittany /usr/bin/brittany
 RUN mkdir -p /code
