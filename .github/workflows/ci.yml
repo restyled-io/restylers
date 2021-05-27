@@ -100,7 +100,6 @@ jobs:
         run: |
           echo $HOME
           cat ~/.docker/config.json
-          /home/runner/
 
           # Makes login creds available in container of next step
           mkdir -p work/_temp/_github_home/.docker
