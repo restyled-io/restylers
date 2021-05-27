@@ -1,6 +1,7 @@
 ---
 name: ormolu
-version: v0.0.1.0-2
+version_cmd: |
+  ormolu --version | head -n 1 | awk '{ printf("v%s\n", $2) }'
 command:
   - ormolu
   - "--mode"
@@ -24,5 +25,7 @@ metadata:
           MonadIO m ->
           Text ->
           Text ->
-          SqlPersistT m ()
+          SqlPersistT
+            m
+            ()
             foo = undefined

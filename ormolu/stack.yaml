@@ -1,0 +1,4 @@
+resolver: lts-17.13
+packages: []
+extra-deps:
+  - ormolu-0.1.4.1
