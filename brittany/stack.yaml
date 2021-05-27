@@ -1,0 +1,6 @@
+resolver: lts-17.13
+packages: []
+extra-deps:
+  - brittany-0.13.1.0
+  - data-tree-print-0.1.0.2
+  - ghc-exactprint-0.6.3.4
