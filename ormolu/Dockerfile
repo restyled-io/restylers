@@ -1,16 +1,22 @@
-FROM quay.io/haskell_works/stack-build-minimal:18.04 as builder
+FROM restyled/stack-build-minimal:20.04 as builder
 label maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
-ENV STACK_RESOLVER lts-14.3
-ENV ORMOLU_VERSION 0.0.1.0
+COPY stack.yaml /root/.stack/global-project/stack.yaml
+RUN stack install ormolu
 
-RUN \
-  git clone https://github.com/tweag/ormolu.git && cd ormolu && \
-  git reset --hard "$ORMOLU_VERSION" && \
-  echo "resolver: $STACK_RESOLVER" > stack.yaml && \
-  stack setup && \
-  stack install
+# The following support files' locations are brittle. Use this RUN command to
+# re-discover them when we update anything.
+# RUN find /root/.stack/programs/x86_64-linux \
+#   \( \
+#     -name settings -o \
+#     -name platformConstants -o \
+#     -name llvm-targets -o \
+#     -name llvm-passes -o \
+#     -name package.conf.d \
+#   \) \
+#   -printf "COPY --from=builder %p %p\n"
+# RUN exit 1
 
 FROM ubuntu:20.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
@@ -21,30 +27,15 @@ RUN \
     locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
-
-# Brittany runtime files
+ENV LANG=en_US.UTF-8
+# BEGIN copy from RUN-find
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings
+# END copy from RUN-find
 COPY --from=builder /root/.local/bin/ormolu /usr/bin/ormolu
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/settings \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/settings
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/llvm-targets \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/llvm-targets
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/llvm-passes \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/llvm-passes
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/platformConstants \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/platformConstants
-COPY --from=builder \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/package.conf.d \
-  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/package.conf.d
-
-# Needed for CPP
-#COPY --from=builder \
-#  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/include/ghcversion.h \
-#  /root/.stack/programs/x86_64-linux/ghc-8.6.5/lib/ghc-8.6.5/include/ghcversion.h
-
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
