@@ -27,9 +27,15 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
 
     steps:
+      - id: prep
+        run: |
+          from=${{ github.event.from }}
+          echo "::set-output name=from::${from:-dev}"
+
+          to=${{ github.event.to }}
+          echo "::set-output name=to::${to:-stable}"
+
       - uses: restyled-io/sdk@main
         with:
-          command: |
-            from=${{ github.event.from }}
-            to=${{ github.event.to }}
-            promote --yes "${from:-dev}" "${to:-stable}"
+          command: >
+            promote --yes ${{ steps.prep.outputs.from }} ${{ steps.prep.outputs.to }}
