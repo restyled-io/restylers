@@ -1,6 +1,11 @@
 name: Promote
 
 on:
+  # Approximate "every 2 weeks" by doing 1st and 15th of the month.
+  schedule:
+    - cron: "0 07 01 * *"
+    - cron: "0 07 15 * *"
+
   workflow_dispatch:
     inputs:
       from:
@@ -22,7 +27,9 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
 
     steps:
-      - uses: restyled-io/sdk@pb/action
+      - uses: restyled-io/sdk@main
         with:
-          command: >
-            promote --yes ${{ github.event.from }} ${{ github.event.to }}
+          command: |
+            from=${{ github.event.from }}
+            to=${{ github.event.to }}
+            promote --yes "${from:-dev}" "${to:-stable}"
