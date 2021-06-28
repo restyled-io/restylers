@@ -75,6 +75,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.restyler }}-image-
 
       - name: Registry login
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -87,7 +88,7 @@ jobs:
           context: ${{ matrix.restyler }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-          push: true
+          push: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
           tags: ${{ steps.prep.outputs.image }}
 
       - name: Cache cleanup
@@ -101,6 +102,18 @@ jobs:
           cp ~/.docker/config.json ~/work/_temp/_github_home/.docker/config.json
 
       - name: Test
+        if: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+        uses: restyled-io/sdk@main
+        with:
+          command: >-
+            restylers
+            --sha ${{ github.sha }}
+            --no-build
+            --write restyler.yaml
+            ${{ matrix.restyler }}
+
+      - name: Test with push
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         uses: restyled-io/sdk@main
         with:
           command: >-
@@ -168,6 +181,7 @@ jobs:
           cat **/*.yaml > restylers.yaml
 
       - name: Promote to sha tag
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         uses: restyled-io/sdk@main
         with:
           command: >-
