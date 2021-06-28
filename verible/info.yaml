@@ -1,0 +1,47 @@
+---
+enabled: true
+name: verible
+version_cmd: |
+  verible-verilog-format --version | grep -v "Commit" | grep -v "Built"
+command:
+  - verible-verilog-format
+  - "--inplace"
+include:
+  - "**/*.sv"
+supports_arg_sep: true
+supports_multiple_path: true
+documentation:
+  - https://google.github.io/verible/verilog_format.html
+metadata:
+  languages: 
+    - "System Verilog"
+  tests:
+    - contents: |
+         module debounce(
+           input wire logic clk, output logic debounced
+            );
+         stateType ns;
+
+           always_comb
+                     begin
+                      ns = ERR;
+                end
+
+           logic timerDone;
+              logic clrTimer;
+            endmodule
+      restyled: |
+        module debounce (
+            input wire logic clk,
+            output logic debounced
+        );
+          stateType ns;
+
+          always_comb begin
+            ns = ERR;
+          end
+
+          logic timerDone;
+          logic clrTimer;
+        endmodule
+      
