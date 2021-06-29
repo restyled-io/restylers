@@ -39,3 +39,10 @@ jobs:
         with:
           command: >
             promote --yes ${{ steps.prep.outputs.from }} ${{ steps.prep.outputs.to }}
+
+      - uses: desiderati/github-action-pushover@v1
+        if: ${{ always() }}
+        with:
+          job-status: ${{ job.status }}
+          pushover-api-token: ${{ secrets.PUSHOVER_API_TOKEN }}
+          pushover-user-key: ${{ secrets.PUSHOVER_USER_KEY }}
