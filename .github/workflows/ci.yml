@@ -107,8 +107,7 @@ jobs:
           context: ${{ matrix.restyler }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-          outputs: type=docker
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
           tags: ${{ steps.prep.outputs.image }}
 
       - name: Cache cleanup
