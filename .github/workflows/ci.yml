@@ -60,7 +60,7 @@ jobs:
       - id: prep
         name: Prepare
         run: |
-          fork=true # Testing
+          fork=${{github.event.pull_request && github.event.pull_request.head.repo.full_name != github.repository}}
           echo "::set-output name=fork::${fork}"
 
           image=restyled/restyler-${{ matrix.restyler }}:${{ github.sha }}
