@@ -45,6 +45,11 @@ jobs:
           # - terraform
           # - yapf
 
+        include:
+          - restyler: prettier
+            overrides: |
+              prettier-json prettier-markdown prettier-yaml
+
       fail-fast: false
 
     steps:
@@ -116,6 +121,7 @@ jobs:
             --no-build
             --write restyler.yaml
             ${{ matrix.restyler }}
+            ${{ matrix.overrides }}
 
       - name: Test and Push
         if: ${{ ! steps.prep.outputs.fork }}
@@ -128,6 +134,7 @@ jobs:
             --push
             --write restyler.yaml
             ${{ matrix.restyler }}
+            ${{ matrix.overrides }}
 
       - if: ${{ ! steps.prep.outputs.fork }}
         uses: actions/upload-artifact@v2
@@ -138,22 +145,12 @@ jobs:
     outputs:
       fork: ${{ steps.prep.outputs.fork }}
 
-  # Restylers that rely on an external image; either fully external, or one of
-  # ours via "overrides" (hence waiting for [test])
   test-external:
-    # TEMPORARY, not sure how to make this work without push/pull access
-    if: ${{ ! needs.test.outputs.fork }}
-
-    needs: [test]
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         restyler:
-          - prettier-json
-          - prettier-markdown
-          - prettier-yaml
           - whitespace
 
       fail-fast: false
