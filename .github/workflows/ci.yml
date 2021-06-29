@@ -135,6 +135,9 @@ jobs:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
 
+    outputs:
+      fork: ${{ steps.prep.outputs.fork }}
+
   # Restylers that rely on an external image; either fully external, or one of
   # ours via "overrides" (hence waiting for [test])
   test-external:
@@ -165,7 +168,7 @@ jobs:
             --write restyler.yaml
             ${{ matrix.restyler }}
 
-      - if: ${{ ! steps.prep.outputs.fork }}
+      - if: ${{ ! jobs.test.outputs.fork }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.restyler }}
@@ -178,7 +181,7 @@ jobs:
       - run: echo "Job to act as our overall required PR Status"
 
   promote:
-    if: ${{ ! steps.prep.outputs.fork }}
+    if: ${{ ! jobs.test.outputs.fork }}
     needs: [test, test-external]
 
     runs-on: ubuntu-latest
