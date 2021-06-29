@@ -43,6 +43,7 @@ jobs:
           - standardrb
           - stylish-haskell
           - terraform
+          - verible
           - yapf
 
         include:
