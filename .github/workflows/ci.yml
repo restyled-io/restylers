@@ -78,6 +78,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.restyler }}-image-
 
       - name: Registry login
+        if: ${{ ! steps.prep.outputs.fork }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -90,7 +91,8 @@ jobs:
           context: ${{ matrix.restyler }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
-          push: true
+          outputs: type=docker
+          push: ${{ ! steps.prep.outputs.fork }}
           tags: ${{ steps.prep.outputs.image }}
 
       - name: Cache cleanup
