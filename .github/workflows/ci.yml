@@ -168,7 +168,7 @@ jobs:
             --write restyler.yaml
             ${{ matrix.restyler }}
 
-      - if: ${{ ! jobs.test.outputs.fork }}
+      - if: ${{ ! needs.test.outputs.fork }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.restyler }}
@@ -181,7 +181,7 @@ jobs:
       - run: echo "Job to act as our overall required PR Status"
 
   promote:
-    if: ${{ ! jobs.test.outputs.fork }}
+    if: ${{ ! needs.test.outputs.fork }}
     needs: [test, test-external]
 
     runs-on: ubuntu-latest
