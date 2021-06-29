@@ -13,42 +13,44 @@ jobs:
       matrix:
         restyler:
           - astyle
-          # - autopep8
-          # - black
-          # - brittany
-          # - clang-format
-          # - dfmt
-          # - dhall-format
-          # - dotnet-format
-          # - elm-format
-          # - fantomas
-          # - gn
-          # - gofmt
-          # - google-java-format
-          # - hindent
-          # - hlint
-          # - isort
-          # - jdt
-          # - jq
-          # - ormolu
-          # - pg_format
-          # - php-cs-fixer
+          - autopep8
+          - black
+          - brittany
+          - clang-format
+          - dfmt
+          - dhall-format
+          - dotnet-format
+          - elm-format
+          - fantomas
+          - gn
+          - gofmt
+          - google-java-format
+          - hindent
+          - hlint
+          - isort
+          - jdt
+          - jq
+          - ormolu
+          - pg_format
+          - php-cs-fixer
           - prettier
-          # - prettier-ruby
-          # - reorder-python-imports
-          # - rubocop
-          # - rustfmt
-          # - shellharden
-          # - shfmt
-          # - standardrb
-          # - stylish-haskell
-          # - terraform
-          # - yapf
+          - prettier-ruby
+          - reorder-python-imports
+          - rubocop
+          - rustfmt
+          - shellharden
+          - shfmt
+          - standardrb
+          - stylish-haskell
+          - terraform
+          - yapf
 
         include:
           - restyler: prettier
-            overrides: |
-              prettier-json prettier-markdown prettier-yaml
+            overrides: >-
+              prettier-json
+              prettier-markdown
+              prettier-yaml
 
       fail-fast: false
 
