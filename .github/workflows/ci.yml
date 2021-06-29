@@ -53,6 +53,9 @@ jobs:
       - id: prep
         name: Prepare
         run: |
+          fork=true # Testing
+          echo "::set-output name=fork::${fork}"
+
           image=restyled/restyler-${{ matrix.restyler }}:${{ github.sha }}
           echo "::set-output name=image::${image}"
 
