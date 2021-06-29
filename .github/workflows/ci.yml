@@ -46,6 +46,13 @@ jobs:
           - verible
           - yapf
 
+        include:
+          - restyler: prettier
+            overrides: >-
+              prettier-json
+              prettier-markdown
+              prettier-yaml
+
       fail-fast: false
 
     steps:
@@ -76,12 +83,25 @@ jobs:
             ${{ runner.os }}-${{ matrix.restyler }}-image-
 
       - name: Registry login
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build
+        if: ${{ github.ref != 'refs/heads/main' }}
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: ${{ matrix.restyler }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          outputs: type=docker
+          tags: ${{ steps.prep.outputs.image }}
+
+      - name: Build and Push
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
@@ -97,11 +117,25 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Container credentials
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           mkdir -p ~/work/_temp/_github_home/.docker
           cp ~/.docker/config.json ~/work/_temp/_github_home/.docker/config.json
 
       - name: Test
+        if: ${{ github.ref != 'refs/heads/main' }}
+        uses: restyled-io/sdk@main
+        with:
+          command: >-
+            restylers
+            --sha ${{ github.sha }}
+            --no-build
+            --write restyler.yaml
+            ${{ matrix.restyler }}
+            ${{ matrix.overrides }}
+
+      - name: Test and Push
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: restyled-io/sdk@main
         with:
           command: >-
@@ -111,25 +145,20 @@ jobs:
             --push
             --write restyler.yaml
             ${{ matrix.restyler }}
+            ${{ matrix.overrides }}
 
-      - uses: actions/upload-artifact@v2
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
 
-  # Restylers that rely on an external image; either fully external, or one of
-  # ours via "overrides" (hence waiting for [test])
   test-external:
-    needs: [test]
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         restyler:
-          - prettier-json
-          - prettier-markdown
-          - prettier-yaml
           - whitespace
 
       fail-fast: false
@@ -147,12 +176,20 @@ jobs:
             --write restyler.yaml
             ${{ matrix.restyler }}
 
-      - uses: actions/upload-artifact@v2
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
 
-  manifest:
+  status:
+    needs: [test, test-external]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job to act as our overall required PR Status"
+
+  promote:
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [test, test-external]
 
     runs-on: ubuntu-latest
@@ -174,15 +211,9 @@ jobs:
           command: >-
             promote --yes --no-test --file restylers.yaml ${{ github.sha }}
 
-  status:
-    needs: manifest
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Job to act as our overall required PR Status"
-
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [manifest]
+    needs: [promote]
 
     runs-on: ubuntu-latest
 
