@@ -141,6 +141,9 @@ jobs:
   # Restylers that rely on an external image; either fully external, or one of
   # ours via "overrides" (hence waiting for [test])
   test-external:
+    # TEMPORARY, not sure how to make this work without push/pull access
+    if: ${{ ! needs.test.outputs.fork }}
+
     needs: [test]
 
     runs-on: ubuntu-latest
