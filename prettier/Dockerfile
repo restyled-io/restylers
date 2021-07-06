@@ -1,4 +1,4 @@
-FROM node:16.3-slim
+FROM node:16.4-slim
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN mkdir -p /app
