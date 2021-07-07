@@ -1,4 +1,4 @@
-FROM ruby:3.0.1-alpine3.13
+FROM ruby:3.0.2-alpine3.13
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN apk add --no-cache \
