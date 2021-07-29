@@ -5,7 +5,7 @@ set -eu
 # but we just need the executable, so we'll "parse" the version from that file
 # and download it directly.
 version=$(sed '/^ *compile '"'\([^']*\)'"' *$/!d; s//\1/' "$1" | awk -F: '{ print $3 }')
-url="https://repo.maven.apache.org/maven2/com/google/googlejavaformat/google-java-format/1.10.0/google-java-format-$version-all-deps.jar"
+url="https://repo.maven.apache.org/maven2/com/google/googlejavaformat/google-java-format/$version/google-java-format-$version-all-deps.jar"
 jar=google-java-format.jar
 
 curl --silent --fail --show-error --location --output "$jar" "$url"
