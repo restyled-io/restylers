@@ -4,12 +4,13 @@ ENV LANG en_US.UTF-8
 #Install prerequisites
 RUN \
   apt-get update &&\
-  apt-get install -y wget
+  apt-get install -y curl
 #Install verible
 ENV VERIBLE_VERSION v0.0-1318-gf6b4485
 RUN \
-  wget -q https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-Ubuntu-20.04-focal-x86_64.tar.gz &&\
-  tar -xf verible* &&\
+  curl --silent --fail --show-error --location \
+    https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-Ubuntu-20.04-focal-x86_64.tar.gz | \
+  tar -xzf - &&\
   mv verible*/bin/verible-verilog-format /usr/bin &&\
   rm -r verible*
 RUN mkdir -p /code
