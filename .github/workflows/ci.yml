@@ -65,7 +65,7 @@ jobs:
           echo "::set-output name=image::${image}"
 
       - name: Lint
-        uses: hadolint/hadolint-action@v1.5.0
+        uses: hadolint/hadolint-action@v1.6.0
         with:
           dockerfile: ${{ matrix.restyler }}/Dockerfile
         continue-on-error: true
