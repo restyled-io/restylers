@@ -1,0 +1,32 @@
+---
+enabled: false
+name: fourmolu
+version_cmd: |
+  fourmolu --version | head -n 1 | awk '{ printf("v%s\n", $2) }'
+command:
+  - fourmolu
+  - "--mode"
+  - inplace
+include:
+  - "**/*.hs"
+documentation:
+  - https://github.com/fourmolu/fourmolu
+metadata:
+  languages:
+    - Haskell
+  tests:
+    - contents: |
+        foo
+         :: MonadIO m
+         -> Text -> Text
+         -> SqlPersistT m ()
+         foo = undefined
+      restyled: |
+        foo ::
+            MonadIO m ->
+            Text ->
+            Text ->
+            SqlPersistT
+                m
+                ()
+                foo = undefined

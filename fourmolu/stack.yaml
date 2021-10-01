@@ -1,0 +1,4 @@
+resolver: lts-18.12
+packages: []
+extra-deps:
+  - fourmolu-0.3.0.0
