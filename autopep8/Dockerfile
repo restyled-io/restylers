@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.10-alpine
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG C.UTF-8
 COPY requirements.txt .
