@@ -1,4 +1,4 @@
-FROM maven:3.8.2-jdk-11
+FROM maven:3.8.3-jdk-11
 LABEL maintainer=pbrisbin@gmail.com
 ENV FORMATTER_VERSION 2.13.0
 RUN mvn org.apache.maven.plugins:maven-dependency-plugin:3.1.1:get -Dartifact=net.revelc.code.formatter:formatter-maven-plugin:$FORMATTER_VERSION
