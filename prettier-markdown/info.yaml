@@ -6,6 +6,7 @@ include:
   - "**/*.markdown"
 documentation:
   - https://prettier.io/blog/2017/11/07/1.8.0.html
+  - https://prettier.io/docs/en/index.html
 metadata:
   languages:
     - Markdown
