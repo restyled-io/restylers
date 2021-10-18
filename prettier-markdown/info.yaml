@@ -1,11 +1,6 @@
 ---
 overrides: prettier
 name: prettier-markdown
-arguments:
-  - "--print-width"
-  - "80"
-  - "--prose-wrap"
-  - always
 include:
   - "**/*.md"
   - "**/*.markdown"
@@ -15,7 +10,11 @@ metadata:
   languages:
     - Markdown
   tests:
-    - extension: md
+    - support:
+        path: .prettierrc
+        contents: |
+          proseWrap: always
+      extension: md
       contents:
         "Voilà! In view, a humble vaudevillian veteran cast vicariously as both
         victim and villain by the vicissitudes of Fate. This visage, no mere veneer
