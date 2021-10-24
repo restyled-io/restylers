@@ -1,1 +1,1 @@
-autopep8==1.5.7
+autopep8==1.6.0
