@@ -5,14 +5,14 @@ RUN \
   apt-get update -y && \
   apt-get install -y --no-install-recommends ca-certificates gnupg2 wget && \
   { \
-    echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main"; \
-    echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main"; \
+    echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main"; \
+    echo "deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main"; \
   } >>/etc/apt/sources.list && \
   wget --quiet -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
   apt-get update -y && \
-  apt-get install -y --no-install-recommends clang-format-12 && \
+  apt-get install -y --no-install-recommends clang-format-13 && \
   rm -rf /var/lib/apt/lists/*
-RUN ln -s /usr/bin/clang-format-12 /usr/bin/clang-format
+RUN ln -s /usr/bin/clang-format-13 /usr/bin/clang-format
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
