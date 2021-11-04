@@ -6,7 +6,7 @@ RUN stack upgrade
 RUN stack setup --resolver lts-11.22
 RUN stack install --resolver lts-11.22 hindent-5.3.1
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \

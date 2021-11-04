@@ -5,7 +5,7 @@ RUN stack upgrade
 COPY stack.yaml /root/.stack/global-project/stack.yaml
 RUN stack install stylish-haskell
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \

@@ -15,7 +15,7 @@ RUN git reset --hard "$DFMT_VERSION"
 RUN git submodule update --init
 RUN make
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 COPY --from=builder /dfmt/bin/dfmt /usr/bin/dfmt

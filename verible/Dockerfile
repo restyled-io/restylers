@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Xan Johnson <xanjohns@gmail.com>"
 ENV LANG en_US.UTF-8
 #Install prerequisites
