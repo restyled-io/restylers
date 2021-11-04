@@ -18,7 +18,7 @@ RUN stack install fourmolu
 #   -printf "COPY --from=builder %p %p\n"
 # RUN exit 1
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Tristan de Cacqueray <tdecacqu@redhat.com>"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
