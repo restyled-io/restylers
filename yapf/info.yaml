@@ -2,7 +2,7 @@
 enabled: true
 name: yapf
 version_cmd: |
-  pip show yapf | sed '/^Version: \(.*\)$/!d; s//v\1/'
+  pip show yapf | sed '/^Version: \(.*\)$/!d; s//v\1-1/'
 command:
   - yapf
   - "--in-place"
