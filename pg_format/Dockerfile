@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.15
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
 ENV PG_FORMAT_VERSION 3.3
