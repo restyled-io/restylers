@@ -1,5 +1,5 @@
 // NOTE: this build file is not actually used via Gradle. It exists so that
 // renovate-bot will auto-update this Restyler. See ./install.
 dependencies {
-  compile 'com.google.googlejavaformat:google-java-format:1.12.0'
+  compile 'com.google.googlejavaformat:google-java-format:1.13.0'
 }
