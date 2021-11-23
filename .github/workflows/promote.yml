@@ -40,9 +40,15 @@ jobs:
           command: >
             promote --yes ${{ steps.prep.outputs.from }} ${{ steps.prep.outputs.to }}
 
-      - uses: desiderati/github-action-pushover@v1
-        if: ${{ always() }}
+      - name: Notify
+        if: always()
+        uses: zulip/github-actions-zulip/send-message@v1
         with:
-          job-status: ${{ job.status }}
-          pushover-api-token: ${{ secrets.PUSHOVER_API_TOKEN }}
-          pushover-user-key: ${{ secrets.PUSHOVER_USER_KEY }}
+          api-key: ${{ secrets.ZULIP_API_KEY }}
+          email: ${{ secrets.ZULIP_EMAIL }}
+          organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
+          to: 'core team'
+          type: 'stream'
+          topic: 'Restylers Releases'
+          content: |
+            Promoting ${{ steps.prep.outputs.from }} to ${{ steps.prep.outputs.to }}: ${{ job.status }}

@@ -252,3 +252,23 @@ jobs:
         with:
           command: >-
             promote --yes --no-test ${{ github.sha }} dev
+
+      - name: Notify
+        uses: zulip/github-actions-zulip/send-message@v1
+        with:
+          api-key: ${{ secrets.ZULIP_API_KEY }}
+          email: ${{ secrets.ZULIP_EMAIL }}
+          organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
+          to: 'core team'
+          type: 'stream'
+          topic: 'Restylers Releases'
+          content: |
+            Restylers [${{ steps.tag.outputs.new_tag }}][link] promoted to Dev
+
+            **Commit**: ${{ github.sha }}
+
+            **Changes**:
+
+            ${{ steps.tag.outputs.changelog }}
+
+            [link]: https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}
