@@ -263,12 +263,9 @@ jobs:
           type: 'stream'
           topic: 'Restylers Releases'
           content: |
-            Restylers [${{ steps.tag.outputs.new_tag }}][link] promoted to Dev
-
-            **Commit**: ${{ github.sha }}
-
-            **Changes**:
+            Restylers [${{ steps.tag.outputs.new_tag }}](https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}) released to `dev` channel
 
             ${{ steps.tag.outputs.changelog }}
 
-            [link]: https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}
+            Commit: ${{ github.sha }}
+

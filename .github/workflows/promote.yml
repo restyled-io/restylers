@@ -51,4 +51,4 @@ jobs:
           type: 'stream'
           topic: 'Restylers Releases'
           content: |
-            Promoting ${{ steps.prep.outputs.from }} to ${{ steps.prep.outputs.to }}: ${{ job.status }}
+            Promotion of `${{ steps.prep.outputs.from }}` to `${{ steps.prep.outputs.to }}`: ${{ job.status }}
