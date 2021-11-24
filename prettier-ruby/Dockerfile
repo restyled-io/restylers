@@ -1,4 +1,4 @@
-FROM ruby:3.0.2
+FROM ruby:3.0.3
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 # hadolint ignore=DL3008,DL4006
