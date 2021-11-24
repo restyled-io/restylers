@@ -274,4 +274,4 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: >-
-            ${{ secrets.ZULIP_ORGANIZATION_URL }}/api/v1/external/slack_incoming?api_key${{ secrets.ZULIP_API_KEY }}&stream=core%20team&topic=Restylers%20Releases
+            ${{ secrets.ZULIP_ORGANIZATION_URL }}/api/v1/external/slack_incoming?api_key=${{ secrets.ZULIP_API_KEY }}&stream=core%20team&topic=Restylers%20Releases
