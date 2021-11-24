@@ -253,19 +253,25 @@ jobs:
           command: >-
             promote --yes --no-test ${{ github.sha }} dev
 
+      # - name: Notify
+      #   uses: zulip/github-actions-zulip/send-message@v1
+      #   with:
+      #     api-key: ${{ secrets.ZULIP_API_KEY }}
+      #     email: ${{ secrets.ZULIP_EMAIL }}
+      #     organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
+      #     to: 'core team'
+      #     type: 'stream'
+      #     topic: 'Restylers Releases'
+      #     content: |
+      #       Restylers [${{ steps.tag.outputs.new_tag }}](https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}) released to `dev` channel
+
+      #       ${{ steps.tag.outputs.changelog }}
+
+      #       Commit: ${{ github.sha }}
+
       - name: Notify
-        uses: zulip/github-actions-zulip/send-message@v1
-        with:
-          api-key: ${{ secrets.ZULIP_API_KEY }}
-          email: ${{ secrets.ZULIP_EMAIL }}
-          organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
-          to: 'core team'
-          type: 'stream'
-          topic: 'Restylers Releases'
-          content: |
-            Restylers [${{ steps.tag.outputs.new_tag }}](https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}) released to `dev` channel
-
-            ${{ steps.tag.outputs.changelog }}
-
-            Commit: ${{ github.sha }}
-
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: >-
+            ${{ secrets.ZULIP_ORGANIZATION_URL }}/api/v1/external/slack_incoming?api_key${{ secrets.ZULIP_API_KEY }}&stream=core%20team&topic=Restylers%20Releases
