@@ -1,0 +1,12 @@
+---
+name: swiftformat
+version_cmd: |
+  swiftformat --version
+include:
+  - "**/*.swift"
+supports_arg_sep: false
+documentation:
+  - https://github.com/nicklockwood/SwiftFormat
+metadata:
+  languages:
+    - Swift
