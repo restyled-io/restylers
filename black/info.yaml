@@ -2,7 +2,7 @@
 enabled: true
 name: black
 version_cmd: |
-  black --version | awk '{print $NF}' | sed 's/^/v/'
+  black --version | awk '{print $2}' | sed 's/^/v/'
 include:
   - "**/*.py"
 interpreters:
