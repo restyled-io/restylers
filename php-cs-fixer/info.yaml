@@ -2,7 +2,7 @@
 enabled: true
 name: php-cs-fixer
 version_cmd: |
-  php-cs-fixer --no-ansi --version | cut -d' ' -f 4 | sed 's/^/v/'
+  php-cs-fixer --no-ansi --version | awk '/^PHP CS Fixer/ { print $4 }' | sed 's/^/v/'
 command:
   - php-cs-fixer
   - fix
