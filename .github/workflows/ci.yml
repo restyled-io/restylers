@@ -92,7 +92,7 @@ jobs:
 
       - name: Build
         if: ${{ github.ref != 'refs/heads/main' }}
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ${{ matrix.restyler }}
@@ -103,7 +103,7 @@ jobs:
 
       - name: Build and Push
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ${{ matrix.restyler }}
