@@ -4,10 +4,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    clang=1:3.5-25 \
-    g++=4:4.9.2-2 \
-    locales=2.19-18+deb8u10 \
-    make=4.0-8.1 && \
+    clang \
+    g++ \
+    locales \
+    make && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -23,7 +23,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    locales=2.19-18+deb8u10 && \
+    locales && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
