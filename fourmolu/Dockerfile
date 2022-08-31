@@ -29,11 +29,11 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/settings /home/tdecacqu/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/settings
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/llvm-passes /home/tdecacqu/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/package.conf.d /home/tdecacqu/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/package.conf.d
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/llvm-targets /home/tdecacqu/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/platformConstants /home/tdecacqu/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.7/lib/ghc-8.10.7/platformConstants
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/platformConstants
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/fourmolu /usr/bin/fourmolu
 RUN mkdir -p /code
