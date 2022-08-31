@@ -1,4 +1,4 @@
-FROM debian:jessie AS builder
+FROM debian:bullseye AS builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
@@ -17,7 +17,7 @@ ADD astyle_3.1_linux.tar.gz /tmp/
 WORKDIR /tmp/astyle/build/clang
 RUN make
 
-FROM debian:jessie
+FROM debian:bullseye
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
