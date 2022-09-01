@@ -12,6 +12,8 @@ include:
 documentation:
   - https://github.com/fourmolu/fourmolu
 metadata:
+  upstream:
+    tag: Hackage
   languages:
     - Haskell
   tests:

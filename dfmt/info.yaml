@@ -10,6 +10,9 @@ include:
 documentation:
   - https://github.com/dlang-community/dfmt#readme
 metadata:
+  upstream:
+    tag: Git
+    contents: dlang-community/dfmt
   languages:
     - D
   tests:
