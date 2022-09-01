@@ -104,6 +104,7 @@ jobs:
             --sha ${{ github.sha }}
             --no-build
             --write restyler.yaml
+            --check-for-update
             ${{ matrix.restyler }}
             ${{ matrix.overrides }}
 
@@ -117,6 +118,7 @@ jobs:
             --no-build
             --push
             --write restyler.yaml
+            --check-for-update
             ${{ matrix.restyler }}
             ${{ matrix.overrides }}
 
@@ -145,6 +147,7 @@ jobs:
             --sha ${{ github.sha }}
             --no-build
             --write restyler.yaml
+            --check-for-update
             ${{ matrix.restyler }}
 
       - if: ${{ github.ref == 'refs/heads/main' }}

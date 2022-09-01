@@ -14,6 +14,9 @@ include:
 documentation:
   - https://docs.dhall-lang.org
 metadata:
+  # upstream:
+  #   tag: Git
+  #   contents: dhall-lang/dhall-lang
   languages:
     - Dhall
   tests:

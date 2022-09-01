@@ -13,6 +13,8 @@ documentation:
   - https://github.com/lspitzner/brittany
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
 metadata:
+  upstream:
+    tag: Hackage
   languages:
     - Haskell
   tests:

@@ -8,6 +8,8 @@ supports_multiple_paths: false
 documentation:
   - https://github.com/commercialhaskell/hindent
 metadata:
+  upstream:
+    tag: Hackage
   languages:
     - Haskell
   tests:

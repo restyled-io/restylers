@@ -11,6 +11,8 @@ include:
 documentation:
   - https://github.com/tweag/ormolu#readme
 metadata:
+  upstream:
+    tag: Hackage
   languages:
     - Haskell
   tests:
