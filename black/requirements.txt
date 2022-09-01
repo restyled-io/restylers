@@ -1,4 +1,4 @@
-black==22.6.0
+black==22.8.0
 
 # Avoid error in 8.1 https://github.com/restyled-io/restylers/runs/6028662282
 click==8.1.3
