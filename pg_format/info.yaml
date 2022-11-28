@@ -1,9 +1,11 @@
 ---
 enabled: true
 name: pg_format
-version: v3.3-2
+version_cmd: |
+  pg_format --version | sed 's/^pg_format version \(.*\)$/v\1/'
 command:
-  - pg_format-inplace
+  - pg_format
+  - --inplace
 include:
   - "**/*.sql"
 supports_arg_sep: false
