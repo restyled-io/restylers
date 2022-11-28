@@ -1,7 +1,7 @@
 FROM alpine:3.17
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
-ENV PG_FORMAT_VERSION 3.3
+ENV PG_FORMAT_VERSION 5.3
 ENV PG_FORMAT_RELEASE \
   https://github.com/darold/pgFormatter/archive/v$PG_FORMAT_VERSION.tar.gz
 
@@ -23,5 +23,4 @@ RUN \
 
 RUN mkdir -p /code
 WORKDIR /code
-COPY files /
 CMD ["pg_format", "--help"]
