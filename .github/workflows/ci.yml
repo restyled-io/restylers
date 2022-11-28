@@ -6,54 +6,26 @@ on:
     branches: main
 
 jobs:
-  test:
+  generate-matrix:
     runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v3
+      - id: prep
+        run: |
+          echo "matrix=$(./.github/bin/generate-matrix)" >>"$GITHUB_OUTPUT"
+          echo "matrix-ext=$(./.github/bin/generate-matrix external)" >>"$GITHUB_OUTPUT"
+
+    outputs:
+      matrix: ${{ steps.prep.outputs.matrix }}
+      matrix-ext: ${{ steps.prep.outputs.matrix-ext }}
+
+  test:
+    runs-on: ubuntu-latest
+    needs: generate-matrix
+
     strategy:
-      matrix:
-        restyler:
-          - astyle
-          - autopep8
-          - black
-          - brittany
-          - clang-format
-          - dfmt
-          - dhall-format
-          - dotnet-format
-          - elm-format
-          - fantomas
-          - fourmolu
-          - gn
-          - gofmt
-          - google-java-format
-          - hindent
-          - hlint
-          - isort
-          - jdt
-          - jq
-          - ormolu
-          - pg_format
-          - php-cs-fixer
-          - prettier
-          - prettier-ruby
-          - reorder-python-imports
-          - rubocop
-          - rustfmt
-          - shellharden
-          - shfmt
-          - standardrb
-          - stylish-haskell
-          - terraform
-          - verible
-          - yapf
-
-        include:
-          - restyler: prettier
-            overrides: >-
-              prettier-json
-              prettier-markdown
-              prettier-yaml
-
+      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
       fail-fast: false
 
     steps:
@@ -63,7 +35,7 @@ jobs:
         name: Prepare
         run: |
           image=restyled/restyler-${{ matrix.restyler }}:${{ github.sha }}
-          echo "::set-output name=image::${image}"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
 
       - name: Lint
         uses: hadolint/hadolint-action@v3.0.0
@@ -156,12 +128,10 @@ jobs:
 
   test-external:
     runs-on: ubuntu-latest
+    needs: generate-matrix
 
     strategy:
-      matrix:
-        restyler:
-          - whitespace
-
+      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix-ext) }}
       fail-fast: false
 
     steps:
