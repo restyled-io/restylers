@@ -1,4 +1,2 @@
-resolver: lts-17.13
+resolver: nightly-2022-12-06
 packages: []
-extra-deps:
-  - ormolu-0.1.4.1

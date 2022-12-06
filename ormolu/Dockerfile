@@ -1,4 +1,4 @@
-FROM restyled/stack-build-minimal:20.04 as builder
+FROM restyled/stack-build-minimal:22.04 as builder
 label maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
@@ -29,11 +29,10 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.3/lib/ghc-9.4.3/lib/package.conf.d
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/ormolu /usr/bin/ormolu
 RUN mkdir -p /code
