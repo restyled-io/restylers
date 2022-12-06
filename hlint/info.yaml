@@ -13,8 +13,9 @@ documentation:
   - https://github.com/ndmitchell/hlint#readme
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
 metadata:
-  upstream:
-    tag: Hackage
+  # Disable --update-check because we can't build hlint-3.5 yet
+  # upstream:
+  #   tag: Hackage
   languages:
     - Haskell
   tests:
