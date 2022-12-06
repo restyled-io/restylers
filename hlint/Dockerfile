@@ -1,4 +1,4 @@
-FROM restyled/stack-build-minimal:20.04 as builder
+FROM restyled/stack-build-minimal:22.04 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
@@ -31,12 +31,11 @@ RUN \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/package.conf.d
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/include/ghcversion.h
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/platformConstants
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.4/lib/ghc-8.8.4/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/include/ghcversion.h
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/package.conf.d
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/hlint /usr/bin/hlint
 COPY --from=builder /root/.local/bin/refactor /usr/bin/refactor

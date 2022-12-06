@@ -1,7 +1,2 @@
-# https://www.stackage.org/lts-16.12/package/hlint-3.1.6
-resolver: lts-16.12
+resolver: lts-20.3
 packages: []
-extra-deps:
-  - apply-refact-0.9.1.0
-  - ghc-exactprint-0.6.3.3@sha256:384e1066c192ed60dc12443b7aca75a4a4adcc47f829336c21ed007596fe683f,9446
-  - uniplate-1.6.13@sha256:c8b715570d0b4baa72512e677552dd3f98372a64bf9de000e779bd4162fd7be7,3320
