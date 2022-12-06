@@ -1,6 +1,6 @@
 ---
 name: hindent
-version: v5.3.1-2
+version: v5.3.4
 include:
   - "**/*.hs"
 supports_arg_sep: false
