@@ -31,12 +31,12 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/package.conf.d
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/include/ghcversion.h
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/platformConstants
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-8.10.4/lib/ghc-8.10.4/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/include/ghcversion.h
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/platformConstants /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.0.2/lib/ghc-9.0.2/platformConstants
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/brittany /usr/bin/brittany
 RUN mkdir -p /code
