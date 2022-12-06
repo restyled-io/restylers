@@ -488,6 +488,6 @@ metadata:
         import FrontRow.Renaissance.RPIdentifier
       restyled: |
         module Foo where
+        import           FrontRow.Renaissance.RenaissancePlatform
         import           FrontRow.Renaissance.RPID
         import           FrontRow.Renaissance.RPIdentifier
-        import           FrontRow.Renaissance.RenaissancePlatform

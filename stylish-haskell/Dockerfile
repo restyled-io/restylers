@@ -3,7 +3,7 @@ LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
 COPY stack.yaml /root/.stack/global-project/stack.yaml
-RUN stack install stylish-haskell-0.13.0.0
+RUN stack install stylish-haskell
 
 FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
