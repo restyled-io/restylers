@@ -12,8 +12,9 @@ documentation:
   - https://github.com/jaspervdj/stylish-haskell
   - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
 metadata:
-  upstream:
-    tag: Hackage
+  # Disable update checking because the latest doesn't compile, sigh
+  # upstream:
+  #   tag: Hackage
   languages:
     - Haskell
   tests:
