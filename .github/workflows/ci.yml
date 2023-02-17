@@ -38,7 +38,7 @@ jobs:
           echo "image=$image" >> "$GITHUB_OUTPUT"
 
       - name: Lint
-        uses: hadolint/hadolint-action@v3.0.0
+        uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ matrix.restyler }}/Dockerfile
         continue-on-error: true
