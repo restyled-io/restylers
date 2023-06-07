@@ -1,4 +1,3 @@
----
 enabled: false
 name: fourmolu
 version_cmd: |
@@ -10,6 +9,7 @@ command:
 include:
   - "**/*.hs"
 documentation:
+  - https://fourmolu.github.io/
   - https://github.com/fourmolu/fourmolu
 metadata:
   upstream:
