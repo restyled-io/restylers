@@ -1,0 +1,55 @@
+enabled: true
+name: shellcheck
+version_cmd: |
+  shellcheck --version | sed '/^version: \(.*\)$/!d; s//v\1/'
+command:
+  - shellcheck-fix
+include:
+  - "**/*.sh"
+  - "**/*.bash"
+interpreters:
+  - sh
+  - bash
+documentation:
+  - https://github.com/koalaman/shellcheck/wiki
+metadata:
+  languages:
+    - POSIX sh
+    - Bash
+  tests:
+    - contents: |
+        echo $foo
+      restyled: |
+        echo "$foo"
+
+    # From the man-page
+    - contents: |
+        ## Example of a broken script.
+        for f in $(ls *.m3u)
+        do
+          grep -qi hq.*mp3 $f \
+            && echo -e 'Playlist $f contains a HQ file in mp3 format'
+        done
+      restyled: |
+        ## Example of a broken script.
+        for f in $(ls *.m3u)
+        do
+          grep -qi hq.*mp3 "$f" \
+            && echo -e 'Playlist $f contains a HQ file in mp3 format'
+        done
+
+    # Issue present that can't be auto-fixed
+    - contents: |
+        if (( $n > 1 )); then
+          echo yeah
+        fi
+      restyled: |
+        if (( $n > 1 )); then
+          echo yeah
+        fi
+
+    # No issues (empty patch handled)
+    - contents: |
+        echo "$foo"
+      restyled: |
+        echo "$foo"
