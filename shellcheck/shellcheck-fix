@@ -1,0 +1,2 @@
+#!/bin/sh
+shellcheck --format=diff "$@" | patch -p 1
