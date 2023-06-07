@@ -1,0 +1,57 @@
+enabled: true
+name: npm-groovy-lint
+version_cmd: |
+  npm-groovy-lint --version | sed '/^npm-groovy-lint version \(.*\)$/!d; s//v\1/'
+command:
+  - npm-groovy-lint
+  - "--fix"
+include:
+  - "**/*.groovy"
+documentation:
+  - https://github.com/nvuillam/npm-groovy-lint#readme
+metadata:
+  languages:
+    - Groovy
+  tests:
+    - contents: |
+        def variable = 1;
+
+        pipeline {
+            agent any
+            options{ timestamps() }
+            stages{ stage('') {
+                    steps {
+                        sh """
+                        """
+                    }
+                }
+
+                stage('Deploy')
+                {
+                    steps {
+                        ansiColor('xterm') {
+                            sh """
+                            """
+                        }
+                    } } } }
+      restyled: |
+        def variable = 1
+
+        pipeline {
+            agent any
+            options { timestamps() }
+            stages { stage('') {
+                    steps {
+                        sh '''
+                        '''
+                    }
+            }
+
+                stage('Deploy')
+                {
+                    steps {
+                        ansiColor('xterm') {
+                            sh '''
+                            '''
+                        }
+                    } } } }
