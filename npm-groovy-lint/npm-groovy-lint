@@ -1,0 +1,5 @@
+#!/bin/sh
+# If you use --failon=none, that doesn't just prevent the non-zero exit code, oh
+# no, it disables all fixing and formatting too! So we need this dumb wrapper
+# that just ignores the exit code instead.
+/app/node_modules/.bin/npm-groovy-lint "$@" || true
