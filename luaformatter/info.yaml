@@ -1,0 +1,25 @@
+enabled: true
+name: luaformatter
+version_cmd: |
+  lua-format --version | sed '/^Version: *\(.*\)$/!d; s//v\1/'
+command:
+  - lua-format
+  - --in-place
+include:
+  - "**/*.lua"
+interpreters:
+  - lua
+documentation:
+  - https://github.com/Koihik/LuaFormatter
+metadata:
+  languages:
+    - Lua
+  tests:
+    - name: Matrix
+      contents: |
+        matrix = { {1, 0, 0, 0},
+           {1, 1, 0,   0},
+           {1, 1,  1, 0},
+           {1, 1, 1, 1} }
+      restyled: |
+        matrix = {{1, 0, 0, 0}, {1, 1, 0, 0}, {1, 1, 1, 0}, {1, 1, 1, 1}}
