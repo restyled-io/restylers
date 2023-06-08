@@ -17,13 +17,14 @@ metadata:
     - POSIX sh
     - Bash
   tests:
-    - contents: |
+    - name: "Simple un-quoted"
+      contents: |
         echo $foo
       restyled: |
         echo "$foo"
 
-    # From the man-page
-    - contents: |
+    - name: "Man-page example"
+      contents: |
         ## Example of a broken script.
         for f in $(ls *.m3u)
         do
@@ -38,8 +39,8 @@ metadata:
             && echo -e 'Playlist $f contains a HQ file in mp3 format'
         done
 
-    # Issue present that can't be auto-fixed
-    - contents: |
+    - name: "Non auto-fix issue"
+      contents: |
         if (( $n > 1 )); then
           echo yeah
         fi
@@ -48,8 +49,8 @@ metadata:
           echo yeah
         fi
 
-    # No issues (empty patch handled)
-    - contents: |
+    - name: "Empty patch"
+      contents: |
         echo "$foo"
       restyled: |
         echo "$foo"
