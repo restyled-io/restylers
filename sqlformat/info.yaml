@@ -1,0 +1,34 @@
+enabled: false
+name: sqlformat
+version_cmd: sqlformat --version
+command:
+  - sqlformat
+  - --reindent
+  - --keywords=upper
+include:
+  - "**/*.sql"
+supports_arg_sep: false
+supports_multiple_paths: false
+run_as_filter: true
+documentation:
+  - https://github.com/andialbrecht/sqlparse#readme
+metadata:
+  languages:
+    - SQL
+    - PSQL
+  tests:
+    - contents: |
+        -- hi there
+        select * from students WHERE students.age > 10;
+      restyled: |
+        -- hi there
+
+        SELECT *
+        FROM students
+        WHERE students.age > 10;
+    - contents: |
+        INSERT
+          INTO x VALUES ()
+      restyled: |
+        INSERT INTO x
+        VALUES ()
