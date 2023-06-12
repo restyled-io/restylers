@@ -7,8 +7,6 @@ command:
   - --keywords=upper
 include:
   - "**/*.sql"
-supports_arg_sep: false
-supports_multiple_paths: false
 run_as_filter: true
 documentation:
   - https://github.com/andialbrecht/sqlparse#readme
