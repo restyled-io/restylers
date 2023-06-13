@@ -4,9 +4,11 @@ ENV LANG en_US.UTF-8
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json .
-RUN npm install
+RUN yarn install
+RUN cd node_modules/tailwindcss && yarn link
 ENV PATH=/app/node_modules/.bin:$PATH
+COPY prettier-with-tailwindcss /usr/local/bin/prettier-with-tailwindcss
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-CMD ["prettier", "--help"]
+CMD ["prettier-with-tailwindcss", "--help"]
