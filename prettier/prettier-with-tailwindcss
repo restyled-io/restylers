@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+yarn link tailwindcss
+trap 'yarn unlink tailwindcss' EXIT
+prettier "$@"
