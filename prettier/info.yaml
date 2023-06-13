@@ -16,7 +16,26 @@ metadata:
   languages:
     - JavaScript
   tests:
-    - extension: js
+    - name: Matrix example
+      extension: js
+      contents: |
+        matrix(
+          1, 0, 0,
+          0, 1, 0,
+          0, 0, 1
+        )
+      restyled: |
+        matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    - name: With tailwindcss config
+      support:
+        path: tailwind.config.js
+        contents: |
+          const defaultTheme = require('tailwindcss/defaultTheme')
+
+          module.exports = {
+            ...defaultTheme,
+          }
+      extension: js
       contents: |
         matrix(
           1, 0, 0,
