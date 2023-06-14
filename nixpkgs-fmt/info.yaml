@@ -1,0 +1,23 @@
+enabled: true
+name: nixpkgs-fmt
+version_cmd: |
+  nixpkgs-fmt --version | sed 's/^nixpkgs-fmt \(.*\)$/v\1/'
+command:
+  - nixpkgs-fmt
+supports_arg_sep: true
+supports_multiple_files: true
+include:
+  - "**/*.nix"
+documentation:
+  - https://github.com/nix-community/nixpkgs-fmt#readme
+metadata:
+  languages:
+    - Nix
+  tests:
+    - name: Online demo
+      contents: |
+        {foo,bar}:
+                foo+bar
+      restyled: |
+        { foo, bar }:
+        foo + bar
