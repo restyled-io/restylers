@@ -2,6 +2,8 @@
 
 Language-specific restylers.
 
+To see all currently-available restylers, visit https://docs.restyled.io/available-restylers/
+
 ## Contributing
 
 See:
