@@ -4,8 +4,12 @@ ENV LANG en_US.UTF-8
 #Install prerequisites
 RUN \
   apt-get update &&\
-  apt-get install -y curl --no-install-recommends &&\
-  apt-get clean && \
+  apt-get install \
+    --yes \
+    --no-install-recommends \
+      ca-certificates \
+      curl &&\
+  apt-get clean &&\
   rm -rf /var/lib/apt/lists/*
 #Install verible
 ENV VERIBLE_VERSION v0.0-1318-gf6b4485
