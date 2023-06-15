@@ -1,7 +1,7 @@
 ---
 name: prettier-ruby
 version_cmd: |
-  cd /app &&  bundle info prettier | sed '/.*prettier (\(.*\))$/!d; s//v\1/'
+  cd /app &&  bundle info prettier | sed '/.*prettier (\(.*\))$/!d; s//v\1-1/'
 command:
   - rbprettier
   - "--write"
