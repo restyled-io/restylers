@@ -29,11 +29,10 @@ jobs:
     steps:
       - id: prep
         run: |
-          from=${{ github.event.from }}
-          echo "::set-output name=from::${from:-dev}"
-
-          to=${{ github.event.to }}
-          echo "::set-output name=to::${to:-stable}"
+          cat >>"$GITHUB_OUTPUT" <<EOM
+          from=${{ github.event.from || 'dev' }}
+          to=${{ github.event.to || 'stable' }}
+          EOM
 
       - uses: restyled-io/sdk@main
         with:
@@ -42,7 +41,7 @@ jobs:
 
       - name: Notify
         if: always()
-        uses: zulip/github-actions-zulip/send-message@v1
+        uses: zulip/github-actions-zulip/send-message@v1.0.1
         with:
           api-key: ${{ secrets.ZULIP_API_KEY }}
           email: ${{ secrets.ZULIP_EMAIL }}
