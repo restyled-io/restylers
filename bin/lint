@@ -1,0 +1,6 @@
+#!/bin/sh
+exec docker run --volume "$PWD:/src:ro" --workdir /src \
+  hadolint/hadolint hadolint \
+  --config ./.hadolint.yaml \
+  --failure-threshold error \
+  ./*/Dockerfile
