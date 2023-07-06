@@ -1,2 +1,2 @@
 source 'https://rubygems.org'
-gem 'prettier', '~> 3.2.0'
+gem 'prettier', '~> 4.0.0'
