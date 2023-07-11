@@ -1,0 +1,31 @@
+enabled: true
+name: dart-format
+version_cmd: |
+  dart format --version | tail -n 1 | sed 's/^/v/'
+command:
+  - dart
+  - format
+supports_arg_sep: true
+supports_multiple_files: true
+include:
+  - "**/*.dart"
+documentation:
+  - https://pub.dev/packages/dart_style
+metadata:
+  languages:
+    - Dart
+  tests:
+    - name: dart_style example
+      contents: |
+        void example() {
+          if (tag=='style'||tag=='script'&&(type==null||type == TYPE_JS
+                ||type==TYPE_DART)||
+            tag=='link'&&(rel=='stylesheet'||rel=='import')) {}
+        }
+      restyled: |
+        void example() {
+          if (tag == 'style' ||
+              tag == 'script' &&
+                  (type == null || type == TYPE_JS || type == TYPE_DART) ||
+              tag == 'link' && (rel == 'stylesheet' || rel == 'import')) {}
+        }
