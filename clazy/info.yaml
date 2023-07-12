@@ -1,0 +1,20 @@
+enabled: true
+name: clazy
+command:
+  - clazy-standalone-apply
+supports_arg_sep: false
+version_cmd: |
+  apt-cache policy clazy | sed '/^ *Installed: \(.*\)$/!d; s//v\1/'
+include:
+  - "**/*.cpp"
+documentation:
+  - https://github.com/KDE/clazy
+metadata:
+  languages:
+    - C++
+  tests:
+    - contents: |
+        #include <QString>
+        QString str = "hello";
+        str.mid(5).toInt(ok);
+      restyled: ""

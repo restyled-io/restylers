@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -eou pipefail
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
+clazy-standalone --export-fixes="$tmp"/fixes.yaml "$@"
+clang-apply-replacements "$tmp"
