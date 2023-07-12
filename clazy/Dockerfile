@@ -5,8 +5,10 @@ RUN \
   apt-get update && \
   apt-get -y --no-install-recommends install \
     clang \
+    clang-tools \
     clazy \
     cmake \
+    make \
     locales \
     qt6-base-dev && \
   locale-gen en_US.UTF-8 && \
