@@ -1,0 +1,62 @@
+enabled: true
+name: clazy
+command:
+  - clazy-standalone-apply
+supports_arg_sep: false
+version_cmd: |
+  apt-cache policy clazy | sed '/^ *Installed: \(.*\)$/!d; s//v\1/'
+include:
+  - "**/*.cpp"
+documentation:
+  - https://github.com/KDE/clazy
+metadata:
+  languages:
+    - C++
+  tests:
+    - name: qstring-allocations
+      arguments: ["-checks=level2"]
+      support:
+        path: CMakeLists.txt
+        contents: |
+          cmake_minimum_required(VERSION 3.16)
+
+          project(helloworld VERSION 1.0.0 LANGUAGES CXX)
+
+          set(CMAKE_CXX_STANDARD 17)
+          set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+          set(CMAKE_AUTOMOC ON)
+
+          find_package(Qt6 REQUIRED COMPONENTS Core)
+
+          add_executable(helloworld
+              clazy-test-1.cpp
+          )
+
+          target_link_libraries(helloworld PRIVATE Qt6::Core)
+      contents: |
+        #include <iostream>
+        #include <QString>
+
+        int main() {
+          QString str = "hello";
+          QString result = str.left(1);
+
+          std::cout << "Original string: " << str.toStdString() << std::endl;
+          std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
+
+          return 0;
+        }
+      restyled: |
+        #include <iostream>
+        #include <QString>
+
+        int main() {
+          QString str = QStringLiteral("hello");
+          QString result = str.left(1);
+
+          std::cout << "Original string: " << str.toStdString() << std::endl;
+          std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
+
+          return 0;
+        }
