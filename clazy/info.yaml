@@ -2,7 +2,6 @@ enabled: true
 name: clazy
 command:
   - clazy-standalone-apply
-  - --checks=level0
 supports_arg_sep: false
 version_cmd: |
   apt-cache policy clazy | sed '/^ *Installed: \(.*\)$/!d; s//v\1/'
