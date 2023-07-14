@@ -1,0 +1,43 @@
+enabled: true
+name: purty
+version_cmd: |
+  purty version | sed 's/^.* version: \(.*\)$/v\1/'
+command:
+  - purty
+  - "--write"
+include:
+  - "**/*.purs"
+documentation:
+  - https://github.com/joneshf/purty#readme
+metadata:
+  languages:
+    - PureScript
+  tests:
+    - name: Ado
+      contents: |
+        module Ado where
+
+        foo = ado
+          let w = 0
+          x <- pure 1
+          y <- do
+            pure 2
+            pure 2
+          z <- do pure 3
+          in w + x + y + z
+
+        bar = ado in 12
+      restyled: |
+        module Ado where
+
+        foo = ado
+          let
+            w = 0
+          x <- pure 1
+          y <- do
+            pure 2
+            pure 2
+          z <- do pure 3
+          in w + x + y + z
+
+        bar = ado in 12
