@@ -1,0 +1,41 @@
+# Scalafmt will error if there is no .scalafmt.conf, which is a BOLD choice, I
+# mean comon. Anyway, we can't enable it always for this reason. But, we should
+# support some way to to conditionally enable it if the file exists.
+enabled: false
+
+name: scalafmt
+version_cmd: |
+  scalafmt --help | head -n 1 | sed 's/^scalafmt \(.*\)/v\1/'
+command:
+  - scalafmt
+  - --non-interactive
+include:
+  - "**/*.scala"
+documentation:
+  - https://todo
+metadata:
+  languages:
+    - Scala
+  tests:
+    - support:
+        path: .scalafmt.conf
+        contents: |
+          version = 3.7.9
+          runner.dialect = scala211
+          rewrite.rules = [RedundantParens]
+      contents: |
+        object a {
+          def c(b: List[Int]): List[Int] =
+            for {
+              a <- b
+              if ((a))
+            } yield a
+        }
+      restyled: |
+        object a {
+          def c(b: List[Int]): List[Int] =
+            for {
+              a <- b
+              if a
+            } yield a
+        }
