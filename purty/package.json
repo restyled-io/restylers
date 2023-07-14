@@ -1,0 +1,7 @@
+{
+  "name": "@restyled/restyler-purty",
+  "version": "0.0.0",
+  "dependencies": {
+    "purty": "7.0.0"
+  }
+}
