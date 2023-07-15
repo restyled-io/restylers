@@ -3,7 +3,8 @@ LABEL maintainer="Pat Brisbin <pbrisbin@restyled.io>"
 RUN opam install ocamlformat
 
 USER root
-ENV PATH=/home/opam/.opam/5.0/bin:$PATH
+RUN cp -r /home/opam/.opam /root/.opam
+ENV PATH=/root/.opam/5.0/bin:$PATH
 
 RUN mkdir -p /code
 WORKDIR /code
