@@ -1,4 +1,4 @@
-FROM perl AS builder
+FROM perl:5 AS builder
 RUN mkdir -p build
 ENV PERLTIDY_TAG 20230701
 ENV PERLTIDY_SRC https://github.com/perltidy/perltidy/archive/refs/tags/${PERLTIDY_TAG}.tar.gz
