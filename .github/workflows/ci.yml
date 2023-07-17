@@ -45,7 +45,7 @@ jobs:
         uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ matrix.restyler }}/Dockerfile
-        continue-on-error: true
+          failure-threshold: error
 
       - id: buildx
         name: Setup buildx
