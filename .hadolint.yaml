@@ -1,9 +1,18 @@
 ignored:
+  # https://github.com/hadolint/hadolint/issues/422
   - DL3003
-  - DL3008
-  - DL3018
-  - DL3045 # temporary, to unblock CI
-  - DL3059
+
+  # Pinning versions: more trouble than it's worth
+  - DL3008 # apt-get
+  - DL3018 # apk
+
+  # Set WORKDIR before relative COPY: I want to / can do things in the default
+  # workdir and I'd rather not have to look it up and re-specify it to satisfy
+  # the linter.
+  - DL3045
+
+  # Set pipefile: I'm frequently using /bin/sh and it's not worth the noise to
+  # run the stuff in an alternate shell to get this behavior.
   - DL4006
 
 trustedRegistries:
