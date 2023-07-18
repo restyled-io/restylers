@@ -23,7 +23,8 @@ RUN yes | cs setup
 ENV PATH=/root/.local/share/coursier/bin:$PATH
 
 # Install scalafmt
-RUN cs install scalafmt
+ENV SCALAFMT_VERSION=3.7.10
+RUN cs install "scalafmt:$SCALAFMT_VERSION"
 
 RUN mkdir -p /code
 WORKDIR /code

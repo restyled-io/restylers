@@ -12,6 +12,7 @@ command:
 include:
   - "**/*.scala"
 documentation:
+  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Scalafmt
   - https://scalameta.org/scalafmt/
 metadata:
   languages:
@@ -20,7 +21,7 @@ metadata:
     - support:
         path: .scalafmt.conf
         contents: |
-          version = 3.7.9
+          version = 3.7.10
           runner.dialect = scala211
           rewrite.rules = [RedundantParens]
       contents: |
