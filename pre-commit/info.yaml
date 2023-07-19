@@ -10,7 +10,7 @@ include:
   - "**/*"
 supports_arg_sep: false
 documentation:
-  - 'https://pre-commit.com'
+  - "https://pre-commit.com"
 metadata:
   languages:
     - "*"
