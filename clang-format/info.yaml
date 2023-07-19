@@ -2,7 +2,7 @@
 enabled: true
 name: clang-format
 version_cmd: |
-  clang-format --version | sed 's/.*clang-format version \([0-9.]*\).*$/\1/'
+  clang-format --version | sed 's/.*clang-format version \([0-9.]*\).*$/v\1/'
 command:
   - clang-format
   - "-i"
