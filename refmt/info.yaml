@@ -1,0 +1,40 @@
+enabled: true
+name: refmt
+version_cmd: |
+  refmt --version | sed 's/Reason \([^ ]*\).*/v\1/'
+command:
+  - refmt
+  - "--in-place"
+include:
+  - "**/*.re"
+documentation:
+  - https://github.com/reasonml/reason-cli#reason-cli
+metadata:
+  languages:
+    - Reason
+  tests:
+    - contents: |
+        type schoolPerson = Teacher
+                | Director | Student(string);
+
+        let greeting = person =>
+          switch (person){
+              | Teacher => "Hey Professor!"
+              | Director => "Hello Director."
+              | Student("Richard") => "Still here Ricky?"
+              | Student(anyOtherName) => "Hey, " ++ anyOtherName
+                  ++ "."
+          };
+      restyled: |
+        type schoolPerson =
+          | Teacher
+          | Director
+          | Student(string);
+
+        let greeting = person =>
+          switch (person) {
+          | Teacher => "Hey Professor!"
+          | Director => "Hello Director."
+          | Student("Richard") => "Still here Ricky?"
+          | Student(anyOtherName) => "Hey, " ++ anyOtherName ++ "."
+          };
