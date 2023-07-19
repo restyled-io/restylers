@@ -1,0 +1,66 @@
+enabled: false
+name: pre-commit
+version_cmd: |
+  pip show pre-commit | sed '/^Version: \(.*\)$/!d; s//v\1/'
+command:
+  - pre-commit
+  - run
+  - --files
+include:
+  - "**/*"
+supports_arg_sep: false
+documentation:
+  - 'https://pre-commit.com'
+metadata:
+  languages:
+    - "*"
+  tests:
+    - support:
+        path: .pre-commit-config.yaml
+        contents: |
+          repos:
+            - repo: https://github.com/python/black
+              rev: "23.7.0"
+              hooks:
+                - id: black
+
+      # Copied from black/info.yaml
+      name: black
+      extension: py
+      contents: |
+        import math, sys;
+        def example1():
+            ####This is a long comment. This should be wrapped to fit within 72 characters.
+            some_tuple=(   1,2, 3,'a'  );
+            some_variable={'long':'Long code lines should be wrapped within 79 characters.',
+            'other':[math.pi, 100,200,300,9876543210,'This is a long string that goes on'],
+            'more':{'inner':'This whole logical line should be wrapped.',some_tuple:[1,
+            20,300,40000,500000000,60000000000000000]}}
+            return (some_tuple, some_variable)
+
+      # NB. This file was reused from the autopep8 tests, so some of the things
+      # it states within itself (such as wrapping the comment) aren't actually
+      # handled by black
+      restyled: |
+        import math, sys
+
+
+        def example1():
+            ####This is a long comment. This should be wrapped to fit within 72 characters.
+            some_tuple = (1, 2, 3, "a")
+            some_variable = {
+                "long": "Long code lines should be wrapped within 79 characters.",
+                "other": [
+                    math.pi,
+                    100,
+                    200,
+                    300,
+                    9876543210,
+                    "This is a long string that goes on",
+                ],
+                "more": {
+                    "inner": "This whole logical line should be wrapped.",
+                    some_tuple: [1, 20, 300, 40000, 500000000, 60000000000000000],
+                },
+            }
+            return (some_tuple, some_variable)

@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+import os
+import sys
+import yaml
+
+HAVES_PATH = "/app/.pre-commit-config.yaml"
+WANTS_PATH = ".pre-commit-config.yaml"
+ISSUES_URL = "https://github.com/restyled-io/restylers/issues/new"
+PR_URL = "https://github.com/restyled-io/restylers/TODO"
+
+
+def die(msg):
+    print("Unable to run pre-commit: {}".format(msg), file=sys.stderr)
+    exit(1)
+
+
+if not os.path.isfile(WANTS_PATH):
+    die("{} must exist".format(WANTS_PATH))
+
+
+def get_config_repos(io):
+    return list(map(simplify, yaml.safe_load(io).get("repos")))
+
+
+def simplify(repo):
+    return "{}@{}".format(repo.get("repo"), repo.get("rev"))
+
+
+with open(HAVES_PATH, "r") as io:
+    haves = get_config_repos(io)
+    haves.sort()
+
+
+with open(WANTS_PATH, "r") as io:
+    wants = get_config_repos(io)
+    wants.sort()
+
+
+missing = []
+
+for want in wants:
+    if (not want in haves):
+        missing.append(want)
+
+if missing:
+  die("""required hook not installed
+
+Any pre-commit hooks must be pre-installed because we do not allow restyler
+images to make network requests to install them on-demand.
+
+The available hooks are:
+- {}
+
+You are using the following hooks, which are not available:
+- {}
+
+To request your hook be pre-installed, please open an Issue at:
+{}
+
+To open a PR adding the hook yourself, see:
+{}
+
+""".format("\n- ".join(haves), "\n- ".join(missing), ISSUES_URL, PR_URL))

@@ -1,0 +1,18 @@
+# This file defines what hooks we pre-install into the Restyler image. Only
+# these hooks will be available and users configured with any other
+# hooks/revisions will receive an error.
+#
+# If updating this to add new hooks, be sure to also install any required system
+# dependencies in the Dockerfile. At the moment, it's python-focused.
+#
+repos:
+  - repo: https://github.com/python/black
+    rev: "23.7.0"
+    hooks:
+      - id: black
+      - id: black-jupyter
+  - repo: https://github.com/python/black
+    rev: "23.3.0"
+    hooks:
+      - id: black
+      - id: black-jupyter
