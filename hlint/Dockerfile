@@ -17,8 +17,7 @@ RUN stack install hlint apply-refact
 #     -name package.conf.d -o \
 #     -name ghcversion.h \
 #   \) \
-#   -printf "COPY --from=builder %p %p\n"
-# RUN exit 1
+#   -printf "COPY --from=builder %p %p\n"; exit 1
 
 FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
@@ -31,11 +30,11 @@ RUN \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 # BEGIN copy from RUN-find
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/include/ghcversion.h
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-passes
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/settings
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/llvm-targets
-COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/llvm-passes /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/llvm-passes
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/llvm-targets /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/llvm-targets
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/settings /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/settings
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/package.conf.d /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/package.conf.d
+COPY --from=builder /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/x86_64-linux-ghc-9.4.5/rts-1.0.2/include/ghcversion.h /root/.stack/programs/x86_64-linux/ghc-tinfo6-9.4.5/lib/ghc-9.4.5/lib/x86_64-linux-ghc-9.4.5/rts-1.0.2/include/ghcversion.h
 # END copy from RUN-find
 COPY --from=builder /root/.local/bin/hlint /usr/bin/hlint
 COPY --from=builder /root/.local/bin/refactor /usr/bin/refactor
