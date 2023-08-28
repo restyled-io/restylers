@@ -1,7 +1,7 @@
 enabled: true
 name: cmake-format
 version_cmd: |
-  cmake-format --version
+  cmake-format --version | sed 's/$/-1/' # add local version bump to redeploy
 command:
   - cmake-format
   - --in-place
