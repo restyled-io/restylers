@@ -2,7 +2,7 @@
 enabled: true
 name: cabal-fmt
 version_cmd: |
-  cabal-fmt --version | awk '{print $2}' | sed 's/^/v/'
+  cabal-fmt --version | sed 's/^/v/'
 command:
   - cabal-fmt
   - "--inplace"
