@@ -1,0 +1,63 @@
+---
+enabled: true
+name: cabal-fmt
+version_cmd: |
+  cabal-fmt --version | awk '{print $2}' | sed 's/^/v/'
+command:
+  - cabal-fmt
+  - "--inplace"
+include:
+  - "**/*.cabal"
+documentation:
+  - https://github.com/jaspervdj/cabal-fmt
+metadata:
+  # Disable update checking because the latest doesn't compile, sigh
+  # upstream:
+  #   tag: Hackage
+  languages:
+    - Haskell
+  tests:
+    - contents: |
+        cabal-version: 2.4
+        name: cabal-fmt
+        version: 0
+
+        -- An example formatter
+        executable cabal-fmt
+            default-language: Haskell2010
+            hs-source-dirs: src 
+            main-is: CabalFmt.hs
+            -- build depends will be in
+            -- a nice tabular format
+            build-depends: base >=4.11 && <4.13, pretty >=1.1.3.6 && <1.2, bytestring, Cabal ^>=2.5, containers ^>=0.5.11.0 || ^>=0.6.0.1
+            -- extensions will be sorted
+            other-extensions:
+              DeriveFunctor FlexibleContexts ExistentialQuantification OverloadedStrings
+              RankNTypes
+      restyled: |
+        cabal-version: 2.4
+        name:          cabal-fmt
+        version:       0
+
+        -- An example formatter
+        executable cabal-fmt
+          default-language: Haskell2010
+          hs-source-dirs:   src
+          main-is:          CabalFmt.hs
+
+          -- build depends will be in
+          -- a nice tabular format
+          build-depends:
+            , base        >=4.11      && <4.13
+            , bytestring
+            , Cabal       ^>=2.5
+            , containers  ^>=0.5.11.0 || ^>=0.6.0.1
+            , pretty      >=1.1.3.6   && <1.2
+
+          -- extensions will be sorted
+          other-extensions:
+            DeriveFunctor
+            ExistentialQuantification
+            FlexibleContexts
+            OverloadedStrings
+            RankNTypes

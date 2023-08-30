@@ -1,0 +1,4 @@
+resolver: lts-21.9
+extra-deps:
+  - cabal-fmt-0.1.6
+packages: []
