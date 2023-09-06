@@ -1,5 +1,5 @@
 ---
-enabled: true
+enabled: false
 name: cabal-fmt
 version_cmd: |
   cabal-fmt --version | sed 's/^/v/'
