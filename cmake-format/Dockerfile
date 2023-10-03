@@ -1,4 +1,4 @@
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
 COPY requirements.txt .
