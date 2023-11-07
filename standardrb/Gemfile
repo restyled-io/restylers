@@ -1,2 +1,2 @@
 source 'https://rubygems.org'
-gem 'standard', '~> 1.31.0'
+gem 'standard', '~> 1.32.0'
