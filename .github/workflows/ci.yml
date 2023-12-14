@@ -125,7 +125,7 @@ jobs:
             ${{ matrix.overrides }}
 
       - if: ${{ github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
@@ -152,7 +152,7 @@ jobs:
             ${{ matrix.restyler }}
 
       - if: ${{ github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
