@@ -157,11 +157,15 @@ jobs:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
 
+  # See https://github.com/orgs/community/discussions/60792
   status:
     needs: [test, test-external]
+    if: ${{ failure() || cancelled() }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Job to act as our overall required PR Status"
+      - run: |
+          echo "Some Restylers have failed or been cancelled"
+          exit 1
 
   promote:
     if: ${{ github.ref == 'refs/heads/main' }}
