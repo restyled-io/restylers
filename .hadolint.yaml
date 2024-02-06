@@ -11,6 +11,11 @@ ignored:
   # the linter.
   - DL3045
 
+  # Multiple consecutive `RUN` instructions: We don't care to address this
+  # always, only if one run is producing files cleaned up by another does it
+  # actually help to make it a single execution.
+  - DL3059
+
   # Set pipefile: I'm frequently using /bin/sh and it's not worth the noise to
   # run the stuff in an alternate shell to get this behavior.
   - DL4006
