@@ -1,0 +1,4 @@
+resolver: lts-11.22
+packages: []
+extra-deps:
+  - hindent-5.3.4

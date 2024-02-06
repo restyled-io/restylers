@@ -1,6 +1,7 @@
 ---
 name: hindent
-version: v5.3.4
+version_cmd: |
+  hindent --version | cut -d ' ' -f 2 | sed 's/^/v/'
 include:
   - "**/*.hs"
 supports_arg_sep: false
