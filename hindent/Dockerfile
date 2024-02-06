@@ -3,8 +3,8 @@ LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
 RUN stack upgrade
-RUN stack setup --resolver lts-11.22
-RUN stack install --resolver lts-11.22 hindent-5.3.4
+COPY stack.yaml /root/.stack/global-project/stack.yaml
+RUN stack install hindent
 
 FROM ubuntu:22.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
