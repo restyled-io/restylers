@@ -232,7 +232,7 @@ jobs:
             promote --yes --no-test ${{ github.sha }} dev
 
       - name: Notify
-        uses: zulip/github-actions-zulip/send-message@v1.0.1
+        uses: zulip/github-actions-zulip/send-message@v1.0.2
         with:
           api-key: ${{ secrets.ZULIP_API_KEY }}
           email: ${{ secrets.ZULIP_EMAIL }}
