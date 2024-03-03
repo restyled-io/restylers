@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 gem 'rubocop', '~> 1.61.0'
 gem 'rubocop-performance', '~> 1.20.0'
-gem 'rubocop-rails', '~> 2.23.0'
+gem 'rubocop-rails', '~> 2.24.0'
