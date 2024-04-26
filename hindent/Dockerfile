@@ -6,7 +6,7 @@ RUN stack upgrade
 COPY stack.yaml /root/.stack/global-project/stack.yaml
 RUN stack install hindent
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN \
   apt-get update && \

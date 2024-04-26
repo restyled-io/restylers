@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 as builder
+FROM ubuntu:24.04 as builder
 LABEL maintainer="Michael Spang <spang@google.com>"
 ENV LANG en_US.UTF-8
 RUN apt-get update && \
@@ -11,7 +11,7 @@ RUN apt-get update && \
 RUN wget -q -O gn.zip https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/Z6cz3BKAP2GgVlujo5D6CFdrLE3B1hXFwVwraB6QBnUC && \
     unzip -d /usr/local/bin gn.zip gn && \
     rm gn.zip
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 COPY --from=builder /usr/local/bin/gn /usr/local/bin/gn
 RUN mkdir -p /code
 WORKDIR /code
