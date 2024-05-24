@@ -1,7 +1,7 @@
 enabled: true
 name: ocamlformat
 version_cmd: |
-  ocamlformat --version | sed 's/^/v/; s/$/-2/'
+  ocamlformat --version | sed 's/^/v/'
 command:
   - ocamlformat
   - --inplace
