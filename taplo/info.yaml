@@ -1,0 +1,52 @@
+enabled: true
+name: taplo
+version_cmd: |
+  taplo --version | awk '{print $2}'
+command:
+  - taplo
+  - fmt
+include:
+  - "**/*.toml"
+documentation:
+  - https://taplo.tamasfe.dev/cli/usage/formatting.html
+metadata:
+  languages:
+    - TOML
+  tests:
+    - contents: |
+        var   = true
+        list = [
+          'hi',
+            'there'
+          , 'now'
+         ]
+      restyled: |
+        var = true
+        list = ['hi', 'there', 'now']
+    - contents: |
+        long_list = [ 'hi', 'there' , 'now' , 'now' , 'now' , 'now' , 'now'
+          , 'now'
+          , 'now'
+          , 'now'
+          , 'now'
+          , 'now'
+          , 'now'
+          , 'now'
+         ]
+      restyled: |
+        long_list = [
+          'hi',
+          'there',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+          'now',
+        ]
