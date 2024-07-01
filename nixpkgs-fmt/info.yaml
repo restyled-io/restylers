@@ -1,4 +1,4 @@
-enabled: true
+enabled: false
 name: nixpkgs-fmt
 version_cmd: |
   nixpkgs-fmt --version | sed 's/^nixpkgs-fmt \(.*\)$/v\1/'
