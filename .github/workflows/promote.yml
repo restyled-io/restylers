@@ -59,6 +59,11 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
 
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: bin/promote
+          sparse-checkout-cone-mode: false
+
       - uses: restyled-io/actions/setup-demo@v2
         with:
           channel: ${{ steps.prep.outputs.from }}
@@ -67,11 +72,6 @@ jobs:
       - uses: restyled-io/actions/run@v2
         with:
           paths: .
-
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: bin/promote
-          sparse-checkout-cone-mode: false
 
       - run: ./bin/promote "${{ steps.prep.outputs.from }}" "${{ steps.prep.outputs.to }}"
 
