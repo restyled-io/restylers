@@ -1,8 +1,8 @@
-FROM restyled/stack-build-minimal:22.04 as builder
+FROM fpco/stack-build-small:lts-22.31 AS builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
+RUN stack update # cache cabal files update
 ENV LANG en_US.UTF-8
 ENV PATH /root/.local/bin:$PATH
-RUN stack upgrade
 COPY stack.yaml /root/.stack/global-project/stack.yaml
 RUN stack install hindent
 
