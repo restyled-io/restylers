@@ -179,6 +179,11 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: bin/promote
+          sparse-checkout-cone-mode: false
+
       - uses: actions/download-artifact@v4
         with:
           pattern: "**/*.yaml"
@@ -187,10 +192,7 @@ jobs:
           cat **/*.yaml > restylers.yaml
 
       - name: Promote to sha tag
-        uses: restyled-io/sdk@main
-        with:
-          command: >-
-            promote --yes --no-test --file restylers.yaml ${{ github.sha }}
+        run: ./bin/promote ./restylers.yaml "${{ github.sha }}"
 
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -222,16 +224,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Promote to version tag
-        uses: restyled-io/sdk@main
-        with:
-          command: >-
-            promote --yes --no-test ${{ github.sha }} ${{ steps.tag.outputs.new_tag }}
+        run: ./bin/promote "${{ github.sha }}" "${{ steps.tag.outputs.new_tag }}"
 
       - name: Promote to dev
-        uses: restyled-io/sdk@main
-        with:
-          command: >-
-            promote --yes --no-test ${{ github.sha }} dev
+        run: ./bin/promote "${{ github.sha }}" "dev"
 
       - name: Notify
         uses: zulip/github-actions-zulip/send-message@v1.0.2
