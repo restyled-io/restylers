@@ -51,14 +51,6 @@ jobs:
         name: Setup buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.restyler }}-image-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.restyler }}-image-
-
       - name: Registry login
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/login-action@v3
@@ -70,10 +62,9 @@ jobs:
         if: ${{ github.ref != 'refs/heads/main' }}
         uses: docker/build-push-action@v6
         with:
-          builder: ${{ steps.buildx.outputs.name }}
           context: ${{ matrix.restyler }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           outputs: type=docker
           tags: ${{ steps.prep.outputs.image }}
 
@@ -81,17 +72,11 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v6
         with:
-          builder: ${{ steps.buildx.outputs.name }}
           context: ${{ matrix.restyler }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: true
           tags: ${{ steps.prep.outputs.image }}
-
-      - name: Cache cleanup
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
       - name: Container credentials
         if: ${{ github.ref == 'refs/heads/main' }}
