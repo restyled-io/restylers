@@ -59,11 +59,10 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
 
+      - uses: actions/checkout@v4
       - uses: restyled-io/actions/setup-demo@v2
         with:
           channel: ${{ steps.prep.outputs.from }}
-
-      - uses: actions/checkout@v4
       - uses: restyled-io/actions/setup@v2
       - uses: restyled-io/actions/run@v2
         with:
