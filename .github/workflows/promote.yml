@@ -6,6 +6,12 @@ on:
     - cron: "0 07 01 * *"
     - cron: "0 07 15 * *"
 
+  # Run it if touched
+  pull_request:
+    paths:
+      - .github/workflows/promote.yml
+
+  # Or manually trigger
   workflow_dispatch:
     inputs:
       from:
@@ -29,15 +35,45 @@ jobs:
     steps:
       - id: prep
         run: |
-          cat >>"$GITHUB_OUTPUT" <<EOM
-          from=${{ github.event.from || 'dev' }}
-          to=${{ github.event.to || 'stable' }}
-          EOM
+          case "$GITHUB_EVENT_NAME" in
+            'schedule')
+              # Promote dev to stable on the schedule
+              echo 'from=dev'
+              echo 'to=stable'
+            ;;
+            'pull_request')
+              # Promote dev to itself just to test our logic
+              echo 'from=dev'
+              echo 'to=dev'
+            ;;
+            'workflow_dispatch')
+              # Promote what was given
+              echo 'from=${{ github.event.from }}'
+              echo 'to=${{ github.event.to }}'
+            ;;
+            *)
+              echo "Unexpected event: $GITHUB_EVENT_NAME" >&2
+              exit 1
+            ;;
+          esac >>"$GITHUB_OUTPUT"
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
 
-      - uses: restyled-io/sdk@main
+      - uses: restyled-io/actions/setup-demo@v2
         with:
-          command: >
-            promote --yes ${{ steps.prep.outputs.from }} ${{ steps.prep.outputs.to }}
+          channel: ${{ steps.prep.outputs.from }}
+
+      - uses: restyled-io/actions/setup@v2
+      - uses: restyled-io/actions/run@v2
+        with:
+          paths: .
+
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: bin/promote
+          sparse-checkout-cone-mode: false
+
+      - run: ./bin/promote "${{ steps.prep.outputs.from }}" "${{ steps.prep.outputs.to }}"
 
       - name: Notify
         if: always()

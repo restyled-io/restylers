@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+get_stack_output() {
+  local stack=$1 output=$2
+
+  aws cloudformation describe-stacks \
+    --stack-name "$stack" \
+    --query "Stacks[*].Outputs[?OutputKey==\`$output\`].OutputValue" \
+    --output "text"
+}
+
+aws_cp() {
+  aws s3 cp --acl public-read --content-type text/plain "$@"
+}
+
+manifest_path() {
+  local channel=$1
+  printf '/data-files/restylers/manifests/%s/restylers.yaml' "$channel"
+}
+
+manifest_s3() {
+  local bucket=$1 channel=$2
+  printf 's3://%s%s' "$bucket" "$(manifest_path "$channel")"
+}
+
+read -r bucket < <(get_stack_output sites-docs BucketName)
+
+if [[ -f "$1" ]]; then
+  printf 'Promoting local file %s to channel %s\n' "$1" "$2"
+  aws_cp "$1" "$(manifest_s3 "$bucket" "$2")"
+else
+  printf 'Promoting channel %s to channel %s\n' "$1" "$2"
+  aws_cp "$(manifest_s3 "$bucket" "$1")" "$(manifest_s3 "$bucket" "$2")"
+fi
+
+read -r distribution_id < <(get_stack_output sites-docs DistributionId)
+
+aws cloudfront create-invalidation \
+  --distribution-id "$distribution_id" --paths "$(manifest_path "$2")"
