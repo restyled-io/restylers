@@ -109,8 +109,7 @@ jobs:
             ${{ matrix.restyler }}
             ${{ matrix.overrides }}
 
-      - if: ${{ github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
@@ -136,8 +135,7 @@ jobs:
             --write restyler.yaml
             ${{ matrix.restyler }}
 
-      - if: ${{ github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.restyler }}
           path: restyler.yaml
@@ -161,8 +159,8 @@ jobs:
       - uses: restyled-io/actions/setup@v2
       - uses: actions/download-artifact@v4
         with:
-          pattern: "**/*.yaml"
-      - run: "cat **/*.yaml > restylers.yaml"
+          pattern: "*/restyler.yaml"
+      - run: "cat */restyler.yaml > restylers.yaml"
 
       - uses: restyled-io/actions/run@v2
         with:
