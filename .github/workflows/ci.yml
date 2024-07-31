@@ -111,7 +111,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.restyler }}
+          name: ${{ matrix.restyler }}-restyler-yaml
           path: restyler.yaml
 
   test-external:
@@ -137,7 +137,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.restyler }}
+          name: ${{ matrix.restyler }}-restyler-yaml
           path: restyler.yaml
 
   # See https://github.com/orgs/community/discussions/60792
@@ -159,7 +159,7 @@ jobs:
       - uses: restyled-io/actions/setup@v2
       - uses: actions/download-artifact@v4
         with:
-          pattern: "*/restyler.yaml"
+          pattern: "*-restyler-yaml"
       - run: "cat */restyler.yaml > restylers.yaml"
 
       - uses: restyled-io/actions/run@v2
