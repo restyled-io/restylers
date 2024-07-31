@@ -153,28 +153,16 @@ jobs:
           exit 1
 
   promote:
-    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [test, test-external]
-
     runs-on: ubuntu-latest
-
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-      AWS_DEFAULT_REGION: us-east-1
-
     steps:
       - uses: actions/checkout@v4
       - uses: restyled-io/actions/setup-demo@v2
       - uses: restyled-io/actions/setup@v2
-
-      # Overwrite
       - uses: actions/download-artifact@v4
         with:
           pattern: "**/*.yaml"
-      - name: Build manifest
-        run: |
-          cat **/*.yaml > restylers.yaml
+      - run: "cat **/*.yaml > restylers.yaml"
 
       - uses: restyled-io/actions/run@v2
         with:
@@ -182,8 +170,13 @@ jobs:
           log-level: debug
           manifest: ./restylers.yaml
 
-      - name: Promote to sha tag
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Promote to sha tag
         run: ./bin/promote ./restylers.yaml "${{ github.sha }}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-1
 
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
