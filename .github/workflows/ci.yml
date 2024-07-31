@@ -172,7 +172,6 @@ jobs:
       - uses: restyled-io/actions/run@v2
         with:
           paths: .
-          log-level: debug
           manifest: ./restylers.yaml
 
       - if: ${{ github.ref == 'refs/heads/main' }}
