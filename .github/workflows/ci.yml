@@ -62,24 +62,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build
-        if: ${{ github.ref != 'refs/heads/main' }}
+      - name: Build to cache
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.restyler }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=docker
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.prep.outputs.image }}
 
-      - name: Build and Push
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Rebuild and load
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.restyler }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: true
+          load: true
           tags: ${{ steps.prep.outputs.image }}
 
       - name: Container credentials
