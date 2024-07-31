@@ -169,10 +169,13 @@ jobs:
       - run: |
           cat ./*-restyler-yaml/restyler.yaml > restylers.yaml
 
+      # Run with --dry-run, just to confirm the manifest parses. A fuller
+      # integration test is run before promoting to stable (not dev).
       - uses: restyled-io/actions/run@v2
         with:
           paths: .
           manifest: ./restylers.yaml
+          dry-run: true
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Promote to sha tag
