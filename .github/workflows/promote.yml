@@ -67,6 +67,8 @@ jobs:
       - uses: restyled-io/actions/setup@v3
       - uses: restyled-io/actions/run@v3
         with:
+          showPatch: false
+          showPatchCommand: false
           image-cleanup: true
           manifest: ${{ steps.setup-demo.outputs.manifest }}
           paths: .
