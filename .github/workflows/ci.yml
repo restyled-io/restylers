@@ -159,8 +159,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: restyled-io/actions/setup-demo@v2
-      - uses: restyled-io/actions/setup@v2
+      - uses: restyled-io/actions/setup-demo@v3
+      - uses: restyled-io/actions/setup@v3
       - uses: actions/download-artifact@v4
         with:
           pattern: "*-restyler-yaml"
@@ -169,9 +169,10 @@ jobs:
 
       # Run with --dry-run, just to confirm the manifest parses. A fuller
       # integration test is run before promoting to stable (not dev).
-      - uses: restyled-io/actions/run@v2
+      - uses: restyled-io/actions/run@v3
         with:
           paths: .
+          image-cleanup: true
           manifest: ./restylers.yaml
           dry-run: true
 
