@@ -48,8 +48,8 @@ jobs:
             ;;
             'workflow_dispatch')
               # Promote what was given
-              echo 'from=${{ github.event.from }}'
-              echo 'to=${{ github.event.to }}'
+              echo 'from=${{ inputs.from }}'
+              echo 'to=${{ inputs.to }}'
             ;;
             *)
               echo "Unexpected event: $GITHUB_EVENT_NAME" >&2
