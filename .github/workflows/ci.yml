@@ -195,7 +195,6 @@ jobs:
       - uses: restyled-io/actions/run@v3
         with:
           paths: .
-          image-cleanup: true
           manifest: ./restylers.yaml
           dry-run: true
 
