@@ -12,6 +12,7 @@ concurrency:
 env:
   DOCKER_BUILD_SUMMARY: "false"
   DOCKER_BUILD_RECORD_UPLOAD: "false"
+  LOG_COLOR: always
 
 jobs:
   generate-matrix:
