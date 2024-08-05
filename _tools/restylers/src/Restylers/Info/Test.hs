@@ -46,7 +46,7 @@ writeTestFiles number name include test@Test {contents, support} = do
 
 testFilePath :: Int -> RestylerName -> [Text] -> Test -> FilePath
 testFilePath number name include Test {extension} =
-  unpack (unRestylerName name)
+  unpack name.unwrap
     <> "-test-"
     <> show number
     <> maybe (guessExtension include) (("." <>) . unpack) extension

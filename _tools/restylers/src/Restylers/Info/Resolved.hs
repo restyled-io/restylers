@@ -45,14 +45,14 @@ data ImageSource
 
 getImageSource :: MonadIO m => FilePath -> Info.RestylerInfo -> m ImageSource
 getImageSource yaml info =
-  case ( getLast $ Info.name info
-       , getLast <$> Info.version info
-       , getLast <$> Info.version_cmd info
-       , getLast <$> Info.image info
+  case ( getLast $ info.name
+       , getLast <$> info.version
+       , getLast <$> info.version_cmd
+       , getLast <$> info.image
        ) of
     (name, Nothing, Nothing, Nothing) ->
       throwString
-        $ unpack (unRestylerName name)
+        $ unpack name.unwrap
         <> ": one of image, version_cmd, or version must be specified"
     (_, Nothing, Nothing, Just image) -> pure $ Explicit image
     (name, Nothing, Just cmd, _) ->
@@ -60,7 +60,7 @@ getImageSource yaml info =
     (name, Just version, _, _) ->
       pure $ BuildVersion name version build
  where
-  build = fromMaybeLast (restylerBuild yaml) $ Info.build info
+  build = fromMaybeLast (restylerBuild yaml) $ info.build
 
 load :: MonadIO m => FilePath -> m RestylerInfo
 load yaml = do
@@ -73,7 +73,7 @@ load yaml = do
       pure $ fromInfo info imageSource
     Right override -> do
       let overridesYaml =
-            unpack (unRestylerName $ Override.overrides override)
+            unpack override.overrides.unwrap
               </> "info"
                 <.> "yaml"
       info <- decodeYaml overridesYaml
@@ -83,25 +83,25 @@ load yaml = do
 fromInfo :: Info.RestylerInfo -> ImageSource -> RestylerInfo
 fromInfo info imageSource =
   RestylerInfo
-    { enabled = fromMaybeLast False $ Info.enabled info
+    { enabled = fromMaybeLast False $ info.enabled
     , name
-    , command = fromMaybeLast [unRestylerName name] $ Info.command info
-    , arguments = fromMaybeLast [] $ Info.arguments info
-    , include = fromMaybeLast [] $ Info.include info
-    , interpreters = fromMaybeLast [] $ Info.interpreters info
-    , supports_arg_sep = fromMaybeLast True $ Info.supports_arg_sep info
+    , command = fromMaybeLast [name.unwrap] $ info.command
+    , arguments = fromMaybeLast [] $ info.arguments
+    , include = fromMaybeLast [] $ info.include
+    , interpreters = fromMaybeLast [] $ info.interpreters
+    , supports_arg_sep = fromMaybeLast True $ info.supports_arg_sep
     , supports_multiple_paths =
         fromMaybeLast True
-          $ Info.supports_multiple_paths info
+          $ info.supports_multiple_paths
     , run_as_filter =
         fromMaybeLast False
-          $ Info.run_as_filter info
-    , documentation = fromMaybeLast [] $ Info.documentation info
-    , metadata = fromMaybeLast Metadata.emptyMetadata $ Info.metadata info
+          $ info.run_as_filter
+    , documentation = fromMaybeLast [] $ info.documentation
+    , metadata = fromMaybeLast Metadata.emptyMetadata $ info.metadata
     , imageSource
     }
  where
-  name = getLast $ Info.name info
+  name = getLast $ info.name
 
 overrideToInfo :: Override.RestylerOverride -> Info.RestylerInfo
 overrideToInfo

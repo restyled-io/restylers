@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3c868a956bc3373a99e88faab4cf28594057ab8eebc8238bb2f01adfc5a50492
+-- hash: 57d15dc4f24d091eca51952720f4188567316d1f0f8fa6a2f7ea6a76ca971c8b
 
 name:           restylers
 version:        0.0.0.0
@@ -42,6 +42,8 @@ library
       DuplicateRecordFields
       GADTs
       LambdaCase
+      NamedFieldPuns
+      NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
       NoPostfixOperators
@@ -84,6 +86,8 @@ executable restylers
       DuplicateRecordFields
       GADTs
       LambdaCase
+      NamedFieldPuns
+      NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
       NoPostfixOperators
@@ -97,34 +101,6 @@ executable restylers
     , filepath
     , restylers
     , unliftio
-  default-language: GHC2021
-
-test-suite doctest
-  type: exitcode-stdio-1.0
-  main-is: Main.hs
-  other-modules:
-      Paths_restylers
-  hs-source-dirs:
-      doctest
-  default-extensions:
-      DataKinds
-      DeriveAnyClass
-      DerivingStrategies
-      DerivingVia
-      DuplicateRecordFields
-      GADTs
-      LambdaCase
-      NoImplicitPrelude
-      NoMonomorphismRestriction
-      NoPostfixOperators
-      OverloadedRecordDot
-      OverloadedStrings
-      QuasiQuotes
-      TypeFamilies
-  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
-  build-depends:
-      base
-    , doctest
   default-language: GHC2021
 
 test-suite spec
@@ -144,6 +120,8 @@ test-suite spec
       DuplicateRecordFields
       GADTs
       LambdaCase
+      NamedFieldPuns
+      NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
       NoPostfixOperators

@@ -12,17 +12,17 @@ import Restylers.Registry
 import ShellWords qualified
 
 data Options = Options
-  { oRegistry :: Maybe Registry
-  , oSha :: Text
-  , oDebug :: Bool
-  , oBuild :: Bool
-  , oPull :: Bool
-  , oPush :: Bool
-  , oWrite :: Maybe FilePath
-  , oCheckForUpdate :: Bool
+  { registry :: Maybe Registry
+  , sha :: Text
+  , debug :: Bool
+  , build :: Bool
+  , pull :: Bool
+  , push :: Bool
+  , write :: Maybe FilePath
+  , checkForUpdate :: Bool
   -- ^ Ignored now. Will be parsed until we update restylers CI to not call it
-  , oInput :: NonEmpty FilePath
-  , oHspecArgs :: Maybe [String]
+  , input :: NonEmpty FilePath
+  , hspecArgs :: Maybe [String]
   }
   deriving stock (Show)
 

@@ -12,6 +12,8 @@ default-extensions:
   - DuplicateRecordFields
   - GADTs
   - LambdaCase
+  - NamedFieldPuns
+  - NoFieldSelectors
   - NoImplicitPrelude
   - NoMonomorphismRestriction
   - NoPostfixOperators
@@ -19,9 +21,6 @@ default-extensions:
   - OverloadedStrings
   - QuasiQuotes
   - TypeFamilies
-
-  # TODO
-  # - NoFieldSelectors
 
 ghc-options:
   - -fignore-optim-changes
@@ -68,11 +67,6 @@ executables:
       - unliftio
 
 tests:
-  doctest:
-    main: Main.hs
-    source-dirs: doctest
-    dependencies:
-      - doctest
   spec:
     main: Spec.hs
     source-dirs: test

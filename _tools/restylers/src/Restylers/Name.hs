@@ -8,6 +8,6 @@ import Restylers.Prelude
 import Data.Aeson
 
 newtype RestylerName = RestylerName
-  { unRestylerName :: Text
+  { unwrap :: Text
   }
   deriving newtype (Eq, Ord, Show, FromJSON, ToJSON)
