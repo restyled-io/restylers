@@ -1,4 +1,8 @@
 restylers:
+  - fourmolu:
+      include:
+        - "_tools/**/*.hs"
+
   - prettier-markdown
   - prettier-yaml
   - shfmt
