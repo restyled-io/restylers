@@ -11,6 +11,7 @@ module Restylers.Info.Build
 import Restylers.Prelude
 
 import Data.Aeson
+import Restylers.Env
 import Restylers.Image
 import System.FilePath (takeDirectory, (</>))
 import System.Process.Typed
@@ -41,16 +42,22 @@ build
   -> RestylerBuild
   -> RestylerImage
   -> m RestylerImage
-build quiet RestylerBuild {..} image = image <$ runProcess_ (proc "docker" args)
- where
-  args =
-    concat
-      [ ["buildx", "build"]
-      , ["--quiet" | quiet]
-      , ["--tag", unImage image]
-      , ["--file", dockerfile]
-      , [path]
-      ]
+build quiet RestylerBuild {..} image = do
+  env <- getRestylersEnv
+
+  let args =
+        concat
+          [ ["buildx", "build"]
+          , ["--quiet" | quiet]
+          , ["--cache-from=type=gha" | env.gha]
+          , ["--cache-to=type=gha,mode=max" | env.gha]
+          , ["--no-cache" | env.buildNoCache]
+          , ["--tag", unImage image]
+          , ["--file", dockerfile]
+          , [path]
+          ]
+
+  image <$ runProcess_ (proc "docker" args)
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage
