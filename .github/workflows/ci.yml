@@ -165,7 +165,7 @@ jobs:
         with:
           pattern: "*-restyler-yaml"
       - run: |
-          cat ./*-restyler-yaml/restyler.yaml > restylers.yaml
+          cat ./*-restyler-yaml/restyler.yaml | tee restylers.yaml
 
       # Run with --dry-run, just to confirm the manifest parses. A fuller
       # integration test is run before promoting to stable (not dev).
