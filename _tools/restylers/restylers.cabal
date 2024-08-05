@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 57d15dc4f24d091eca51952720f4188567316d1f0f8fa6a2f7ea6a76ca971c8b
+-- hash: 455f696a2a121a1190f835e132db8a4d3e6ee565dba1c168378521d792d72b84
 
 name:           restylers
 version:        0.0.0.0
@@ -15,6 +15,7 @@ library
   exposed-modules:
       Restylers.App
       Restylers.Build
+      Restylers.Env
       Restylers.Image
       Restylers.Info
       Restylers.Info.Build

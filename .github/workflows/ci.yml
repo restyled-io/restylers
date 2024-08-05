@@ -15,20 +15,6 @@ env:
   LOG_COLOR: always
 
 jobs:
-  generate-matrix:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - id: prep
-        run: |
-          echo "matrix=$(./.github/bin/generate-matrix)" >>"$GITHUB_OUTPUT"
-          echo "matrix-ext=$(./.github/bin/generate-matrix external)" >>"$GITHUB_OUTPUT"
-
-    outputs:
-      matrix: ${{ steps.prep.outputs.matrix }}
-      matrix-ext: ${{ steps.prep.outputs.matrix-ext }}
-
   tools:
     runs-on: ubuntu-latest
     steps:
@@ -39,177 +25,112 @@ jobs:
           working-directory: _tools
       - uses: actions/upload-artifact@v4
         with:
-          name: binaries
+          name: tools
           path: ${{ steps.stack.outputs.local-install-root }}/bin/restylers
           if-no-files-found: error
 
-  test:
+  changes:
     runs-on: ubuntu-latest
-    needs:
-      - generate-matrix
-      - tools
-
-    strategy:
-      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
-      fail-fast: false
-
     steps:
       - uses: actions/checkout@v4
 
-      - id: prep
-        name: Prepare
-        run: |
-          image=restyled/restyler-${{ matrix.restyler }}:${{ github.sha }}
-          echo "image=$image" >> "$GITHUB_OUTPUT"
-
-      - name: Lint
-        uses: hadolint/hadolint-action@v3.1.0
+      - id: changes
+        uses: dorny/paths-filter@v3
         with:
-          dockerfile: ${{ matrix.restyler }}/Dockerfile
-          failure-threshold: error
+          filters: |
+            all: '**/*'
+          list-files: shell
 
-      - id: buildx
-        name: Setup buildx
-        uses: docker/setup-buildx-action@v3
+      - id: filtered
+        name: Identify Restyler changes
+        run: |
+          restylers=()
 
-      - name: Registry login
-        uses: docker/login-action@v3
+          for file in ${{ steps.changes.outputs.all_files }}; do
+            base=$(dirname "$file")
+
+            if [[ -f "$base"/info.yaml ]]; then
+              echo "Changed restyler: $base"
+              restylers+=( "$base" )
+            fi
+          done
+
+          echo "restylers=${restylers[*]}" >>"$GITHUB_OUTPUT"
+    outputs:
+      restylers: ${{ steps.filtered.outputs.restylers }}
+
+  restylers:
+    needs:
+      - tools
+      - changes
+    if: ${{ needs.changes.outputs.restylers }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: tools
+
+      - name: Install tools
+        run: |
+          chmod +x ./restylers
+          sudo mv -v restylers /usr/local/bin
+          curl --proto '=https' --tlsv1.2 -sSf \
+            https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
+
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-        # Assume this means a bot or fork PR and proceed anyway. It's simpler
-        # then crafting the perfect "if:" condition.
-        continue-on-error: true
+        # Necessary if pushing, but best-effort if pulling (rate limits)
+        continue-on-error: ${{ github.ref_name != 'main' }}
 
-      - name: Build to cache
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.restyler }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ steps.prep.outputs.image }}
+      # TODO: lint
 
-      - name: Rebuild and load
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.restyler }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          load: true
-          tags: ${{ steps.prep.outputs.image }}
-
-      - name: Download tools
-        uses: actions/download-artifact@v4
-        with:
-          name: binaries
-
-      - name: Install tools
-        run: |
-          chmod +x ./restylers
-          sudo mv -v restylers /usr/local/bin
-          curl --proto '=https' --tlsv1.2 -sSf \
-            https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
-
-      - name: Test
+      - name: "Build, test, and push (if main) sha-tagged images"
         run: >-
           restylers
           --sha ${{ github.sha }}
-          --no-build
-          --no-pull ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
-          --write restyler.yaml
-          ${{ matrix.restyler }}
-          ${{ matrix.overrides }}
+          --write tested.yaml
+          ${{ github.ref_name == 'main' && '--push' || '' }}
+          ${{ needs.changes.outputs.restylers }}
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.restyler }}-restyler-yaml
-          path: restyler.yaml
-          if-no-files-found: error
-
-  test-external:
-    runs-on: ubuntu-latest
-    needs:
-      - generate-matrix
-      - tools
-
-    strategy:
-      matrix: ${{ fromJSON(needs.generate-matrix.outputs.matrix-ext) }}
-      fail-fast: false
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download tools
-        uses: actions/download-artifact@v4
-        with:
-          name: binaries
-
-      - name: Install tools
+      - name: Build merged restylers.yaml
         run: |
-          chmod +x ./restylers
-          sudo mv -v restylers /usr/local/bin
-          curl --proto '=https' --tlsv1.2 -sSf \
-            https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
+          curl -sSf -L -o base.yaml \
+            https://docs.restyled.io/data-files/restylers/manifests/dev/restylers.yaml
 
-      - name: Test
-        run: >-
-          restylers
-          --sha ${{ github.sha }}
-          --no-build
-          --write restyler.yaml
-          ${{ matrix.restyler }}
+          ruby -r yaml > restylers.yaml <<'EOM'
+          base = YAML.safe_load_file("./base.yaml")
+          tested = YAML.safe_load_file("./tested.yaml")
+          merged = base.map do |b|
+            tested.find { _1.fetch("name") == b.fetch("name") } || b
+          end
+          puts YAML.dump(merged)
+          EOM
+
+          echo "::group::Merged manifest"
+          cat restylers.yaml
+          echo "::endgroup::"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.restyler }}-restyler-yaml
-          path: restyler.yaml
+          name: manifest
+          path: restylers.yaml
           if-no-files-found: error
 
-  # See https://github.com/orgs/community/discussions/60792
-  status:
-    needs: [test, test-external]
-    if: ${{ failure() || cancelled() }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Some Restylers have failed or been cancelled"
-          exit 1
-
-  promote:
-    needs: [test, test-external]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - uses: restyled-io/actions/setup-demo@v3
       - uses: restyled-io/actions/setup@v3
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: "*-restyler-yaml"
-      - run: |
-          rb_script='puts YAML.dump(ARGV.flat_map { YAML.safe_load_file(_1) })'
-          ruby -r yaml -e "$rb_script" ./*-restyler-yaml/restyler.yaml | tee restylers.yaml
-
-      # Run with --dry-run, just to confirm the manifest parses. A fuller
-      # integration test is run before promoting to stable (not dev).
       - uses: restyled-io/actions/run@v3
         with:
           paths: .
           manifest: ./restylers.yaml
           dry-run: true
 
-      - if: ${{ github.ref == 'refs/heads/main' }}
-        name: Promote to sha tag
-        run: ./bin/promote ./restylers.yaml "${{ github.sha }}"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-          AWS_DEFAULT_REGION: us-east-1
-
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [promote]
+    needs: [restylers]
 
     runs-on: ubuntu-latest
 
@@ -227,6 +148,15 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: manifest
+
+      - name: Release sha, versioned, and dev manifests
+        run: |
+          ./bin/promote ./restylers.yaml \
+            "${{ github.sha }}" "${{ steps.tag.outputs.new_tag }}" "dev"
+
       - name: Release
         uses: actions/create-release@v1
         with:
@@ -235,25 +165,3 @@ jobs:
           body: ${{ steps.tag.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Promote to version tag
-        run: ./bin/promote "${{ github.sha }}" "${{ steps.tag.outputs.new_tag }}"
-
-      - name: Promote to dev
-        run: ./bin/promote "${{ github.sha }}" "dev"
-
-      - name: Notify
-        uses: zulip/github-actions-zulip/send-message@v1.0.2
-        with:
-          api-key: ${{ secrets.ZULIP_API_KEY }}
-          email: ${{ secrets.ZULIP_EMAIL }}
-          organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
-          to: 'changelog'
-          type: 'stream'
-          topic: 'Restylers Releases'
-          content: |
-            Restylers [${{ steps.tag.outputs.new_tag }}](https://github.com/restyled-io/restylers/releases/tag/${{ steps.tag.outputs.new_tag }}) released to `dev` channel
-
-            ${{ steps.tag.outputs.changelog }}
-
-            Commit: ${{ github.sha }}

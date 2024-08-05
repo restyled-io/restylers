@@ -8,6 +8,7 @@ import Data.Aeson (ToJSON, object)
 import Data.ByteString.Lazy qualified as BSL
 import Data.Text.IO qualified as T
 import Data.Yaml qualified as Yaml
+import Restylers.Env
 import Restylers.Info.Metadata qualified as Metadata
 import Restylers.Info.Test
   ( testDescription
@@ -17,7 +18,7 @@ import Restylers.Info.Test
 import Restylers.Info.Test qualified as Test
 import Restylers.Manifest qualified as Manifest
 import Restylers.Name (RestylerName (..))
-import System.Environment (lookupEnv, withArgs)
+import System.Environment (withArgs)
 import System.FilePath (takeBaseName, (</>))
 import System.Process.Typed
 import Test.Hspec
@@ -34,7 +35,7 @@ testRestylers
   -> m ()
 testRestylers pull restylers hspecArgs = do
   cwd <- getCurrentDirectory
-  rts <- liftIO $ maybe False (not . null) <$> lookupEnv "RESTYLERS_TEST_SHOW"
+  rts <- (.testShow) <$> getRestylersEnv
 
   withTempDirectory cwd "restylers-test" $ \tmp ->
     withCurrentDirectory tmp $ do
@@ -87,8 +88,7 @@ runRestyler
   -> m (BSL.ByteString, BSL.ByteString)
 runRestyler pull code = do
   readProcess_
-    $ proc
-      "restyle"
+    $ proc "restyle"
     $ concat
       [ ["--debug"]
       , ["--color", "always"]

@@ -1,40 +1,65 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-get_stack_output() {
-  local stack=$1 output=$2
+tmp=$(mktemp '/tmp/sites-docs-stack-outputs-XXXXXX.json')
+trap 'rm -f "$tmp"' EXIT
 
-  aws cloudformation describe-stacks \
-    --stack-name "$stack" \
-    --query "Stacks[*].Outputs[?OutputKey==\`$output\`].OutputValue" \
-    --output "text"
+aws cloudformation describe-stacks \
+  --stack-name sites-docs \
+  --query "Stacks[*].Outputs[]" \
+  --output "json" >"$tmp"
+
+read_output() {
+  jq --raw-output ".[] | select(.OutputKey == \"$1\") | .OutputValue" <"$tmp" |
+    head -n 1
 }
 
-aws_cp() {
-  aws s3 cp --acl public-read --content-type text/plain "$@"
-}
+read -r bucket < <(read_output BucketName)
+read -r distribution_id < <(read_output DistributionId)
 
-manifest_path() {
-  local channel=$1
-  printf '/data-files/restylers/manifests/%s/restylers.yaml' "$channel"
-}
-
-manifest_s3() {
-  local bucket=$1 channel=$2
-  printf 's3://%s%s' "$bucket" "$(manifest_path "$channel")"
-}
-
-read -r bucket < <(get_stack_output sites-docs BucketName)
-
-if [[ -f "$1" ]]; then
-  printf 'Promoting local file %s to channel %s\n' "$1" "$2"
-  aws_cp "$1" "$(manifest_s3 "$bucket" "$2")"
-else
-  printf 'Promoting channel %s to channel %s\n' "$1" "$2"
-  aws_cp "$(manifest_s3 "$bucket" "$1")" "$(manifest_s3 "$bucket" "$2")"
+if [[ -z "$bucket" ]]; then
+  echo "Unabled to determine manifests bucket" >&2
+  exit 1
 fi
 
-read -r distribution_id < <(get_stack_output sites-docs DistributionId)
+if [[ -z "$distribution_id" ]]; then
+  echo "Unabled to determine CloudFront distribution" >&2
+  exit 1
+fi
 
-aws cloudfront create-invalidation \
-  --distribution-id "$distribution_id" --paths "$(manifest_path "$2")"
+if ((!$#)); then
+  echo "Usage: bin/promote <from> <to> [to...]" >&2
+  exit 64
+fi
+
+manifest_fmt='/data-files/restylers/manifests/%s/restylers.yaml'
+
+# shellcheck disable=SC2059
+manifest_cf() { printf "$manifest_fmt" "$1"; }
+manifest_s3() { printf "s3://%s$manifest_fmt" "$bucket" "$1"; }
+
+if [[ -f "$1" ]]; then
+  printf 'Promoting from local file: %s\n' "$1"
+  src=$1
+else
+  printf 'Promoting from channel: %s\n' "$1"
+  src="$(manifest_s3 "$1")"
+fi
+
+shift
+
+for arg; do
+  printf 'Promoting to channel: %s\n' "$arg"
+done
+
+if [[ -n "${DRY_RUN:-""}" ]]; then
+  echo "=> Exiting due to DRY_RUN" >&2
+  exit
+fi
+
+for arg; do
+  dst_s3="$(manifest_s3 "$arg")"
+  dst_cf="$(manifest_cf "$arg")"
+  aws s3 cp --acl public-read --content-type text/plain "$src" "$dst_s3"
+  aws cloudfront create-invalidation --distribution-id "$distribution_id" --paths "$dst_cf"
+done
