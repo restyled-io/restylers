@@ -4,21 +4,20 @@ module Restylers.Info.ResolvedSpec
   ( spec
   ) where
 
-import RIO
+import Restylers.Prelude
 
-import RIO.Directory (createDirectoryIfMissing, withCurrentDirectory)
-import RIO.FilePath (takeDirectory, (<.>), (</>))
-import qualified RIO.Text as T
+import Data.Text qualified as T
+import Data.Text.IO qualified as T
 import Restylers.Info.Build (restylerBuild)
 import Restylers.Info.Resolved (ImageSource (..))
-import qualified Restylers.Info.Resolved as Info
+import Restylers.Info.Resolved qualified as Info
 import Restylers.Name
 import Restylers.Options
 import Restylers.Version
+import System.FilePath (takeDirectory, (<.>), (</>))
 import Test.Hspec
-
-instance HasOptions SimpleApp where
-  optionsL = lens testOptions undefined
+import UnliftIO.Directory (createDirectoryIfMissing, withCurrentDirectory)
+import UnliftIO.Temporary (withSystemTempDirectory)
 
 testOptions :: a -> Options
 testOptions _ =
@@ -65,7 +64,7 @@ spec = do
           , "  - https://prettier.io/docs/en/options.html#parser"
           ]
 
-      info <- runSimpleApp $ Info.load override
+      info <- runReaderT (Info.load override) testOptions
 
       Info.name info `shouldBe` RestylerName "prettier-json"
       Info.imageSource info
@@ -83,4 +82,4 @@ inTempDirectory f =
 addFile :: MonadIO m => FilePath -> Text -> m ()
 addFile path contents = do
   createDirectoryIfMissing True $ takeDirectory path
-  writeFileUtf8 path contents
+  liftIO $ T.writeFile path contents

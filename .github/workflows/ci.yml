@@ -109,14 +109,12 @@ jobs:
             https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
 
       - name: Test
-        if: ${{ github.ref == 'refs/heads/main' }}
         run: >-
           restylers
             --sha ${{ github.sha }}
             --no-build
-            --no-pull
+            --no-pull ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
             --write restyler.yaml
-            ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
             ${{ matrix.restyler }}
             ${{ matrix.overrides }}
 

@@ -7,21 +7,20 @@ module Restylers.Info.Resolved
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
 import Data.Semigroup (Last (..))
-import qualified Data.Yaml as Yaml
-import RIO.FilePath ((<.>), (</>))
-import RIO.Text (unpack)
+import Data.Yaml qualified as Yaml
 import Restylers.Image
-import qualified Restylers.Info as Info
+import Restylers.Info qualified as Info
 import Restylers.Info.Build (RestylerBuild, restylerBuild)
 import Restylers.Info.Metadata (Metadata)
-import qualified Restylers.Info.Metadata as Metadata
+import Restylers.Info.Metadata qualified as Metadata
 import Restylers.Name
-import qualified Restylers.Override as Override
+import Restylers.Override qualified as Override
 import Restylers.Version
+import System.FilePath ((<.>), (</>))
 
 data RestylerInfo = RestylerInfo
   { enabled :: Bool
@@ -37,9 +36,6 @@ data RestylerInfo = RestylerInfo
   , metadata :: Metadata
   , imageSource :: ImageSource
   }
-
-instance Display RestylerInfo where
-  display = display . name
 
 data ImageSource
   = Explicit RestylerImage
@@ -108,26 +104,10 @@ fromInfo info imageSource =
   name = getLast $ Info.name info
 
 overrideToInfo :: Override.RestylerOverride -> Info.RestylerInfo
-overrideToInfo Override.RestylerOverride
-                { enabled
-                , name
-                , command
-                , arguments
-                , include
-                , interpreters
-                , supports_arg_sep
-                , supports_multiple_paths
-                , run_as_filter
-                , documentation
-                , metadata
-                } =
-  Info.RestylerInfo
+overrideToInfo
+  Override.RestylerOverride
     { enabled
     , name
-    , Info.version = Nothing
-    , Info.version_cmd = Nothing
-    , Info.image = Nothing
-    , build = Nothing
     , command
     , arguments
     , include
@@ -137,7 +117,24 @@ overrideToInfo Override.RestylerOverride
     , run_as_filter
     , documentation
     , metadata
-    }
+    } =
+    Info.RestylerInfo
+      { enabled
+      , name
+      , Info.version = Nothing
+      , Info.version_cmd = Nothing
+      , Info.image = Nothing
+      , build = Nothing
+      , command
+      , arguments
+      , include
+      , interpreters
+      , supports_arg_sep
+      , supports_multiple_paths
+      , run_as_filter
+      , documentation
+      , metadata
+      }
 
 decodeYaml :: (MonadIO m, FromJSON a) => FilePath -> m a
 decodeYaml = liftIO . Yaml.decodeFileThrow

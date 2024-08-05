@@ -3,11 +3,11 @@ module Restylers.Name
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
 
 newtype RestylerName = RestylerName
   { unRestylerName :: Text
   }
-  deriving newtype (Eq, Hashable, Ord, Show, Display, FromJSON, ToJSON)
+  deriving newtype (Eq, Ord, Show, FromJSON, ToJSON)

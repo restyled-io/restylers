@@ -3,7 +3,7 @@ module Restylers.Registry
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 newtype Registry = Registry
   { unRegistry :: Text

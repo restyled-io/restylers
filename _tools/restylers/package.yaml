@@ -2,55 +2,60 @@ name: restylers
 version: 0.0.0.0
 license: MIT
 
-dependencies:
-  - base
+language: GHC2021
 
 default-extensions:
-  - BangPatterns
   - DataKinds
   - DeriveAnyClass
-  - DeriveFoldable
-  - DeriveFunctor
-  - DeriveGeneric
-  - DeriveLift
-  - DeriveTraversable
   - DerivingStrategies
-  - FlexibleContexts
-  - FlexibleInstances
+  - DerivingVia
+  - DuplicateRecordFields
   - GADTs
-  - GeneralizedNewtypeDeriving
   - LambdaCase
-  - MultiParamTypeClasses
   - NoImplicitPrelude
   - NoMonomorphismRestriction
+  - NoPostfixOperators
+  - OverloadedRecordDot
   - OverloadedStrings
-  - RankNTypes
-  - RecordWildCards
-  - ScopedTypeVariables
-  - StandaloneDeriving
-  - TypeApplications
+  - QuasiQuotes
   - TypeFamilies
 
-ghc-options: -Weverything
-  -Wno-missed-specialisations
-  -Wno-missing-import-lists
-  -Wno-missing-kind-signatures
-  -Wno-missing-safe-haskell-mode
-  -Wno-prepositive-qualified-module
-  -Wno-unsafe
+  # TODO
+  # - NoFieldSelectors
+
+ghc-options:
+  - -fignore-optim-changes
+  - -fwrite-ide-info
+  - -Weverything
+  - -Wno-all-missed-specialisations
+  - -Wno-missed-specialisations
+  - -Wno-missing-import-lists
+  - -Wno-missing-kind-signatures
+  - -Wno-missing-safe-haskell-mode
+  - -Wno-prepositive-qualified-module
+  - -Wno-unsafe
+
+dependencies:
+  - base
 
 library:
   source-dirs: src
   dependencies:
+    - Blammo
     - aeson
+    - bytestring
     - errors
     - filepath
     - hspec
+    - microlens
+    - mtl
     - optparse-applicative
-    - rio
     - semigroups
     - semver
     - shellwords
+    - text
+    - typed-process
+    - unliftio
     - yaml
 
 executables:
@@ -58,8 +63,9 @@ executables:
     main: Main.hs
     source-dirs: app
     dependencies:
+      - filepath
       - restylers
-      - rio
+      - unliftio
 
 tests:
   doctest:
@@ -72,6 +78,9 @@ tests:
     source-dirs: test
     dependencies:
       - aeson
+      - bytestring
+      - filepath
       - hspec
       - restylers
-      - rio
+      - text
+      - unliftio

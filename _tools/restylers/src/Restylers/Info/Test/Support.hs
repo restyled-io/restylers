@@ -6,9 +6,10 @@ module Restylers.Info.Test.Support
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
+import Data.Text.IO qualified as T
 
 data Support = Support
   { path :: FilePath
@@ -19,11 +20,10 @@ data Support = Support
 
 writeSupportFile
   :: ( MonadIO m
-     , MonadReader env m
-     , HasLogFunc env
+     , MonadLogger m
      )
   => Support
   -> m ()
 writeSupportFile Support {path, contents} = do
-  logInfo $ "CREATE " <> fromString path
-  writeFileUtf8 path contents
+  logInfo $ "CREATE" :# ["path" .= path]
+  liftIO $ T.writeFile path contents

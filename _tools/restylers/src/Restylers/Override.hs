@@ -3,7 +3,7 @@ module Restylers.Override
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
 import Data.Semigroup (Last)

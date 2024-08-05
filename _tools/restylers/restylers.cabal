@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6f4f382414659cef197b465f4c1be4c38b9d51f06888d03e5eb76773652bedb7
+-- hash: 3c868a956bc3373a99e88faab4cf28594057ab8eebc8238bb2f01adfc5a50492
 
 name:           restylers
 version:        0.0.0.0
@@ -15,7 +15,6 @@ library
   exposed-modules:
       Restylers.App
       Restylers.Build
-      Restylers.Directory
       Restylers.Image
       Restylers.Info
       Restylers.Info.Build
@@ -23,7 +22,6 @@ library
       Restylers.Info.Resolved
       Restylers.Info.Test
       Restylers.Info.Test.Support
-      Restylers.Lint
       Restylers.Manifest
       Restylers.Name
       Restylers.Options
@@ -37,44 +35,40 @@ library
   hs-source-dirs:
       src
   default-extensions:
-      BangPatterns
       DataKinds
       DeriveAnyClass
-      DeriveFoldable
-      DeriveFunctor
-      DeriveGeneric
-      DeriveLift
-      DeriveTraversable
       DerivingStrategies
-      FlexibleContexts
-      FlexibleInstances
+      DerivingVia
+      DuplicateRecordFields
       GADTs
-      GeneralizedNewtypeDeriving
       LambdaCase
-      MultiParamTypeClasses
       NoImplicitPrelude
       NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
       OverloadedStrings
-      RankNTypes
-      RecordWildCards
-      ScopedTypeVariables
-      StandaloneDeriving
-      TypeApplications
+      QuasiQuotes
       TypeFamilies
-  ghc-options: -Weverything -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
   build-depends:
-      aeson
+      Blammo
+    , aeson
     , base
+    , bytestring
     , errors
     , filepath
     , hspec
+    , microlens
+    , mtl
     , optparse-applicative
-    , rio
     , semigroups
     , semver
     , shellwords
+    , text
+    , typed-process
+    , unliftio
     , yaml
-  default-language: Haskell2010
+  default-language: GHC2021
 
 executable restylers
   main-is: Main.hs
@@ -83,36 +77,27 @@ executable restylers
   hs-source-dirs:
       app
   default-extensions:
-      BangPatterns
       DataKinds
       DeriveAnyClass
-      DeriveFoldable
-      DeriveFunctor
-      DeriveGeneric
-      DeriveLift
-      DeriveTraversable
       DerivingStrategies
-      FlexibleContexts
-      FlexibleInstances
+      DerivingVia
+      DuplicateRecordFields
       GADTs
-      GeneralizedNewtypeDeriving
       LambdaCase
-      MultiParamTypeClasses
       NoImplicitPrelude
       NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
       OverloadedStrings
-      RankNTypes
-      RecordWildCards
-      ScopedTypeVariables
-      StandaloneDeriving
-      TypeApplications
+      QuasiQuotes
       TypeFamilies
-  ghc-options: -Weverything -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
   build-depends:
       base
+    , filepath
     , restylers
-    , rio
-  default-language: Haskell2010
+    , unliftio
+  default-language: GHC2021
 
 test-suite doctest
   type: exitcode-stdio-1.0
@@ -122,35 +107,25 @@ test-suite doctest
   hs-source-dirs:
       doctest
   default-extensions:
-      BangPatterns
       DataKinds
       DeriveAnyClass
-      DeriveFoldable
-      DeriveFunctor
-      DeriveGeneric
-      DeriveLift
-      DeriveTraversable
       DerivingStrategies
-      FlexibleContexts
-      FlexibleInstances
+      DerivingVia
+      DuplicateRecordFields
       GADTs
-      GeneralizedNewtypeDeriving
       LambdaCase
-      MultiParamTypeClasses
       NoImplicitPrelude
       NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
       OverloadedStrings
-      RankNTypes
-      RecordWildCards
-      ScopedTypeVariables
-      StandaloneDeriving
-      TypeApplications
+      QuasiQuotes
       TypeFamilies
-  ghc-options: -Weverything -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
   build-depends:
       base
     , doctest
-  default-language: Haskell2010
+  default-language: GHC2021
 
 test-suite spec
   type: exitcode-stdio-1.0
@@ -162,35 +137,28 @@ test-suite spec
   hs-source-dirs:
       test
   default-extensions:
-      BangPatterns
       DataKinds
       DeriveAnyClass
-      DeriveFoldable
-      DeriveFunctor
-      DeriveGeneric
-      DeriveLift
-      DeriveTraversable
       DerivingStrategies
-      FlexibleContexts
-      FlexibleInstances
+      DerivingVia
+      DuplicateRecordFields
       GADTs
-      GeneralizedNewtypeDeriving
       LambdaCase
-      MultiParamTypeClasses
       NoImplicitPrelude
       NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
       OverloadedStrings
-      RankNTypes
-      RecordWildCards
-      ScopedTypeVariables
-      StandaloneDeriving
-      TypeApplications
+      QuasiQuotes
       TypeFamilies
-  ghc-options: -Weverything -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
   build-depends:
       aeson
     , base
+    , bytestring
+    , filepath
     , hspec
     , restylers
-    , rio
-  default-language: Haskell2010
+    , text
+    , unliftio
+  default-language: GHC2021
