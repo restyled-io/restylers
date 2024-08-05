@@ -114,6 +114,7 @@ jobs:
           restylers
             --sha ${{ github.sha }}
             --no-build
+            --no-pull
             --write restyler.yaml
             ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
             ${{ matrix.restyler }}
