@@ -12,6 +12,17 @@ See:
 - https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler
 - https://github.com/restyled-io/restyled.io/wiki/Restyler-Info-Yaml
 
+## Tests
+
+1. Install [`restyle`][install-restyle]
+2. Install [The Haskell Tool Stack][install-stack]
+3. Run `bin/test <restyler>`
+
+![](./_files/prettier.png)
+
+[install-restyle] https://github.com/restyled-io/restyler?tab=readme-ov-file#installation
+[install-stack] https://docs.haskellstack.org/en/stable/#how-to-install-stack
+
 ## Releasing
 
 Merges to `main` automatically tag versions, release a manifest at that
