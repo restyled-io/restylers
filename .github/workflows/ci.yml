@@ -188,7 +188,8 @@ jobs:
         with:
           pattern: "*-restyler-yaml"
       - run: |
-          cat ./*-restyler-yaml/restyler.yaml > restylers.yaml
+          rb_script='puts YAML.dump(ARGV.flat_map { YAML.safe_load_file(_1) })'
+          ruby -r yaml -e "$rb_script" ./*-restyler-yaml/restyler.yaml | tee restylers.yaml
 
       # Run with --dry-run, just to confirm the manifest parses. A fuller
       # integration test is run before promoting to stable (not dev).
