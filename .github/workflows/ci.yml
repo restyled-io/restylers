@@ -111,12 +111,12 @@ jobs:
       - name: Test
         run: >-
           restylers
-            --sha ${{ github.sha }}
-            --no-build
-            --no-pull ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
-            --write restyler.yaml
-            ${{ matrix.restyler }}
-            ${{ matrix.overrides }}
+          --sha ${{ github.sha }}
+          --no-build
+          --no-pull ${{ github.ref == 'refs/heads/main' && '--push' || '' }}
+          --write restyler.yaml
+          ${{ matrix.restyler }}
+          ${{ matrix.overrides }}
 
       - uses: actions/upload-artifact@v4
         with:
