@@ -16,6 +16,7 @@ data Options = Options
   , oSha :: Text
   , oDebug :: Bool
   , oBuild :: Bool
+  , oPull :: Bool
   , oPush :: Bool
   , oWrite :: Maybe FilePath
   , oCheckForUpdate :: Bool
@@ -62,6 +63,13 @@ options =
               ( short 'B'
                   <> long "no-build"
                   <> help "Skip build before testing"
+              )
+        )
+    <*> ( not
+            <$> switch
+              ( short 'P'
+                  <> long "no-pull"
+                  <> help "Pass --no-pull to restyle"
               )
         )
     <*> switch

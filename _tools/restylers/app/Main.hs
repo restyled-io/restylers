@@ -30,7 +30,7 @@ main = do
         image <- tagRestylerImage info
         pure $ toRestyler info image
 
-      testRestylers restylers $ fromMaybe [] oHspecArgs
+      testRestylers oPull restylers $ fromMaybe [] oHspecArgs
 
       when oPush $ for_ restylers $ \restyler -> do
         exists <- doesRestylerImageExist $ Manifest.image restyler

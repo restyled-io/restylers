@@ -27,6 +27,7 @@ testOptions _ =
     , oSha = "dev"
     , oDebug = False
     , oBuild = False
+    , oPull = False
     , oPush = False
     , oWrite = Nothing
     , oCheckForUpdate = False

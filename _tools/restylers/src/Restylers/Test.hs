@@ -29,10 +29,11 @@ testRestylers
      , HasLogFunc env
      , HasProcessContext env
      )
-  => NonEmpty Manifest.Restyler
+  => Bool
+  -> NonEmpty Manifest.Restyler
   -> [String]
   -> m ()
-testRestylers restylers hspecArgs = do
+testRestylers pull restylers hspecArgs = do
   cwd <- getCurrentDirectory
   chd <- getCurrentHostDirectory
   rts <- liftIO $ maybe False (not . null) <$> lookupEnv "RESTYLERS_TEST_SHOW"
@@ -48,8 +49,8 @@ testRestylers restylers hspecArgs = do
             test
 
       writeYaml testManifest restylers
-      writeYaml ".restyled.yaml" $
-        object
+      writeYaml ".restyled.yaml"
+        $ object
           [ "restylers_version" .= ("testing" :: Text)
           , "restylers" .= (Manifest.name <$> restylers)
           ]
@@ -58,7 +59,7 @@ testRestylers restylers hspecArgs = do
 
       delayedException <-
         tryAny $ do
-          (out, err) <- runRestyler code
+          (out, err) <- runRestyler pull code
           logDebug $ "stdout: " <> displayBytesUtf8 (BSL.toStrict out)
           logDebug $ "stderr: " <> displayBytesUtf8 (BSL.toStrict err)
 
@@ -71,8 +72,8 @@ testRestylers restylers hspecArgs = do
                   -- If docker-run failed, re-throw it here so it's handled
                   void $ either throwIO pure delayedException
                   restyled <-
-                    readFileUtf8 $
-                      testFilePath
+                    readFileUtf8
+                      $ testFilePath
                         number
                         (Manifest.name restyler)
                         (Manifest.include restyler)
@@ -91,9 +92,10 @@ runRestyler
      , HasLogFunc env
      , HasProcessContext env
      )
-  => FilePath
+  => Bool
+  -> FilePath
   -> m (BSL.ByteString, BSL.ByteString)
-runRestyler code = do
+runRestyler pull code = do
   proc
     "restyle"
     ( concat
@@ -102,7 +104,7 @@ runRestyler code = do
         , ["--host-directory", code]
         , ["--manifest", testManifest]
         , ["--no-commit"]
-        , ["--no-pull"]
+        , ["--no-pull" | not pull]
         , ["."]
         ]
     )
