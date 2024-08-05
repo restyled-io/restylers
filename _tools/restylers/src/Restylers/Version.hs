@@ -16,7 +16,7 @@ import Data.Version
 import Text.ParserCombinators.ReadP (readP_to_S)
 
 newtype RestylerVersion = RestylerVersion
-  { unRestylerVersion :: Text
+  { unwrap :: Text
   }
   deriving newtype (Eq, Show, FromJSON, ToJSON)
 
@@ -27,7 +27,7 @@ toDataVersion =
     . readP_to_S parseVersion
     . dropV
     . unpack
-    . unRestylerVersion
+    . (.unwrap)
  where
   dropV = \case
     ('v' : rest) -> rest
@@ -59,7 +59,7 @@ toSemVerVersion =
   hush
     . SemVer.fromText
     <=< T.stripPrefix "v"
-    . unRestylerVersion
+    . (.unwrap)
 
 fromSemVerParts :: [Int] -> Text
 fromSemVerParts = ("v" <>) . T.intercalate "." . map (pack . show)

@@ -6,6 +6,6 @@ where
 import Restylers.Prelude
 
 newtype Registry = Registry
-  { unRegistry :: Text
+  { unwrap :: Text
   }
   deriving stock (Eq, Show)

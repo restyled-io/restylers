@@ -22,16 +22,16 @@ import UnliftIO.Temporary (withSystemTempDirectory)
 testOptions :: a -> Options
 testOptions _ =
   Options
-    { oRegistry = Nothing
-    , oSha = "dev"
-    , oDebug = False
-    , oBuild = False
-    , oPull = False
-    , oPush = False
-    , oWrite = Nothing
-    , oCheckForUpdate = False
-    , oInput = undefined
-    , oHspecArgs = Nothing
+    { registry = Nothing
+    , sha = "dev"
+    , debug = False
+    , build = False
+    , pull = False
+    , push = False
+    , write = Nothing
+    , checkForUpdate = False
+    , input = undefined
+    , hspecArgs = Nothing
     }
 
 spec :: Spec
@@ -66,14 +66,14 @@ spec = do
 
       info <- runReaderT (Info.load override) testOptions
 
-      Info.name info `shouldBe` RestylerName "prettier-json"
-      Info.imageSource info
+      info.name `shouldBe` RestylerName "prettier-json"
+      info.imageSource
         `shouldBe` BuildVersion
           (RestylerName "prettier")
           (RestylerVersion "v2.0.2-2")
           (restylerBuild base)
-      Info.command info `shouldBe` ["prettier", "--write"]
-      Info.include info `shouldBe` ["**/*.json"]
+      info.command `shouldBe` ["prettier", "--write"]
+      info.include `shouldBe` ["**/*.json"]
 
 inTempDirectory :: MonadUnliftIO m => m a -> m a
 inTempDirectory f =

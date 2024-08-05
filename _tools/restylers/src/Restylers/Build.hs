@@ -28,10 +28,10 @@ buildRestylerImage
   => RestylerInfo
   -> m ()
 buildRestylerImage info = do
-  registry <- asks $ oRegistry . view optionsL
-  sha <- asks $ oSha . view optionsL
-  quiet <- asks $ not . oDebug . view optionsL
-  case Info.imageSource info of
+  registry <- asks $ (.registry) . view optionsL
+  sha <- asks $ (.sha) . view optionsL
+  quiet <- asks $ not . (.debug) . view optionsL
+  case info.imageSource of
     Explicit x -> logInfo $ "Not bulding explicit image" :# ["image" .= x]
     BuildVersionCmd name _cmd options -> do
       let image = mkRestylerImage registry name sha
@@ -51,16 +51,16 @@ tagRestylerImage
   => RestylerInfo
   -> m RestylerImage
 tagRestylerImage info = do
-  registry <- asks $ oRegistry . view optionsL
+  registry <- asks $ (.registry) . view optionsL
 
   let mkVersioned name getVersion = do
-        sha <- asks $ oSha . view optionsL
+        sha <- asks $ (.sha) . view optionsL
         let image = mkRestylerImage registry name sha
         version <- getVersion image
         let versioned = mkRestylerImage registry name version
         versioned <$ dockerTag image versioned
 
-  image <- case Info.imageSource info of
+  image <- case info.imageSource of
     Explicit image -> pure image
     BuildVersionCmd name cmd _ -> do
       logInfo $ "Running for version_cmd" :# ["name" .= name]
@@ -72,7 +72,7 @@ tagRestylerImage info = do
           logWarn
             $ "Error pulling, assuming local-only image"
             :# ["code" .= show (eceExitCode ex)]
-        pure $ unRestylerVersion explicitVersion
+        pure explicitVersion.unwrap
 
   logInfo $ "Tagged" :# ["image" .= image]
 

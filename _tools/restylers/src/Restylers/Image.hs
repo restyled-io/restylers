@@ -1,10 +1,11 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Restylers.Image
   ( RestylerImage
   , unRestylerImage
   , mkRestylerImage
   , getSeriesImages
+
+    -- * Exported to test
+  , chopFromEnd
   )
 where
 
@@ -18,19 +19,19 @@ import Restylers.Registry
 import Restylers.Version
 
 data RestylerImage = RestylerImage
-  { riRegistry :: Maybe Registry
-  , riName :: RestylerImageName
-  , riTag :: RestylerImageTag
+  { registry :: Maybe Registry
+  , name :: RestylerImageName
+  , tag :: RestylerImageTag
   }
   deriving stock (Eq, Show)
 
 newtype RestylerImageName = RestylerImageName
-  { unRestylerImageName :: Text
+  { unwrap :: Text
   }
   deriving newtype (Eq, Show, FromJSON, ToJSON)
 
 newtype RestylerImageTag = RestylerImageTag
-  { unRestylerImageTag :: Text
+  { unwrap :: Text
   }
   deriving newtype (Eq, Show, FromJSON, ToJSON)
 
@@ -42,9 +43,9 @@ instance FromJSON RestylerImage where
 
     pure
       RestylerImage
-        { riRegistry = Registry <$> guarded (not . T.null) registry
-        , riName = RestylerImageName $ org <> "/" <> name
-        , riTag = RestylerImageTag tag
+        { registry = Registry <$> guarded (not . T.null) registry
+        , name = RestylerImageName $ org <> "/" <> name
+        , tag = RestylerImageTag tag
         }
    where
     invalidImage :: MonadFail m => Text -> String -> Maybe a -> m a
@@ -59,25 +60,6 @@ instance FromJSON RestylerImage where
         )
         pure
 
--- |
---
--- >>> chopFromEnd ':' "foo/bar/baz/bat:quix"
--- Just ("foo/bar/baz/bat","quix")
---
--- >>> chopFromEnd ':' "foo/bar/baz/bat"
--- Just ("","foo/bar/baz/bat")
---
--- >>> chopFromEnd ':' "foo/bar/baz/bat:"
--- Nothing
---
--- >>> chopFromEnd '/' "foo/bar"
--- Just ("foo","bar")
---
--- >>> chopFromEnd '/' "foo/bar/baz"
--- Just ("foo/bar","baz")
---
--- >>> chopFromEnd '/' "foo"
--- Just ("","foo")
 chopFromEnd :: Char -> Text -> Maybe (Text, Text)
 chopFromEnd c value = case T.breakOnEnd (T.singleton c) value of
   (_, y) | T.null y -> Nothing
@@ -90,20 +72,20 @@ instance ToJSON RestylerImage where
 mkRestylerImage :: Maybe Registry -> RestylerName -> Text -> RestylerImage
 mkRestylerImage registry name tag =
   RestylerImage
-    { riRegistry = registry
-    , riName = RestylerImageName $ "restyled/restyler-" <> unRestylerName name
-    , riTag = RestylerImageTag tag
+    { registry = registry
+    , name = RestylerImageName $ "restyled/restyler-" <> name.unwrap
+    , tag = RestylerImageTag tag
     }
 
 unRestylerImage :: RestylerImage -> Text
-unRestylerImage RestylerImage {..} =
-  maybe "" ((<> "/") . unRegistry) riRegistry
-    <> unRestylerImageName riName
+unRestylerImage image =
+  maybe "" ((<> "/") . (.unwrap)) image.registry
+    <> image.name.unwrap
     <> ":"
-    <> unRestylerImageTag riTag
+    <> image.tag.unwrap
 
 setRestylerImageTag :: RestylerImage -> RestylerImageTag -> RestylerImage
-setRestylerImageTag i t = i {riTag = t}
+setRestylerImageTag i t = i {tag = t}
 
 getSeriesImages :: RestylerImage -> Maybe (NonEmpty RestylerImage)
 getSeriesImages image = do
@@ -115,7 +97,7 @@ getSeriesImages image = do
         ]
   pure $ setRestylerImageTag image . RestylerImageTag <$> tags
  where
-  version = RestylerVersion $ unRestylerImageTag $ riTag image
+  version = RestylerVersion $ image.tag.unwrap
 
 guarded :: Alternative f => (t -> Bool) -> t -> f t
 guarded p x = x <$ guard (p x)

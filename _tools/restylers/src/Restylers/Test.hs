@@ -40,17 +40,13 @@ testRestylers pull restylers hspecArgs = do
     withCurrentDirectory tmp $ do
       for_ restylers $ \restyler -> do
         for_ (restylerTests restyler) $ \(number, test) -> do
-          writeTestFiles
-            number
-            (Manifest.name restyler)
-            (Manifest.include restyler)
-            test
+          writeTestFiles number restyler.name restyler.include test
 
       writeYaml testManifest restylers
       writeYaml ".restyled.yaml"
         $ object
           [ "restylers_version" .= ("testing" :: Text)
-          , "restylers" .= (Manifest.name <$> restylers)
+          , "restylers" .= ((.name) <$> restylers)
           ]
 
       let code = cwd </> takeBaseName tmp
@@ -70,25 +66,19 @@ testRestylers pull restylers hspecArgs = do
       liftIO $ do
         withArgs hspecArgs $ hspec $ do
           for_ restylers $ \restyler -> do
-            describe (unpack $ unRestylerName $ Manifest.name restyler) $ do
+            describe (unpack $ restyler.name.unwrap) $ do
               for_ (restylerTests restyler) $ \(number, test) -> do
                 it (testDescription number test) $ do
                   -- If docker-run failed, re-throw it here so it's handled
                   void $ either throwIO pure delayedException
-                  restyled <-
-                    T.readFile
-                      $ testFilePath
-                        number
-                        (Manifest.name restyler)
-                        (Manifest.include restyler)
-                        test
+                  restyled <- T.readFile $ testFilePath number restyler.name restyler.include test
 
                   if rts
-                    then show restyled `shouldBe` show (Test.restyled test)
-                    else restyled `shouldBe` Test.restyled test
+                    then show restyled `shouldBe` show test.restyled
+                    else restyled `shouldBe` test.restyled
 
 restylerTests :: Manifest.Restyler -> [(Int, Test.Test)]
-restylerTests = zip [1 ..] . Metadata.tests . Manifest.metadata
+restylerTests r = zip [1 ..] r.metadata.tests
 
 runRestyler
   :: MonadIO m

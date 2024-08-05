@@ -13,18 +13,18 @@ import Blammo.Logging.Simple
 import Restylers.Options
 
 data App = App
-  { appLogger :: Logger
-  , appOptions :: Options
+  { logger :: Logger
+  , options :: Options
   }
 
 instance HasLogger App where
-  loggerL = lens appLogger $ \x y -> x {appLogger = y}
+  loggerL = lens (.logger) $ \x y -> x {logger = y}
 
 instance HasOptions App where
-  optionsL = lens appOptions $ \x y -> x {appOptions = y}
+  optionsL = lens (.options) $ \x y -> x {options = y}
 
 newtype AppT m a = AppT
-  { unAppT :: ReaderT App m a
+  { unwrap :: ReaderT App m a
   }
   deriving newtype
     ( Functor
@@ -38,4 +38,4 @@ newtype AppT m a = AppT
 
 runAppT :: MonadUnliftIO m => Options -> AppT m a -> m a
 runAppT opts f = withLoggerEnv $ \logger -> do
-  runReaderT (unAppT f) $ App logger opts
+  runReaderT f.unwrap $ App logger opts

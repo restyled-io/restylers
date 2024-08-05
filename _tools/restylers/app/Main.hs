@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Main
   ( main
   ) where
@@ -20,31 +18,28 @@ import UnliftIO.Directory (doesFileExist)
 
 main :: IO ()
 main = do
-  opts@Options {..} <- parseOptions
+  opts <- parseOptions
 
   runAppT opts $ do
     logDebug $ (:# []) $ "Options: " <> pack (show opts)
-    restylers <- for oInput $ \path -> do
+    restylers <- for opts.input $ \path -> do
       yaml <- locateYaml path
       info <- Info.load yaml
-      when oBuild $ buildRestylerImage info
+      when opts.build $ buildRestylerImage info
       image <- tagRestylerImage info
       pure $ toRestyler info image
 
-    testRestylers oPull restylers $ fromMaybe [] oHspecArgs
+    testRestylers opts.pull restylers $ fromMaybe [] opts.hspecArgs
 
-    when oPush $ for_ restylers $ \restyler -> do
-      exists <- doesRestylerImageExist $ Manifest.image restyler
+    when opts.push $ for_ restylers $ \restyler -> do
+      exists <- doesRestylerImageExist restyler.image
       if exists
         then logWarn "Not pushing, image exists"
         else do
-          pushRestylerImage $ Manifest.image restyler
+          pushRestylerImage restyler.image
+          traverse_ (traverse_ pushRestylerImage) $ getSeriesImages restyler.image
 
-          traverse_ (traverse_ pushRestylerImage)
-            $ getSeriesImages
-            $ Manifest.image restyler
-
-    traverse_ (liftIO . (`Manifest.write` restylers)) oWrite
+    traverse_ (liftIO . (`Manifest.write` restylers)) opts.write
 
 locateYaml
   :: (MonadIO m, MonadLogger m) => FilePath -> m FilePath
