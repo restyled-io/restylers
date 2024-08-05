@@ -34,8 +34,8 @@ jobs:
       - uses: actions/checkout@v4
       - id: stack
         uses: freckle/stack-action@v5
-        env:
-          STACK_YAML: _tools/stack.yaml
+        with:
+          working-directory: _tools
       - uses: actions/upload-artifact@v4
         with:
           name: binaries
