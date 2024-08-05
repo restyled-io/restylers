@@ -4,7 +4,7 @@ module Restylers.Info
   ( RestylerInfo (..)
   ) where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
 import Data.Semigroup (Last (..))

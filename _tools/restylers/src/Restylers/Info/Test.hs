@@ -8,12 +8,12 @@ module Restylers.Info.Test
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
-import RIO.List (headMaybe)
-import RIO.Text (pack, unpack)
-import qualified RIO.Text as T
+import Data.List.NonEmpty qualified as NE
+import Data.Text qualified as T
+import Data.Text.IO qualified as T
 import Restylers.Info.Test.Support (Support, writeSupportFile)
 import Restylers.Name
 import System.FilePath (takeExtension)
@@ -30,8 +30,7 @@ data Test = Test
 
 writeTestFiles
   :: ( MonadIO m
-     , MonadReader env m
-     , HasLogFunc env
+     , MonadLogger m
      )
   => Int
   -> RestylerName
@@ -39,8 +38,8 @@ writeTestFiles
   -> Test
   -> m ()
 writeTestFiles number name include test@Test {contents, support} = do
-  logInfo $ "CREATE " <> fromString path
-  writeFileUtf8 path contents
+  logInfo $ "CREATE" :# ["path" .= path]
+  liftIO $ T.writeFile path contents
   traverse_ writeSupportFile support
  where
   path = testFilePath number name include test
@@ -54,8 +53,8 @@ testFilePath number name include Test {extension} =
 
 guessExtension :: [Text] -> String
 guessExtension =
-  maybe ".tmp" (takeExtension . unpack)
-    . headMaybe
+  maybe ".tmp" (takeExtension . unpack . NE.head)
+    . NE.nonEmpty
     . filter ("." `T.isInfixOf`)
     . filter (not . ("!" `T.isPrefixOf`))
 

@@ -1,34 +1,41 @@
+{-# LANGUAGE DerivingVia #-}
+
 module Restylers.App
   ( App
-  , loadApp
+  , AppT
+  , runAppT
   )
 where
 
-import RIO
+import Restylers.Prelude
 
-import RIO.Process
+import Blammo.Logging.Simple
 import Restylers.Options
 
 data App = App
-  { appLogFunc :: LogFunc
-  , appProcessContext :: ProcessContext
+  { appLogger :: Logger
   , appOptions :: Options
   }
 
-instance HasLogFunc App where
-  logFuncL = lens appLogFunc $ \x y -> x {appLogFunc = y}
-
-instance HasProcessContext App where
-  processContextL =
-    lens appProcessContext $ \x y -> x {appProcessContext = y}
+instance HasLogger App where
+  loggerL = lens appLogger $ \x y -> x {appLogger = y}
 
 instance HasOptions App where
   optionsL = lens appOptions $ \x y -> x {appOptions = y}
 
--- brittany-disable-next-binding
+newtype AppT m a = AppT
+  { unAppT :: ReaderT App m a
+  }
+  deriving newtype
+    ( Functor
+    , Applicative
+    , Monad
+    , MonadIO
+    , MonadUnliftIO
+    , MonadReader App
+    )
+  deriving (MonadLogger) via (WithLogger App m)
 
-loadApp :: Options -> LogFunc -> IO App
-loadApp opts lf =
-  App lf
-    <$> mkDefaultProcessContext
-    <*> pure opts
+runAppT :: MonadUnliftIO m => Options -> AppT m a -> m a
+runAppT opts f = withLoggerEnv $ \logger -> do
+  runReaderT (unAppT f) $ App logger opts

@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: Blammo-2.1.0.0@sha256:cb974555dfe850cbc4f174a0a4443883b776b1e93c1d4b37249fb6081cb286de,4755
+    pantry-tree:
+      sha256: 3c36d6a62cc32b5f80f0573a50205b71874570e6d55e0af5a7b72795f8c1b3b7
+      size: 1788
+  original:
+    hackage: Blammo-2.1.0.0
 snapshots:
 - completed:
     sha256: 87da71cb0ae9ee1ea1bf51a8eb9812f39f779be76abc0a3c926defd8afda05d1

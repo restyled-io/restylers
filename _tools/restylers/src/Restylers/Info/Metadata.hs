@@ -3,7 +3,7 @@ module Restylers.Info.Metadata
   , emptyMetadata
   ) where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
 import Restylers.Info.Test

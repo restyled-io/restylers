@@ -5,21 +5,20 @@ module Restylers.Version
   , toSeriesMinor
   ) where
 
-import RIO
+import Restylers.Prelude
 
 import Control.Error.Util (hush)
 import Data.Aeson
-import qualified Data.SemVer as SemVer
+import Data.List.NonEmpty qualified as NE
+import Data.SemVer qualified as SemVer
+import Data.Text qualified as T
 import Data.Version
-import qualified RIO.NonEmpty as NE
-import RIO.Text (pack, unpack)
-import qualified RIO.Text as T
 import Text.ParserCombinators.ReadP (readP_to_S)
 
 newtype RestylerVersion = RestylerVersion
   { unRestylerVersion :: Text
   }
-  deriving newtype (Eq, Show, Display, FromJSON, ToJSON)
+  deriving newtype (Eq, Show, FromJSON, ToJSON)
 
 toDataVersion :: RestylerVersion -> Maybe Version
 toDataVersion =

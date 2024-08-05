@@ -4,12 +4,12 @@ module Restylers.Options
   , parseOptions
   ) where
 
-import RIO
+import Restylers.Prelude
 
+import Data.List.NonEmpty (some1)
 import Options.Applicative
-import RIO.NonEmpty (some1)
 import Restylers.Registry
-import qualified ShellWords
+import ShellWords qualified
 
 data Options = Options
   { oRegistry :: Maybe Registry

@@ -3,11 +3,12 @@ module Restylers.ImageSpec
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
-import qualified RIO.ByteString.Lazy as BSL
-import RIO.Text (unpack)
+import Data.ByteString.Lazy qualified as BSL
+import Data.Either (isLeft)
+import Data.Maybe (isNothing)
 import Restylers.Image
 import Restylers.Name
 import Restylers.Registry

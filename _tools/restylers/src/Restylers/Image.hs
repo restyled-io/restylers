@@ -1,3 +1,5 @@
+{-# LANGUAGE RecordWildCards #-}
+
 module Restylers.Image
   ( RestylerImage
   , unRestylerImage
@@ -6,13 +8,11 @@ module Restylers.Image
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
-import qualified RIO.NonEmpty as NE
-import RIO.Text (unpack)
-import qualified RIO.Text as T
-import qualified RIO.Text.Partial as T (breakOnEnd)
+import Data.List.NonEmpty qualified as NE
+import Data.Text qualified as T
 import Restylers.Name
 import Restylers.Registry
 import Restylers.Version
@@ -27,15 +27,12 @@ data RestylerImage = RestylerImage
 newtype RestylerImageName = RestylerImageName
   { unRestylerImageName :: Text
   }
-  deriving newtype (Eq, Show, Display, FromJSON, ToJSON)
+  deriving newtype (Eq, Show, FromJSON, ToJSON)
 
 newtype RestylerImageTag = RestylerImageTag
   { unRestylerImageTag :: Text
   }
-  deriving newtype (Eq, Show, Display, FromJSON, ToJSON)
-
-instance Display RestylerImage where
-  display = display . unRestylerImage
+  deriving newtype (Eq, Show, FromJSON, ToJSON)
 
 instance FromJSON RestylerImage where
   parseJSON = withText "RestylerImage" $ \full -> do

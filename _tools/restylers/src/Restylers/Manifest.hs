@@ -7,13 +7,13 @@ module Restylers.Manifest
   )
 where
 
-import RIO
+import Restylers.Prelude
 
 import Data.Aeson
-import qualified Data.Yaml as Yaml
+import Data.Yaml qualified as Yaml
 import Restylers.Image
 import Restylers.Info.Metadata (Metadata)
-import qualified Restylers.Info.Resolved as Info
+import Restylers.Info.Resolved qualified as Info
 import Restylers.Name
 
 data Restyler = Restyler
@@ -34,23 +34,10 @@ data Restyler = Restyler
   deriving anyclass (FromJSON, ToJSON)
 
 toRestyler :: Info.RestylerInfo -> RestylerImage -> Restyler
-toRestyler Info.RestylerInfo
-            { enabled
-            , name
-            , command
-            , arguments
-            , include
-            , interpreters
-            , supports_arg_sep
-            , supports_multiple_paths
-            , run_as_filter
-            , documentation
-            , metadata
-            } image =
-  Restyler
+toRestyler
+  Info.RestylerInfo
     { enabled
     , name
-    , image
     , command
     , arguments
     , include
@@ -61,6 +48,21 @@ toRestyler Info.RestylerInfo
     , documentation
     , metadata
     }
+  image =
+    Restyler
+      { enabled
+      , name
+      , image
+      , command
+      , arguments
+      , include
+      , interpreters
+      , supports_arg_sep
+      , supports_multiple_paths
+      , run_as_filter
+      , documentation
+      , metadata
+      }
 
 write :: MonadIO m => FilePath -> NonEmpty Restyler -> m ()
 write path = liftIO . Yaml.encodeFile path
