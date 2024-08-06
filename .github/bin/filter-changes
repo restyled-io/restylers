@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Take a list of changed paths and produce a list of restylers to test
+#
+###
+set -euo pipefail
+
+restylers=()
+
+for file; do
+  base=$(dirname "$file")
+
+  if [[ ! -f "$base"/info.yaml ]]; then
+    continue
+  fi
+
+  echo "Changed restyler: $base"
+  restylers+=("$base")
+
+  for ofile in */info.yaml; do
+    obase=$(dirname "$ofile")
+
+    # Do a naive parse to avoid installing yq
+    if ! grep -q "^overrides: *$base *" "$ofile"; then
+      continue
+    fi
+
+    echo "Including override $obase"
+    restylers+=("$obase")
+  done
+done
+
+echo "restylers=${restylers[*]}" >>"${GITHUB_OUTPUT:-/dev/stdout}"
