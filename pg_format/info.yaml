@@ -20,4 +20,4 @@ metadata:
         SELECT * from
         students
         WHERE students.age > 10;
-      restyled: "SELECT\n    *\nFROM\n    students\nWHERE\n    students.age > 10;\n\n"
+      restyled: "SELECT\n    *\nFROM\n    students\nWHERE\n    students.age > 10;\n"
