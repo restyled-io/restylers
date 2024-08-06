@@ -43,19 +43,7 @@ jobs:
 
       - id: filtered
         name: Identify Restyler changes
-        run: |
-          restylers=()
-
-          for file in ${{ steps.changes.outputs.all_files }}; do
-            base=$(dirname "$file")
-
-            if [[ -f "$base"/info.yaml ]]; then
-              echo "Changed restyler: $base"
-              restylers+=( "$base" )
-            fi
-          done
-
-          echo "restylers=${restylers[*]}" >>"$GITHUB_OUTPUT"
+        run: ./.github/bin/filter-changes ${{ steps.changes.outputs.all_files }}
     outputs:
       restylers: ${{ steps.filtered.outputs.restylers }}
 
