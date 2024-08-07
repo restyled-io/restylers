@@ -60,6 +60,8 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
 
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # so we can find from tag refs
       - id: setup-demo
         uses: restyled-io/actions/setup-demo@v3
         with:
@@ -67,13 +69,35 @@ jobs:
       - uses: restyled-io/actions/setup@v3
       - uses: restyled-io/actions/run@v3
         with:
-          showPatch: false
-          showPatchCommand: false
+          show-patch: false
+          show-patch-command: false
           image-cleanup: true
           manifest: ${{ steps.setup-demo.outputs.manifest }}
+          dry-run: ${{ github.event_name == 'pull_request' }}
           paths: .
 
       - run: ./bin/promote "${{ steps.prep.outputs.from }}" "${{ steps.prep.outputs.to }}"
+
+      - name: Download ${{ steps.prep.outputs.from }} release manifest
+        run: gh release download "${{ steps.prep.outputs.from }}" -p restylers.yaml
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update ${{ steps.prep.outputs.to }} tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.prep.outputs.to }}
+          force_push_tag: true
+          commit_sha: "${{ steps.prep.outputs.from }}^{}"
+
+      - name: Add manifest to ${{ steps.prep.outputs.to }} release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.prep.outputs.to }}
+          files: |
+            restylers.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify
         if: always()

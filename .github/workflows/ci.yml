@@ -152,7 +152,7 @@ jobs:
         with:
           tag: dev
           force_push_tag: true
-          commit_sha: ${{ github.sha }}
+          commit_sha: "${{ steps.tag.outputs.new_tag }}^{}"
 
       - name: Update dev release
         uses: softprops/action-gh-release@v2
