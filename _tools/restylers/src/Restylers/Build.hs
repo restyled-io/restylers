@@ -23,6 +23,7 @@ buildRestylerImage
   :: ( MonadIO m
      , MonadLogger m
      , MonadReader env m
+     , HasLogger env
      , HasOptions env
      )
   => RestylerInfo
@@ -32,7 +33,9 @@ buildRestylerImage info = do
   sha <- asks $ (.sha) . view optionsL
   quiet <- asks $ not . (.debug) . view optionsL
   case info.imageSource of
-    Explicit x -> logInfo $ "Not bulding explicit image" :# ["image" .= x]
+    Explicit x -> do
+      logInfo $ "Pulling explicit image" :# ["image" .= x]
+      pullRestylerImage x
     BuildVersionCmd name _cmd options -> do
       let image = mkRestylerImage registry name sha
       logInfo $ "Building" :# ["image" .= image]
@@ -46,6 +49,7 @@ tagRestylerImage
   :: ( MonadUnliftIO m
      , MonadLogger m
      , MonadReader env m
+     , HasLogger env
      , HasOptions env
      )
   => RestylerInfo
@@ -83,47 +87,77 @@ tagRestylerImage info = do
 
   pure image
 
-doesRestylerImageExist :: MonadIO m => RestylerImage -> m Bool
+doesRestylerImageExist
+  :: ( MonadIO m
+     , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
+     )
+  => RestylerImage
+  -> m Bool
 doesRestylerImageExist image = do
   env <- liftIO $ (<> [("DOCKER_CLI_EXPERIMENTAL", "enabled")]) <$> getEnvironment
   (ec, _stdout, _stderr) <-
     readProcess
-      $ setEnv env
-      $ proc "docker" ["manifest", "inspect", unImage image]
+      . setEnv env
+      =<< loggedProc "docker" ["manifest", "inspect", unImage image]
   pure $ ec == ExitSuccess
 
 pullRestylerImage
-  :: (MonadIO m, MonadLogger m)
+  :: ( MonadIO m
+     , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
+     )
   => RestylerImage
   -> m ()
 pullRestylerImage image = do
   logInfo $ "Pulling" :# ["image" .= image]
-  runProcess_ $ proc "docker" ["pull", unImage image]
+  runProcess_ =<< loggedProc "docker" ["pull", unImage image]
 
 pushRestylerImage
-  :: (MonadIO m, MonadLogger m)
+  :: ( MonadIO m
+     , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
+     )
   => RestylerImage
   -> m ()
 pushRestylerImage image = do
   logInfo $ "Pushing" :# ["image" .= image]
-  runProcess_ $ proc "docker" ["push", unImage image]
+  runProcess_ =<< loggedProc "docker" ["push", unImage image]
 
-dockerRunSh :: MonadIO m => RestylerImage -> String -> m Text
+dockerRunSh
+  :: ( MonadIO m
+     , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
+     )
+  => RestylerImage
+  -> String
+  -> m Text
 dockerRunSh image cmd = do
-  bs <-
-    readProcessStdout_
-      $ proc
-        "docker"
+  p <-
+    loggedProc "docker"
       $ concat
         [ ["run", "--rm"]
         , ["--entrypoint", "sh"]
         , [unpack $ unRestylerImage image]
         , ["-c", cmd]
         ]
+  bs <- readProcessStdout_ p
   pure $ T.strip $ decodeUtf8With lenientDecode $ BSL.toStrict bs
 
-dockerTag :: MonadIO m => RestylerImage -> RestylerImage -> m ()
-dockerTag from to = runProcess_ $ proc "docker" ["tag", unImage from, unImage to]
+dockerTag
+  :: ( MonadIO m
+     , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
+     )
+  => RestylerImage
+  -> RestylerImage
+  -> m ()
+dockerTag from to = runProcess_ =<< loggedProc "docker" ["tag", unImage from, unImage to]
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage

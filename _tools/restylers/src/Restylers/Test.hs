@@ -4,6 +4,7 @@ module Restylers.Test
 
 import Restylers.Prelude
 
+import Blammo.Logging.Logger (flushLogger)
 import Data.Aeson (ToJSON, object)
 import Data.ByteString.Lazy qualified as BSL
 import Data.Text.IO qualified as T
@@ -28,6 +29,8 @@ import UnliftIO.Temporary (withTempDirectory)
 testRestylers
   :: ( MonadUnliftIO m
      , MonadLogger m
+     , MonadReader env m
+     , HasLogger env
      )
   => Bool
   -> NonEmpty Manifest.Restyler
@@ -64,6 +67,7 @@ testRestylers pull restylers hspecArgs = do
             $ "stderr: "
             <> decodeUtf8With lenientDecode (BSL.toStrict err)
 
+      flushLogger -- before hspec makes its own output
       liftIO $ do
         withArgs hspecArgs $ hspec $ do
           for_ restylers $ \restyler -> do
@@ -82,22 +86,23 @@ restylerTests :: Manifest.Restyler -> [(Int, Test.Test)]
 restylerTests r = zip [1 ..] r.metadata.tests
 
 runRestyler
-  :: MonadIO m
+  :: (MonadIO m, MonadLogger m, MonadReader env m, HasLogger env)
   => Bool
   -> FilePath
   -> m (BSL.ByteString, BSL.ByteString)
 runRestyler pull code = do
-  readProcess_
-    $ proc "restyle"
-    $ concat
-      [ ["--debug"]
-      , ["--color", "always"]
-      , ["--host-directory", code]
-      , ["--manifest", testManifest]
-      , ["--no-commit"]
-      , ["--no-pull" | not pull]
-      , ["."]
-      ]
+  p <-
+    loggedProc "restyle"
+      $ concat
+        [ ["--debug"]
+        , ["--color", "always"]
+        , ["--host-directory", code]
+        , ["--manifest", testManifest]
+        , ["--no-commit"]
+        , ["--no-pull" | not pull]
+        , ["."]
+        ]
+  readProcess_ p
 
 writeYaml :: (MonadIO m, ToJSON a) => FilePath -> a -> m ()
 writeYaml path =
