@@ -37,7 +37,7 @@ restylerBuild yaml =
   path = takeDirectory yaml
 
 build
-  :: MonadIO m
+  :: (MonadIO m, MonadLogger m, MonadReader env m, HasLogger env)
   => Bool
   -> RestylerBuild
   -> RestylerImage
@@ -57,7 +57,8 @@ build quiet RestylerBuild {..} image = do
           , [path]
           ]
 
-  image <$ runProcess_ (proc "docker" args)
+  p <- loggedProc "docker" args
+  image <$ runProcess_ p
 
 unImage :: RestylerImage -> String
 unImage = unpack . unRestylerImage
