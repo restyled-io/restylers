@@ -2,16 +2,6 @@
 
 Language-specific restylers.
 
-To see all currently-available restylers, visit https://docs.restyled.io/available-restylers/
-
-## Contributing
-
-See:
-
-- https://github.com/restyled-io/restyled.io/wiki/Contributing-to-Restyled
-- https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler
-- https://github.com/restyled-io/restyled.io/wiki/Restyler-Info-Yaml
-
 ## Tests
 
 1. Install [`restyle`][install-restyle]
@@ -20,8 +10,8 @@ See:
 
 ![](./_files/prettier.png)
 
-[install-restyle] https://github.com/restyled-io/restyler?tab=readme-ov-file#installation
-[install-stack] https://docs.haskellstack.org/en/stable/#how-to-install-stack
+[install-restyle]: https://github.com/restyled-io/restyler?tab=readme-ov-file#installation
+[install-stack]: https://docs.haskellstack.org/en/stable/#how-to-install-stack
 
 ## Releasing
 
@@ -29,7 +19,7 @@ Merges to `main` automatically tag versions, release a manifest at that
 tag, and update the `dev` manifest.
 
 The Promote workflow can be run manually to promote any tag to another,
-typically to promote `dev` to `stable`.
+typically to promote `dev` to `stable`. It also runs twice a month.
 
 ## LICENSE
 
