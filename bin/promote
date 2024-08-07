@@ -1,65 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-tmp=$(mktemp '/tmp/sites-docs-stack-outputs-XXXXXX.json')
-trap 'rm -f "$tmp"' EXIT
-
-aws cloudformation describe-stacks \
-  --stack-name sites-docs \
-  --query "Stacks[*].Outputs[]" \
-  --output "json" >"$tmp"
-
-read_output() {
-  jq --raw-output ".[] | select(.OutputKey == \"$1\") | .OutputValue" <"$tmp" |
-    head -n 1
-}
-
-read -r bucket < <(read_output BucketName)
-read -r distribution_id < <(read_output DistributionId)
-
-if [[ -z "$bucket" ]]; then
-  echo "Unabled to determine manifests bucket" >&2
-  exit 1
-fi
-
-if [[ -z "$distribution_id" ]]; then
-  echo "Unabled to determine CloudFront distribution" >&2
-  exit 1
-fi
-
-if ((!$#)); then
-  echo "Usage: bin/promote <from> <to> [to...]" >&2
+if (($# != 2)); then
+  echo "Usage: bin/promote <file> <channel>" >&2
   exit 64
 fi
 
-manifest_fmt='/data-files/restylers/manifests/%s/restylers.yaml'
-
-# shellcheck disable=SC2059
-manifest_cf() { printf "$manifest_fmt" "$1"; }
-manifest_s3() { printf "s3://%s$manifest_fmt" "$bucket" "$1"; }
-
-if [[ -f "$1" ]]; then
-  printf 'Promoting from local file: %s\n' "$1"
-  src=$1
-else
-  printf 'Promoting from channel: %s\n' "$1"
-  src="$(manifest_s3 "$1")"
+if [[ ! -f "$1" ]]; then
+  echo "<from> must be a file" >&2
+  exit 1
 fi
 
-shift
+bucket=sites-docs-bucket-1vleclrg7tli7
+prefix=data-files/restylers/manifests
+name=restylers.yaml
+distribution_id=E539B2WJC12CB
 
-for arg; do
-  printf 'Promoting to channel: %s\n' "$arg"
-done
+path=$1
+channel=$2
 
-if [[ -n "${DRY_RUN:-""}" ]]; then
-  echo "=> Exiting due to DRY_RUN" >&2
-  exit
-fi
+aws s3 cp --acl public-read --content-type text/plain "$path" \
+  "s3://$bucket/$prefix/$channel/$name"
 
-for arg; do
-  dst_s3="$(manifest_s3 "$arg")"
-  dst_cf="$(manifest_cf "$arg")"
-  aws s3 cp --acl public-read --content-type text/plain "$src" "$dst_s3"
-  aws cloudfront create-invalidation --distribution-id "$distribution_id" --paths "$dst_cf"
-done
+aws cloudfront create-invalidation \
+  --distribution-id "$distribution_id" \
+  --paths "/$prefix/$channel/$name"
