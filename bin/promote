@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if (($# != 2)); then
-  echo "Usage: bin/promote <file> <channel>" >&2
+bucket=sites-docs-bucket-1vleclrg7tli7
+prefix=data-files/restylers/manifests
+distribution_id=E539B2WJC12CB
+
+if (($# != 1)); then
+  echo "Usage: bin/promote <channel>" >&2
+  echo "Upload restylers.yaml to s3://.../channel/restylers.yaml" >&2
   exit 64
 fi
 
-if [[ ! -f "$1" ]]; then
-  echo "<from> must be a file" >&2
+path=restylers.yaml
+channel=$1
+
+if [[ ! -f "$path" ]]; then
+  echo "$path: file not found" >&2
   exit 1
 fi
 
-bucket=sites-docs-bucket-1vleclrg7tli7
-prefix=data-files/restylers/manifests
-name=restylers.yaml
-distribution_id=E539B2WJC12CB
-
-path=$1
-channel=$2
-
 aws s3 cp --acl public-read --content-type text/plain "$path" \
-  "s3://$bucket/$prefix/$channel/$name"
+  "s3://$bucket/$prefix/$channel/$path"
 
 aws cloudfront create-invalidation \
   --distribution-id "$distribution_id" \
-  --paths "/$prefix/$channel/$name"
+  --paths "/$prefix/$channel/$path"
