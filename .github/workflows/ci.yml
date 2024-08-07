@@ -89,8 +89,8 @@ jobs:
 
       - name: Build merged restylers.yaml
         run: |
-          curl -sSf -L -o base.yaml \
-            https://docs.restyled.io/data-files/restylers/manifests/dev/restylers.yaml
+          gh release download dev -p restylers.yaml
+          mv -v restylers.yaml base.yaml
 
           ruby -r yaml > restylers.yaml <<'EOM'
           base = YAML.safe_load_file("./base.yaml")
@@ -104,6 +104,12 @@ jobs:
           echo "::group::Merged manifest"
           cat restylers.yaml
           echo "::endgroup::"
+
+          echo "::group::Changes"
+          diff -U 3 base.yaml restylers.yaml
+          echo "::endgroup::"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         with:
