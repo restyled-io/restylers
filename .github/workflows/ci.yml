@@ -13,6 +13,8 @@ env:
   DOCKER_BUILD_SUMMARY: "false"
   DOCKER_BUILD_RECORD_UPLOAD: "false"
   LOG_COLOR: always
+  LOG_CONCURRENCY: 1
+  LOG_BREAKPOINT: 200
 
 jobs:
   tools:
