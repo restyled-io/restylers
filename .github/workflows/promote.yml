@@ -24,14 +24,8 @@ on:
         default: stable
 
 jobs:
-  release:
+  promote:
     runs-on: ubuntu-latest
-
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-      AWS_DEFAULT_REGION: us-east-1
-
     steps:
       - id: prep
         run: |
@@ -61,11 +55,13 @@ jobs:
 
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # so we can find from tag refs
+          fetch-depth: 0 # so we can find from-tag refs
+
       - id: setup-demo
         uses: restyled-io/actions/setup-demo@v3
         with:
           channel: ${{ steps.prep.outputs.from }}
+
       - uses: restyled-io/actions/setup@v3
       - uses: restyled-io/actions/run@v3
         with:
@@ -75,8 +71,6 @@ jobs:
           manifest: ${{ steps.setup-demo.outputs.manifest }}
           dry-run: ${{ github.event_name == 'pull_request' }}
           paths: .
-
-      - run: ./bin/promote "${{ steps.prep.outputs.from }}" "${{ steps.prep.outputs.to }}"
 
       - name: Download ${{ steps.prep.outputs.from }} release manifest
         run: gh release download "${{ steps.prep.outputs.from }}" -p restylers.yaml
@@ -99,15 +93,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Notify
-        if: always()
-        uses: zulip/github-actions-zulip/send-message@v1.0.2
-        with:
-          api-key: ${{ secrets.ZULIP_API_KEY }}
-          email: ${{ secrets.ZULIP_EMAIL }}
-          organization-url: ${{ secrets.ZULIP_ORGANIZATION_URL }}
-          to: 'changelog'
-          type: 'stream'
-          topic: 'Restylers Releases'
-          content: |
-            Promotion of `${{ steps.prep.outputs.from }}` to `${{ steps.prep.outputs.to }}`: ${{ job.status }}
+      # TODO: update CLI to use release artifacts and stop managing this
+      - run: ./bin/promote "${{ steps.prep.outputs.from }}" "${{ steps.prep.outputs.to }}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-1
