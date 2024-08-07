@@ -144,6 +144,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update dev tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: dev
+          force_push_tag: true
+          commit_sha: ${{ github.sha }}
+
+      - name: Update dev release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dev
+          files: |
+            restylers.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # TODO: create dev and stable releases, download manifests from them
       # instead of maintaining these files on S3.
       - name: Release sha, versioned, and dev manifests
