@@ -71,9 +71,9 @@ tagRestylerImage info = do
       logInfo $ "Tagging as explicit version" :# ["name" .= name]
       mkVersioned name $ \image -> do
         pullRestylerImage image `catch` \ex ->
-          logWarn $
-            "Error pulling, assuming local-only image"
-              :# ["code" .= show (eceExitCode ex)]
+          logWarn
+            $ "Error pulling, assuming local-only image"
+            :# ["code" .= show (eceExitCode ex)]
         pure explicitVersion.unwrap
 
   logInfo $ "Tagged" :# ["image" .= image]
@@ -89,9 +89,9 @@ doesRestylerImageExist :: MonadIO m => RestylerImage -> m Bool
 doesRestylerImageExist image = do
   env <- liftIO $ (<> [("DOCKER_CLI_EXPERIMENTAL", "enabled")]) <$> getEnvironment
   (ec, _stdout, _stderr) <-
-    readProcess $
-      setEnv env $
-        proc "docker" ["manifest", "inspect", unImage image]
+    readProcess
+      $ setEnv env
+      $ proc "docker" ["manifest", "inspect", unImage image]
   pure $ ec == ExitSuccess
 
 pullRestylerImage
