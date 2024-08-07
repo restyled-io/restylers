@@ -163,12 +163,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # TODO: create dev and stable releases, download manifests from them
-      # instead of maintaining these files on S3.
-      - name: Release sha, versioned, and dev manifests
-        run: |
-          ./bin/promote ./restylers.yaml \
-            "${{ github.sha }}" "${{ steps.tag.outputs.new_tag }}" "dev"
+      # TODO: update CLI to use release artifacts and stop managing this
+      - run: ./bin/promote ./restylers.yaml dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
