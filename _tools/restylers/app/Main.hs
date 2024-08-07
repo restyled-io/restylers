@@ -37,7 +37,9 @@ main = do
         then logWarn "Not pushing, image exists"
         else do
           pushRestylerImage restyler.image
-          traverse_ (traverse_ pushRestylerImage) $ getSeriesImages restyler.image
+          case getSeriesImages restyler.image of
+            Nothing -> logWarn "Image is not semantically-versioned"
+            Just is -> traverse_ pushRestylerImage is
 
     traverse_ (liftIO . (`Manifest.write` restylers)) opts.write
 
