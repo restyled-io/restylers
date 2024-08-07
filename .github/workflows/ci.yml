@@ -106,7 +106,7 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::Changes"
-          diff -U 3 base.yaml restylers.yaml
+          diff -U 3 base.yaml restylers.yaml || true
           echo "::endgroup::"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
