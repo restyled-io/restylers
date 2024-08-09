@@ -2,6 +2,13 @@
 {-# LANGUAGE RecordWildCards #-}
 
 -- | Details about how to build a Restyler Docker image
+--
+-- Module      : Restylers.Info.Build
+-- Copyright   : (c) 2024 Patrick Brisbin
+-- License     : AGPL-3
+-- Maintainer  : pbrisbin@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Restylers.Info.Build
   ( RestylerBuild (..)
   , restylerBuild

@@ -168,10 +168,3 @@ jobs:
             restylers.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # TODO: update CLI to use release artifacts and stop managing this
-      - run: ./bin/promote dev
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-          AWS_DEFAULT_REGION: us-east-1

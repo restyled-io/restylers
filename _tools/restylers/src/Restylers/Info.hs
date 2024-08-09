@@ -1,5 +1,13 @@
 {-# LANGUAGE DerivingVia #-}
 
+-- |
+--
+-- Module      : Restylers.Info
+-- Copyright   : (c) 2024 Patrick Brisbin
+-- License     : AGPL-3
+-- Maintainer  : pbrisbin@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Restylers.Info
   ( RestylerInfo (..)
   ) where

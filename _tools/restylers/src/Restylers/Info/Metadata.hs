@@ -1,3 +1,11 @@
+-- |
+--
+-- Module      : Restylers.Info.Metadata
+-- Copyright   : (c) 2024 Patrick Brisbin
+-- License     : AGPL-3
+-- Maintainer  : pbrisbin@gmail.com
+-- Stability   : experimental
+-- Portability : POSIX
 module Restylers.Info.Metadata
   ( Metadata (..)
   , emptyMetadata

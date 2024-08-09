@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-export STACK_YAML=_tools/stack.yaml
-stack build --fast --pedantic restylers:restylers
-stack exec -- restylers --no-pull "$@"
