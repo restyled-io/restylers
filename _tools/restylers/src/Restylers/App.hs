@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingVia #-}
+
 -- |
 --
 -- Module      : Restylers.App
@@ -6,8 +8,6 @@
 -- Maintainer  : pbrisbin@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
-{-# LANGUAGE DerivingVia #-}
-
 module Restylers.App
   ( App
   , AppT

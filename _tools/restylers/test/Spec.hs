@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -F -Wno-missing-export-lists #-}
+{-# OPTIONS_GHC -F -pgmF hspec-discover #-}
+
 -- |
 --
 -- Module      : Main
@@ -6,5 +9,3 @@
 -- Maintainer  : pbrisbin@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
-{-# OPTIONS_GHC -F -Wno-missing-export-lists #-}
-{-# OPTIONS_GHC -F -pgmF hspec-discover #-}
