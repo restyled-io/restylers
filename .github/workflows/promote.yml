@@ -58,12 +58,12 @@ jobs:
           fetch-depth: 0 # so we can find from-tag refs
 
       - id: setup-demo
-        uses: restyled-io/actions/setup-demo@v3
+        uses: restyled-io/actions/setup-demo@v4
         with:
           channel: ${{ steps.prep.outputs.from }}
 
-      - uses: restyled-io/actions/setup@v3
-      - uses: restyled-io/actions/run@v3
+      - uses: restyled-io/actions/setup@v4
+      - uses: restyled-io/actions/run@v4
         with:
           show-patch: false
           show-patch-command: false
