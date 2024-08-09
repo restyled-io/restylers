@@ -6,7 +6,7 @@ Language-specific restylers.
 
 1. Install [`restyle`][install-restyle]
 2. Install [The Haskell Tool Stack][install-stack]
-3. Run `bin/test <restyler>`
+3. Run `just test <restyler>`
 
 ![](./_files/prettier.png)
 
