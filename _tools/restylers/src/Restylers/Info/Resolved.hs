@@ -1,3 +1,5 @@
+{-# LANGUAGE NamedFieldPuns #-}
+
 -- |
 --
 -- Module      : Restylers.Info.Resolved
@@ -6,8 +8,6 @@
 -- Maintainer  : pbrisbin@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Restylers.Info.Resolved
   ( RestylerInfo (..)
   , ImageSource (..)

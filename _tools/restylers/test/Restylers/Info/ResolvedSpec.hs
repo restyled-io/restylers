@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 -- |
 --
 -- Module      : Restylers.Info.ResolvedSpec
@@ -6,8 +8,6 @@
 -- Maintainer  : pbrisbin@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
-{-# OPTIONS_GHC -fno-warn-orphans #-}
-
 module Restylers.Info.ResolvedSpec
   ( spec
   ) where
