@@ -80,7 +80,7 @@ jobs:
 
       - name: "Build, test, and push (if main) sha-tagged images"
         run: >-
-          restylers
+          restylers ${{ env.RUNNER_DEBUG && '--debug' || '' }}
           --sha ${{ github.sha }}
           --write tested.yaml
           --no-pull
