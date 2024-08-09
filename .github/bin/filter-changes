@@ -14,7 +14,7 @@ for file; do
     continue
   fi
 
-  if [[ "$(basename "$file")" =~ ^LICENSE\. ]]; then
+  if [[ "$(basename "$file")" =~ ^LICENSE\.{0,1} ]]; then
     echo "Ignoring metadata file: $file"
     continue
   fi
