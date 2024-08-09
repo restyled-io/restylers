@@ -117,9 +117,9 @@ jobs:
           path: restylers.yaml
           if-no-files-found: error
 
-      - uses: restyled-io/actions/setup-demo@v3
-      - uses: restyled-io/actions/setup@v3
-      - uses: restyled-io/actions/run@v3
+      - uses: restyled-io/actions/setup-demo@v4
+      - uses: restyled-io/actions/setup@v4
+      - uses: restyled-io/actions/run@v4
         with:
           paths: .
           manifest: ./restylers.yaml
