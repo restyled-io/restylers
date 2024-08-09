@@ -1,3 +1,8 @@
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE RecordWildCards #-}
+
+-- \| Details about how to build a Restyler Docker image
+
 -- |
 --
 -- Module      : Restylers.Info.Build
@@ -6,10 +11,6 @@
 -- Maintainer  : pbrisbin@gmail.com
 -- Stability   : experimental
 -- Portability : POSIX
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE RecordWildCards #-}
-
--- | Details about how to build a Restyler Docker image
 module Restylers.Info.Build
   ( RestylerBuild (..)
   , restylerBuild
