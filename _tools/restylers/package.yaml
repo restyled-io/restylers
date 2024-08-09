@@ -1,6 +1,6 @@
 name: restylers
 version: 0.0.0.0
-license: MIT
+license: AGPL-3
 
 language: GHC2021
 

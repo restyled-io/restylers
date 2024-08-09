@@ -7,3 +7,7 @@ lint:
     --config ./.hadolint.yaml \
     --failure-threshold error \
     ./*/Dockerfile
+
+headroom:
+  stack --stack-yaml _tools/stack.yaml exec -- headroom run -r
+  stack --stack-yaml _tools/stack.yaml exec -- fourmolu -i app src test
