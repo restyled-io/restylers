@@ -14,6 +14,11 @@ for file; do
     continue
   fi
 
+  if [[ "$(basename "$file")" =~ ^LICENSE\. ]]; then
+    echo "Ignoring metadata file: $file"
+    continue
+  fi
+
   echo "Changed restyler: $base"
   restylers+=("$base")
 
