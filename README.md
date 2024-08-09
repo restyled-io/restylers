@@ -23,13 +23,8 @@ typically to promote `dev` to `stable`. It also runs twice a month.
 
 ## LICENSE
 
-What minimal code and configuration there is in this repository is itself
-[Commons Claused][cc], MIT licensed, as is all of Restyled's codebase. Projects
-installed into the Docker images defined here are governed by their own
-licenses.
+Restylers themselves are released under the same license as the project they
+package. In most cases the appropriate license file has been copied into the
+Restyler sub-directory. In cases where it's not: patches welcome.
 
-For a detailed description of another project's rationale for this licensing
-model, one with which I agree, see [here][level].
-
-[cc]: https://commonsclause.com/
-[level]: https://web.archive.org/web/20181120030157/https://leveljournal.com/source-available-licensing
+Other in this project is licensed AGPLv3. See [COPYING](./COPYING).
