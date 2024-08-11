@@ -22,7 +22,7 @@ typically to promote `dev` to `stable`. It also runs twice a month.
 ## LICENSE
 
 Restylers themselves are released under the same license as the project they
-package. In most cases the appropriate license file has been copied into the
+package. In most cases, the appropriate license file has been copied into the
 Restyler sub-directory. In cases where it's not: patches welcome.
 
-Other in this project is licensed AGPLv3. See [COPYING](./COPYING).
+All other code in this project is licensed AGPLv3. See [COPYING](./COPYING).
