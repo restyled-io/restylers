@@ -8,8 +8,6 @@ Language-specific restylers.
 2. Install [The Haskell Tool Stack][install-stack]
 3. Run `just test <restyler>`
 
-![](./_files/prettier.png)
-
 [install-restyle]: https://github.com/restyled-io/restyler?tab=readme-ov-file#installation
 [install-stack]: https://docs.haskellstack.org/en/stable/#how-to-install-stack
 
