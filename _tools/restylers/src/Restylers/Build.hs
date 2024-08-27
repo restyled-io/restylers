@@ -25,6 +25,7 @@ import Restylers.Info.Resolved qualified as Info
 import Restylers.Options
 import Restylers.Version
 import System.Environment (getEnvironment)
+import System.Exit (exitFailure)
 import System.Process.Typed
 
 buildRestylerImage
@@ -69,6 +70,11 @@ tagRestylerImage info = do
         sha <- asks $ (.sha) . view optionsL
         let image = mkRestylerImage registry name sha
         version <- getVersion image
+
+        when (T.null version) $ do
+          logError "Unable to determine image version"
+          liftIO exitFailure
+
         let versioned = mkRestylerImage registry name version
         versioned <$ dockerTag image versioned
 
