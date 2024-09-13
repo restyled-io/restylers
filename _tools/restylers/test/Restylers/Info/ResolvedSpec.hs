@@ -30,10 +30,11 @@ import UnliftIO.Temporary (withSystemTempDirectory)
 testOptions :: a -> Options
 testOptions _ =
   Options
-    { registry = Nothing
+    { prefix = "restyled/"
     , sha = "dev"
     , debug = False
     , build = False
+    , test = False
     , pull = False
     , push = False
     , write = Nothing
