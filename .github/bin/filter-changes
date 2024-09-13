@@ -19,6 +19,11 @@ for file; do
     continue
   fi
 
+  if printf '%s\n' "${restylers[@]}" | grep -Fxq "$base"; then
+    # Already included
+    continue
+  fi
+
   echo "Changed restyler: $base"
   restylers+=("$base")
 
