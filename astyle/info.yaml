@@ -2,7 +2,7 @@
 enabled: true
 name: astyle
 version_cmd: |
-  astyle --version | sed 's/^Artistic Style Version /v/; s/$/-2/'
+  astyle --version | sed 's/^Artistic Style Version /v/'
 include:
   - "**/*.c"
   - "**/*.cc"
@@ -78,7 +78,7 @@ metadata:
             pFile = fopen ("myfile.txt", "r");
             if (pFile == NULL) perror ("Error opening file");
             else {
-                while ( ! feof (pFile) ) {
+                while (! feof (pFile) ) {
                     if ( fgets (buffer, 100, pFile) == NULL ) break;
                     fputs (buffer, stdout);
                 }
