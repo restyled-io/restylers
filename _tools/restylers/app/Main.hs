@@ -37,7 +37,8 @@ main = do
       image <- tagRestylerImage info
       pure $ toRestyler info image
 
-    testRestylers opts.pull restylers $ fromMaybe [] opts.hspecArgs
+    when opts.test $ do
+      testRestylers opts.pull restylers $ fromMaybe [] opts.hspecArgs
 
     when opts.push $ for_ restylers $ \restyler -> do
       exists <- doesRestylerImageExist restyler.image

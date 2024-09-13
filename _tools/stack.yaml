@@ -5,3 +5,4 @@ packages:
 
 extra-deps:
   - Blammo-2.1.0.0
+  - monad-validate-1.3.0.0

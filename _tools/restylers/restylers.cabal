@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 96bf46546b11e27a9201b8e336796e7d85b9a6a60e44449333fae89b604fdd57
+-- hash: c07856477d78bb71342f7c73e16eae8ad05c4c3985ae42c271dbfa0252bc4f4c
 
 name:           restylers
 version:        0.0.0.0
@@ -28,7 +28,6 @@ library
       Restylers.Options
       Restylers.Override
       Restylers.Prelude
-      Restylers.Registry
       Restylers.Test
       Restylers.Version
   other-modules:
@@ -132,9 +131,7 @@ test-suite spec
       TypeFamilies
   ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
   build-depends:
-      aeson
-    , base
-    , bytestring
+      base
     , filepath
     , hspec
     , restylers

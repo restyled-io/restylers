@@ -16,14 +16,14 @@ import Restylers.Prelude
 
 import Data.List.NonEmpty (some1)
 import Options.Applicative
-import Restylers.Registry
 import ShellWords qualified
 
 data Options = Options
-  { registry :: Maybe Registry
+  { prefix :: Text
   , sha :: Text
   , debug :: Bool
   , build :: Bool
+  , test :: Bool
   , pull :: Bool
   , push :: Bool
   , write :: Maybe FilePath
@@ -45,14 +45,13 @@ parseOptions = execParser $ withInfo "Build, test, and push Restylers" options
 options :: Parser Options
 options =
   Options
-    <$> optional
-      ( Registry
-          <$> strOption
-            ( short 'r'
-                <> long "registry"
-                <> help "Registry to prefix all Docker images"
-                <> metavar "PREFIX"
-            )
+    <$> strOption
+      ( short 'p'
+          <> long "prefix"
+          <> help "Prefix to use for restyler images"
+          <> metavar "PREFIX"
+          <> value "restyled/"
+          <> showDefault
       )
     <*> strOption
       ( short 's'
@@ -70,7 +69,14 @@ options =
             <$> switch
               ( short 'B'
                   <> long "no-build"
-                  <> help "Skip build before testing"
+                  <> help "Skip building"
+              )
+        )
+    <*> ( not
+            <$> switch
+              ( short 'T'
+                  <> long "no-test"
+                  <> help "Skip testing"
               )
         )
     <*> ( not

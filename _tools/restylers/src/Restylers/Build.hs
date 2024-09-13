@@ -38,7 +38,7 @@ buildRestylerImage
   => RestylerInfo
   -> m ()
 buildRestylerImage info = do
-  registry <- asks $ (.registry) . view optionsL
+  prefix <- asks $ (.prefix) . view optionsL
   sha <- asks $ (.sha) . view optionsL
   quiet <- asks $ not . (.debug) . view optionsL
   case info.imageSource of
@@ -46,11 +46,11 @@ buildRestylerImage info = do
       logInfo $ "Pulling explicit image" :# ["image" .= x]
       pullRestylerImage x
     BuildVersionCmd name _cmd options -> do
-      let image = mkRestylerImage registry name sha
+      image <- mkRestylerImageThrow prefix name sha
       logInfo $ "Building" :# ["image" .= image]
       void $ Build.build quiet options image
     BuildVersion name _version options -> do
-      let image = mkRestylerImage registry name sha
+      image <- mkRestylerImageThrow prefix name sha
       logInfo $ "Building" :# ["image" .= image]
       void $ Build.build quiet options image
 
@@ -64,18 +64,18 @@ tagRestylerImage
   => RestylerInfo
   -> m RestylerImage
 tagRestylerImage info = do
-  registry <- asks $ (.registry) . view optionsL
+  prefix <- asks $ (.prefix) . view optionsL
+  sha <- asks $ (.sha) . view optionsL
 
   let mkVersioned name getVersion = do
-        sha <- asks $ (.sha) . view optionsL
-        let image = mkRestylerImage registry name sha
+        image <- mkRestylerImageThrow prefix name sha
         version <- getVersion image
 
         when (T.null version) $ do
           logError "Unable to determine image version"
           liftIO exitFailure
 
-        let versioned = mkRestylerImage registry name version
+        versioned <- mkRestylerImageThrow prefix name version
         versioned <$ dockerTag image versioned
 
   image <- case info.imageSource of
