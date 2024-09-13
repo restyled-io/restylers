@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: astyle
-version: v3.1-2
+version_cmd: |
+  astyle --version | sed 's/^Artistic Style Version /v/; s/$/-2/'
 include:
   - "**/*.c"
   - "**/*.cc"
