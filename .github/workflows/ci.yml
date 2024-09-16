@@ -129,7 +129,7 @@ jobs:
           ${{ needs.changes.outputs.restylers }}
         env:
           # TODO: use restyled-io alias once available
-          PREFIX: ${{ steps.ecr-login.outputs.registry }}/y2t3n2b1
+          PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
 
       - name: Build merged restylers.yaml
         run: |
