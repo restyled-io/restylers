@@ -10,7 +10,9 @@ on:
 
 jobs:
   restyled:
-    if: ${{ github.event.pull_request.merged != true }}
+    if: |
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,10 +23,7 @@ jobs:
         uses: restyled-io/actions/run@v4
         with:
           fail-on-differences: true
-      - if: |
-          !cancelled() &&
-          steps.restyler.outputs.success == 'true' &&
-          github.event.pull_request.head.repo.full_name == github.repository
+      - if: ${{ !cancelled() && steps.restyler.outputs.success == 'true' }}
         uses: peter-evans/create-pull-request@v7
         with:
           base: ${{ steps.restyler.outputs.restyled-base }}
@@ -34,3 +33,28 @@ jobs:
           labels: restyled
           reviewers: ${{ github.event.pull_request.user.login }}
           delete-branch: true
+
+  restyled-fork:
+    if: |
+      github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: restyled-io/actions/setup@v4
+      - uses: restyled-io/actions/run@v4
+        with:
+          fail-on-differences: true
+
+  restyled-cleanup:
+    if: ${{ github.event.action == 'closed' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: restyled-io/actions/setup@v4
+      - id: restyler
+        uses: restyled-io/actions/run@v4
+      - run: gh --repo "$REPO" pr close "$BRANCH" --delete-branch || true
+        env:
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ steps.restyler.outputs.restyled-head }}
+          GH_TOKEN: ${{ github.token }}
