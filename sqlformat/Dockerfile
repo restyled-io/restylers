@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.13-alpine
 LABEL maintainer=asottile@umich.edu
 ENV LANG C.UTF-8
 RUN apk add --no-cache bash moreutils
