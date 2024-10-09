@@ -34,6 +34,13 @@ import Test.Hspec
 import UnliftIO.Directory
 import UnliftIO.Temporary (withTempDirectory)
 
+data CRestyler = CRestyler
+  { name :: RestylerName
+  , include :: [FilePath]
+  }
+  deriving stock (Generic)
+  deriving anyclass (ToJSON)
+
 testRestylers
   :: ( MonadUnliftIO m
      , MonadLogger m
@@ -50,15 +57,16 @@ testRestylers pull restylers hspecArgs = do
 
   withTempDirectory cwd "restylers-test" $ \tmp ->
     withCurrentDirectory tmp $ do
-      for_ restylers $ \restyler -> do
-        for_ (restylerTests restyler) $ \(number, test) -> do
+      crestylers <- for restylers $ \restyler -> do
+        files <- for (restylerTests restyler) $ \(number, test) -> do
           writeTestFiles number restyler.name restyler.include test
+        pure $ CRestyler restyler.name files
 
       writeYaml testManifest restylers
       writeYaml ".restyled.yaml"
         $ object
           [ "restylers_version" .= ("testing" :: Text)
-          , "restylers" .= ((.name) <$> restylers)
+          , "restylers" .= crestylers
           ]
 
       let code = cwd </> takeBaseName tmp

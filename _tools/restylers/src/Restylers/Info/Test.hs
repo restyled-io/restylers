@@ -44,11 +44,11 @@ writeTestFiles
   -> RestylerName
   -> [Text]
   -> Test
-  -> m ()
+  -> m FilePath
 writeTestFiles number name include test@Test {contents, support} = do
   logInfo $ "CREATE" :# ["path" .= path]
   liftIO $ T.writeFile path contents
-  traverse_ writeSupportFile support
+  path <$ traverse_ writeSupportFile support
  where
   path = testFilePath number name include test
 
