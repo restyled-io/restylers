@@ -93,7 +93,8 @@ jobs:
           ${{ github.ref_name == 'main' && '--push' || '' }}
           ${{ needs.changes.outputs.restylers }}
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      - if: ${{ github.ref_name == 'main' }}
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ vars.AWS_ROLE }}
