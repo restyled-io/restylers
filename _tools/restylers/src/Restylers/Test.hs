@@ -115,6 +115,7 @@ runRestyler pull code = do
         , ["--host-directory", code]
         , ["--manifest", testManifest]
         , ["--no-commit"]
+        , ["--no-clean"]
         , ["--no-pull" | not pull]
         , ["."]
         ]
