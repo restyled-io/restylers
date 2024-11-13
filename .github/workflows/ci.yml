@@ -49,167 +49,223 @@ jobs:
     outputs:
       restylers: ${{ steps.filtered.outputs.restylers }}
 
-  restylers:
-    permissions:
-      contents: read
-      pull-requests: read
-      id-token: write
+  lint:
+    needs: changes
+    if: ${{ needs.changes.outputs.restylers }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          # TODO hadolint over changed Dockerfile(s)
 
+  test:
     needs:
-      - tools
       - changes
+      - tools
     if: ${{ needs.changes.outputs.restylers }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: restyled-io/actions/setup@v4
       - uses: actions/download-artifact@v4
-        with:
-          name: tools
+        with: {name: tools}
+      - run: sudo install -v restylers /usr/local/bin/restylers
 
-      - name: Install tools
-        run: |
-          chmod +x ./restylers
-          sudo mv -v restylers /usr/local/bin
-          curl --proto '=https' --tlsv1.2 -sSf \
-            https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
-
-      - uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-        # Necessary if pushing, but best-effort if pulling (rate limits)
-        continue-on-error: ${{ github.ref_name != 'main' }}
-
-      # TODO: lint
-
-      - name: "Build, test, and push (if main) sha-tagged images"
+      - name: Test
         run: >-
           restylers
           ${{ runner.debug && '--debug' || '' }}
-          --sha ${{ github.sha }}
           --write tested.yaml
           --no-pull
-          ${{ github.ref_name == 'main' && '--push' || '' }}
           ${{ needs.changes.outputs.restylers }}
-
-      - if: ${{ github.ref_name == 'main' }}
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-region: ${{ vars.AWS_REGION }}
-          role-to-assume: ${{ vars.AWS_ROLE }}
-
-      - if: ${{ github.ref_name == 'main' }}
-        id: ecr-login
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          registry-type: public
-
-      - if: ${{ github.ref_name == 'main' }}
-        name: Create ECR repositories if necessary
-        run: |
-          for name in ${{ needs.changes.outputs.restylers }}; do
-            rname=restyler-$name
-
-            if ! aws ecr-public describe-repositories --repository-names "$rname" &>/dev/null; then
-              echo "Creating ECR repository for $rname"
-              aws ecr-public create-repository --repository-name "$rname"
-            fi
-          done
-
-      - if: ${{ github.ref_name == 'main' }}
-        name: Mirror image to ECR
-        run: >-
-          restylers
-          ${{ runner.debug && '--debug' || '' }}
-          --sha ${{ github.sha }}
-          --no-pull
-          --no-test
-          --push
-          --prefix "$PREFIX"
-          ${{ needs.changes.outputs.restylers }}
-        env:
-          # TODO: use restyled-io alias once available
-          PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
-
-      - name: Build merged restylers.yaml
-        run: |
-          gh release download dev -p restylers.yaml
-          mv -v restylers.yaml base.yaml
-
-          ruby -r yaml > restylers.yaml <<'EOM'
-          base = YAML.safe_load_file("./base.yaml")
-          tested = YAML.safe_load_file("./tested.yaml")
-          merged = base.map do |b|
-            tested.find { _1.fetch("name") == b.fetch("name") } || b
-          end
-          puts YAML.dump(merged)
-          EOM
-
-          echo "::group::Merged manifest"
-          cat restylers.yaml
-          echo "::endgroup::"
-
-          echo "::group::Changes"
-          diff -U 3 base.yaml restylers.yaml || true
-          echo "::endgroup::"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         with:
-          name: manifest
-          path: restylers.yaml
-          if-no-files-found: error
+          name: tested
+          path: tested.yaml
 
-      - uses: restyled-io/actions/setup-demo@v4
-      - uses: restyled-io/actions/setup@v4
-      - uses: restyled-io/actions/run@v4
+      - id: images
+        uses: mikefarah/yq@v4.44.3
         with:
-          paths: .
-          manifest: ./restylers.yaml
-          dry-run: true
+          cmd: |
+            yq -o json -e '[.[].image]' tested.yaml
 
-  release:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [restylers]
+    outputs:
+      images: ${{ steps.images.outputs.result }}
+
+  dockerhub:
+    needs: test
+    # if: ${{ github.ref == 'refs/heads/main' }}
+
+    strategy:
+      matrix:
+        image: ${{ fromJSON(needs.test.outputs.images) }}
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: tested}
+      - run: |
+          # DH login
+          # push ${matrix.image} to DH
+          # push series images ${matrix.image} to DH
+
+  ecr-public:
+    needs: test
+    # if: ${{ github.ref == 'refs/heads/main' }}
+
+    strategy:
+      matrix:
+        image: ${{ fromJSON(needs.test.outputs.images) }}
+      fail-fast: false
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - id: tag
-        name: Tag
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: actions/download-artifact@v4
-        with:
-          name: manifest
+        with: {name: tested}
+      - run: |
+          # ECR login
+          # Create ECR if necessary
+          # push ${matrix.image} to ECR
+          # push series images ${matrix.image} to ECR
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.tag.outputs.new_tag }}
-          name: Release ${{ steps.tag.outputs.new_tag }}
-          body: ${{ steps.tag.outputs.changelog }}
-          files: |
-            restylers.yaml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # manifest:
+  #     # - uses: docker/login-action@v3
+  #     #   with:
+  #     #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #     #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Update dev tag
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: dev
-          force_push_tag: true
-          commit_sha: ${{ github.sha }}
+  #     #   # Necessary if pushing, but best-effort if pulling (rate limits)
+  #     #   continue-on-error: ${{ github.ref_name != 'main' }}
 
-      - name: Update dev release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: dev
-          files: |
-            restylers.yaml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Test
+  #       run: >-
+  #         restylers
+  #         ${{ runner.debug && '--debug' || '' }}
+  #         --sha ${{ github.sha }}
+  #         --no-pull
+  #         ${{ needs.changes.outputs.restylers }}
+
+  #     # TODO: lint
+
+  #     - if: ${{ github.ref_name == 'main' }}
+  #       uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         aws-region: ${{ vars.AWS_REGION }}
+  #         role-to-assume: ${{ vars.AWS_ROLE }}
+
+  #     - if: ${{ github.ref_name == 'main' }}
+  #       id: ecr-login
+  #       uses: aws-actions/amazon-ecr-login@v2
+  #       with:
+  #         registry-type: public
+
+  #     - if: ${{ github.ref_name == 'main' }}
+  #       name: Create ECR repositories if necessary
+  #       run: |
+  #         for name in ${{ needs.changes.outputs.restylers }}; do
+  #           rname=restyler-$name
+
+  #           if ! aws ecr-public describe-repositories --repository-names "$rname" &>/dev/null; then
+  #             echo "Creating ECR repository for $rname"
+  #             aws ecr-public create-repository --repository-name "$rname"
+  #           fi
+  #         done
+
+  #     - if: ${{ github.ref_name == 'main' }}
+  #       name: Mirror image to ECR
+  #       run: >-
+  #         restylers
+  #         ${{ runner.debug && '--debug' || '' }}
+  #         --sha ${{ github.sha }}
+  #         --no-pull
+  #         --no-test
+  #         --push
+  #         --prefix "$PREFIX"
+  #         ${{ needs.changes.outputs.restylers }}
+  #       env:
+  #         # TODO: use restyled-io alias once available
+  #         PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
+
+  #     - name: Build merged restylers.yaml
+  #       run: |
+  #         gh release download dev -p restylers.yaml
+  #         mv -v restylers.yaml base.yaml
+
+  #         ruby -r yaml > restylers.yaml <<'EOM'
+  #         base = YAML.safe_load_file("./base.yaml")
+  #         tested = YAML.safe_load_file("./tested.yaml")
+  #         merged = base.map do |b|
+  #           tested.find { _1.fetch("name") == b.fetch("name") } || b
+  #         end
+  #         puts YAML.dump(merged)
+  #         EOM
+
+  #         echo "::group::Merged manifest"
+  #         cat restylers.yaml
+  #         echo "::endgroup::"
+
+  #         echo "::group::Changes"
+  #         diff -U 3 base.yaml restylers.yaml || true
+  #         echo "::endgroup::"
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - uses: actions/upload-artifact@v4
+  #       with:
+  #         name: manifest
+  #         path: restylers.yaml
+  #         if-no-files-found: error
+
+  #     - uses: restyled-io/actions/setup-demo@v4
+  #     - uses: restyled-io/actions/setup@v4
+  #     - uses: restyled-io/actions/run@v4
+  #       with:
+  #         paths: .
+  #         manifest: ./restylers.yaml
+  #         dry-run: true
+
+  # release:
+  #   if: ${{ github.ref == 'refs/heads/main' }}
+  #   needs: [restylers]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - id: tag
+  #       name: Tag
+  #       uses: mathieudutour/github-tag-action@v6.2
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: manifest
+
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v2
+  #       with:
+  #         tag_name: ${{ steps.tag.outputs.new_tag }}
+  #         name: Release ${{ steps.tag.outputs.new_tag }}
+  #         body: ${{ steps.tag.outputs.changelog }}
+  #         files: |
+  #           restylers.yaml
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  #     - name: Update dev tag
+  #       uses: rickstaa/action-create-tag@v1
+  #       with:
+  #         tag: dev
+  #         force_push_tag: true
+  #         commit_sha: ${{ github.sha }}
+
+  #     - name: Update dev release
+  #       uses: softprops/action-gh-release@v2
+  #       with:
+  #         tag_name: dev
+  #         files: |
+  #           restylers.yaml
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
