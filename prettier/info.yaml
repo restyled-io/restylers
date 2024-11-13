@@ -12,6 +12,7 @@ include:
 documentation:
   - https://github.com/restyled-io/restyler/wiki/Errors#prettier
   - https://prettier.io/docs/en/
+  - https://example.com # TEMP
 metadata:
   languages:
     - JavaScript

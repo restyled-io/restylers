@@ -11,6 +11,7 @@ include:
 documentation:
   - https://fourmolu.github.io/
   - https://github.com/fourmolu/fourmolu
+  - https://example.com # TEMP
 metadata:
   upstream:
     tag: Hackage
