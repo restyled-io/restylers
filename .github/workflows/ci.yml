@@ -87,7 +87,7 @@ jobs:
         uses: mikefarah/yq@v4.44.3
         with:
           cmd: |
-            yq -o json -e '[.[].image]' tested.yaml
+            yq -o json -e '[.[].image]' tested.yaml | sort -u
 
     outputs:
       images: ${{ steps.images.outputs.result }}
