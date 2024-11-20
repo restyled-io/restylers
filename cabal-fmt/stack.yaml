@@ -1,4 +1,4 @@
 resolver: lts-21.9
 extra-deps:
-  - cabal-fmt-0.1.6
+  - cabal-fmt-0.1.12
 packages: []
