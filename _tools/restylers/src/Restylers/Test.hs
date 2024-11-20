@@ -109,6 +109,18 @@ testRestylers pull restylers hspecArgs = do
 
                   restyled <- T.readFile $ testFilePath number restyler.name restyler.include test
 
+                  when (restyled == test.contents) $ do
+                    expectationFailure
+                      $ unlines
+                        [ "Restyler made no changes to the given files. For debugging, output was:"
+                        , "stdout:"
+                        , BSL8.unpack out
+                        , ""
+                        , "stderr:"
+                        , BSL8.unpack err
+                        , ""
+                        ]
+
                   if rts
                     then show restyled `shouldBe` show test.restyled
                     else restyled `shouldBe` test.restyled
