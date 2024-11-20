@@ -83,111 +83,102 @@ jobs:
           name: tested
           path: tested.yaml
 
-      - id: images
-        uses: mikefarah/yq@v4.44.3
-        with:
-          cmd: |
-            yq -o json -e '[.[].image]' tested.yaml | sort -u
-
-    outputs:
-      images: ${{ steps.images.outputs.result }}
-
   dockerhub:
-    needs: test
+    needs:
+      - changes
+      - tools
+      - test
+    if: ${{ needs.changes.outputs.restylers }}
     # if: ${{ github.ref == 'refs/heads/main' }}
-
-    strategy:
-      matrix:
-        image: ${{ fromJSON(needs.test.outputs.images) }}
-      fail-fast: false
-
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with: {name: tested}
-      - run: |
-          # DH login
-          # push ${matrix.image} to DH
-          # push series images ${matrix.image} to DH
-
-  ecr-public:
-    needs: test
-    # if: ${{ github.ref == 'refs/heads/main' }}
-
-    strategy:
-      matrix:
-        image: ${{ fromJSON(needs.test.outputs.images) }}
-      fail-fast: false
 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-        with: {name: tested}
-      - run: |
-          # ECR login
-          # Create ECR if necessary
-          # push ${matrix.image} to ECR
-          # push series images ${matrix.image} to ECR
+        with: {name: tools}
+      - run: sudo install -v restylers /usr/local/bin/restylers
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push
+        run: >-
+          restylers
+          ${{ runner.debug && '--debug' || '' }}
+          --write dockerhub.yaml
+          --no-test
+          --no-pull
+          --no-push
+          ${{ needs.changes.outputs.restylers }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dockerhub
+          path: dockerhub.yaml
+
+  ecr-public:
+    needs:
+      - changes
+      - tools
+      - test
+    if: ${{ needs.changes.outputs.restylers }}
+    # if: ${{ github.ref == 'refs/heads/main' }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: {name: tools}
+      - run: sudo install -v restylers /usr/local/bin/restylers
+
+      - name: AWS Login
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE }}
+
+      - name: Create ECR repositories if necessary
+        run: |
+          for name in ${{ needs.changes.outputs.restylers }}; do
+            rname=restyler-$name
+
+            if ! aws ecr-public describe-repositories --repository-names "$rname" &>/dev/null; then
+              echo "Creating ECR repository for $rname"
+              aws ecr-public create-repository --repository-name "$rname"
+            fi
+          done
+
+      - id: ecr-login
+        name: ECR Login
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Push
+        run: >-
+          restylers
+          ${{ runner.debug && '--debug' || '' }}
+          --write ecr.yaml
+          --no-test
+          --no-pull
+          --no-push
+          ${{ needs.changes.outputs.restylers }}
+        env:
+          # TODO: use restyled-io alias once available
+          PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecr
+          path: ecr.yaml
 
   # manifest:
-  #     # - uses: docker/login-action@v3
-  #     #   with:
-  #     #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #     #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-  #     #   # Necessary if pushing, but best-effort if pulling (rate limits)
-  #     #   continue-on-error: ${{ github.ref_name != 'main' }}
-
-  #     - name: Test
-  #       run: >-
-  #         restylers
-  #         ${{ runner.debug && '--debug' || '' }}
-  #         --sha ${{ github.sha }}
-  #         --no-pull
-  #         ${{ needs.changes.outputs.restylers }}
-
-  #     # TODO: lint
-
-  #     - if: ${{ github.ref_name == 'main' }}
-  #       uses: aws-actions/configure-aws-credentials@v4
-  #       with:
-  #         aws-region: ${{ vars.AWS_REGION }}
-  #         role-to-assume: ${{ vars.AWS_ROLE }}
-
-  #     - if: ${{ github.ref_name == 'main' }}
-  #       id: ecr-login
-  #       uses: aws-actions/amazon-ecr-login@v2
-  #       with:
-  #         registry-type: public
-
-  #     - if: ${{ github.ref_name == 'main' }}
-  #       name: Create ECR repositories if necessary
-  #       run: |
-  #         for name in ${{ needs.changes.outputs.restylers }}; do
-  #           rname=restyler-$name
-
-  #           if ! aws ecr-public describe-repositories --repository-names "$rname" &>/dev/null; then
-  #             echo "Creating ECR repository for $rname"
-  #             aws ecr-public create-repository --repository-name "$rname"
-  #           fi
-  #         done
-
-  #     - if: ${{ github.ref_name == 'main' }}
-  #       name: Mirror image to ECR
-  #       run: >-
-  #         restylers
-  #         ${{ runner.debug && '--debug' || '' }}
-  #         --sha ${{ github.sha }}
-  #         --no-pull
-  #         --no-test
-  #         --push
-  #         --prefix "$PREFIX"
-  #         ${{ needs.changes.outputs.restylers }}
-  #       env:
-  #         # TODO: use restyled-io alias once available
-  #         PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
-
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
   #     - name: Build merged restylers.yaml
   #       run: |
   #         gh release download dev -p restylers.yaml
