@@ -10,7 +10,7 @@ include:
   - "**/*.js"
   - "**/*.jsx"
 documentation:
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Prettier
+  - https://github.com/restyled-io/restyler/wiki/Errors#prettier
   - https://prettier.io/docs/en/
 metadata:
   languages:

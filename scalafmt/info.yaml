@@ -12,8 +12,8 @@ command:
 include:
   - "**/*.scala"
 documentation:
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Scalafmt
   - https://scalameta.org/scalafmt/
+  - https://github.com/restyled-io/restyler/wiki/Errors#scalafmt
 metadata:
   languages:
     - Scala
