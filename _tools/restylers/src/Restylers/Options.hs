@@ -40,8 +40,6 @@ class HasOptions env where
 parseOptions :: IO Options
 parseOptions = execParser $ withInfo "Build, test, and push Restylers" options
 
--- brittany-disable-next-binding
-
 options :: Parser Options
 options =
   Options
