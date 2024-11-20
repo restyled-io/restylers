@@ -14,7 +14,7 @@ import Restylers.Prelude
 
 import Blammo.Logging.Logger (flushLogger)
 import Data.Aeson (ToJSON, object)
-import Data.ByteString.Lazy qualified as BSL
+import Data.ByteString.Lazy.Char8 qualified as BSL8
 import Data.Text.IO qualified as T
 import Data.Yaml qualified as Yaml
 import Restylers.Env
@@ -25,6 +25,7 @@ import Restylers.Info.Test
   , writeTestFiles
   )
 import Restylers.Info.Test qualified as Test
+import Restylers.Info.Test.Support (withSupportFile)
 import Restylers.Manifest qualified as Manifest
 import Restylers.Name (RestylerName (..))
 import System.Environment (withArgs)
@@ -71,18 +72,6 @@ testRestylers pull restylers hspecArgs = do
 
       let code = cwd </> takeBaseName tmp
 
-      delayedException <-
-        tryAny $ do
-          (out, err) <- runRestyler pull code
-          logDebug
-            $ (:# [])
-            $ "stdout: "
-            <> decodeUtf8With lenientDecode (BSL.toStrict out)
-          logDebug
-            $ (:# [])
-            $ "stderr: "
-            <> decodeUtf8With lenientDecode (BSL.toStrict err)
-
       flushLogger -- before hspec makes its own output
       liftIO $ do
         withArgs hspecArgs $ hspec $ do
@@ -90,8 +79,33 @@ testRestylers pull restylers hspecArgs = do
             describe (unpack $ restyler.name.unwrap) $ do
               for_ (restylerTests restyler) $ \(number, test) -> do
                 it (testDescription number test) $ do
-                  -- If docker-run failed, re-throw it here so it's handled
-                  void $ either throwIO pure delayedException
+                  (ec, out, err) <-
+                    maybe id withSupportFile test.support
+                      $ readProcess
+                      $ proc "restyle"
+                      $ concat
+                        [ ["--debug"]
+                        , ["--color", "always"]
+                        , ["--host-directory", code]
+                        , ["--manifest", testManifest]
+                        , ["--no-commit"]
+                        , ["--no-clean"]
+                        , ["--no-pull" | not pull]
+                        , ["."]
+                        ]
+
+                  when (ec /= ExitSuccess) $ do
+                    throwString
+                      $ unlines
+                        [ "Restyler " <> show ec
+                        , "stdout:"
+                        , BSL8.unpack out
+                        , ""
+                        , "stderr:"
+                        , BSL8.unpack err
+                        , ""
+                        ]
+
                   restyled <- T.readFile $ testFilePath number restyler.name restyler.include test
 
                   if rts
@@ -100,26 +114,6 @@ testRestylers pull restylers hspecArgs = do
 
 restylerTests :: Manifest.Restyler -> [(Int, Test.Test)]
 restylerTests r = zip [1 ..] r.metadata.tests
-
-runRestyler
-  :: (MonadIO m, MonadLogger m, MonadReader env m, HasLogger env)
-  => Bool
-  -> FilePath
-  -> m (BSL.ByteString, BSL.ByteString)
-runRestyler pull code = do
-  p <-
-    loggedProc "restyle"
-      $ concat
-        [ ["--debug"]
-        , ["--color", "always"]
-        , ["--host-directory", code]
-        , ["--manifest", testManifest]
-        , ["--no-commit"]
-        , ["--no-clean"]
-        , ["--no-pull" | not pull]
-        , ["."]
-        ]
-  readProcess_ p
 
 writeYaml :: (MonadIO m, ToJSON a) => FilePath -> a -> m ()
 writeYaml path =

@@ -10,7 +10,7 @@
 -- Portability : POSIX
 module Restylers.Info.Test.Support
   ( Support (..)
-  , writeSupportFile
+  , withSupportFile
   )
 where
 
@@ -18,6 +18,8 @@ import Restylers.Prelude
 
 import Data.Aeson
 import Data.Text.IO qualified as T
+import UnliftIO.Directory (removeFile)
+import UnliftIO.Exception (finally)
 
 data Support = Support
   { path :: FilePath
@@ -26,12 +28,11 @@ data Support = Support
   deriving stock (Eq, Show, Generic)
   deriving anyclass (FromJSON, ToJSON)
 
-writeSupportFile
-  :: ( MonadIO m
-     , MonadLogger m
-     )
+withSupportFile
+  :: MonadUnliftIO m
   => Support
-  -> m ()
-writeSupportFile Support {path, contents} = do
-  logInfo $ "CREATE" :# ["path" .= path]
+  -> m a
+  -> m a
+withSupportFile Support {path, contents} f = do
   liftIO $ T.writeFile path contents
+  f `finally` removeFile path
