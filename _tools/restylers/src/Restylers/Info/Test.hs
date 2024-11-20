@@ -22,7 +22,7 @@ import Data.Aeson
 import Data.List.NonEmpty qualified as NE
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
-import Restylers.Info.Test.Support (Support, writeSupportFile)
+import Restylers.Info.Test.Support (Support)
 import Restylers.Name
 import System.FilePath (takeExtension)
 
@@ -45,10 +45,9 @@ writeTestFiles
   -> [Text]
   -> Test
   -> m FilePath
-writeTestFiles number name include test@Test {contents, support} = do
+writeTestFiles number name include test@Test {contents} = do
   logInfo $ "CREATE" :# ["path" .= path]
-  liftIO $ T.writeFile path contents
-  path <$ traverse_ writeSupportFile support
+  path <$ liftIO (T.writeFile path contents)
  where
   path = testFilePath number name include test
 
