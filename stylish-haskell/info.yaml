@@ -10,7 +10,7 @@ include:
   - "**/*.hs"
 documentation:
   - https://github.com/jaspervdj/stylish-haskell
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors-Stylish-Haskell
+  - https://github.com/restyled-io/restyler/wiki/Errors#stylish-haskell
 metadata:
   # Disable update checking because the latest doesn't compile, sigh
   # upstream:

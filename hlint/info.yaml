@@ -11,7 +11,7 @@ include:
 supports_multiple_paths: false
 documentation:
   - https://github.com/ndmitchell/hlint#readme
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-HLint
+  - https://github.com/restyled-io/restyler/wiki/Errors#hlint
 metadata:
   # Disable --update-check because we can't build hlint-3.5 yet
   # upstream:

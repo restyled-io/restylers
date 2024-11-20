@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-Hi there! We love to add new Restylers, and the process is designed to be very easy. You can even [do it yourself](https://github.com/restyled-io/restyled.io/wiki/Adding-a-Restyler) if you like. If you'd rather have someone on our team do it, that's fine too. In order to make that happen as quickly as possible, there is just a few things we'd need from you.
+Hi there! We love to add new Restylers, and the process is designed to be very easy. You can even [do it yourself](https://github.com/restyled-io/restylers/wiki/Adding-a-Restyler) if you like. If you'd rather have someone on our team do it, that's fine too. In order to make that happen as quickly as possible, there is just a few things we'd need from you.
 
 Please confirm the following:
 
-- [ ] I have looked at the [list of existing restylers](https://docs.restyled.io/available-restylers/) and confirmed the one I want is not present
+- [ ] I have looked at the [list of existing restylers](https://docs.restyled.io/restylers) and confirmed the one I want is not present
 - [ ] I have used this tool locally, invoked via CLI, to reformat source files
 
 And provide the following:

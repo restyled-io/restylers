@@ -11,7 +11,7 @@ interpreters: []
 supports_arg_sep: false
 documentation:
   - https://github.com/lspitzner/brittany
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Brittany
+  - https://github.com/restyled-io/restyler/wiki/Errors#brittany
 metadata:
   upstream:
     tag: Hackage

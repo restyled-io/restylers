@@ -9,7 +9,7 @@ include:
   - "**/*.rs"
 documentation:
   - https://github.com/rust-lang-nursery/rustfmt#readme
-  - https://github.com/restyled-io/restyled.io/wiki/Common-Errors:-Rustfmt
+  - https://github.com/restyled-io/restyler/wiki/Errors#prettier
 metadata:
   languages:
     - Rust
