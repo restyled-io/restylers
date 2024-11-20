@@ -1,4 +1,4 @@
-FROM restyled/stack-build-minimal:22.04 AS builder
+FROM restyled/stack-build-minimal:24.04 AS builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
