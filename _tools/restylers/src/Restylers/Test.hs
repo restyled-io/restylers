@@ -91,6 +91,7 @@ testRestylers pull restylers hspecArgs = do
                         , ["--no-commit"]
                         , ["--no-clean"]
                         , ["--no-pull" | not pull]
+                        , ["--restyler-memory", "512m"]
                         , ["."]
                         ]
 
