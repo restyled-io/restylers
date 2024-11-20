@@ -1,4 +1,4 @@
-FROM restyled/stack-build-minimal:22.04 as builder
+FROM restyled/stack-build-minimal:22.04 AS builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN stack upgrade
 
@@ -13,7 +13,7 @@ RUN \
   apt-get -y install --no-install-recommends locales && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 COPY --from=builder /root/.local/bin/cabal-fmt /usr/bin/cabal-fmt
 RUN mkdir -p /code
 WORKDIR /code
