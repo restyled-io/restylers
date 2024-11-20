@@ -169,7 +169,7 @@ jobs:
           --no-test
           ${{ needs.changes.outputs.restylers }}
         env:
-          # TODO: use restyled-io alias once available
+          # TODO: use restyled-io alias (can it be used for pushing too?)
           PREFIX: ${{ steps.ecr-login.outputs.registry }}/${{ vars.AWS_ECR_NAMESPACE }}/
 
       - uses: actions/upload-artifact@v4
