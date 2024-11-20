@@ -44,3 +44,17 @@ metadata:
         )
       restyled: |
         matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    - name: With import sorting plugin
+      support:
+        path: .prettierrc.json
+        contents: |
+          {"plugins": ["@trivago/prettier-plugin-sort-imports"]}
+      extension: js
+      contents: |
+        import c from 'moduleC';
+        import a from 'moduleA';
+        import b from 'moduleB';
+      restyled: |
+        import a from "moduleA";
+        import b from "moduleB";
+        import c from "moduleC";

@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
-yarn link tailwindcss
-trap 'yarn unlink tailwindcss' EXIT
+#
+# NB. this executable handles link/unlink of all plugins, not just tailwind, but
+# we're keeping it named as is to avoid errors for users who may be using
+# command in their .restyled.yaml
+#
+###
+yarn link tailwindcss @trivago/prettier-plugin-sort-imports
+trap 'yarn unlink tailwindcss @trivago/prettier-plugin-sort-imports' EXIT
 prettier "$@"
