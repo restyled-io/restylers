@@ -126,6 +126,10 @@ jobs:
     if: ${{ needs.changes.outputs.restylers }}
     # if: ${{ github.ref == 'refs/heads/main' }}
 
+    permissions:
+      contents: read
+      id-token: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
