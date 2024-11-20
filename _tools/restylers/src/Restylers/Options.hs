@@ -48,7 +48,7 @@ options =
           <> long "prefix"
           <> help "Prefix to use for restyler images"
           <> metavar "PREFIX"
-          <> value "restyled/"
+          <> value "public.ecr.aws/restyled-io/"
           <> showDefault
       )
     <*> strOption
