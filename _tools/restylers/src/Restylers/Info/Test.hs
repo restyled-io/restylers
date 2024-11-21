@@ -10,8 +10,8 @@
 -- Portability : POSIX
 module Restylers.Info.Test
   ( Test (..)
-  , writeTestFiles
-  , testFilePath
+  , writeTestFile
+  , writeTestSupportFile
   , testDescription
   )
 where
@@ -22,7 +22,7 @@ import Data.Aeson
 import Data.List.NonEmpty qualified as NE
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
-import Restylers.Info.Test.Support (Support)
+import Restylers.Info.Test.Support (Support (..))
 import Restylers.Name
 import System.FilePath (takeExtension)
 
@@ -36,20 +36,22 @@ data Test = Test
   deriving stock (Eq, Show, Generic)
   deriving anyclass (FromJSON, ToJSON)
 
-writeTestFiles
-  :: ( MonadIO m
-     , MonadLogger m
-     )
+writeTestFile
+  :: MonadIO m
   => Int
   -> RestylerName
   -> [Text]
   -> Test
   -> m FilePath
-writeTestFiles number name include test@Test {contents} = do
-  logInfo $ "CREATE" :# ["path" .= path]
+writeTestFile number name include test@Test {contents} = do
   path <$ liftIO (T.writeFile path contents)
  where
   path = testFilePath number name include test
+
+writeTestSupportFile :: MonadIO m => Test -> m ()
+writeTestSupportFile Test {support} = do
+  for_ support $ \Support {path, contents} ->
+    liftIO $ T.writeFile path contents
 
 testFilePath :: Int -> RestylerName -> [Text] -> Test -> FilePath
 testFilePath number name include Test {extension} =
