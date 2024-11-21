@@ -32,6 +32,8 @@ data Test = Test
   , contents :: Text
   , restyled :: Text
   , support :: Maybe Support
+  , command :: Maybe [Text]
+  , arguments :: Maybe [Text]
   }
   deriving stock (Eq, Show, Generic)
   deriving anyclass (FromJSON, ToJSON)

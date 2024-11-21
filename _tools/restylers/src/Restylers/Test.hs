@@ -73,6 +73,8 @@ testRestylers pull restylers hspecArgs = do
                         .= [ restyler
                               { Manifest.enabled = True
                               , Manifest.include = [pack file]
+                              , Manifest.command = fromMaybe restyler.command test.command
+                              , Manifest.arguments = fromMaybe restyler.arguments test.arguments
                               }
                            ]
                     ]
