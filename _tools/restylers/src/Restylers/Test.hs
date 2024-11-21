@@ -14,26 +14,24 @@ import Restylers.Prelude
 
 import Blammo.Logging.Logger (flushLogger)
 import Data.Aeson (ToJSON, object)
-import Data.ByteString.Lazy.Char8 qualified as BSL8
 import Data.Text.IO qualified as T
 import Data.Yaml qualified as Yaml
 import Restylers.Env
 import Restylers.Info.Metadata qualified as Metadata
 import Restylers.Info.Test
   ( testDescription
-  , testFilePath
-  , writeTestFiles
+  , writeTestFile
+  , writeTestSupportFile
   )
 import Restylers.Info.Test qualified as Test
-import Restylers.Info.Test.Support (withSupportFile)
 import Restylers.Manifest qualified as Manifest
 import Restylers.Name (RestylerName (..))
+import Restylers.Test.Output
 import System.Environment (withArgs)
-import System.FilePath (takeBaseName, (</>))
 import System.Process.Typed
 import Test.Hspec
 import UnliftIO.Directory
-import UnliftIO.Temporary (withTempDirectory)
+import UnliftIO.Temporary (withSystemTempDirectory)
 
 data CRestyler = CRestyler
   { name :: RestylerName
@@ -53,80 +51,73 @@ testRestylers
   -> [String]
   -> m ()
 testRestylers pull restylers hspecArgs = do
-  cwd <- getCurrentDirectory
   rts <- (.testShow) <$> getRestylersEnv
 
-  withTempDirectory cwd "restylers-test" $ \tmp ->
-    withCurrentDirectory tmp $ do
-      crestylers <- for restylers $ \restyler -> do
-        files <- for (restylerTests restyler) $ \(number, test) -> do
-          writeTestFiles number restyler.name restyler.include test
-        pure $ CRestyler restyler.name files
+  flushLogger -- before hspec makes its own output
+  liftIO $ do
+    withArgs hspecArgs $ hspec $ do
+      for_ restylers $ \restyler -> do
+        describe (unpack $ restyler.name.unwrap) $ do
+          for_ (restylerTests restyler) $ \(number, test) -> do
+            it (testDescription number test) $ do
+              inTempDirectory $ do
+                writeYaml testManifest restylers
+                writeTestSupportFile test
 
-      writeYaml testManifest restylers
-      writeYaml ".restyled.yaml"
-        $ object
-          [ "restylers_version" .= ("testing" :: Text)
-          , "restylers" .= crestylers
-          ]
+                file <- writeTestFile number restyler.name restyler.include test
 
-      let code = cwd </> takeBaseName tmp
+                writeYaml ".restyled.yaml"
+                  $ object
+                    [ "restylers_version" .= ("testing" :: Text)
+                    , "restylers"
+                        .= [ restyler
+                              { Manifest.enabled = True
+                              , Manifest.include = [pack file]
+                              }
+                           ]
+                    ]
 
-      flushLogger -- before hspec makes its own output
-      liftIO $ do
-        withArgs hspecArgs $ hspec $ do
-          for_ restylers $ \restyler -> do
-            describe (unpack $ restyler.name.unwrap) $ do
-              for_ (restylerTests restyler) $ \(number, test) -> do
-                it (testDescription number test) $ do
-                  (ec, out, err) <-
-                    maybe id withSupportFile test.support
-                      $ readProcess
-                      $ proc "restyle"
-                      $ concat
-                        [ ["--debug"]
-                        , ["--color", "always"]
-                        , ["--host-directory", code]
-                        , ["--manifest", testManifest]
-                        , ["--no-commit"]
-                        , ["--no-clean"]
-                        , ["--no-pull" | not pull]
-                        , ["--restyler-memory", "512m"]
-                        , ["."]
-                        ]
+                (ec, out, err) <-
+                  readProcess
+                    $ proc "restyle"
+                    $ concat
+                      [ ["--debug"]
+                      , ["--color", "always"]
+                      , ["--manifest", testManifest]
+                      , ["--no-commit"]
+                      , ["--no-clean"]
+                      , ["--no-pull" | not pull]
+                      , ["--restyler-memory", "512m"]
+                      , ["."]
+                      ]
 
-                  when (ec /= ExitSuccess) $ do
-                    throwString
-                      $ unlines
-                        [ "Restyler " <> show ec
-                        , "stdout:"
-                        , BSL8.unpack out
-                        , ""
-                        , "stderr:"
-                        , BSL8.unpack err
-                        , ""
-                        ]
+                when (ec /= ExitSuccess)
+                  $ expectationFailure
+                  $ "Restyler "
+                  <> show ec
+                  <> "\n"
+                  <> frameOutput out err
 
-                  restyled <- T.readFile $ testFilePath number restyler.name restyler.include test
+                restyled <- T.readFile file
 
-                  when (restyled == test.contents) $ do
-                    expectationFailure
-                      $ unlines
-                        [ "Restyler made no changes to the given files. For debugging, output was:"
-                        , "stdout:"
-                        , BSL8.unpack out
-                        , ""
-                        , "stderr:"
-                        , BSL8.unpack err
-                        , ""
-                        ]
+                when (restyled == test.contents)
+                  $ expectationFailure
+                  $ "Restyler made no changes to "
+                  <> file
+                  <> "\n"
+                  <> frameOutput out err
 
-                  if rts
-                    then show restyled `shouldBe` show test.restyled
-                    else restyled `shouldBe` test.restyled
+                if rts
+                  then show restyled `shouldBe` show test.restyled
+                  else restyled `shouldBe` test.restyled
 
 restylerTests :: Manifest.Restyler -> [(Int, Test.Test)]
 restylerTests r = zip [1 ..] r.metadata.tests
+
+inTempDirectory :: MonadUnliftIO m => m a -> m a
+inTempDirectory f = do
+  withSystemTempDirectory "restylers-test" $ \tmp ->
+    withCurrentDirectory tmp f
 
 writeYaml :: (MonadIO m, ToJSON a) => FilePath -> a -> m ()
 writeYaml path =
