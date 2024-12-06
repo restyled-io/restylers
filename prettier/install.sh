@@ -12,8 +12,15 @@ done
 
 cat >/usr/local/bin/prettier <<EOM
 #!/usr/bin/env bash
-yarn --offline link ${plugins[*]} >/dev/null
-trap 'yarn --offline unlink ${plugins[*]} >/dev/null' EXIT
+if ! yarn --offline link ${plugins[*]} >/dev/null; then
+  echo "Failed to link yarn modules" >&2
+  echo "Please report this as an issue" >&2
+  echo "https://github.com/restyled-io/restylers/issues" >&2
+  exit 1
+fi
+
+trap 'yarn --offline unlink ${plugins[*]} >/dev/null || true' EXIT
+
 /app/node_modules/.bin/prettier "\$@"
 EOM
 
