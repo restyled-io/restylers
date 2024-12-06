@@ -23,4 +23,8 @@ trap 'yarn --offline unlink ${plugins[*]} >/dev/null' EXIT
 /app/node_modules/.bin/prettier "\$@"
 EOM
 
+# Install at the legacy name we may see as CMD in the wild
 chmod +x /usr/local/bin/prettier-with-tailwindcss
+
+# Copy back as the right name
+cp /usr/local/bin/prettier{-with-tailwindcss,}

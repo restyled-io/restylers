@@ -2,9 +2,9 @@
 enabled: true
 name: prettier
 version_cmd: |
-  prettier-with-tailwindcss --version | sed 's/^/v/; s/$/-2/'
+  prettier --version | sed 's/^/v/; s/$/-2/'
 command:
-  - prettier-with-tailwindcss
+  - prettier
   - "--write"
 include:
   - "**/*.js"
