@@ -5,11 +5,9 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY package.json .
 RUN yarn install && yarn cache clean
-RUN cd node_modules/tailwindcss && yarn link
-RUN cd node_modules/@trivago/prettier-plugin-sort-imports && yarn link
-ENV PATH=/app/node_modules/.bin:$PATH
-COPY prettier-with-tailwindcss /usr/local/bin/prettier-with-tailwindcss
+COPY install.sh /tmp
+RUN /tmp/install.sh
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
-CMD ["prettier-with-tailwindcss", "--help"]
+CMD ["prettier", "--help"]

@@ -4,7 +4,7 @@ name: prettier
 version_cmd: |
   prettier --version | sed 's/^/v/; s/$/-2/'
 command:
-  - prettier-with-tailwindcss
+  - prettier
   - "--write"
 include:
   - "**/*.js"
