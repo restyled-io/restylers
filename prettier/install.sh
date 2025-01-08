@@ -7,7 +7,7 @@ plugins=(
 )
 
 for plugin in "${plugins[@]}"; do
-  (cd /app/node_modules/"$plugin" && yarn link)
+  (cd /node_modules/"$plugin" && yarn link)
 done
 
 cat >/usr/local/bin/prettier <<EOM
