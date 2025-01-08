@@ -2,7 +2,7 @@
 enabled: true
 name: prettier
 version_cmd: |
-  prettier --version | sed 's/^/v/; s/$/-2/'
+  prettier --version | sed 's/^/v/; s/$/-3/'
 command:
   - prettier
   - "--write"
