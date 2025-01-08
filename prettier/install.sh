@@ -21,7 +21,7 @@ fi
 
 trap 'yarn --offline unlink ${plugins[*]} >/dev/null || true' EXIT
 
-node_modules/.bin/prettier "\$@"
+/app/node_modules/.bin/prettier "\$@"
 EOM
 
 chmod +x /usr/local/bin/prettier
