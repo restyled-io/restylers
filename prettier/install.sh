@@ -7,7 +7,7 @@ plugins=(
 )
 
 for plugin in "${plugins[@]}"; do
-  (cd /node_modules/"$plugin" && yarn link)
+  (cd node_modules/"$plugin" && yarn link)
 done
 
 cat >/usr/local/bin/prettier <<EOM
@@ -21,7 +21,7 @@ fi
 
 trap 'yarn --offline unlink ${plugins[*]} >/dev/null || true' EXIT
 
-/node_modules/.bin/prettier "\$@"
+node_modules/.bin/prettier "\$@"
 EOM
 
 chmod +x /usr/local/bin/prettier
