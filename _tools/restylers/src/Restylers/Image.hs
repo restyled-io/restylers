@@ -9,7 +9,7 @@
 -- Stability   : experimental
 -- Portability : POSIX
 module Restylers.Image
-  ( RestylerImage
+  ( RestylerImage (..)
   , unRestylerImage
   , mkRestylerImage
   , mkRestylerImageThrow
@@ -34,12 +34,12 @@ data RestylerImage = RestylerImage
 newtype RestylerImageName = RestylerImageName
   { unwrap :: Text
   }
-  deriving newtype (Eq, Show, FromJSON, ToJSON)
+  deriving newtype (Eq, Show, FromJSON, ToJSON, ToText)
 
 newtype RestylerImageTag = RestylerImageTag
   { unwrap :: Text
   }
-  deriving newtype (Eq, Show, FromJSON, ToJSON)
+  deriving newtype (Eq, Show, FromJSON, ToJSON, ToText)
 
 instance FromJSON RestylerImage where
   parseJSON = withText "RestylerImage" $ either fail pure . parseRestylerImage

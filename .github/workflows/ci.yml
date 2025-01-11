@@ -28,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: tools
-          path: ${{ steps.stack.outputs.local-install-root }}/bin/restylers
+          path: "${{ steps.stack.outputs.local-install-root }}/bin/*"
           if-no-files-found: error
 
   changes:
@@ -147,6 +147,41 @@ jobs:
           paths: .
           manifest: ./restylers.yaml
           dry-run: true
+
+  update-docs:
+    if: ${{ github.event_name == 'pull_request' }}
+    needs:
+      - tools
+      - restylers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/download-artifact@v4
+        with: {name: tools}
+
+      - uses: actions/download-artifact@v4
+        with: {name: manifest}
+
+      - name: Update and commit _docs
+        run: |
+          chmod +x ./restylers-docs
+
+          ./restylers-docs "$GH_SHA" restylers.yaml > _docs/restylers.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "commits@restyled.io"
+
+          if ! git commit -m "Update docs" _docs/restylers.md; then
+            echo "No documentation changes"
+            exit 0
+          fi
+
+          git push
+        env:
+          GH_SHA: ${{ github.sha }}
 
   release:
     if: ${{ github.ref == 'refs/heads/main' }}

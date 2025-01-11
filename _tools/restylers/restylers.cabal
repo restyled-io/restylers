@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e3541df039aa6277437eb1f4ce9c39e96d53b63fba9fad21990854be74cbb8f0
+-- hash: 9574d686e762ae178a58bb1a2c55b1df1f713b7e4cbe487c44f4aa8e14fc8f83
 
 name:           restylers
 version:        0.0.0.0
@@ -66,6 +66,7 @@ library
     , optparse-applicative
     , semigroups
     , semver
+    , shakespeare
     , shellwords
     , text
     , typed-process

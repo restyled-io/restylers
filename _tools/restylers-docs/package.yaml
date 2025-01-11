@@ -1,4 +1,4 @@
-name: restylers
+name: restylers-docs
 version: 0.0.0.0
 license: AGPL-3
 
@@ -40,40 +40,15 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-    - Blammo
     - aeson
-    - bytestring
-    - errors
-    - filepath
-    - hspec
-    - microlens
-    - mtl
-    - optparse-applicative
-    - semigroups
-    - semver
+    - restylers
     - shakespeare
-    - shellwords
     - text
-    - typed-process
-    - unliftio
     - yaml
 
 executables:
-  restylers:
+  restylers-docs:
     main: Main.hs
     source-dirs: app
     dependencies:
-      - filepath
-      - restylers
-      - unliftio
-
-tests:
-  spec:
-    main: Spec.hs
-    source-dirs: test
-    dependencies:
-      - filepath
-      - hspec
-      - restylers
-      - text
-      - unliftio
+      - restylers-docs
