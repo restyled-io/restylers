@@ -25,6 +25,9 @@ source-paths:
   - _tools/restylers/app
   - _tools/restylers/src
   - _tools/restylers/test
+  - _tools/restylers-docs/app
+  - _tools/restylers-docs/src
+  - _tools/restylers-docs/test
 
 
 ## If set to 'true', Headroom tries to detect whether any VCS (like GIT) is used

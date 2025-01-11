@@ -1,0 +1,75 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           restylers-docs
+version:        0.0.0.0
+license:        AGPL-3
+build-type:     Simple
+
+library
+  exposed-modules:
+      Restylers.Docs.Main
+      Restylers.Docs.Prelude
+      Restylers.Docs.Render
+  other-modules:
+      Paths_restylers_docs
+  hs-source-dirs:
+      src
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DerivingStrategies
+      DerivingVia
+      DuplicateRecordFields
+      GADTs
+      LambdaCase
+      NamedFieldPuns
+      NoFieldSelectors
+      NoImplicitPrelude
+      NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
+      OverloadedStrings
+      QuasiQuotes
+      TypeFamilies
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  build-depends:
+      aeson
+    , base
+    , restylers
+    , shakespeare
+    , text
+    , yaml
+  default-language: GHC2021
+
+executable restylers-docs
+  main-is: Main.hs
+  other-modules:
+      Paths_restylers_docs
+  hs-source-dirs:
+      app
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DerivingStrategies
+      DerivingVia
+      DuplicateRecordFields
+      GADTs
+      LambdaCase
+      NamedFieldPuns
+      NoFieldSelectors
+      NoImplicitPrelude
+      NoMonomorphismRestriction
+      NoPostfixOperators
+      OverloadedRecordDot
+      OverloadedStrings
+      QuasiQuotes
+      TypeFamilies
+  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  build-depends:
+      base
+    , restylers-docs
+  default-language: GHC2021

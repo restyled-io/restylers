@@ -33,6 +33,7 @@ import GHC.Generics as X (Generic)
 import Lens.Micro as X (Lens', lens, (^?))
 import Lens.Micro.Extras as X (view)
 import Numeric.Natural as X (Natural)
+import Text.Shakespeare.Text as X (ToText (..))
 import UnliftIO as X (MonadUnliftIO)
 import UnliftIO.Exception as X (catch, throwIO, throwString, tryAny)
 import Prelude as X
