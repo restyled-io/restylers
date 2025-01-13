@@ -10,5 +10,6 @@ module Restylers.Docs.Prelude
   ( module X
   ) where
 
+import Data.Maybe as X (listToMaybe)
 import Data.Text as X (Text, pack, unpack)
 import Prelude as X

@@ -39,9 +39,15 @@ library
   build-depends:
       aeson
     , base
+    , bytestring
+    , directory
+    , http-conduit
+    , http-types
     , restylers
-    , shakespeare
+    , stache
     , text
+    , transformers
+    , typed-process
     , yaml
   default-language: GHC2021
 

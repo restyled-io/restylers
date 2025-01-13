@@ -10,6 +10,7 @@
 -- Portability : POSIX
 module Restylers.Image
   ( RestylerImage (..)
+  , RestylerImageTag (..)
   , unRestylerImage
   , mkRestylerImage
   , mkRestylerImageThrow

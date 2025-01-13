@@ -1,0 +1,58 @@
+# Restylers
+
+Built from `{{ref}}`.
+
+| Restyler | Language(s) | Version | Runs automatically? |
+| -------- | ----------- | ------- | ------------------- |
+{{#restylers}}
+| [{{name}}](#{{name}}) | {{languagesList}} | `{{imageTag}}` | {{enabledYesNo}} |
+{{/restylers}}
+
+---
+{{#restylers}}
+
+## {{name}}
+
+Restyles {{languagesListI}}, {{enabledDescription}}.
+
+<details>
+<summary>Documentation</summary>
+
+{{#documentation}}
+- {{.}}
+{{/documentation}}
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+{{{infoYaml}}}
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+{{#metadata.tests}}
+
+**Before**
+
+```{{languageGuess}}
+{{{contents}}}
+```
+
+**After**
+
+```{{languageGuess}}
+{{{restyled}}}
+```
+
+{{/metadata.tests}}
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-{{name}})
+{{/restylers}}
