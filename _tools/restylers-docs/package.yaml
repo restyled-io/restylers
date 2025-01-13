@@ -41,9 +41,15 @@ library:
   source-dirs: src
   dependencies:
     - aeson
+    - bytestring
+    - directory
+    - http-conduit
+    - http-types
     - restylers
-    - shakespeare
+    - stache
     - text
+    - transformers
+    - typed-process
     - yaml
 
 executables:
