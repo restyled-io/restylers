@@ -11,3 +11,6 @@ lint:
 headroom:
   stack --stack-yaml _tools/stack.yaml exec -- headroom run -r
   stack --stack-yaml _tools/stack.yaml exec -- fourmolu -i _tools/restylers{,-docs}/{app,src,test}
+
+docs:
+  stack --stack-yaml _tools/stack.yaml exec -- restylers-docs > _docs/restylers.md

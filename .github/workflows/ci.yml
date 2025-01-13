@@ -169,7 +169,7 @@ jobs:
         run: |
           chmod +x ./restylers-docs
 
-          ./restylers-docs "$GH_SHA" restylers.yaml > _docs/restylers.md
+          ./restylers-docs > _docs/restylers.md
 
           git config user.name "github-actions[bot]"
           git config user.email "commits@restyled.io"
@@ -180,8 +180,6 @@ jobs:
           fi
 
           git push
-        env:
-          GH_SHA: ${{ github.sha }}
 
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
