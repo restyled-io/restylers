@@ -1,7 +1,6 @@
-
 # Restylers
 
-Built from `7b17de6277ad209e7933f90a2d6db27df8138c66`
+Built from `715cfdecadad1cdd42a3e6b46ff6980278336ea7`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
@@ -35,11 +34,11 @@ Built from `7b17de6277ad209e7933f90a2d6db27df8138c66`
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20230701` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.3` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.67.0` | Yes |
-| [prettier](#prettier) | JavaScript | `v3.4.2-x` | Yes |
-| [prettier-json](#prettier-json) | JSON | `v3.4.2-x` | Yes |
-| [prettier-markdown](#prettier-markdown) | Markdown | `v3.4.2-x` | Yes |
-| [prettier-yaml](#prettier-yaml) | Yaml | `v3.4.2-x` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.67.1` | Yes |
+| [prettier](#prettier) | JavaScript | `v3.4.2-3` | Yes |
+| [prettier-json](#prettier-json) | JSON | `v3.4.2-3` | Yes |
+| [prettier-markdown](#prettier-markdown) | Markdown | `v3.4.2-3` | Yes |
+| [prettier-yaml](#prettier-yaml) | Yaml | `v3.4.2-3` | Yes |
 | [prettier-ruby](#prettier-ruby) | Ruby | `v3.2.2-1` | No |
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
@@ -59,26 +58,22 @@ Built from `7b17de6277ad209e7933f90a2d6db27df8138c66`
 | [verible](#verible) | System Verilog | `v0.0-1318-gf6b4485` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
+
 ---
 
 ## astyle
 
 Restyles _C_, _C++_, _C#_, _Java*_, _Objective-C_, runs automatically.
 
-
 <details>
 <summary>Documentation</summary>
 
 - http://astyle.sourceforge.net/astyle.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -107,17 +102,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```c
 int Foo(bool isBar)
@@ -131,9 +122,7 @@ int Foo(bool isBar)
 
 ```
 
-
 **After**
-
 
 ```c
 int Foo(bool isBar)
@@ -149,9 +138,7 @@ int Foo(bool isBar)
 ```
 
 
-
 **Before**
-
 
 ```c
 /* FEOF example */
@@ -174,9 +161,7 @@ int main()
 
 ```
 
-
 **After**
-
 
 ```c
 /* FEOF example */
@@ -200,32 +185,23 @@ int main()
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-astyle)
-
 
 ## autopep8
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/hhatto/autopep8
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -242,17 +218,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```python
 import math, sys;
@@ -267,9 +239,7 @@ def example1():
 
 ```
 
-
 **After**
-
 
 ```python
 import math
@@ -288,32 +258,23 @@ def example1():
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-autopep8)
-
 
 ## black
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/python/black
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -329,17 +290,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```python
 import math, sys;
@@ -354,9 +311,7 @@ def example1():
 
 ```
 
-
 **After**
-
 
 ```python
 import math, sys
@@ -385,18 +340,13 @@ def example1():
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-black)
-
 
 ## brittany
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
@@ -404,14 +354,10 @@ Restyles _Haskell_, must be explicitly enabled.
 - https://github.com/lspitzner/brittany
 - https://github.com/restyled-io/restyler/wiki/Errors#brittany
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -427,17 +373,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```haskell
 func (MyLongFoo abc def) = 1
@@ -446,9 +388,7 @@ func _ = 3
 
 ```
 
-
 **After**
-
 
 ```haskell
 func (MyLongFoo abc def) = 1
@@ -458,32 +398,23 @@ func _                   = 3
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-brittany)
-
 
 ## cabal-fmt
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/phadej/cabal-fmt
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -499,17 +430,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```haskell
 cabal-version: 2.4
@@ -531,9 +458,7 @@ executable cabal-fmt
 
 ```
 
-
 **After**
-
 
 ```haskell
 cabal-version: 2.4
@@ -566,32 +491,23 @@ executable cabal-fmt
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-cabal-fmt)
-
 
 ## clang-format
 
 Restyles _C_, _C++_, _Java_, _JavaScript_, _Objective-C_, _Protobuf_, _C#_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://clang.llvm.org/docs/ClangFormat.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -622,17 +538,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```c
 int formatted_code;
@@ -641,9 +553,7 @@ void formatted_code_again;
 
 ```
 
-
 **After**
-
 
 ```c
 int formatted_code;
@@ -653,32 +563,23 @@ void formatted_code_again;
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-clang-format)
-
 
 ## cmake-format
 
 Restyles _CMake_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/cheshirekow/cmake_format
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -695,17 +596,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```cmake
 # The following multiple newlines should be collapsed into a single newline
@@ -810,9 +707,7 @@ add_library(a b.cc
 
 ```
 
-
 **After**
-
 
 ```cmake
 # The following multiple newlines should be collapsed into a single newline
@@ -934,32 +829,23 @@ add_library(a b.cc
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-cmake-format)
-
 
 ## dart-format
 
 Restyles _Dart_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://pub.dev/packages/dart_style
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -975,17 +861,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```dart
 void example() {
@@ -996,9 +878,7 @@ void example() {
 
 ```
 
-
 **After**
-
 
 ```dart
 void example() {
@@ -1011,32 +891,23 @@ void example() {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-dart-format)
-
 
 ## dfmt
 
 Restyles _D_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/dlang-community/dfmt#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1052,17 +923,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```d
 void main(string[] args) {
@@ -1075,9 +942,7 @@ void main(string[] args) {
 
 ```
 
-
 **After**
-
 
 ```d
 void main(string[] args)
@@ -1089,32 +954,23 @@ void main(string[] args)
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-dfmt)
-
 
 ## dhall-format
 
 Restyles _Dhall_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://docs.dhall-lang.org
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1131,17 +987,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```dhall
 let Fruit_ = < Apple : {} | Banana : {} | Orange : {} >
@@ -1156,9 +1008,7 @@ in let fruiteHandler_ =
 
 ```
 
-
 **After**
-
 
 ```dhall
 let Fruit_ = < Apple : {} | Banana : {} | Orange : {} >
@@ -1184,32 +1034,23 @@ in  let fruiteHandler_ =
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-dhall-format)
-
 
 ## dotnet-format
 
 Restyles _C#_, _VB.NET_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/dotnet/format
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1225,10 +1066,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -1236,7 +1074,6 @@ restylers:
 
 **Before**
 
-
 ```csharp
 int formatted_code;
     void    unformatted_code  ;
@@ -1244,9 +1081,7 @@ void formatted_code_again;
 
 ```
 
-
 **After**
-
 
 ```csharp
 int formatted_code;
@@ -1254,12 +1089,10 @@ void unformatted_code;
 void formatted_code_again;
 
 ```
-
 
 
 **Before**
 
-
 ```csharp
 int formatted_code;
     void    unformatted_code  ;
@@ -1267,9 +1100,7 @@ void formatted_code_again;
 
 ```
 
-
 **After**
-
 
 ```csharp
 int formatted_code;
@@ -1279,32 +1110,23 @@ void formatted_code_again;
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-dotnet-format)
-
 
 ## elm-format
 
 Restyles _Elm_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/avh4/elm-format
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1320,17 +1142,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```elm
 homeDirectory = "/root/files"
@@ -1342,9 +1160,7 @@ eval boolean = case boolean of
 
 ```
 
-
 **After**
-
 
 ```elm
 module Main exposing (eval, homeDirectory)
@@ -1371,32 +1187,23 @@ eval boolean =
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-elm-format)
-
 
 ## fantomas
 
 Restyles _F#_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/fsprojects/fantomas
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1413,17 +1220,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```fsharp
 type Type
@@ -1438,9 +1241,7 @@ type Type
 
 ```
 
-
 **After**
-
 
 ```fsharp
 type Type =
@@ -1456,9 +1257,7 @@ type Type =
 ```
 
 
-
 **Before**
-
 
 ```fsharp
 let Multiple9x9 () =
@@ -1473,9 +1272,7 @@ Multiple9x9 ();;
 
 ```
 
-
 **After**
-
 
 ```fsharp
 let Multiple9x9() =
@@ -1490,18 +1287,13 @@ Multiple9x9()
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-fantomas)
-
 
 ## fourmolu
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
@@ -1509,14 +1301,10 @@ Restyles _Haskell_, must be explicitly enabled.
 - https://fourmolu.github.io/
 - https://github.com/fourmolu/fourmolu
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1533,17 +1321,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```haskell
 foo
@@ -1554,9 +1338,7 @@ foo
 
 ```
 
-
 **After**
-
 
 ```haskell
 foo ::
@@ -1571,32 +1353,23 @@ foo ::
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-fourmolu)
-
 
 ## gn
 
 Restyles _GN_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://gn.googlesource.com/gn/+/master/docs/reference.md#cmd_format
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1613,10 +1386,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -1624,15 +1394,12 @@ restylers:
 
 **Before**
 
-
 ```gn
 sources = ["b", "a"]
 
 ```
 
-
 **After**
-
 
 ```gn
 sources = [
@@ -1643,32 +1410,23 @@ sources = [
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-gn)
-
 
 ## gofmt
 
 Restyles _Go_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://golang.org/cmd/gofmt/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1684,17 +1442,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```go
 package main
@@ -1713,9 +1467,7 @@ package main
 
 ```
 
-
 **After**
-
 
 ```go
 package main
@@ -1738,32 +1490,23 @@ func print() {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-gofmt)
-
 
 ## google-java-format
 
 Restyles _Java_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/google/google-java-format#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1779,17 +1522,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```java
 private enum Answer {
@@ -1801,9 +1540,7 @@ private enum Answer {
 
 ```
 
-
 **After**
-
 
 ```java
 private enum Answer {
@@ -1820,32 +1557,23 @@ private enum Answer {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-google-java-format)
-
 
 ## hindent
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/commercialhaskell/hindent
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1860,10 +1588,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -1871,15 +1596,12 @@ restylers:
 
 **Before**
 
-
 ```haskell
 example = case x of Just p -> foo bar
 
 ```
 
-
 **After**
-
 
 ```haskell
 example =
@@ -1889,18 +1611,13 @@ example =
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-hindent)
-
 
 ## hlint
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
@@ -1908,14 +1625,10 @@ Restyles _Haskell_, must be explicitly enabled.
 - https://github.com/ndmitchell/hlint#readme
 - https://github.com/restyled-io/restyler/wiki/Errors#hlint
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -1932,10 +1645,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -1943,16 +1653,13 @@ restylers:
 
 **Before**
 
-
 ```haskell
 main :: IO ()
 main = putStrLn $ "hello hlint"
 
 ```
 
-
 **After**
-
 
 ```haskell
 main :: IO ()
@@ -1961,32 +1668,23 @@ main = putStrLn "hello hlint"
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-hlint)
-
 
 ## isort
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/timothycrosley/isort/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2002,17 +1700,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```python
 from my_lib import Object
@@ -2038,9 +1732,7 @@ print("yo")
 
 ```
 
-
 **After**
-
 
 ```python
 from __future__ import absolute_import
@@ -2058,32 +1750,23 @@ print("yo")
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-isort)
-
 
 ## jdt
 
 Restyles _Java_, _JavaScript*_, _CSS_, _HTML_, _JSON_, _XML_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://code.revelc.net/formatter-maven-plugin/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2102,17 +1785,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```java
 public class ShouldFormat1 {
@@ -2127,9 +1806,7 @@ int Foo(bool isBar) {
 
 ```
 
-
 **After**
-
 
 ```java
 public class ShouldFormat1 {
@@ -2145,9 +1822,7 @@ public class ShouldFormat1 {
 ```
 
 
-
 **Before**
-
 
 ```java
 public class ShouldFormat2 {
@@ -2165,9 +1840,7 @@ public class ShouldFormat2 {
 
 ```
 
-
 **After**
-
 
 ```java
 public class ShouldFormat2 {
@@ -2187,32 +1860,23 @@ public class ShouldFormat2 {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-jdt)
-
 
 ## jq
 
 Restyles _JSON_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://stedolan.github.io/jq/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2227,17 +1891,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```json
 {
@@ -2247,9 +1907,7 @@ restylers:
 
 ```
 
-
 **After**
-
 
 ```json
 {
@@ -2260,32 +1918,23 @@ restylers:
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-jq)
-
 
 ## luaformatter
 
 Restyles _Lua_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/Koihik/LuaFormatter
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2302,17 +1951,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```lua
 matrix = { {1, 0, 0, 0},
@@ -2322,9 +1967,7 @@ matrix = { {1, 0, 0, 0},
 
 ```
 
-
 **After**
-
 
 ```lua
 matrix = {{1, 0, 0, 0}, {1, 1, 0, 0}, {1, 1, 1, 0}, {1, 1, 1, 1}}
@@ -2332,32 +1975,23 @@ matrix = {{1, 0, 0, 0}, {1, 1, 0, 0}, {1, 1, 1, 0}, {1, 1, 1, 1}}
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-luaformatter)
-
 
 ## nixfmt
 
 Restyles _Nix_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/NixOS/nixfmt#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2372,17 +2006,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```nix
 let
@@ -2467,9 +2097,7 @@ in
 
 ```
 
-
 **After**
-
 
 ```nix
 let
@@ -2572,32 +2200,23 @@ in
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-nixfmt)
-
 
 ## nixpkgs-fmt
 
 Restyles _Nix_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/nix-community/nixpkgs-fmt#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2612,10 +2231,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -2623,16 +2239,13 @@ restylers:
 
 **Before**
 
-
 ```nix
 {foo,bar}:
         foo+bar
 
 ```
 
-
 **After**
-
 
 ```nix
 { foo, bar }:
@@ -2641,32 +2254,23 @@ foo + bar
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-nixpkgs-fmt)
-
 
 ## npm-groovy-lint
 
 Restyles _Groovy_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/nvuillam/npm-groovy-lint#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2682,17 +2286,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```groovy
 def variable = 1;
@@ -2718,9 +2318,7 @@ pipeline {
 
 ```
 
-
 **After**
-
 
 ```groovy
 def variable = 1
@@ -2747,32 +2345,23 @@ pipeline {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-npm-groovy-lint)
-
 
 ## ocamlformat
 
 Restyles _OCaml_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/ocaml-ppx/ocamlformat
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2788,17 +2377,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```ocaml
 let sum_of_squares num =
@@ -2808,9 +2393,7 @@ let sum_of_squares num =
 
 ```
 
-
 **After**
-
 
 ```ocaml
 let sum_of_squares num =
@@ -2820,32 +2403,23 @@ let sum_of_squares num =
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-ocamlformat)
-
 
 ## ormolu
 
 Restyles _Haskell_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/tweag/ormolu#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2862,17 +2436,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```haskell
 foo
@@ -2883,9 +2453,7 @@ foo
 
 ```
 
-
 **After**
-
 
 ```haskell
 foo ::
@@ -2900,32 +2468,23 @@ foo ::
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-ormolu)
-
 
 ## perltidy
 
 Restyles _Perl_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://perltidy.sourceforge.net/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -2942,17 +2501,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```perl
 my $lines  = 0; # checksum: #lines
@@ -2965,9 +2520,7 @@ my $fail  = 0; # failed
 
 ```
 
-
 **After**
-
 
 ```perl
 my $lines     = 0;    # checksum: #lines
@@ -2981,9 +2534,7 @@ my $fail      = 0;    # failed
 ```
 
 
-
 **Before**
-
 
 ```perl
 $_= <<'EOL';
@@ -2999,9 +2550,7 @@ print(" MiXeD"),redo LOOP if/\G[A-Za-z]+\b[,.;]?\s*/gc;print(
 
 ```
 
-
 **After**
-
 
 ```perl
 $_ = <<'EOL';
@@ -3022,9 +2571,7 @@ LOOP: {
 ```
 
 
-
 **Before**
-
 
 ```perl
 %unitscale=("in",72,"pt",72.27/72,"pc",12,"mm",72/25.4,"cm",72/2.54,
@@ -3033,9 +2580,7 @@ LOOP: {
 
 ```
 
-
 **After**
-
 
 ```perl
 %unitscale = (
@@ -3050,9 +2595,7 @@ LOOP: {
 ```
 
 
-
 **Before**
-
 
 ```perl
 my $a_box = [ [ $a11, $a12, $a13, $a14, $a15, $a16 ], 
@@ -3062,9 +2605,7 @@ my $a_box = [ [ $a11, $a12, $a13, $a14, $a15, $a16 ],
 
 ```
 
-
 **After**
-
 
 ```perl
 my $a_box = [
@@ -3079,9 +2620,7 @@ my $a_box = [
 ```
 
 
-
 **Before**
-
 
 ```perl
 %TV=(flintstones=>{series=>"flintstones",nights=>[qw(monday thursday friday)],
@@ -3095,9 +2634,7 @@ role=>"kid",age=>11,},],},);
 
 ```
 
-
 **After**
-
 
 ```perl
 %TV = (
@@ -3149,9 +2686,7 @@ role=>"kid",age=>11,},],},);
 ```
 
 
-
 **Before**
-
 
 ```perl
 {
@@ -3202,9 +2737,7 @@ role=>"kid",age=>11,},],},);
 
 ```
 
-
 **After**
-
 
 ```perl
 {
@@ -3273,32 +2806,23 @@ role=>"kid",age=>11,},],},);
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-perltidy)
-
 
 ## pg_format
 
 Restyles _PSQL_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/darold/pgFormatter#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3314,17 +2838,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```psql
 SELECT * from
@@ -3333,9 +2853,7 @@ WHERE students.age > 10;
 
 ```
 
-
 **After**
-
 
 ```psql
 SELECT
@@ -3349,32 +2867,23 @@ WHERE
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-pg_format)
-
 
 ## php-cs-fixer
 
 Restyles _PHP_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/FriendsOfPHP/PHP-CS-Fixer
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3383,17 +2892,14 @@ restylers:
     command:
     - php-cs-fixer
     - fix
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.67.0
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.67.1
     include:
     - '**/*.php'
     interpreters: []
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -3401,16 +2907,13 @@ restylers:
 
 **Before**
 
-
 ```php
 <?PHP
 $this->foo();
 
 ```
 
-
 **After**
-
 
 ```php
 <?php
@@ -3420,18 +2923,13 @@ $this->foo();
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-php-cs-fixer)
-
 
 ## prettier
 
 Restyles _JavaScript_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
@@ -3439,14 +2937,10 @@ Restyles _JavaScript_, runs automatically.
 - https://github.com/restyled-io/restyler/wiki/Errors#prettier
 - https://prettier.io/docs/en/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3455,7 +2949,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-x
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
     include:
     - '**/*.js'
     - '**/*.jsx'
@@ -3463,10 +2957,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -3474,6 +2965,24 @@ restylers:
 
 **Before**
 
+```javascript
+matrix(
+  1, 0, 0,
+  0, 1, 0,
+  0, 0, 1
+)
+
+```
+
+**After**
+
+```javascript
+matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+```
+
+
+**Before**
 
 ```javascript
 matrix(
@@ -3484,9 +2993,7 @@ matrix(
 
 ```
 
-
 **After**
-
 
 ```javascript
 matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
@@ -3494,32 +3001,7 @@ matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
 ```
 
 
-
 **Before**
-
-
-```javascript
-matrix(
-  1, 0, 0,
-  0, 1, 0,
-  0, 0, 1
-)
-
-```
-
-
-**After**
-
-
-```javascript
-matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
-
-```
-
-
-
-**Before**
-
 
 ```javascript
 import c from 'moduleC';
@@ -3528,9 +3010,7 @@ import b from 'moduleB';
 
 ```
 
-
 **After**
-
 
 ```javascript
 import a from "moduleA";
@@ -3540,32 +3020,23 @@ import c from "moduleC";
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier)
-
 
 ## prettier-json
 
 Restyles _JSON_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://prettier.io/docs/en/options.html#parser
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3574,24 +3045,20 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-x
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
     include:
     - '**/*.json'
     interpreters: []
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```json
 {
@@ -3601,9 +3068,7 @@ restylers:
 
 ```
 
-
 **After**
-
 
 ```json
 {
@@ -3614,18 +3079,13 @@ restylers:
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-json)
-
 
 ## prettier-markdown
 
 Restyles _Markdown_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
@@ -3633,14 +3093,10 @@ Restyles _Markdown_, runs automatically.
 - https://prettier.io/blog/2017/11/07/1.8.0.html
 - https://prettier.io/docs/en/index.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3649,7 +3105,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-x
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
     include:
     - '**/*.md'
     - '**/*.markdown'
@@ -3657,10 +3113,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -3668,15 +3121,12 @@ restylers:
 
 **Before**
 
-
 ```markdown
 Voilà! In view, a humble vaudevillian veteran cast vicariously as both victim and villain by the vicissitudes of Fate. This visage, no mere veneer of vanity, is a vestige of the vox populi, now vacant, vanished. However, this valourous visitation of a bygone vexation stands vivified and has vowed to vanquish these venal and virulent vermin vanguarding vice and vouchsafing the violently vicious and voracious violation of volition! The only verdict is vengeance; a vendetta held as a votive, not in vain, for the value and veracity of such shall one day vindicate the vigilant and the virtuous. Verily, this vichyssoise of verbiage veers most verbose, so let me simply add that it's my very good honour to meet you and you may call me V.
 
 ```
 
-
 **After**
-
 
 ```markdown
 Voilà! In view, a humble vaudevillian veteran cast vicariously as both victim
@@ -3693,18 +3143,13 @@ you and you may call me V.
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-markdown)
-
 
 ## prettier-yaml
 
 Restyles _Yaml_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
@@ -3712,14 +3157,10 @@ Restyles _Yaml_, runs automatically.
 - https://prettier.io/docs/en/
 - https://prettier.io/blog/2018/07/29/1.14.0.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3728,7 +3169,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-x
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
     include:
     - '**/*.yml'
     - '**/*.yaml'
@@ -3736,10 +3177,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -3747,16 +3185,13 @@ restylers:
 
 **Before**
 
-
 ```yaml
 foo: bar
 baz:   bat
 
 ```
 
-
 **After**
-
 
 ```yaml
 foo: bar
@@ -3765,18 +3200,13 @@ baz: bat
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-yaml)
-
 
 ## prettier-ruby
 
 Restyles _Ruby_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
@@ -3784,14 +3214,10 @@ Restyles _Ruby_, must be explicitly enabled.
 - https://prettier.io/docs/en/
 - https://github.com/prettier/plugin-ruby
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3808,17 +3234,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```ruby
        d=[30644250780,9003106878,
@@ -3837,9 +3259,7 @@ restylers:
 
 ```
 
-
 **After**
-
 
 ```ruby
 d = [
@@ -3864,32 +3284,23 @@ end
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-ruby)
-
 
 ## purty
 
 Restyles _PureScript_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/joneshf/purty#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3905,17 +3316,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```purescript
 module Ado where
@@ -3933,9 +3340,7 @@ bar = ado in 12
 
 ```
 
-
 **After**
-
 
 ```purescript
 module Ado where
@@ -3955,32 +3360,23 @@ bar = ado in 12
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-purty)
-
 
 ## pyment
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/dadadel/pyment
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -3997,10 +3393,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -4008,7 +3401,6 @@ restylers:
 
 **Before**
 
-
 ```python
 def func(param1=True, param2: str = 'default val'):
   '''Description of func with docstring groups style.
@@ -4033,9 +3425,7 @@ class A:
 
 ```
 
-
 **After**
-
 
 ```python
 def func(param1=True, param2: str = 'default val'):
@@ -4063,12 +3453,10 @@ class A:
         pass
 
 ```
-
 
 
 **Before**
 
-
 ```python
 def func(param1=True, param2: str = 'default val'):
   '''Description of func with docstring groups style.
@@ -4093,9 +3481,7 @@ class A:
 
 ```
 
-
 **After**
-
 
 ```python
 def func(param1=True, param2: str = 'default val'):
@@ -4125,32 +3511,23 @@ class A:
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-pyment)
-
 
 ## refmt
 
 Restyles _Reason_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/reasonml/reason-cli#reason-cli
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4166,17 +3543,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```reason
 type schoolPerson = Teacher
@@ -4193,9 +3566,7 @@ let greeting = person =>
 
 ```
 
-
 **After**
-
 
 ```reason
 type schoolPerson =
@@ -4214,32 +3585,23 @@ let greeting = person =>
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-refmt)
-
 
 ## reorder-python-imports
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/asottile/reorder_python_imports
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4256,17 +3618,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```python
 import os, sys
@@ -4279,9 +3637,7 @@ from crazy import example1
 
 ```
 
-
 **After**
-
 
 ```python
 import os
@@ -4295,32 +3651,23 @@ from foo import bar
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-reorder-python-imports)
-
 
 ## rubocop
 
 Restyles _Ruby_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://rubocop.readthedocs.io/en/latest/
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4339,17 +3686,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```ruby
 def some_method
@@ -4358,9 +3701,7 @@ end
 
 ```
 
-
 **After**
-
 
 ```ruby
 def some_method
@@ -4370,9 +3711,7 @@ end
 ```
 
 
-
 **Before**
-
 
 ```ruby
 case foo
@@ -4384,9 +3723,7 @@ end
 
 ```
 
-
 **After**
-
 
 ```ruby
 case foo
@@ -4399,9 +3736,7 @@ end
 ```
 
 
-
 **Before**
-
 
 ```ruby
 class User < ApplicationRecord
@@ -4472,9 +3807,7 @@ end
 
 ```
 
-
 **After**
-
 
 ```ruby
 class User < ApplicationRecord
@@ -4546,18 +3879,13 @@ end
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-rubocop)
-
 
 ## rustfmt
 
 Restyles _Rust_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
@@ -4565,14 +3893,10 @@ Restyles _Rust_, runs automatically.
 - https://github.com/rust-lang-nursery/rustfmt#readme
 - https://github.com/restyled-io/restyler/wiki/Errors#prettier
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4587,17 +3911,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```rust
 // Attributes should be on their own lines
@@ -4607,9 +3927,7 @@ struct CRepr {
 
 ```
 
-
 **After**
-
 
 ```rust
 // Attributes should be on their own lines
@@ -4621,18 +3939,13 @@ struct CRepr {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-rustfmt)
-
 
 ## scalafmt
 
 Restyles _Scala_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
@@ -4640,14 +3953,10 @@ Restyles _Scala_, must be explicitly enabled.
 - https://scalameta.org/scalafmt/
 - https://github.com/restyled-io/restyler/wiki/Errors#scalafmt
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4663,17 +3972,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```scala
 object a {
@@ -4686,9 +3991,7 @@ object a {
 
 ```
 
-
 **After**
-
 
 ```scala
 object a {
@@ -4702,32 +4005,23 @@ object a {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-scalafmt)
-
 
 ## shellcheck
 
 Restyles _POSIX sh_, _Bash_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/koalaman/shellcheck/wiki
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4745,10 +4039,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -4756,15 +4047,12 @@ restylers:
 
 **Before**
 
-
 ```sh
 echo $foo
 
 ```
 
-
 **After**
-
 
 ```sh
 echo "$foo"
@@ -4772,9 +4060,7 @@ echo "$foo"
 ```
 
 
-
 **Before**
-
 
 ```sh
 ## Example of a broken script.
@@ -4786,9 +4072,7 @@ done
 
 ```
 
-
 **After**
-
 
 ```sh
 ## Example of a broken script.
@@ -4801,9 +4085,16 @@ done
 ```
 
 
-
 **Before**
 
+```sh
+if (( $n > 1 )); then
+  echo yeah
+fi
+
+```
+
+**After**
 
 ```sh
 if (( $n > 1 )); then
@@ -4813,62 +4104,38 @@ fi
 ```
 
 
-**After**
-
-
-```sh
-if (( $n > 1 )); then
-  echo yeah
-fi
-
-```
-
-
-
 **Before**
 
-
 ```sh
 echo "$foo"
 
 ```
-
 
 **After**
 
-
 ```sh
 echo "$foo"
 
 ```
-
-
 
 
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-shellcheck)
-
 
 ## shellharden
 
 Restyles _POSIX sh_, _Bash_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/anordal/shellharden#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4887,17 +4154,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```sh
 #!/bin/sh
@@ -4906,9 +4169,7 @@ var=`echo $x`
 
 ```
 
-
 **After**
-
 
 ```sh
 #!/bin/sh
@@ -4918,32 +4179,23 @@ var=`echo "$x"`
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-shellharden)
-
 
 ## shfmt
 
 Restyles _POSIX sh_, _Bash_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/mvdan/sh#shfmt
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -4965,17 +4217,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```sh
 #!/bin/sh
@@ -4986,9 +4234,7 @@ if [ 2 -eq 2 ]
 
 ```
 
-
 **After**
-
 
 ```sh
 #!/bin/sh
@@ -4999,32 +4245,23 @@ fi
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-shfmt)
-
 
 ## sqlformat
 
 Restyles _SQL_, _PSQL_, must be explicitly enabled.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/andialbrecht/sqlparse#readme
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5041,10 +4278,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -5052,16 +4286,13 @@ restylers:
 
 **Before**
 
-
 ```sql
 -- hi there
 select * from students WHERE students.age > 10;
 
 ```
 
-
 **After**
-
 
 ```sql
 -- hi there
@@ -5073,9 +4304,7 @@ WHERE students.age > 10;
 ```
 
 
-
 **Before**
-
 
 ```sql
 INSERT
@@ -5083,9 +4312,7 @@ INSERT
 
 ```
 
-
 **After**
-
 
 ```sql
 INSERT INTO x
@@ -5094,32 +4321,23 @@ VALUES ()
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-sqlformat)
-
 
 ## standardrb
 
 Restyles _Ruby_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/testdouble/standard
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5136,17 +4354,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```ruby
 def some_method
@@ -5155,9 +4369,7 @@ end
 
 ```
 
-
 **After**
-
 
 ```ruby
 def some_method
@@ -5167,18 +4379,13 @@ end
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-standardrb)
-
 
 ## stylish-haskell
 
 Restyles _Haskell_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
@@ -5186,14 +4393,10 @@ Restyles _Haskell_, runs automatically.
 - https://github.com/jaspervdj/stylish-haskell
 - https://github.com/restyled-io/restyler/wiki/Errors#stylish-haskell
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5209,10 +4412,7 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
@@ -5220,16 +4420,13 @@ restylers:
 
 **Before**
 
-
 ```haskell
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
 ```
 
-
 **After**
-
 
 ```haskell
 {-# LANGUAGE OverloadedStrings #-}
@@ -5238,9 +4435,7 @@ restylers:
 ```
 
 
-
 **Before**
-
 
 ```haskell
 {-# LANGUAGE FlexibleContexts #-}
@@ -5475,9 +4670,7 @@ queryParts = map $ \(k, mv) -> decodeUtf8 k <> "=" <> maybe "" decodeUtf8 mv
 
 ```
 
-
 **After**
-
 
 ```haskell
 {-# LANGUAGE FlexibleContexts           #-}
@@ -5713,9 +4906,7 @@ queryParts = map $ \(k, mv) -> decodeUtf8 k <> "=" <> maybe "" decodeUtf8 mv
 ```
 
 
-
 **Before**
-
 
 ```haskell
 module Foo where
@@ -5725,9 +4916,7 @@ import FrontRow.Renaissance.RPIdentifier
 
 ```
 
-
 **After**
-
 
 ```haskell
 module Foo where
@@ -5738,32 +4927,23 @@ import           FrontRow.Renaissance.RPIdentifier
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-stylish-haskell)
-
 
 ## taplo
 
 Restyles _TOML_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://taplo.tamasfe.dev/cli/usage/formatting.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5779,17 +4959,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```toml
 var   = true
@@ -5801,9 +4977,7 @@ list = [
 
 ```
 
-
 **After**
-
 
 ```toml
 var = true
@@ -5812,9 +4986,7 @@ list = ['hi', 'there', 'now']
 ```
 
 
-
 **Before**
-
 
 ```toml
 long_list = [ 'hi', 'there' , 'now' , 'now' , 'now' , 'now' , 'now'
@@ -5829,9 +5001,7 @@ long_list = [ 'hi', 'there' , 'now' , 'now' , 'now' , 'now' , 'now'
 
 ```
 
-
 **After**
-
 
 ```toml
 long_list = [
@@ -5854,32 +5024,23 @@ long_list = [
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-taplo)
-
 
 ## terraform
 
 Restyles _Terraform_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://www.terraform.io/docs/commands/fmt.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5895,17 +5056,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```terraform
 locals = {
@@ -5916,9 +5073,7 @@ locals = {
 
 ```
 
-
 **After**
-
 
 ```terraform
 locals = {
@@ -5930,9 +5085,7 @@ locals = {
 ```
 
 
-
 **Before**
-
 
 ```terraform
 variable "policy_definition_name" {
@@ -5942,9 +5095,7 @@ variable "policy_definition_name" {
 
 ```
 
-
 **After**
-
 
 ```terraform
 variable "policy_definition_name" {
@@ -5955,32 +5106,23 @@ variable "policy_definition_name" {
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-terraform)
-
 
 ## verible
 
 Restyles _System Verilog_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://google.github.io/verible/verilog_format.html
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -5996,17 +5138,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```verilog
 module debounce(
@@ -6025,9 +5163,7 @@ stateType ns;
 
 ```
 
-
 **After**
-
 
 ```verilog
 module debounce (
@@ -6047,32 +5183,23 @@ endmodule
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-verible)
-
 
 ## whitespace
 
 Restyles _*_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/restyled-io/restyler-whitespace/blob/master/README.md
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -6094,17 +5221,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```
 line one  
@@ -6115,9 +5238,7 @@ line four
 
 ```
 
-
 **After**
-
 
 ```
 line one
@@ -6129,9 +5250,7 @@ line four
 ```
 
 
-
 **Before**
-
 
 ```
 line one
@@ -6142,11 +5261,9 @@ line three
 
 
 ```
-
 
 **After**
 
-
 ```
 line one
 line two
@@ -6154,23 +5271,19 @@ line two
 line three
 
 ```
-
 
 
 **Before**
 
-
 ```
 line one
 line two
 
 line three
 ```
-
 
 **After**
 
-
 ```
 line one
 line two
@@ -6178,57 +5291,44 @@ line two
 line three
 
 ```
-
 
 
 **Before**
 
-
 ```
 line one
 line two
 line three
 
 ```
-
 
 **After**
 
-
 ```
 line one
 line two
 line three
 
 ```
-
-
 
 
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-whitespace)
-
 
 ## yapf
 
 Restyles _Python_, runs automatically.
-
 
 <details>
 <summary>Documentation</summary>
 
 - https://github.com/google/yapf
 
-
 </details>
-
-
 
 <details>
 <summary>Configuration</summary>
-
 
 ```yaml
 restylers:
@@ -6245,17 +5345,13 @@ restylers:
 
 ```
 
-
 </details>
-
-
 
 <details>
 <summary>Examples</summary>
 
 
 **Before**
-
 
 ```python
 import math, sys;
@@ -6270,9 +5366,7 @@ def example1():
 
 ```
 
-
 **After**
-
 
 ```python
 import math, sys
@@ -6298,11 +5392,7 @@ def example1():
 ```
 
 
-
-
 </details>
 
-
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-yapf)
-
 
