@@ -2,6 +2,9 @@
 
 Language-specific restylers.
 
+For a rendered list of all restylers with documentation, configuration, and examples
+see [here](./_docs/restylers.md).
+
 ## Tests
 
 1. Install [`restyle`][install-restyle]
