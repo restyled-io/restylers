@@ -10,7 +10,7 @@ RUN \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
-ENV FOURMOLU_VERSION=0.16.2.0
+ENV FOURMOLU_VERSION=0.17.0.0
 RUN \
   curl -L -o /usr/bin/fourmolu \
   https://github.com/fourmolu/fourmolu/releases/download/v${FOURMOLU_VERSION}/fourmolu-${FOURMOLU_VERSION}-linux-x86_64 && \
