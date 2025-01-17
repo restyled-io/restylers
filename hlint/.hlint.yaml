@@ -1,0 +1,152 @@
+#
+# Meanings of hlint severity levels:
+#
+#    error ┃ A rule that is enforced and fails the build.
+# ─────────╂─────────────────────────────────────────────────────
+#     warn ┃ A rule that we intend to enforce soon.
+#          ┃
+#          ┃ Any warning severity should only be *temporary*;
+#          ┃ once all the violatations are fixed, a warning
+#          ┃ will escalated to error severity.
+#          ┃
+#          ┃ Place a TODO and date on each warning to indicate
+#          ┃ when each rule enforcement was disabled so that we
+#          ┃ can notice neglect.
+# ─────────╂─────────────────────────────────────────────────────
+#     hint ┃ A sujective suggestion that is sometimes useful but
+#          ┃ not a rule and should not be applied blindly.
+# ─────────╂─────────────────────────────────────────────────────
+#   ignore ┃ Used to suppress hlint defaults that we don't want.
+#
+#
+# If a rule truly does not apply in a particular situation, see
+# https://github.com/ndmitchell/hlint/#ignoring-hints
+# for ad hoc ways to suppress hlint.
+
+---
+
+# By default, everything is an error
+- error: {name: ""}
+
+# Some things we don't care about at all
+- ignore: {name: "Use module export list"}
+- ignore: {name: "Redundant bracket due to operator fixities"}
+- ignore: {name: "Use explicit module export list"}
+- ignore: {name: "Redundant do"}
+- ignore: {name: "Eta reduce"}
+- ignore: {name: "Use list comprehension"}
+- ignore: {name: "Reduce duplication"}
+- ignore: {name: "Use fmap"}  # we use classy prelude so this would be in error
+- ignore: {name: "Avoid restricted function", within: Application}
+- ignore: {name: "Use ."}  # commonly broken or less readable
+- ignore: {name: "Use &&"}  # we like "and" at 3+ elements
+- ignore: {name: "Use ||"}  # we like "or" at 3+ elements
+- ignore: {name: "Use join"}  # this often leads to cryptic code when do notation is easier to read
+- ignore: {name: "Redundant ^."}  # confused by esqueleto's (^.)
+- ignore: {name: "Fuse on/on"}  # confused by esqueleto's on
+
+# Custom errors
+- error: {lhs: mapM, rhs: traverse}
+- error: {lhs: mapM_, rhs: traverse_}
+- error: {lhs: forM, rhs: for}
+- error: {lhs: forM_, rhs: for_}
+- error: {lhs: return, rhs: pure}
+- error: {lhs: "only (entityKey x)", rhs: "onlyKey x"}
+
+- error:
+    name: "Avoid unsafePerformIO"
+    lhs: "unsafePerformIO"
+    rhs: "unsafePerformIO"
+    note: |
+      Avoid `unsafePerformIO`, which bypasses the type system to perform arbitrary
+      `IO` effects from pure code
+
+- warn: # TODO (2023-08-17) escalate to error severity
+    name: "Avoid error"
+    lhs: "error"
+    rhs: "error"
+    note: |
+      `error` will not raise until the value is demanded, which can lead to a
+      confusing debugging experience. Prefer modeling the error in the type
+      system via `Maybe` or `Either` or `fail` in an appropriate `Monad`. If
+      that's not possible, throw an actual exception. Lastly, if an error in a
+      pure context cannot be avoided (e.g. `fromString`), ignore this specific
+      case via an `ANN` pragma.
+
+- error:
+    name: "Avoid fromJust"
+    lhs: "fromJust"
+    rhs: "fromJust"
+    note: |
+      `fromJust` uses `error` internally, and comes with all the same caveats
+      (see "Avoid error"). Prefer `fromJustNoteM`.
+
+- warn: # TODO (2023-08-17) escalate to error severity
+    name: "Avoid fromJustNote"
+    lhs: "fromJustNote"
+    rhs: "fromJustNote"
+    note: |
+      `fromJustNote` uses `error` internally, and comes with all the same
+      caveats (see "Avoid error"). Prefer `fromJustNoteM`.
+
+# Ignore everything within our generated clients
+- ignore: {within: "FreckleCurriculaApi.**.*"}
+- ignore: {within: "RenaissanceGUR.**.*"}
+- ignore: {within: "PerformanceAnalysisService.**.*"}
+- ignore: {within: "BenchmarkService.**.*"}
+- ignore: {within: "RecurlyApi.**.*"}
+
+# Specify additional command line arguments
+- arguments:
+  - -XBangPatterns
+  - -XDataKinds
+  - -XDeriveAnyClass
+  - -XDeriveFoldable
+  - -XDeriveFunctor
+  - -XDeriveGeneric
+  - -XDeriveLift
+  - -XDeriveTraversable
+  - -XDerivingStrategies
+  - -XFlexibleContexts
+  - -XFlexibleInstances
+  - -XGADTs
+  - -XGeneralizedNewtypeDeriving
+  - -XLambdaCase
+  - -XMultiParamTypeClasses
+  - -XNoImplicitPrelude
+  - -XNoMonomorphismRestriction
+  - -XOverloadedRecordDot
+  - -XOverloadedStrings
+  - -XQuasiQuotes
+  - -XRankNTypes
+  - -XRecordWildCards
+  - -XScopedTypeVariables
+  - -XStandaloneDeriving
+  - -XTypeApplications
+  - -XTypeFamilies
+
+- modules:
+  - {name: [Data.Set], as: Set}
+  - {name: [Data.Map], as: Map}
+  - {name: [Data.HashSet], as: HashSet}
+  - {name: [Data.HashMap.Strict], as: HashMap}
+  - {name: [Data.Text], as: T}
+  - {name: [Data.Text.Encoding], as: T}
+  - {name: [Data.Text.IO], as: T}
+  - {name: [Data.Text.Lazy], as: TL}
+  - {name: [Data.Text.Lazy.Encoding], as: TL}
+  - {name: [Data.Text.IO.Lazy], as: TL}
+  - {name: [Data.ByteString], as: BS}
+  - {name: [Data.ByteString.Lazy], as: BSL}
+  - {name: [Data.ByteString.Char8], as: BS8}
+  - {name: [Data.ByteString.Lazy.Char8], as: BSL8}
+  - {name: [Data.List.NonEmpty], as: NE}
+  - {name: [Data.Sequence], as: Seq}
+  - {name: Database.Esqueleto.Legacy, within: []}
+  - {name: Freckle.CurriculaApi, as: CurriculaApi}
+  - name:
+    - Freckle.App.OpenTelemetry
+    - OpenTelemetry.Context
+    - OpenTelemetry.Context.ThreadLocal
+    - OpenTelemetry.Trace
+    as: Trace

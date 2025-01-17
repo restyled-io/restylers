@@ -1,0 +1,41 @@
+name: HLint Repro
+
+on:
+  pull_request:
+
+jobs:
+  restyled:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "hlint, then same exact refactor command as 2 steps (works)"
+        working-directory: hlint
+        run: |
+          docker run \
+            --rm \
+            --net=none \
+            --cpu-shares=512 \
+            --memory=128m \
+            --volume "$PWD":/code \
+            public.ecr.aws/restyled-io/restyler-hlint:v3.5 sh -c '
+          hlint --serialise --no-exit-code ./BadFile.hs > hlint.refact;
+          exec refactor ./BadFile.hs -v2 -i --refact-file hlint.refact -X TypeFamilies -X TypeApplications -X StandaloneDeriving -X ScopedTypeVariables -X RecordWildCards -X RankNTypes -X QuasiQuotes -X OverloadedStrings -X OverloadedRecordDot -X MultiParamTypeClasses -X LambdaCase -X GeneralizedNewtypeDeriving -X GADTs -X FlexibleInstances -X FlexibleContexts -X DerivingStrategies -X DeriveTraversable -X DeriveLift -X DeriveGeneric -X DeriveFunctor -X DeriveFoldable -X DeriveAnyClass -X DataKinds -X BangPatterns -X Cpp -X OverlappingInstances -X UndecidableInstances -X IncoherentInstances -X UndecidableSuperClasses -X MonoLocalBinds -X DeepSubsumption -X RelaxedPolyRec -X ExtendedDefaultRules -X ForeignFunctionInterface -X UnliftedFFITypes -X InterruptibleFFI -X CApiFFI -X GHCForeignImportPrim -X JavaScriptFFI -X ParallelArrays -X TemplateHaskell -X TemplateHaskellQuotes -X QualifiedDo -X ImplicitParams -X AllowAmbiguousTypes -X UnliftedNewtypes -X UnliftedDatatypes -X TypeFamilyDependencies -X TypeInType -X OverloadedLists -X NumDecimals -X DisambiguateRecordFields -X NamedFieldPuns -X ViewPatterns -X GADTSyntax -X NPlusKPatterns -X DoAndIfThenElse -X BlockArguments -X RebindableSyntax -X ConstraintKinds -X PolyKinds -X InstanceSigs -X ApplicativeDo -X LinearTypes -X DeriveDataTypeable -X AutoDeriveTypeable -X DefaultSignatures -X DerivingVia -X TypeSynonymInstances -X ConstrainedClassMethods -X NullaryTypeClasses -X FunctionalDependencies -X UnicodeSyntax -X ExistentialQuantification -X MagicHash -X EmptyDataDecls -X KindSignatures -X RoleAnnotations -X ParallelListComp -X PostfixOperators -X TupleSections -X PatternGuards -X LiberalTypeSynonyms -X ImpredicativeTypes -X TypeOperators -X ExplicitNamespaces -X PackageImports -X ExplicitForAll -X AlternativeLayoutRuleTransitional -X DatatypeContexts -X NondecreasingIndentation -X RelaxedLayout -X TraditionalRecordSyntax -X MultiWayIf -X BinaryLiterals -X HexFloatLiterals -X DuplicateRecordFields -X OverloadedLabels -X EmptyCase -X PatternSynonyms -X PartialTypeSignatures -X NamedWildCards -X Strict -X StrictData -X EmptyDataDeriving -X NumericUnderscores -X QuantifiedConstraints -X ImportQualifiedPost -X CUSKs -X StandaloneKindSignatures -X FieldSelectors -X NoMonomorphismRestriction -X NoImplicitPrelude
+          '
+
+      - name: "hlint --refactor (exits 255)"
+        working-directory: hlint
+        run: |
+          docker run \
+            --rm \
+            --net=none \
+            --cpu-shares=512 \
+            --memory=128m \
+            --volume "$PWD":/code \
+            public.ecr.aws/restyled-io/restyler-hlint:v3.5 \
+            hlint \
+            --verbose \
+            --refactor \
+            --refactor-options="-i" \
+            -- \
+            ./BadFile.hs
