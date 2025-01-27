@@ -21,6 +21,17 @@
       ],
       "depNameTemplate": "fourmolu",
       "datasourceTemplate": "hackage"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "shellcheck/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV SHELLCHECK_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "shellcheck",
+      "datasourceTemplate": "github-releases"
     }
   ]
 }
