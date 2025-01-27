@@ -2,7 +2,7 @@
 enabled: true
 name: verible
 version_cmd: |
-  verible-verilog-format --version | grep -v "Commit" | grep -v "Built"
+  verible-verilog-format --version | awk '/^Version/ { print $2 }'
 command:
   - verible-verilog-format
   - "--inplace"
@@ -13,7 +13,7 @@ supports_multiple_path: true
 documentation:
   - https://google.github.io/verible/verilog_format.html
 metadata:
-  languages: 
+  languages:
     - "System Verilog"
   tests:
     - contents: |
@@ -44,4 +44,4 @@ metadata:
           logic timerDone;
           logic clrTimer;
         endmodule
-      
+
