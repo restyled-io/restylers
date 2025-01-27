@@ -52,7 +52,7 @@
         "verible/Dockerfile"
       ],
       "matchStrings": [
-        "ENV VERIBLE_VERSION=(?<currentValue>.*?)\\n"
+        "ENV VERIBLE_VERSION (?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "verible",
       "packageNameTemplate": "chipsalliance/verible",
