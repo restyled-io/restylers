@@ -1,11 +1,11 @@
 # Restylers
 
-Built from `715cfdecadad1cdd42a3e6b46ff6980278336ea7`.
+Built from `16178edcca061ce51cdfe9c594788db7ce3678a1`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
 | [astyle](#astyle) | C, C++, C#, Java*, Objective-C | `v3.6.2` | Yes |
-| [autopep8](#autopep8) | Python | `v2.3.1` | Yes |
+| [autopep8](#autopep8) | Python | `v2.3.2` | Yes |
 | [black](#black) | Python | `v24.10.0` | Yes |
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
@@ -17,7 +17,7 @@ Built from `715cfdecadad1cdd42a3e6b46ff6980278336ea7`.
 | [dotnet-format](#dotnet-format) | C#, VB.NET | `v5.1.250801` | No |
 | [elm-format](#elm-format) | Elm | `v0.6.1-alpha-3` | Yes |
 | [fantomas](#fantomas) | F# | `v3.3.0` | Yes |
-| [fourmolu](#fourmolu) | Haskell | `v0.16.2.0` | No |
+| [fourmolu](#fourmolu) | Haskell | `v0.17.0.0` | No |
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.23.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
@@ -34,7 +34,7 @@ Built from `715cfdecadad1cdd42a3e6b46ff6980278336ea7`.
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20230701` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.3` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.67.1` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.68.1` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.4.2-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.4.2-3` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.4.2-3` | Yes |
@@ -44,18 +44,18 @@ Built from `715cfdecadad1cdd42a3e6b46ff6980278336ea7`.
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.14.0` | Yes |
-| [rubocop](#rubocop) | Ruby | `v1.70.0` | No |
+| [rubocop](#rubocop) | Ruby | `v1.71.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
-| [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.9.0` | Yes |
+| [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.10.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.4.3` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.5.3` | No |
-| [standardrb](#standardrb) | Ruby | `v1.43.0` | Yes |
+| [standardrb](#standardrb) | Ruby | `v1.44.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v0.12.24-2` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-1318-gf6b4485` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-3927-ge90ef184` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -210,7 +210,7 @@ restylers:
     command:
     - autopep8
     - --in-place
-    image: restyled/restyler-autopep8:v2.3.1
+    image: public.ecr.aws/restyled-io/restyler-autopep8:v2.3.2
     include:
     - '**/*.py'
     interpreters:
@@ -1314,7 +1314,7 @@ restylers:
     - fourmolu
     - --mode
     - inplace
-    image: restyled/restyler-fourmolu:v0.16.2.0
+    image: public.ecr.aws/restyled-io/restyler-fourmolu:v0.17.0.0
     include:
     - '**/*.hs'
     interpreters: []
@@ -2892,7 +2892,7 @@ restylers:
     command:
     - php-cs-fixer
     - fix
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.67.1
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.68.1
     include:
     - '**/*.php'
     interpreters: []
@@ -3678,7 +3678,7 @@ restylers:
     - --auto-correct
     - --fail-level
     - fatal
-    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.70.0
+    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.71.0
     include:
     - '**/*.rb'
     interpreters:
@@ -4029,7 +4029,7 @@ restylers:
     arguments: []
     command:
     - shellcheck-fix
-    image: restyled/restyler-shellcheck:v0.9.0
+    image: public.ecr.aws/restyled-io/restyler-shellcheck:v0.10.0
     include:
     - '**/*.sh'
     - '**/*.bash'
@@ -4346,7 +4346,7 @@ restylers:
     command:
     - standardrb
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.43.0
+    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.44.0
     include:
     - '**/*.rb'
     interpreters:
@@ -5131,7 +5131,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: restyled/restyler-verible:v0.0-1318-gf6b4485
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-3927-ge90ef184
     include:
     - '**/*.sv'
     interpreters: []
