@@ -1,0 +1,13 @@
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/github"
+      successCommentCondition: false
+  - - "@semantic-release/git"
+      assets: "_docs"
+      message: "chore(release): update docs"
+
+branches:
+  - main
+  - name: rc/*
+    prerelease: '${name.replace(/^rc\//g, "rc-")}'
