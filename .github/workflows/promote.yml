@@ -11,6 +11,18 @@ on:
     paths:
       - .github/workflows/promote.yml
 
+  # Called by release
+  workflow_call:
+    inputs:
+      from:
+        type: string
+        description: Tag to promote from
+        required: true
+      to:
+        type: string
+        description: Tag to promote to
+        required: true
+
   # Or manually trigger
   workflow_dispatch:
     inputs:
@@ -30,17 +42,17 @@ jobs:
       - id: prep
         run: |
           case "$GITHUB_EVENT_NAME" in
-            'schedule')
+            schedule)
               # Promote dev to stable on the schedule
               echo 'from=dev'
               echo 'to=stable'
             ;;
-            'pull_request')
+            pull_request)
               # Promote dev to itself just to test our logic
               echo 'from=dev'
               echo 'to=dev'
             ;;
-            'workflow_dispatch')
+            workflow_call|workflow_dispatch)
               # Promote what was given
               echo 'from=${{ inputs.from }}'
               echo 'to=${{ inputs.to }}'
