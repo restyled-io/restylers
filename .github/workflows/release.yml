@@ -16,11 +16,21 @@ jobs:
     if: ${{ needs.test.outputs.restylers }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - uses: actions/download-artifact@v4
         with: {name: tools}
+
       - uses: actions/download-artifact@v4
         with: {name: manifest}
 
+      - id: token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_PRIVATE_KEY }}
 
       - name: Update _docs
         run: |
@@ -32,6 +42,8 @@ jobs:
         with:
           extra_plugins: |
             @semantic-release/git
+        env:
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
 
     outputs:
       new_release_git_head: ${{ steps.release.outputs.new_release_git_head }}
