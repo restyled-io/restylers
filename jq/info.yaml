@@ -1,7 +1,8 @@
 ---
 enabled: false
 name: jq
-version: v1.6-3
+version_cmd: |
+  jq --version | sed 's/^jq-/v/; s/$/-3/'
 command:
   - jq-write
 include:
