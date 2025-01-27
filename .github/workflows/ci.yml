@@ -9,6 +9,10 @@ on:
         type: boolean
         description: To push built images or not
         default: false
+    outputs:
+      restylers:
+        description: Changed restylers
+        value: ${{ jobs.changes.outputs.restylers }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
