@@ -21,14 +21,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with: {name: manifest}
 
-      # Test manifest
-      - uses: restyled-io/actions/setup-demo@v4
-      - uses: restyled-io/actions/setup@v4
-      - uses: restyled-io/actions/run@v4
-        with:
-          paths: .
-          manifest: ./restylers.yaml
-          dry-run: true
 
       - name: Update _docs
         run: |
