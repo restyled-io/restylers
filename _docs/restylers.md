@@ -1,6 +1,6 @@
 # Restylers
 
-Built from `0e6db517a032fcf11b9051777384ee16a8a0a112`.
+Built from `f9df1d96a22235289572ffaa06c3f8e8b35ed6f3`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
@@ -23,7 +23,7 @@ Built from `0e6db517a032fcf11b9051777384ee16a8a0a112`.
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
 | [hindent](#hindent) | Haskell | `v6.1.1` | No |
 | [hlint](#hlint) | Haskell | `v3.5` | No |
-| [isort](#isort) | Python | `v5.13.2` | Yes |
+| [isort](#isort) | Python | `v6.0.0` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
 | [jq](#jq) | JSON | `v1.6-3` | No |
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
@@ -1692,7 +1692,7 @@ restylers:
     arguments: []
     command:
     - isort
-    image: restyled/restyler-isort:v5.13.2
+    image: public.ecr.aws/restyled-io/restyler-isort:v6.0.0
     include:
     - '**/*.py'
     interpreters:
