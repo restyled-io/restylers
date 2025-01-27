@@ -2,7 +2,7 @@
 enabled: false
 name: jq
 version_cmd: |
-  jq --version | sed 's/^jq-/v/; s/$/-3/'
+  jq --version | sed 's/^jq-/v/; s/$/-4/'
 command:
   - jq-write
 include:
