@@ -1,6 +1,6 @@
 # Restylers
 
-Built from `f9df1d96a22235289572ffaa06c3f8e8b35ed6f3`.
+Built from `90ff2d649b95ed99b4197c05bff90ff31d71cb78`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
@@ -23,9 +23,9 @@ Built from `f9df1d96a22235289572ffaa06c3f8e8b35ed6f3`.
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
 | [hindent](#hindent) | Haskell | `v6.1.1` | No |
 | [hlint](#hlint) | Haskell | `v3.5` | No |
-| [isort](#isort) | Python | `v6.0.0` | Yes |
+| [isort](#isort) | Python | `v5.13.2` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
-| [jq](#jq) | JSON | `v1.6-3` | No |
+| [jq](#jq) | JSON | `v1.6-4` | No |
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
@@ -1692,7 +1692,7 @@ restylers:
     arguments: []
     command:
     - isort
-    image: public.ecr.aws/restyled-io/restyler-isort:v6.0.0
+    image: restyled/restyler-isort:v5.13.2
     include:
     - '**/*.py'
     interpreters:
@@ -1884,7 +1884,7 @@ restylers:
     arguments: []
     command:
     - jq-write
-    image: public.ecr.aws/restyled-io/restyler-jq:v1.6-3
+    image: public.ecr.aws/restyled-io/restyler-jq:v1.6-4
     include:
     - '**/*.json'
     interpreters: []
