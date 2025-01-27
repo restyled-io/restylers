@@ -9,5 +9,18 @@
   "automergeType": "pr",
   "ignorePaths": ["prettier-ruby/Gemfile"],
   "semanticCommitScope": "{{baseDir}}",
-  "semanticCommitType": "feat"
+  "semanticCommitType": "feat",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "fourmolu/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV FOURMOLU_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "fourmolu",
+      "datasourceTemplate": "hackage"
+    }
+  ]
 }
