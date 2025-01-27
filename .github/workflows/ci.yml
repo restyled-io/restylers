@@ -149,7 +149,7 @@ jobs:
           dry-run: true
 
   update-docs:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs:
       - tools
       - restylers
