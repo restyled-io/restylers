@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+      - rc/*
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+    with:
+      push: true
+
+  release:
+    needs: test
+    if: ${{ needs.test.outputs.restylers }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: tools}
+      - uses: actions/download-artifact@v4
+        with: {name: manifest}
+
+      # Test manifest
+      - uses: restyled-io/actions/setup-demo@v4
+      - uses: restyled-io/actions/setup@v4
+      - uses: restyled-io/actions/run@v4
+        with:
+          paths: .
+          manifest: ./restylers.yaml
+          dry-run: true
+
+      - name: Update _docs
+        run: |
+          chmod +x ./restylers-docs
+          ./restylers-docs > _docs/restylers.md
+
+      - id: release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/git
+
+    outputs:
+      new_release_git_head: ${{ steps.release.outputs.new_release_git_head }}
+
+  promote-dev:
+    needs: release
+    uses: ./.github/workflows/promote.yml
+    with:
+      from: ${{ needs.release.outputs.new_release_git_head }}
+      to: dev
