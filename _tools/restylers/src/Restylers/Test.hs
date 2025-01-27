@@ -71,11 +71,11 @@ testRestylers pull restylers hspecArgs = do
                     [ "restylers_version" .= ("testing" :: Text)
                     , "restylers"
                         .= [ restyler
-                              { Manifest.enabled = True
-                              , Manifest.include = [pack file]
-                              , Manifest.command = fromMaybe restyler.command test.command
-                              , Manifest.arguments = fromMaybe restyler.arguments test.arguments
-                              }
+                               { Manifest.enabled = True
+                               , Manifest.include = [pack file]
+                               , Manifest.command = fromMaybe restyler.command test.command
+                               , Manifest.arguments = fromMaybe restyler.arguments test.arguments
+                               }
                            ]
                     ]
 
@@ -102,7 +102,9 @@ testRestylers pull restylers hspecArgs = do
 
                 restyled <- T.readFile file
 
-                when (restyled == test.contents)
+                -- Unless we explicitly expected the restyling to produce no
+                -- differences, fail informatively if there were none
+                when (restyled == test.contents && test.restyled /= test.contents)
                   $ expectationFailure
                   $ "Restyler made no changes to "
                   <> file
