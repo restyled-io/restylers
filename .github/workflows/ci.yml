@@ -2,8 +2,13 @@ name: CI
 
 on:
   pull_request:
-  push:
-    branches: main
+
+  workflow_call:
+    inputs:
+      push:
+        type: boolean
+        description: To push built images or not
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -50,16 +55,18 @@ jobs:
       restylers: ${{ steps.filtered.outputs.restylers }}
 
   restylers:
+    needs:
+      - tools
+      - changes
+    if: ${{ needs.changes.outputs.restylers }}
+
+    runs-on: ubuntu-latest
+
     permissions:
       contents: read
       pull-requests: read
       id-token: write
 
-    needs:
-      - tools
-      - changes
-    if: ${{ needs.changes.outputs.restylers }}
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -73,14 +80,14 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf \
             https://raw.githubusercontent.com/restyled-io/restyler/main/install | sudo sh
 
-      - if: ${{ github.ref_name == 'main' }}
+      - if: ${{ inputs.push }}
         name: AWS Login
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ vars.AWS_ROLE }}
 
-      - if: ${{ github.ref_name == 'main' }}
+      - if: ${{ inputs.push }}
         name: Create ECR repositories if necessary
         run: |
           for name in ${{ needs.changes.outputs.restylers }}; do
@@ -92,7 +99,7 @@ jobs:
             fi
           done
 
-      - if: ${{ github.ref_name == 'main' }}
+      - if: ${{ inputs.push }}
         name: ECR Login
         id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
@@ -107,7 +114,7 @@ jobs:
           ${{ runner.debug && '--debug' || '' }}
           --write tested.yaml
           --no-pull
-          ${{ github.ref_name == 'main' && '--push' || '' }}
+          ${{ inputs.push && '--push' || '' }}
           ${{ needs.changes.outputs.restylers }}
 
       - name: Build merged restylers.yaml
@@ -139,88 +146,3 @@ jobs:
           name: manifest
           path: restylers.yaml
           if-no-files-found: error
-
-      - uses: restyled-io/actions/setup-demo@v4
-      - uses: restyled-io/actions/setup@v4
-      - uses: restyled-io/actions/run@v4
-        with:
-          paths: .
-          manifest: ./restylers.yaml
-          dry-run: true
-
-  update-docs:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs:
-      - tools
-      - restylers
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - uses: actions/download-artifact@v4
-        with: {name: tools}
-
-      - uses: actions/download-artifact@v4
-        with: {name: manifest}
-
-      - name: Update and commit _docs
-        run: |
-          chmod +x ./restylers-docs
-
-          ./restylers-docs > _docs/restylers.md
-
-          git config user.name "github-actions[bot]"
-          git config user.email "commits@restyled.io"
-
-          if ! git commit -m "Update docs" _docs/restylers.md; then
-            echo "No documentation changes"
-            exit 0
-          fi
-
-          git push
-
-  release:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: [restylers]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - id: tag
-        name: Tag
-        uses: mathieudutour/github-tag-action@v6.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: manifest
-
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.tag.outputs.new_tag }}
-          name: Release ${{ steps.tag.outputs.new_tag }}
-          body: ${{ steps.tag.outputs.changelog }}
-          files: |
-            restylers.yaml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Update dev tag
-        uses: rickstaa/action-create-tag@v1
-        with:
-          tag: dev
-          force_push_tag: true
-          commit_sha: ${{ github.sha }}
-
-      - name: Update dev release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: dev
-          files: |
-            restylers.yaml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
