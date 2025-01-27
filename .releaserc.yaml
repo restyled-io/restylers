@@ -2,9 +2,9 @@ plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
   - - "@semantic-release/github"
-      successCommentCondition: false
+    - successCommentCondition: false
   - - "@semantic-release/git"
-      assets: "_docs"
+    - assets: "_docs"
       message: "chore(release): update docs"
 
 branches:
