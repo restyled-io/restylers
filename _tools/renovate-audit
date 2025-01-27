@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2001
+set -euo pipefail
+
+tmp=$(mktemp)
+trap 'rm -rf "$tmp"' EXIT
+
+gh pr list \
+  --author 'renovate[bot]' \
+  --base main \
+  --state all \
+  --limit 100 \
+  --json title \
+  --jq '.[] | .title' | while read -r title; do
+    read -r dep < <(sed 's/^feat(\(.*\)): .*$/\1/' <<<"$title")
+    read -r msg < <(sed 's/^feat(.*): \(.*\)$/\1/' <<<"$title")
+    grep -Fwo "$dep" <<<"$msg" || true
+  done |
+  sort -u >"$tmp"
+
+ret=0
+
+for info in */info.yaml; do
+  dep=$(dirname "$info")
+
+  if grep -Fxq "$dep" "$tmp"; then
+    printf '\e[32m✓\e[0m \e[35m%s\e[0m updated by renovate\n' "$dep"
+  else
+    printf '\e[31m✗\e[0m \e[35m%s\e[0m \e[1mnot\e[0m updated by renovate\n' "$dep"
+    ret=1
+  fi
+done
+
+exit "$ret"
