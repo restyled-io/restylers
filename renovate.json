@@ -57,7 +57,7 @@
       "depNameTemplate": "verible",
       "packageNameTemplate": "chipsalliance/verible",
       "datasourceTemplate": "github-releases",
-      "versioning": "loose"
+      "versioningTemplate": "loose"
     }
   ]
 }
