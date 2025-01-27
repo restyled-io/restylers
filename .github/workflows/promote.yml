@@ -11,17 +11,9 @@ on:
     paths:
       - .github/workflows/promote.yml
 
-  # Called by release
-  workflow_call:
-    inputs:
-      from:
-        type: string
-        description: Tag to promote from
-        required: true
-      to:
-        type: string
-        description: Tag to promote to
-        required: true
+  # Promote all published releases to dev
+  release:
+    types: [published]
 
   # Or manually trigger
   workflow_dispatch:
@@ -52,7 +44,12 @@ jobs:
               echo 'from=dev'
               echo 'to=dev'
             ;;
-            push|workflow_dispatch) # push is workflow_call
+            release)
+              # Promote releases to dev
+              echo 'from=${{ github.event.release.tag_name }}'
+              echo 'to=dev'
+            ;;
+            workflow_dispatch)
               # Promote what was given
               echo 'from=${{ inputs.from }}'
               echo 'to=${{ inputs.to }}'
