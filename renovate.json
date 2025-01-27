@@ -25,6 +25,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "jq/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV JQ_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "jq",
+      "packageNameTemplate": "stedolan/jq",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "shellcheck/Dockerfile"
       ],
       "matchStrings": [
@@ -33,6 +45,19 @@
       "depNameTemplate": "shellcheck",
       "packageNameTemplate": "koalaman/shellcheck",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "verible/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV VERIBLE_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "verible",
+      "packageNameTemplate": "chipsalliance/verible",
+      "datasourceTemplate": "github-releases",
+      "versioning": "loose"
     }
   ]
 }
