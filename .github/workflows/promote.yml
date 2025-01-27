@@ -52,7 +52,7 @@ jobs:
               echo 'from=dev'
               echo 'to=dev'
             ;;
-            workflow_call|workflow_dispatch)
+            push|workflow_dispatch) # push is workflow_call
               # Promote what was given
               echo 'from=${{ inputs.from }}'
               echo 'to=${{ inputs.to }}'
