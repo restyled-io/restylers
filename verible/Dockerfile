@@ -12,10 +12,10 @@ RUN \
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/*
 #Install verible
-ENV VERIBLE_VERSION v0.0-1318-gf6b4485
+ENV VERIBLE_VERSION v0.0-3929-g931a6910
 RUN \
   curl --silent --fail --show-error --location \
-    https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-Ubuntu-20.04-focal-x86_64.tar.gz | \
+    https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-linux-static-x86_64.tar.gz | \
   tar -xzf - &&\
   mv verible*/bin/verible-verilog-format /usr/bin &&\
   rm -r verible*
