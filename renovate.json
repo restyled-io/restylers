@@ -30,7 +30,7 @@
       "matchStrings": [
         "ENV SHELLCHECK_VERSION=(?<currentValue>.*?)\\n"
       ],
-      "depNameTemplate": "shellcheck",
+      "depNameTemplate": "koalaman/shellcheck",
       "datasourceTemplate": "github-releases"
     }
   ]
