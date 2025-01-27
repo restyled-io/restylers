@@ -46,11 +46,11 @@ jobs:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
 
     outputs:
-      new_release_git_head: ${{ steps.release.outputs.new_release_git_head }}
+      new_release_git_tag: ${{ steps.release.outputs.new_release_git_tag }}
 
   promote-dev:
     needs: release
     uses: ./.github/workflows/promote.yml
     with:
-      from: ${{ needs.release.outputs.new_release_git_head }}
+      from: ${{ needs.release.outputs.new_release_git_tag }}
       to: dev
