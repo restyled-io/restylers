@@ -127,8 +127,12 @@ jobs:
           ruby -r yaml > restylers.yaml <<'EOM'
           base = YAML.safe_load_file("./base.yaml")
           tested = YAML.safe_load_file("./tested.yaml")
-          merged = base.map do |b|
-            tested.find { _1.fetch("name") == b.fetch("name") } || b
+          merged = [base, tested].flat_map do |y|
+            y.map { _1.fetch("name") }
+          end.sort.uniq.map do |name|
+            tested.find { _1.fetch("name") == name } or
+              base.find { _1.fetch("name") == name } or
+              raise "impossible"
           end
           puts YAML.dump(merged)
           EOM
