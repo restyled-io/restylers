@@ -1,7 +1,7 @@
 FROM alpine:3.21
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
-ENV PG_FORMAT_TAG v5.3
+ENV PG_FORMAT_TAG v5.5
 ENV PG_FORMAT_ARCHIVE \
   https://github.com/darold/pgFormatter/archive/$PG_FORMAT_TAG.tar.gz
 
