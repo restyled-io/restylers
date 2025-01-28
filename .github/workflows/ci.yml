@@ -112,7 +112,7 @@ jobs:
 
       # TODO: lint
 
-      - name: Build, test, and push (if main)
+      - name: Build${{ inputs.push && ', test, and push' || ' and test'}}
         run: >-
           restylers
           ${{ runner.debug && '--debug' || '' }}
