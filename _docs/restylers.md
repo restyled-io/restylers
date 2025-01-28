@@ -1,6 +1,6 @@
 # Restylers
 
-Built from `8f6f666ca69f63ce3238bc2433d639fc6f332a33`.
+Built from `6b2ca6a5112ee9685b50323641a0553d8e30ea12`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
@@ -54,7 +54,7 @@ Built from `8f6f666ca69f63ce3238bc2433d639fc6f332a33`.
 | [standardrb](#standardrb) | Ruby | `v1.44.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
-| [terraform](#terraform) | Terraform | `v0.12.24-2` | Yes |
+| [terraform](#terraform) | Terraform | `v1.10.5` | Yes |
 | [verible](#verible) | System Verilog | `v0.0-3931-g19aee2cb` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
@@ -5049,7 +5049,7 @@ restylers:
     command:
     - terraform
     - fmt
-    image: public.ecr.aws/restyled-io/restyler-terraform:v0.12.24-2
+    image: public.ecr.aws/restyled-io/restyler-terraform:v1.10.5
     include:
     - '**/*.tf'
     interpreters: []
