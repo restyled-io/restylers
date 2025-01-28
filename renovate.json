@@ -73,6 +73,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "pg_format/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV PG_FORMAT_TAG (?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "pg_format",
+      "packageNameTemplate": "darold/pgFormatter",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "shellcheck/Dockerfile"
       ],
       "matchStrings": [

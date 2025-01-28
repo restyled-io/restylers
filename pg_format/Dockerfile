@@ -1,9 +1,9 @@
 FROM alpine:3.21
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
-ENV PG_FORMAT_VERSION 5.3
-ENV PG_FORMAT_RELEASE \
-  https://github.com/darold/pgFormatter/archive/v$PG_FORMAT_VERSION.tar.gz
+ENV PG_FORMAT_TAG v5.3
+ENV PG_FORMAT_ARCHIVE \
+  https://github.com/darold/pgFormatter/archive/$PG_FORMAT_TAG.tar.gz
 
 RUN apk add --no-cache \
   curl \
@@ -12,14 +12,14 @@ RUN apk add --no-cache \
 
 RUN \
   cd /tmp && \
-  curl -L -o pgFormatter.tar.gz "$PG_FORMAT_RELEASE" && \
+  curl -L -o pgFormatter.tar.gz "$PG_FORMAT_ARCHIVE" && \
   tar xzf pgFormatter.tar.gz && \
-  cd pgFormatter-$PG_FORMAT_VERSION && \
+  cd pgFormatter-* && \
   perl Makefile.PL && \
   make && \
   make install && \
   cd /tmp && \
-  rm -rf ./pgFormatter.tar.gz ./pgFormatter-$PG_FORMAT_VERSION
+  rm -rf ./pgFormatter.tar.gz ./pgFormatter-*
 
 RUN mkdir -p /code
 WORKDIR /code
