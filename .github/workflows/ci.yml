@@ -110,8 +110,6 @@ jobs:
         with:
           registry-type: public
 
-      # TODO: lint
-
       - name: Build${{ inputs.push && ', test, and push' || ' and test'}}
         run: >-
           restylers
@@ -159,3 +157,23 @@ jobs:
           name: manifest
           path: restylers.yaml
           if-no-files-found: error
+
+  lint:
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - id: prep
+        run: |
+          {
+            printf 'dockerfiles='
+            for restyler in ${{ needs.changes.outputs.restylers }}; do
+              printf './%s/Dockerfile ' "$restyler"
+            done
+            echo
+          } >>"$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: ${{ steps.prep.outputs.dockerfiles }}
+          failure-threshold: error
