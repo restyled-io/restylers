@@ -8,6 +8,7 @@
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
+| [clazy](#clazy) | C++ | `v1.11-4ubuntu2-2` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
 | [dart-format](#dart-format) | Dart | `v2.3.4` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
@@ -36,8 +37,8 @@
 | [prettier](#prettier) | JavaScript | `v3.4.2-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.4.2-3` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.4.2-3` | Yes |
-| [prettier-yaml](#prettier-yaml) | Yaml | `v3.4.2-3` | Yes |
 | [prettier-ruby](#prettier-ruby) | Ruby | `v3.2.2-1` | No |
+| [prettier-yaml](#prettier-yaml) | Yaml | `v3.4.2-3` | Yes |
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
@@ -564,6 +565,80 @@ void formatted_code_again;
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-clang-format)
+
+## clazy
+
+Restyles _C++_, runs automatically.
+
+<details>
+<summary>Documentation</summary>
+
+- https://github.com/KDE/clazy
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+restylers:
+- clazy:
+    arguments: []
+    command:
+    - clazy-standalone-apply
+    image: public.ecr.aws/restyled-io/restyler-clazy:v1.11-4ubuntu2-2
+    include:
+    - '**/*.cpp'
+    interpreters: []
+
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+
+**Before**
+
+```c++
+#include <iostream>
+#include <QString>
+
+int main() {
+  QString str = "hello";
+  QString result = str.left(1);
+
+  std::cout << "Original string: " << str.toStdString() << std::endl;
+  std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
+
+  return 0;
+}
+
+```
+
+**After**
+
+```c++
+#include <iostream>
+#include <QString>
+
+int main() {
+  QString str = QStringLiteral("hello");
+  QString result = str.left(1);
+
+  std::cout << "Original string: " << str.toStdString() << std::endl;
+  std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
+
+  return 0;
+}
+
+```
+
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-clazy)
 
 ## cmake-format
 
@@ -3145,63 +3220,6 @@ you and you may call me V.
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-markdown)
 
-## prettier-yaml
-
-Restyles _Yaml_, runs automatically.
-
-<details>
-<summary>Documentation</summary>
-
-- https://prettier.io/docs/en/
-- https://prettier.io/blog/2018/07/29/1.14.0.html
-
-</details>
-
-<details>
-<summary>Configuration</summary>
-
-```yaml
-restylers:
-- prettier-yaml:
-    arguments: []
-    command:
-    - prettier
-    - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
-    include:
-    - '**/*.yml'
-    - '**/*.yaml'
-    interpreters: []
-
-```
-
-</details>
-
-<details>
-<summary>Examples</summary>
-
-
-**Before**
-
-```yaml
-foo: bar
-baz:   bat
-
-```
-
-**After**
-
-```yaml
-foo: bar
-baz: bat
-
-```
-
-
-</details>
-
-[See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-yaml)
-
 ## prettier-ruby
 
 Restyles _Ruby_, must be explicitly enabled.
@@ -3285,6 +3303,63 @@ end
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-ruby)
+
+## prettier-yaml
+
+Restyles _Yaml_, runs automatically.
+
+<details>
+<summary>Documentation</summary>
+
+- https://prettier.io/docs/en/
+- https://prettier.io/blog/2018/07/29/1.14.0.html
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+restylers:
+- prettier-yaml:
+    arguments: []
+    command:
+    - prettier
+    - --write
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.4.2-3
+    include:
+    - '**/*.yml'
+    - '**/*.yaml'
+    interpreters: []
+
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+
+**Before**
+
+```yaml
+foo: bar
+baz:   bat
+
+```
+
+**After**
+
+```yaml
+foo: bar
+baz: bat
+
+```
+
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier-yaml)
 
 ## purty
 
