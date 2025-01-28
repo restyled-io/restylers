@@ -60,6 +60,19 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "perltidy/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV PERLTIDY_TAG (?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "perltidy",
+      "packageNameTemplate": "perltidy/perltidy",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "shellcheck/Dockerfile"
       ],
       "matchStrings": [
