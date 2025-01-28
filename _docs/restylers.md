@@ -1,7 +1,5 @@
 # Restylers
 
-Built from `6b2ca6a5112ee9685b50323641a0553d8e30ea12`.
-
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
 | [astyle](#astyle) | C, C++, C#, Java*, Objective-C | `v3.6.2` | Yes |
