@@ -14,6 +14,17 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "clazy/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV CLAZY_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "clazy",
+      "datasourceTemplate": "deb"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "fourmolu/Dockerfile"
       ],
       "matchStrings": [
