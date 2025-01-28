@@ -1,6 +1,6 @@
 # Restylers
 
-Built from `90ff2d649b95ed99b4197c05bff90ff31d71cb78`.
+Built from `6551d5e5d2018048c0545eaf5be15cf7c2ee7d80`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
@@ -55,7 +55,7 @@ Built from `90ff2d649b95ed99b4197c05bff90ff31d71cb78`.
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v0.12.24-2` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-3927-ge90ef184` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-3931-g19aee2cb` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -5131,7 +5131,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-3927-ge90ef184
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-3931-g19aee2cb
     include:
     - '**/*.sv'
     interpreters: []
