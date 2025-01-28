@@ -1,6 +1,6 @@
 # Restylers
 
-Built from `6551d5e5d2018048c0545eaf5be15cf7c2ee7d80`.
+Built from `8f6f666ca69f63ce3238bc2433d639fc6f332a33`.
 
 | Restyler | Language(s) | Version | Runs automatically? |
 | -------- | ----------- | ------- | ------------------- |
