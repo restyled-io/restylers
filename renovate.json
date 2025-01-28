@@ -25,6 +25,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "dfmt/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV DFMT_VERSION (?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "dfmt",
+      "packageNameTemplate": "dlang-community/dfmt",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "fourmolu/Dockerfile"
       ],
       "matchStrings": [

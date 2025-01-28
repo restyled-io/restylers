@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: dfmt
-version: v0.14.2
+version_cmd: |
+  dfmt --version
 command:
   - dfmt
   - "--inplace"
