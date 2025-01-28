@@ -160,6 +160,7 @@ jobs:
 
   lint:
     needs: changes
+    if: ${{ needs.changes.outputs.restylers }}
     runs-on: ubuntu-latest
     steps:
       - id: prep
