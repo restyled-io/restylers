@@ -31,25 +31,12 @@ import Network.HTTP.Types.Status (statusIsSuccessful)
 import Restylers.Docs.Render
 import Restylers.Manifest (Restyler)
 import System.Directory (doesFileExist)
-import System.Environment (getArgs, lookupEnv)
+import System.Environment (getArgs)
 import System.Exit (die)
 import System.IO (hPutStrLn, stderr)
-import System.Process.Typed (ExitCode (..), proc, readProcess)
 
 main :: IO ()
-main = do
-  docs <- renderDocs <$> getGitRef <*> decodeManifest
-  T.putStrLn docs
-
-getGitRef :: IO Text
-getGitRef =
-  pack
-    <$> runMaybesOrDie
-      "GH_SHA or GITHUB_SHA not set, and git-rev-parse failed"
-      [ lookupEnv "GH_SHA"
-      , lookupEnv "GITHUB_SHA"
-      , readGit ["rev-parse", "HEAD"]
-      ]
+main = T.putStrLn . renderDocs =<< decodeManifest
 
 decodeManifest :: IO [Restyler]
 decodeManifest = Yaml.decodeThrow =<< readManifest
@@ -62,19 +49,6 @@ readManifest =
     , readLocalManifest "restylers.yaml"
     , fetchRemoteManifest "dev"
     ]
-
-readGit :: [String] -> IO (Maybe String)
-readGit args = do
-  (ec, out, err) <- readProcess $ proc "git" args
-  case ec of
-    ExitSuccess -> pure $ Just $ BSL8.unpack $ BSL8.dropWhileEnd (== '\n') out
-    ExitFailure i -> do
-      hPutStrLn stderr
-        $ unlines
-          [ "WARNING: reading git-rev-parse failed (" <> show i <> ")"
-          , BSL8.unpack err
-          ]
-      pure Nothing
 
 readLocalManifest :: FilePath -> IO (Maybe ByteString)
 readLocalManifest path = do

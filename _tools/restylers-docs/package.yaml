@@ -49,7 +49,6 @@ library:
     - stache
     - text
     - transformers
-    - typed-process
     - yaml
 
 executables:

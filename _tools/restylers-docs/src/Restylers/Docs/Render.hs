@@ -29,9 +29,8 @@ import Restylers.Name (RestylerName (..))
 import Text.Mustache.Compile.TH
 import Text.Mustache.Render
 
-data TPayload = TPayload
-  { ref :: Text
-  , restylers :: [RPayload]
+newtype TPayload = TPayload
+  { restylers :: [RPayload]
   }
   deriving stock (Generic)
   deriving anyclass (ToJSON)
@@ -82,15 +81,15 @@ toMPayload restyler =
           $ object
             [ "restylers"
                 .= [ object
-                      [ infoYamlKey
-                          .= object
-                            [ "image" .= restyler.image
-                            , "command" .= restyler.command
-                            , "arguments" .= restyler.arguments
-                            , "include" .= restyler.include
-                            , "interpreters" .= restyler.interpreters
-                            ]
-                      ]
+                       [ infoYamlKey
+                           .= object
+                             [ "image" .= restyler.image
+                             , "command" .= restyler.command
+                             , "arguments" .= restyler.arguments
+                             , "include" .= restyler.include
+                             , "interpreters" .= restyler.interpreters
+                             ]
+                       ]
                    ]
             ]
     }
@@ -116,12 +115,12 @@ instance ToJSON RPayload where
     (Object a, Object b) -> Object $ KeyMap.union a b
     (x, _) -> x -- "impossible"
 
-renderDocs :: Text -> [Restyler] -> Text
-renderDocs ref restylers =
+renderDocs :: [Restyler] -> Text
+renderDocs =
   TL.toStrict
-    $ renderMustache template
-    $ toJSON
-    $ TPayload ref
-    $ map toRPayload restylers
+    . renderMustache template
+    . toJSON
+    . TPayload
+    . map toRPayload
  where
   template = $(compileMustacheDir "template.md" ".")

@@ -47,7 +47,6 @@ library
     , stache
     , text
     , transformers
-    , typed-process
     , yaml
   default-language: GHC2021
 
