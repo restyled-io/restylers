@@ -9,7 +9,7 @@
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
-| [dart-format](#dart-format) | Dart | `v2.3.7` | Yes |
+| [dart-format](#dart-format) | Dart | `v2.3.4` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
 | [dhall-format](#dhall-format) | Dhall | `1.42.1` | Yes |
 | [dotnet-format](#dotnet-format) | C#, VB.NET | `v5.1.250801` | No |
@@ -852,7 +852,7 @@ restylers:
     command:
     - dart
     - format
-    image: public.ecr.aws/restyled-io/restyler-dart-format:v2.3.7
+    image: restyled/restyler-dart-format:v2.3.4
     include:
     - '**/*.dart'
     interpreters: []
@@ -914,7 +914,7 @@ restylers:
     command:
     - dfmt
     - --inplace
-    image: restyled/restyler-dfmt:v0.14.2
+    image: public.ecr.aws/restyled-io/restyler-dfmt:v0.14.2
     include:
     - '**/*.d'
     interpreters: []
