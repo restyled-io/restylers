@@ -4,7 +4,7 @@ command:
   - clazy-standalone-apply
 supports_arg_sep: false
 version_cmd: |
-  apt-cache policy clazy | sed '/^ *Installed: \(.*\)$/!d; s//v\1/'
+  apt-cache policy clazy | sed '/^ *Installed: \(.*\)$/!d; s//v\1-2/'
 include:
   - "**/*.cpp"
 documentation:
