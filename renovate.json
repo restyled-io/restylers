@@ -131,6 +131,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "stylish-haskell/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV STYLISH_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "stylish-haskell",
+      "packageNameTemplate": "haskell/stylish-haskell",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "verible/Dockerfile"
       ],
       "matchStrings": [
