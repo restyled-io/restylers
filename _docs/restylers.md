@@ -4142,7 +4142,7 @@ restylers:
     command:
     - shellharden
     - --replace
-    image: public.ecr.aws/restyled-io/restyler-shellharden:v4.1.1-3
+    image: restyled/restyler-shellharden:v4.1.1-3
     include:
     - '**/*.sh'
     - '**/*.bash'
