@@ -82,6 +82,18 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "ormolu/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV ORMOLU_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "jq",
+      "packageNameTemplate": "tweag/ormolu",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "perltidy/Dockerfile"
       ],
       "matchStrings": [
