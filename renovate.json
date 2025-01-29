@@ -59,6 +59,17 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "hindent/stack.yaml"
+      ],
+      "matchStrings": [
+        "  - hindent-(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "hindent",
+      "datasourceTemplate": "hackage"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "jq/Dockerfile"
       ],
       "matchStrings": [
