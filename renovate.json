@@ -53,8 +53,7 @@
       "matchStrings": [
         "ENV FOURMOLU_VERSION=(?<currentValue>.*?)\\n"
       ],
-      "depNameTemplate": "fourmolu",
-      "datasourceTemplate": "hackage"
+      "depNameTemplate": "fourmolu", "datasourceTemplate": "hackage"
     },
     {
       "customType": "regex",
@@ -127,6 +126,17 @@
       "depNameTemplate": "shellcheck",
       "packageNameTemplate": "koalaman/shellcheck",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "shellharden/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV SHELLHARDEN_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "shellharden",
+      "datasourceTemplate": "crate"
     },
     {
       "customType": "regex",
