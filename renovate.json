@@ -141,6 +141,19 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "shfmt/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV SHFMT_VERSION=(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "shfmt",
+      "packageNameTemplate": "sh/v3",
+      "registryUrlTemplate": "https://mvdan.cc",
+      "datasourceTemplate": "go"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "stylish-haskell/Dockerfile"
       ],
       "matchStrings": [
