@@ -14,6 +14,17 @@
     {
       "customType": "regex",
       "fileMatch": [
+        "cabal-fmt/stack.yaml"
+      ],
+      "matchStrings": [
+        "  - cabal-fmt-(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "cabal-fmt",
+      "datasourceTemplate": "hackage"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
         "clazy/Dockerfile"
       ],
       "matchStrings": [
