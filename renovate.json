@@ -147,8 +147,7 @@
         "ENV SHFMT_VERSION=(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "shfmt",
-      "packageNameTemplate": "sh/v3",
-      "registryUrlTemplate": "https://mvdan.cc",
+      "packageNameTemplate": "mvdan.cc/sh",
       "datasourceTemplate": "go"
     },
     {
