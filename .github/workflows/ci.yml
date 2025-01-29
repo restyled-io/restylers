@@ -181,4 +181,3 @@ jobs:
       - uses: hadolint/hadolint-action@master
         with:
           dockerfile: ${{ steps.prep.outputs.dockerfiles }}
-          failure-threshold: error
