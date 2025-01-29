@@ -152,6 +152,19 @@
       "packageNameTemplate": "chipsalliance/verible",
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "whitespace/info.yaml"
+      ],
+      "matchStrings": [
+        "^image: restyled/restyler-whitespace:(?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "whitespace",
+      "packageNameTemplate": "restyled-io/restyler-whitespace",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "pvp"
     }
   ]
 }
