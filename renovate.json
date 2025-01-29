@@ -163,7 +163,7 @@
       ],
       "depNameTemplate": "whitespace",
       "packageNameTemplate": "restyled-io/restyler-whitespace",
-      "datasourceTemplate": "github-tags",
+      "datasourceTemplate": "github-releases",
       "versioningTemplate": "pvp"
     }
   ]
