@@ -49,7 +49,7 @@ for info in */info.yaml; do
     continue
   fi
 
-  if jq -r '.customManagers[] | .fileMatch[]' renovate.json | grep -Fxq "$dep/Dockerfile"; then
+  if jq -r '.customManagers[] | .fileMatch[]' renovate.json | grep -q "^$dep/.*"; then
     printf ' \e[1;33m⏲\e[0m \e[35m%s\e[0m is configured, but not yet updated by renovate\n' "$dep"
     continue
   fi
