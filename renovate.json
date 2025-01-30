@@ -20,7 +20,8 @@
         "  - cabal-fmt-(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "cabal-fmt",
-      "datasourceTemplate": "hackage"
+      "datasourceTemplate": "hackage",
+      "versioningTemplate": "regex:^(?<major>[0-9]+\\.[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+).$"
     },
     {
       "customType": "regex",
@@ -53,7 +54,9 @@
       "matchStrings": [
         "ENV FOURMOLU_VERSION=(?<currentValue>.*?)\\n"
       ],
-      "depNameTemplate": "fourmolu", "datasourceTemplate": "hackage"
+      "depNameTemplate": "fourmolu",
+      "datasourceTemplate": "hackage",
+      "versioningTemplate": "regex:^(?<major>[0-9]+\\.[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+).$"
     },
     {
       "customType": "regex",
@@ -64,7 +67,8 @@
         "  - hindent-(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "hindent",
-      "datasourceTemplate": "hackage"
+      "datasourceTemplate": "hackage",
+      "versioningTemplate": "regex:^(?<major>[0-9]+\\.[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+).$"
     },
     {
       "customType": "regex",
@@ -186,7 +190,7 @@
       "depNameTemplate": "whitespace",
       "packageNameTemplate": "restyled-io/restyler-whitespace",
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "pvp"
+      "versioningTemplate": "regex:^(?<major>[0-9]+\\.[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+).$"
     }
   ]
 }
