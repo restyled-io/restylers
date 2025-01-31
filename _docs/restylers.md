@@ -19,7 +19,7 @@
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.23.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
-| [hindent](#hindent) | Haskell | `v6.1.1` | No |
+| [hindent](#hindent) | Haskell | `v6.2.1` | No |
 | [hlint](#hlint) | Haskell | `v3.5` | No |
 | [isort](#isort) | Python | `v5.13.2` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
@@ -1579,7 +1579,7 @@ restylers:
     arguments: []
     command:
     - hindent
-    image: restyled/restyler-hindent:v6.1.1
+    image: public.ecr.aws/restyled-io/restyler-hindent:v6.2.1
     include:
     - '**/*.hs'
     interpreters: []
