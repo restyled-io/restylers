@@ -978,7 +978,7 @@ restylers:
     - --inplace
     command:
     - dhall
-    image: restyled/restyler-dhall-format:1.42.1
+    image: public.ecr.aws/restyled-io/restyler-dhall-format:1.42.1
     include:
     - '**/*.dhall'
     interpreters: []
@@ -1997,7 +1997,7 @@ restylers:
     arguments: []
     command:
     - nixfmt
-    image: restyled/restyler-nixfmt:v0.6.0
+    image: public.ecr.aws/restyled-io/restyler-nixfmt:v0.6.0
     include:
     - '**/*.nix'
     interpreters: []
@@ -2222,7 +2222,7 @@ restylers:
     arguments: []
     command:
     - nixpkgs-fmt
-    image: restyled/restyler-nixpkgs-fmt:v1.3.0
+    image: public.ecr.aws/restyled-io/restyler-nixpkgs-fmt:v1.3.0
     include:
     - '**/*.nix'
     interpreters: []
