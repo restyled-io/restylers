@@ -44,6 +44,7 @@ jobs:
           extra_plugins: |
             @semantic-release/git
         env:
+          FORCE_COLOR: 1
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
 
     outputs:
