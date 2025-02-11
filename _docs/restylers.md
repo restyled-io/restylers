@@ -49,7 +49,7 @@
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.4.3` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.5.3` | No |
-| [standardrb](#standardrb) | Ruby | `v1.44.0` | Yes |
+| [standardrb](#standardrb) | Ruby | `v1.45.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.10.5` | Yes |
@@ -4344,7 +4344,7 @@ restylers:
     command:
     - standardrb
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.44.0
+    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.45.0
     include:
     - '**/*.rb'
     interpreters:
