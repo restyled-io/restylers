@@ -172,12 +172,18 @@ jobs:
           {
             printf 'dockerfiles='
             for restyler in ${{ needs.changes.outputs.restylers }}; do
-              printf './%s/Dockerfile ' "$restyler"
+              dockerfile="./$restyler/Dockerfile"
+
+              # Won't exist in case of an override
+              if [[ -f "$dockerfile" ]]; then
+                printf '%s ' "$dockerfile"
+              fi
             done
             echo
           } >>"$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@master
+      - if: ${{ steps.prep.outputs.dockerfiles }}
+        uses: hadolint/hadolint-action@master
         with:
           dockerfile: ${{ steps.prep.outputs.dockerfiles }}
