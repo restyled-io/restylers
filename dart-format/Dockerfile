@@ -1,4 +1,4 @@
-FROM dart:3.7.1
+FROM dart:3.7.2
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN mkdir -p /code
 WORKDIR /code
