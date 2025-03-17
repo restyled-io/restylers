@@ -31,7 +31,7 @@
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250214.03` | Yes |
-| [pg_format](#pg_format) | PSQL | `v5.3` | Yes |
+| [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.71.0` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.5.3-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.5.3-3` | Yes |
@@ -2829,7 +2829,7 @@ restylers:
     command:
     - pg_format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-pg_format:v5.3
+    image: public.ecr.aws/restyled-io/restyler-pg_format:v5.6
     include:
     - '**/*.sql'
     interpreters: []
