@@ -30,7 +30,7 @@
 | [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
-| [perltidy](#perltidy) | Perl | `v20250214.03` | Yes |
+| [perltidy](#perltidy) | Perl | `v20250311` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.73.1` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.5.3-3` | Yes |
@@ -2491,7 +2491,7 @@ restylers:
     command:
     - perltidy
     - -st
-    image: public.ecr.aws/restyled-io/restyler-perltidy:v20250214.03
+    image: public.ecr.aws/restyled-io/restyler-perltidy:v20250311
     include:
     - '**/*.pl'
     - '**/*.pm'
