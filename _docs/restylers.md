@@ -32,7 +32,7 @@
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250311.02` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.73.1` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.75.0` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.5.3-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.5.3-3` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.5.3-3` | Yes |
@@ -2890,7 +2890,7 @@ restylers:
     command:
     - php-cs-fixer
     - fix
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.73.1
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.75.0
     include:
     - '**/*.php'
     interpreters: []
