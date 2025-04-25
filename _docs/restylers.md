@@ -27,7 +27,7 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.1.0` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250311.02` | Yes |
@@ -53,7 +53,7 @@
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.10.5` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-3969-g6a70680a` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-3971-g391fd325` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -2277,7 +2277,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.1.0
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
@@ -5129,7 +5129,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-3969-g6a70680a
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-3971-g391fd325
     include:
     - '**/*.sv'
     interpreters: []
