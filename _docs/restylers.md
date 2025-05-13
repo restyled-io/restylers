@@ -27,10 +27,10 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.2.0` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
-| [perltidy](#perltidy) | Perl | `v20250311.03` | Yes |
+| [perltidy](#perltidy) | Perl | `v20250311.04` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.75.0` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.5.3-3` | Yes |
@@ -2277,7 +2277,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.2.0
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
@@ -2491,7 +2491,7 @@ restylers:
     command:
     - perltidy
     - -st
-    image: public.ecr.aws/restyled-io/restyler-perltidy:v20250311.03
+    image: public.ecr.aws/restyled-io/restyler-perltidy:v20250311.04
     include:
     - '**/*.pl'
     - '**/*.pm'
