@@ -9,9 +9,9 @@
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
-| [dart-format](#dart-format) | Dart | `v3.1.0-wip` | Yes |
+| [dart-format](#dart-format) | Dart | `v3.0.1-wip` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
-| [dhall-format](#dhall-format) | Dhall | `1.42.1` | Yes |
+| [dhall-format](#dhall-format) | Dhall | `1.42.2` | Yes |
 | [dotnet-format](#dotnet-format) | C#, VB.NET | `v5.1.250801` | No |
 | [elm-format](#elm-format) | Elm | `v0.6.1-alpha-3` | Yes |
 | [fantomas](#fantomas) | F# | `v3.3.0` | Yes |
@@ -852,7 +852,7 @@ restylers:
     command:
     - dart
     - format
-    image: public.ecr.aws/restyled-io/restyler-dart-format:v3.1.0-wip
+    image: public.ecr.aws/restyled-io/restyler-dart-format:v3.0.1-wip
     include:
     - '**/*.dart'
     interpreters: []
@@ -978,7 +978,7 @@ restylers:
     - --inplace
     command:
     - dhall
-    image: public.ecr.aws/restyled-io/restyler-dhall-format:1.42.1
+    image: public.ecr.aws/restyled-io/restyler-dhall-format:1.42.2
     include:
     - '**/*.dhall'
     interpreters: []
