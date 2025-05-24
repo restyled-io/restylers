@@ -27,7 +27,7 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.2.0` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250311.04` | Yes |
@@ -2277,7 +2277,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.2.0
     include:
     - '**/*.groovy'
     interpreters: []
