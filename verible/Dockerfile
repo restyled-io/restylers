@@ -12,7 +12,7 @@ RUN \
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/*
 #Install verible
-ENV VERIBLE_VERSION v0.0-3997-gd6924079
+ENV VERIBLE_VERSION v0.0-3999-g93adb37c
 RUN \
   curl --silent --fail --show-error --location \
     https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-linux-static-x86_64.tar.gz | \
