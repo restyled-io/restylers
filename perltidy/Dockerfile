@@ -1,6 +1,6 @@
 FROM perl:5 AS builder
 RUN mkdir -p build
-ENV PERLTIDY_TAG 20250311.06
+ENV PERLTIDY_TAG 20250311.07
 ENV PERLTIDY_SRC https://github.com/perltidy/perltidy/archive/refs/tags/${PERLTIDY_TAG}.tar.gz
 RUN \
   bash -c 'set -o pipefail; curl -L "$PERLTIDY_SRC" | tar xzf - -C /tmp' && \
