@@ -1,2 +1,2 @@
 autopep8==2.3.2
-pycodestyle==2.13.0
+pycodestyle==2.14.0
