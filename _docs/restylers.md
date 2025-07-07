@@ -32,7 +32,7 @@
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250616.02` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.80.0` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.81.0` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.6.2-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.6.2-3` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.6.2-3` | Yes |
@@ -52,7 +52,7 @@
 | [standardrb](#standardrb) | Ruby | `v1.50.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
-| [terraform](#terraform) | Terraform | `v1.12.2` | Yes |
+| [terraform](#terraform) | Terraform | `v1.10.5` | Yes |
 | [verible](#verible) | System Verilog | `v0.0-4007-g98bdb38a` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
@@ -2890,7 +2890,7 @@ restylers:
     command:
     - php-cs-fixer
     - fix
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.80.0
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.81.0
     include:
     - '**/*.php'
     interpreters: []
@@ -5047,7 +5047,7 @@ restylers:
     command:
     - terraform
     - fmt
-    image: public.ecr.aws/restyled-io/restyler-terraform:v1.12.2
+    image: public.ecr.aws/restyled-io/restyler-terraform:v1.10.5
     include:
     - '**/*.tf'
     interpreters: []
