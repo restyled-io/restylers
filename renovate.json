@@ -10,6 +10,18 @@
   "ignorePaths": ["prettier-ruby/Gemfile"],
   "semanticCommitScope": "{{baseDir}}",
   "semanticCommitType": "feat",
+  "terraform": {
+    "enabled": true
+  },
+  "html": {
+    "enabled": true
+  },
+  "customDatasources": {
+    "terraform": {
+      "defaultRegistryUrlTemplate": "https://releases.hashicorp.com/terraform/",
+      "format": "html"
+    }
+  },
   "customManagers": [
     {
       "customType": "regex",
@@ -190,6 +202,18 @@
       "depNameTemplate": "whitespace",
       "packageNameTemplate": "restyled-io/restyler-whitespace",
       "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "terraform/Dockerfile"
+      ],
+      "matchStrings": [
+        "ENV TERRAFORM_VERSION (?<currentValue>.*?)\\n"
+      ],
+      "depNameTemplate": "terraform",
+      "datasourceTemplate": "custom.terraform",
       "versioningTemplate": "loose"
     }
   ]
