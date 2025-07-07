@@ -2,7 +2,7 @@
 enabled: true
 name: terraform
 version_cmd: |
-  terraform version | awk '/Terraform/ { print $2 }'
+  terraform version | awk '/Terraform v/ { print $2 }'
 command:
   - terraform
   - fmt
