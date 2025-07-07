@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.22
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
 ENV PG_FORMAT_TAG v5.6
