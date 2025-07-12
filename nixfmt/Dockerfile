@@ -1,4 +1,4 @@
-FROM nixos/nix:2.30.0
+FROM nixos/nix:2.30.1
 LABEL maintainer="Chris Martin <ch.martin@gmail.com>"
 RUN echo "experimental-features = nix-command flakes" > /etc/nix/nix.conf
 RUN nix profile install --impure 'github:NixOS/nixfmt?rev=83de1eceaae8a891ae52a3a2b82226540207309e'
