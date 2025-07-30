@@ -27,12 +27,12 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.2.1` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250711` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.6` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.84.0` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.85.1` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.6.2-3` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.6.2-3` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.6.2-3` | Yes |
@@ -2277,7 +2277,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.2.1
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
@@ -2890,7 +2890,7 @@ restylers:
     command:
     - php-cs-fixer
     - fix
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.84.0
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.85.1
     include:
     - '**/*.php'
     interpreters: []
