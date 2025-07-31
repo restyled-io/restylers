@@ -1,6 +1,9 @@
 ---
 overrides: prettier
 name: prettier-yaml
+command:
+  - /app/node_modules/.bin/prettier
+  - "--write"
 include:
   - "**/*.yml"
   - "**/*.yaml"

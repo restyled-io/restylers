@@ -1,6 +1,9 @@
 ---
 overrides: prettier
 name: prettier-markdown
+command:
+  - /app/node_modules/.bin/prettier
+  - "--write"
 include:
   - "**/*.md"
   - "**/*.markdown"
