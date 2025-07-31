@@ -3041,7 +3041,7 @@ restylers:
 - prettier-json:
     arguments: []
     command:
-    - prettier
+    - /app/node_modules/.bin/prettier
     - --write
     image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
     include:
@@ -3101,7 +3101,7 @@ restylers:
 - prettier-markdown:
     arguments: []
     command:
-    - prettier
+    - /app/node_modules/.bin/prettier
     - --write
     image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
     include:
@@ -3249,7 +3249,7 @@ restylers:
 - prettier-yaml:
     arguments: []
     command:
-    - prettier
+    - /app/node_modules/.bin/prettier
     - --write
     image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
     include:
