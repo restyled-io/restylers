@@ -1,6 +1,6 @@
 {
   "extends": [
-    "config:base",
+    "config:recommended",
     ":semanticCommits",
     ":semanticCommitTypeAll(feat)",
     ":disableDependencyDashboard"
@@ -8,8 +8,10 @@
   "automerge": true,
   "automergeType": "pr",
   "dependencyDashboard": true,
-  "ignorePaths": ["prettier-ruby/Gemfile"],
-  "semanticCommitScope": "{{baseDir}}",
+  "ignorePaths": [
+    "prettier-ruby/Gemfile"
+  ],
+  "semanticCommitScope": "{{packageFileDir}}",
   "semanticCommitType": "feat",
   "terraform": {
     "enabled": true
@@ -26,8 +28,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "cabal-fmt/stack.yaml"
+      "managerFilePatterns": [
+        "/cabal-fmt/stack.yaml/"
       ],
       "matchStrings": [
         "  - cabal-fmt-(?<currentValue>.*?)\\n"
@@ -38,8 +40,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "clazy/Dockerfile"
+      "managerFilePatterns": [
+        "/clazy/Dockerfile/"
       ],
       "matchStrings": [
         "ENV CLAZY_VERSION=(?<currentValue>.*?)\\n"
@@ -49,8 +51,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "dfmt/Dockerfile"
+      "managerFilePatterns": [
+        "/dfmt/Dockerfile/"
       ],
       "matchStrings": [
         "ENV DFMT_VERSION (?<currentValue>.*?)\\n"
@@ -61,8 +63,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "fourmolu/Dockerfile"
+      "managerFilePatterns": [
+        "/fourmolu/Dockerfile/"
       ],
       "matchStrings": [
         "ENV FOURMOLU_VERSION=(?<currentValue>.*?)\\n"
@@ -73,8 +75,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "hindent/stack.yaml"
+      "managerFilePatterns": [
+        "/hindent/stack.yaml/"
       ],
       "matchStrings": [
         "  - hindent-(?<currentValue>.*?)\\n"
@@ -85,8 +87,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "jq/Dockerfile"
+      "managerFilePatterns": [
+        "/jq/Dockerfile/"
       ],
       "matchStrings": [
         "ENV JQ_VERSION=(?<currentValue>.*?)\\n"
@@ -97,8 +99,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "ormolu/Dockerfile"
+      "managerFilePatterns": [
+        "/ormolu/Dockerfile/"
       ],
       "matchStrings": [
         "ENV ORMOLU_VERSION=(?<currentValue>.*?)\\n"
@@ -109,8 +111,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "perltidy/Dockerfile"
+      "managerFilePatterns": [
+        "/perltidy/Dockerfile/"
       ],
       "matchStrings": [
         "ENV PERLTIDY_TAG (?<currentValue>.*?)\\n"
@@ -122,8 +124,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "pg_format/Dockerfile"
+      "managerFilePatterns": [
+        "/pg_format/Dockerfile/"
       ],
       "matchStrings": [
         "ENV PG_FORMAT_TAG (?<currentValue>.*?)\\n"
@@ -134,8 +136,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "shellcheck/Dockerfile"
+      "managerFilePatterns": [
+        "/shellcheck/Dockerfile/"
       ],
       "matchStrings": [
         "ENV SHELLCHECK_VERSION=(?<currentValue>.*?)\\n"
@@ -146,8 +148,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "shellharden/Dockerfile"
+      "managerFilePatterns": [
+        "/shellharden/Dockerfile/"
       ],
       "matchStrings": [
         "ENV SHELLHARDEN_VERSION=(?<currentValue>.*?)\\n"
@@ -157,8 +159,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "shfmt/Dockerfile"
+      "managerFilePatterns": [
+        "/shfmt/Dockerfile/"
       ],
       "matchStrings": [
         "ENV SHFMT_VERSION=(?<currentValue>.*?)\\n"
@@ -169,8 +171,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "stylish-haskell/Dockerfile"
+      "managerFilePatterns": [
+        "/stylish-haskell/Dockerfile/"
       ],
       "matchStrings": [
         "ENV STYLISH_VERSION=(?<currentValue>.*?)\\n"
@@ -181,8 +183,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "verible/Dockerfile"
+      "managerFilePatterns": [
+        "/verible/Dockerfile/"
       ],
       "matchStrings": [
         "ENV VERIBLE_VERSION (?<currentValue>.*?)\\n"
@@ -194,8 +196,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "whitespace/info.yaml"
+      "managerFilePatterns": [
+        "/whitespace/info.yaml/"
       ],
       "matchStrings": [
         "^image: restyled/restyler-whitespace:(?<currentValue>.*?)\\n"
@@ -207,8 +209,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "terraform/Dockerfile"
+      "managerFilePatterns": [
+        "/terraform/Dockerfile/"
       ],
       "matchStrings": [
         "ENV TERRAFORM_VERSION (?<currentValue>.*?)\\n"
