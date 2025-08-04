@@ -12,7 +12,7 @@ RUN \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
-ENV SHELLCHECK_VERSION=0.10.0
+ENV SHELLCHECK_VERSION=0.11.0
 ENV SHELLCHECK_ARCHIVE=https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz
 RUN \
   curl -L "$SHELLCHECK_ARCHIVE" | tar xJf - && \
