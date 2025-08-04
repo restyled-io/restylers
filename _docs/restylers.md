@@ -45,7 +45,7 @@
 | [rubocop](#rubocop) | Ruby | `v1.78.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
-| [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.10.0` | Yes |
+| [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.4.3` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.5.3` | No |
@@ -4027,7 +4027,7 @@ restylers:
     arguments: []
     command:
     - shellcheck-fix
-    image: public.ecr.aws/restyled-io/restyler-shellcheck:v0.10.0
+    image: public.ecr.aws/restyled-io/restyler-shellcheck:v0.11.0
     include:
     - '**/*.sh'
     - '**/*.bash'
