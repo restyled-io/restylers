@@ -1,4 +1,4 @@
-FROM debian:bookworm AS builder
+FROM debian:trixie AS builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
@@ -17,7 +17,7 @@ ADD astyle-3.6.2.tar.bz2 /tmp/
 WORKDIR /tmp/astyle-3.6.2/build/clang
 RUN make
 
-FROM debian:bookworm
+FROM debian:trixie
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 RUN \
