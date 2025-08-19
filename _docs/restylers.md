@@ -79,7 +79,7 @@ restylers:
     arguments: []
     command:
     - astyle
-    image: restyled/restyler-astyle:v3.6.2
+    image: public.ecr.aws/restyled-io/restyler-astyle:v3.6.2
     include:
     - '**/*.c'
     - '**/*.cc'
