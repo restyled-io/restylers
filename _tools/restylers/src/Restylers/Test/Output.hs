@@ -43,6 +43,6 @@ frameOutputLines name = (headerLine :) . (<> [footerLine]) . map outLine
   footerLine :: String
 
   -- Grouped below types so we can see it
-  headerLine = "╭─┤ " <> name <> "├──────"
+  headerLine = "╭─┤ " <> name <> " ├──────"
   outLine st = "│ " <> st
   footerLine = "╰─"
