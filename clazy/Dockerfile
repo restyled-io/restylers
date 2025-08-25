@@ -32,7 +32,7 @@ RUN \
   cd /tmp && \
   rm -rf ./clazy
 
-COPY clazy-standlone-apply /usr/local/bin/clazy-standalone-apply
+COPY clazy-standalone-apply /usr/local/bin/clazy-standalone-apply
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
