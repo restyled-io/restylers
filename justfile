@@ -1,6 +1,9 @@
 test +args:
   stack --stack-yaml _tools/stack.yaml run -- restylers --no-pull {{args}}
 
+shell restyler:
+  docker run --rm -it public.ecr.aws/restyled-io/restyler-{{restyler}}:dev /bin/bash
+
 headroom:
   headroom run -r
   cd _tools && fourmolu -i ./restylers{,-docs}/{app,src,test}
