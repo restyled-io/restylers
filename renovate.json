@@ -47,7 +47,8 @@
         "ENV CLAZY_VERSION=(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "clazy",
-      "datasourceTemplate": "deb"
+      "packageNameTemplate": "KDE/clazy",
+      "datasourceTemplate": "github-tags"
     },
     {
       "customType": "regex",

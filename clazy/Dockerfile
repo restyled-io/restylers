@@ -1,20 +1,37 @@
-FROM ubuntu:24.04
+FROM ubuntu:25.04
 LABEL maintainer="Pat Brisbin pbrisbin@restyled.io"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
-ENV CLAZY_VERSION=1.14-1
 RUN \
   apt-get update && \
   apt-get -y --no-install-recommends install \
+    ca-certificates \
     clang \
     clang-tools \
-    clazy="$CLAZY_VERSION" \
     cmake \
+    g++ \
+    git-core \
+    libclang-dev \
+    llvm-dev \
     make \
+    ninja-build \
     locales \
     qt6-base-dev && \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
+
 ENV LANG=en_US.UTF-8
+ENV CLAZY_VERSION=1.15
+RUN \
+  cd /tmp && \
+  git clone https://github.com/KDE/clazy && \
+  cd clazy/ && \
+  git reset --hard "$CLAZY_VERSION" && \
+  cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release -G Ninja && \
+  cmake --build . && \
+  cmake --build . --target install && \
+  cd /tmp && \
+  rm -rf ./clazy
+
 COPY clazy-standlone-apply /usr/local/bin/clazy-standalone-apply
 RUN mkdir -p /code
 WORKDIR /code
