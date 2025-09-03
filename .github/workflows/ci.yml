@@ -86,7 +86,7 @@ jobs:
 
       - if: ${{ inputs.push }}
         name: AWS Login
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ vars.AWS_ROLE }}
