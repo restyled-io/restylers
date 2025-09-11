@@ -20,7 +20,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 ENV LANG=en_US.UTF-8
-ENV CLAZY_VERSION=1.15
+ENV CLAZY_VERSION=v1.16
 RUN \
   cd /tmp && \
   git clone https://github.com/KDE/clazy && \
