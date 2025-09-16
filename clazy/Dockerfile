@@ -1,4 +1,4 @@
-FROM ubuntu:plucky-20250730
+FROM ubuntu:plucky-20250910
 LABEL maintainer="Pat Brisbin pbrisbin@restyled.io"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
