@@ -8,7 +8,6 @@
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
-| [clazy](#clazy) | C++ | `1.15` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
 | [dart-format](#dart-format) | Dart | `v3.1.1-wip` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
@@ -565,80 +564,6 @@ void formatted_code_again;
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-clang-format)
-
-## clazy
-
-Restyles _C++_, runs automatically.
-
-<details>
-<summary>Documentation</summary>
-
-- https://github.com/KDE/clazy
-
-</details>
-
-<details>
-<summary>Configuration</summary>
-
-```yaml
-restylers:
-- clazy:
-    arguments: []
-    command:
-    - clazy-standalone-apply
-    image: public.ecr.aws/restyled-io/restyler-clazy:1.15
-    include:
-    - '**/*.cpp'
-    interpreters: []
-
-```
-
-</details>
-
-<details>
-<summary>Examples</summary>
-
-
-**Before**
-
-```c++
-#include <iostream>
-#include <QString>
-
-int main() {
-  QString str = "hello";
-  QString result = str.left(1);
-
-  std::cout << "Original string: " << str.toStdString() << std::endl;
-  std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
-
-  return 0;
-}
-
-```
-
-**After**
-
-```c++
-#include <iostream>
-#include <QString>
-
-int main() {
-  QString str = QStringLiteral("hello");
-  QString result = str.left(1);
-
-  std::cout << "Original string: " << str.toStdString() << std::endl;
-  std::cout << "Substring from index 5 onwards: " << result.toStdString() << std::endl;
-
-  return 0;
-}
-
-```
-
-
-</details>
-
-[See all available images](https://gallery.ecr.aws/restyled-io/restyler-clazy)
 
 ## cmake-format
 
