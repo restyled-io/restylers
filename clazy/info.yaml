@@ -30,7 +30,7 @@ metadata:
           find_package(Qt6 REQUIRED COMPONENTS Core)
 
           add_executable(helloworld
-              clazy-test-1.cpp
+              clazy-test-0.cpp
           )
 
           target_link_libraries(helloworld PRIVATE Qt6::Core)
