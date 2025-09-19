@@ -4,7 +4,7 @@ command:
   - clazy-standalone-apply
 supports_arg_sep: false
 version_cmd: |
-  clazy --version | sed '/^clazy version: \(.*\)$/!d; s//\1/'
+  clazy --version | sed '/^clazy version: \([^ ]*\).*$/!d; s//v\1/' | head -n 1
 include:
   - "**/*.cpp"
 documentation:
