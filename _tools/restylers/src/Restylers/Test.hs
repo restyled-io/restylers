@@ -116,7 +116,7 @@ testRestylers pull restylers hspecArgs = do
                   else restyled `shouldBe` test.restyled
 
 restylerTests :: Manifest.Restyler -> [(Int, Test.Test)]
-restylerTests r = zip [1 ..] r.metadata.tests
+restylerTests r = zip [0 ..] r.metadata.tests
 
 inTempDirectory :: MonadUnliftIO m => m a -> m a
 inTempDirectory f = do
