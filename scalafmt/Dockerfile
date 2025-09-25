@@ -1,4 +1,4 @@
-FROM openjdk:22-slim
+FROM openjdk:25-slim
 LABEL maintainer="Pat Brisbin <pbrisbin@restyled.io>"
 ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN \
