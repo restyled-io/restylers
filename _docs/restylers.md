@@ -16,7 +16,7 @@
 | [dotnet-format](#dotnet-format) | C#, VB.NET | `v5.1.250801` | No |
 | [elm-format](#elm-format) | Elm | `v0.6.1-alpha-3` | Yes |
 | [fantomas](#fantomas) | F# | `v3.3.0` | Yes |
-| [fourmolu](#fourmolu) | Haskell | `v0.19.0.0` | No |
+| [fourmolu](#fourmolu) | Haskell | `v0.19.0.1` | No |
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.25.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
@@ -1387,7 +1387,7 @@ restylers:
     - fourmolu
     - --mode
     - inplace
-    image: public.ecr.aws/restyled-io/restyler-fourmolu:v0.19.0.0
+    image: public.ecr.aws/restyled-io/restyler-fourmolu:v0.19.0.1
     include:
     - '**/*.hs'
     interpreters: []
