@@ -44,6 +44,7 @@
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.15.0` | Yes |
 | [rubocop](#rubocop) | Ruby | `v1.80.2` | No |
+| [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
@@ -661,7 +662,7 @@ restylers:
     command:
     - cmake-format
     - --in-place
-    image: restyled/restyler-cmake-format:0.6.13-1
+    image: public.ecr.aws/restyled-io/restyler-cmake-format:0.6.13-1
     include:
     - '**/CMakeLists.txt'
     - '**/*.cmake-format-test'
@@ -3458,7 +3459,7 @@ restylers:
     command:
     - pyment
     - -w
-    image: restyled/restyler-pyment:v0.3.3
+    image: public.ecr.aws/restyled-io/restyler-pyment:v0.3.3
     include:
     - '**/*.py'
     interpreters:
@@ -3955,6 +3956,88 @@ end
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-rubocop)
+
+## ruff
+
+Restyles _Python_, must be explicitly enabled.
+
+<details>
+<summary>Documentation</summary>
+
+- https://docs.astral.sh/ruff
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+restylers:
+- ruff:
+    arguments: []
+    command:
+    - ruff
+    - format
+    image: public.ecr.aws/restyled-io/restyler-ruff:v0.14.0
+    include:
+    - '**/*.py'
+    interpreters: []
+
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+
+**Before**
+
+```python
+import math, sys;
+def example1():
+    ####This is a long comment. This should be wrapped to fit within 72 characters.
+    some_tuple=(   1,2, 3,'a'  );
+    some_variable={'long':'Long code lines should be wrapped within 79 characters.',
+    'other':[math.pi, 100,200,300,9876543210,'This is a long string that goes on'],
+    'more':{'inner':'This whole logical line should be wrapped.',some_tuple:[1,
+    20,300,40000,500000000,60000000000000000]}}
+    return (some_tuple, some_variable)
+
+```
+
+**After**
+
+```python
+import math, sys
+
+
+def example1():
+    ####This is a long comment. This should be wrapped to fit within 72 characters.
+    some_tuple = (1, 2, 3, "a")
+    some_variable = {
+        "long": "Long code lines should be wrapped within 79 characters.",
+        "other": [
+            math.pi,
+            100,
+            200,
+            300,
+            9876543210,
+            "This is a long string that goes on",
+        ],
+        "more": {
+            "inner": "This whole logical line should be wrapped.",
+            some_tuple: [1, 20, 300, 40000, 500000000, 60000000000000000],
+        },
+    }
+    return (some_tuple, some_variable)
+
+```
+
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-ruff)
 
 ## rustfmt
 
@@ -5410,7 +5493,7 @@ restylers:
     command:
     - yapf
     - --in-place
-    image: restyled/restyler-yapf:v0.43.0-1
+    image: public.ecr.aws/restyled-io/restyler-yapf:v0.43.0-1
     include:
     - '**/*.py'
     interpreters:
