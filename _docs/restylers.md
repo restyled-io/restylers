@@ -22,7 +22,7 @@
 | [google-java-format](#google-java-format) | Java | `v1.9` | No |
 | [hindent](#hindent) | Haskell | `v6.2.1` | No |
 | [hlint](#hlint) | Haskell | `v3.5` | No |
-| [isort](#isort) | Python | `v6.1.0` | Yes |
+| [isort](#isort) | Python | `v7.0.0` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
 | [jq](#jq) | JSON | `v1.6-4` | No |
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
@@ -1766,7 +1766,7 @@ restylers:
     arguments: []
     command:
     - isort
-    image: public.ecr.aws/restyled-io/restyler-isort:v6.1.0
+    image: public.ecr.aws/restyled-io/restyler-isort:v7.0.0
     include:
     - '**/*.py'
     interpreters:
