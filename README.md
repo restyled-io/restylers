@@ -2,8 +2,8 @@
 
 Language-specific restylers.
 
-For a rendered list of all restylers with documentation, configuration, and examples
-see [here](./_docs/restylers.md).
+For a rendered list of all restylers with documentation, configuration, and
+examples see [here](./_docs/restylers.md).
 
 ## Tests
 
