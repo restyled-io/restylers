@@ -27,8 +27,8 @@ metadata:
             20,300,40000,500000000,60000000000000000]}}
             return (some_tuple, some_variable)
 
-      # NB. This file was reused from the autopep8 tests, so some of the things it
-      # states within itself (such as wrapping the comment) aren't actually
+      # NB. This file was reused from the autopep8 tests, so some of the things
+      # it states within itself (such as wrapping the comment) aren't actually
       # handled by ruff with default setup.
       restyled: |
         import math, sys
