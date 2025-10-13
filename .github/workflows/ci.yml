@@ -195,7 +195,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # need to get back to base
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
       - name: Install
         run: |
           npm install --save-dev @commitlint/cli
