@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+base=$1
+
+if [[ -z "$base" ]]; then
+  echo "Error filtering scopes: base SHA not known" >&2
+  exit 1
+fi
+
+restylers=()
+
+while read -r scope; do
+  if [[ -f "$scope"/info.yaml ]]; then
+    restylers+=("$scope")
+
+    for ofile in */info.yaml; do
+      obase=$(dirname "$ofile")
+
+      if grep -q "^overrides: *$scope *" "$ofile"; then
+        restylers+=("$obase")
+      fi
+    done
+  fi
+done < <(
+  git log --format='%s' "$base..HEAD" |
+    sed '/^[^(]\+(\([^)]\+\)):.*$/!d; s||\1|' |
+    sort -u
+)
+
+printf 'restylers=%s\n' "${restylers[*]}"

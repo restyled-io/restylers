@@ -45,18 +45,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - id: changes
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            all: '**/*'
-          list-files: shell
-
-      - id: filtered
+      - id: scopes
         name: Identify Restyler changes
-        run: ./.github/bin/filter-changes ${{ steps.changes.outputs.all_files }}
+        run: |
+          base=${{ github.event.pull_request.base.sha }}
+          base=${base:-${{ github.event.before }}}
+          ./.github/bin/filter-scopes "$base" >>"$GITHUB_OUTPUT"
     outputs:
-      restylers: ${{ steps.filtered.outputs.restylers }}
+      restylers: ${{ steps.scopes.outputs.restylers }}
 
   restylers:
     needs:
