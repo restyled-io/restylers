@@ -6,6 +6,7 @@ plugins:
   - - "@semantic-release/github"
     - assets: "restylers.yaml"
       successCommentCondition: false
+      failCommentCondition: false
   - - "@semantic-release/git"
     - assets: "_docs"
       message: "chore(release): update docs"
