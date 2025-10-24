@@ -2,10 +2,9 @@
 enabled: true
 name: prettier
 version_cmd: |
-  prettier --version | sed 's/^/v/; s/$/-3/'
+  restyler-prettier version
 command:
-  - prettier
-  - "--write"
+  - restyler-prettier
 include:
   - "**/*.js"
   - "**/*.jsx"
