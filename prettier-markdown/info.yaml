@@ -1,8 +1,10 @@
 ---
-overrides: prettier
+enabled: true
 name: prettier-markdown
+version_cmd: |
+  prettier --version | sed 's/^/v/; s/$/-3/'
 command:
-  - /app/node_modules/.bin/prettier
+  - prettier
   - "--write"
 include:
   - "**/*.md"
