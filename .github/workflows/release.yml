@@ -21,10 +21,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with: {name: tools}
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with: {name: manifest}
 
       - id: token
