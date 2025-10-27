@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Modify any relative path arguments to be absolute
+args=()
+
+for arg; do
+  abs=$PWD/$arg
+
+  if [[ -e "$abs" ]]; then
+    args+=("$abs")
+  else
+    args+=("$arg")
+  fi
+done
+
+# Run prettier from within /app
+cd /app
+exec ./node_modules/.bin/prettier "${args[@]}"
