@@ -1,12 +1,12 @@
 FROM node:24.10-slim
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
-ENV LANG en_US.UTF-8
+ENV LANG=en_US.UTF-8
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json .
 RUN yarn install && yarn cache clean
-COPY install.sh /tmp
-RUN /tmp/install.sh
+COPY prettier-shim /usr/local/bin/prettier
+COPY prettier-shim /usr/local/bin/prettier-with-tailwindcss
 RUN mkdir -p /code
 WORKDIR /code
 ENTRYPOINT []
