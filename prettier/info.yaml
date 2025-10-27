@@ -58,3 +58,74 @@ metadata:
         import a from "moduleA";
         import b from "moduleB";
         import c from "moduleC";
+    - name: With bundled yarn
+      support:
+        path: package.json
+        contents: |
+          {
+            "name": "@blah/blah",
+            "version": "0.1.0",
+            "private": true,
+            "license": "MIT",
+            "type": "module",
+            "scripts": {
+              "format": "prettier --write 'ts/**/*.ts' 'ts/**/*.tsx'"
+            },
+            "dependencies": {
+            },
+            "devDependencies": {
+            },
+            "engines": {
+              "node": "^20.11.0"
+            },
+            "resolutions": {
+              "optionator": "^0.9.3",
+              "brace-expansion": ">=1.1.12 <2.0.0"
+            },
+            "packageManager": "yarn@3.2.4"
+          }
+      extension: js
+      contents: |
+        matrix(
+          1, 0, 0,
+          0, 1, 0,
+          0, 0, 1
+        )
+      restyled: |
+        matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+    - name: With pnpm
+      support:
+        path: package.json
+        contents: |
+          {
+            "name": "@blah/blah",
+            "version": "0.1.0",
+            "private": true,
+            "license": "MIT",
+            "type": "module",
+            "scripts": {
+              "format": "prettier --write 'ts/**/*.ts' 'ts/**/*.tsx'"
+            },
+            "dependencies": {
+            },
+            "devDependencies": {
+            },
+            "engines": {
+              "node": "^20.11.0"
+            },
+            "resolutions": {
+              "optionator": "^0.9.3",
+              "brace-expansion": ">=1.1.12 <2.0.0"
+            },
+            "packageManager": "yarn@pnpm@10.17.0"
+          }
+      extension: js
+      contents: |
+        matrix(
+          1, 0, 0,
+          0, 1, 0,
+          0, 0, 1
+        )
+      restyled: |
+        matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
