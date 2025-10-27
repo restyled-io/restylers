@@ -220,5 +220,8 @@
       "datasourceTemplate": "custom.terraform",
       "versioningTemplate": "loose"
     }
-  ]
+  ],
+  "nix": {
+    "enabled": true
+  }
 }

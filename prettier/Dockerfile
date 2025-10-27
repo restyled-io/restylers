@@ -1,13 +1,11 @@
-FROM node:22.21-slim
+FROM nixos/nix:2.32.1
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
-ENV LANG en_US.UTF-8
-RUN mkdir -p /app
-WORKDIR /app
-COPY package.json .
-RUN yarn install && yarn cache clean
-COPY install.sh /tmp
-RUN /tmp/install.sh
-RUN mkdir -p /code
+RUN echo "experimental-features = nix-command flakes" > /etc/nix/nix.conf
+
+RUN mkdir /restyler-prettier
+COPY restyler-prettier /restyler-prettier
+RUN nix profile install '/restyler-prettier'
+
+RUN mkdir /code
 WORKDIR /code
-ENTRYPOINT []
-CMD ["prettier", "--help"]
+CMD ["restyler-prettier", "--help"]

@@ -1,9 +1,6 @@
 ---
 overrides: prettier
 name: prettier-json
-command:
-  - /app/node_modules/.bin/prettier
-  - "--write"
 include:
   - "**/*.json"
 documentation:
