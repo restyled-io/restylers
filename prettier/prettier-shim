@@ -5,9 +5,7 @@ set -euo pipefail
 args=()
 
 for arg; do
-  abs=$PWD/$arg
-
-  if [[ -e "$abs" ]]; then
+  if abs=$(realpath "$arg" 2>/dev/null) && [[ -e "$abs" ]]; then
     args+=("$abs")
   else
     args+=("$arg")
