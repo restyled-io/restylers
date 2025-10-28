@@ -34,11 +34,11 @@
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.8` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.89.1` | Yes |
-| [prettier](#prettier) | JavaScript | `v3.6.2-3` | Yes |
-| [prettier-json](#prettier-json) | JSON | `v3.6.2-3` | Yes |
-| [prettier-markdown](#prettier-markdown) | Markdown | `v3.6.2-3` | Yes |
+| [prettier](#prettier) | JavaScript | `v3.6.2-4` | Yes |
+| [prettier-json](#prettier-json) | JSON | `v3.6.2-4` | Yes |
+| [prettier-markdown](#prettier-markdown) | Markdown | `v3.6.2-4` | Yes |
 | [prettier-ruby](#prettier-ruby) | Ruby | `v3.2.2-1` | No |
-| [prettier-yaml](#prettier-yaml) | Yaml | `v3.6.2-3` | Yes |
+| [prettier-yaml](#prettier-yaml) | Yaml | `v3.6.2-4` | Yes |
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
@@ -3023,7 +3023,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-4
     include:
     - '**/*.js'
     - '**/*.jsx'
@@ -3094,6 +3094,44 @@ import c from "moduleC";
 ```
 
 
+**Before**
+
+```javascript
+matrix(
+  1, 0, 0,
+  0, 1, 0,
+  0, 0, 1
+)
+
+```
+
+**After**
+
+```javascript
+matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+```
+
+
+**Before**
+
+```javascript
+matrix(
+  1, 0, 0,
+  0, 1, 0,
+  0, 0, 1
+)
+
+```
+
+**After**
+
+```javascript
+matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+```
+
+
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-prettier)
@@ -3117,9 +3155,9 @@ restylers:
 - prettier-json:
     arguments: []
     command:
-    - /app/node_modules/.bin/prettier
+    - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-4
     include:
     - '**/*.json'
     interpreters: []
@@ -3177,9 +3215,9 @@ restylers:
 - prettier-markdown:
     arguments: []
     command:
-    - /app/node_modules/.bin/prettier
+    - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-4
     include:
     - '**/*.md'
     - '**/*.markdown'
@@ -3325,9 +3363,9 @@ restylers:
 - prettier-yaml:
     arguments: []
     command:
-    - /app/node_modules/.bin/prettier
+    - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-3
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.6.2-4
     include:
     - '**/*.yml'
     - '**/*.yaml'
