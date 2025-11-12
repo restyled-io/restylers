@@ -211,7 +211,7 @@
         "/whitespace/info.yaml/"
       ],
       "matchStrings": [
-        "^image: restyled\\\/restyler-whitespace:(?<currentValue>.*?)\\n"
+        "image: restyled\\\/restyler-whitespace:(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "whitespace",
       "packageNameTemplate": "restyled-io/restyler-whitespace",
