@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: whitespace
-image: restyled/restyler-whitespace:v0.2.0.3
+image: restyled/restyler-whitespace:v0.2.0.4
 
 # Attempt to exclude some obvious non-text files that would commonly see edits
 # in a Pull Request. This list is not exhaustive or robust, and we would rather
