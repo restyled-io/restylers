@@ -1,7 +1,7 @@
 FROM amazoncorretto:25-alpine3.22-jdk
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG=en_US.UTF-8
-RUN apk update && apk add --no-cache curl
+RUN apk update && apk add --no-cache bash curl
 
 # renovate: datasource=maven depName=google-java-format
 ENV GOOGLE_JAVA_FORMAT_VERSION=1.32.0
