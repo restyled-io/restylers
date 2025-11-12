@@ -56,7 +56,7 @@
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.10.5` | Yes |
 | [verible](#verible) | System Verilog | `v0.0-4021-g76446d4d` | Yes |
-| [whitespace](#whitespace) | * | `v0.2.0.0` | Yes |
+| [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
 ---
@@ -5401,7 +5401,7 @@ restylers:
     arguments: []
     command:
     - whitespace
-    image: restyled/restyler-whitespace:v0.2.0.0
+    image: restyled/restyler-whitespace:v0.2.0.5
     include:
     - '**/*'
     - '!**/*.gif'
@@ -5424,9 +5424,9 @@ restylers:
 **Before**
 
 ```
-line one  
-line two 
-  
+line one
+line two
+
 line three \
 line four
 
