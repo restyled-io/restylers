@@ -29,7 +29,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/*/Dockerfile"
+        "/(^|/)Dockerfile$/"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( package=(?<package>.*?))?( versioning=(?<versioning>.*?))?\\nENV [A-Z_]+=(?<currentValue>\\S+)\\n"
