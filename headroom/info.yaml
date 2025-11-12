@@ -1,0 +1,51 @@
+name: headroom
+version_cmd: |
+  headroom --version | awk '{print $2}'
+command:
+  - headroom
+  - run
+  - --replace-headers
+  - --source-path
+include:
+  - "**/*"
+auto_enable:
+  config_patterns:
+    - ".headroom.yaml"
+supports_arg_sep: false
+supports_multiple_paths: false
+documentation:
+  - https://doc.norcane.com/headroom/v0.4.3.0/
+metadata:
+  languages:
+    - "*"
+
+  tests:
+    - support:
+        path: .headroom.yaml
+        contents: |
+          version: 0.4.0.0
+          template-paths:
+            - /root/.headroom/templates
+          variables:
+            author: Patrick Brisbin
+            email: pbrisbin@restyled.io
+            year: "2025"
+          updates:
+            check-for-updates: false
+
+      extension: hs
+      contents: |
+        module Main where
+      restyled: |
+        {-|
+        Module      : Main
+        Description : !!! INSERT MODULE SHORT DESCRIPTION !!!
+        Copyright   : (c) 2025 Patrick Brisbin
+        License     : MIT
+        Maintainer  : pbrisbin@restyled.io
+        Stability   : experimental
+        Portability : POSIX
+
+        !!! INSERT MODULE LONG DESCRIPTION !!!
+        -}
+        module Main where

@@ -1,0 +1,3 @@
+updates:
+  check-for-updates: false
+  update-interval-days: 14 # needed even though it's false
