@@ -1,6 +1,7 @@
 ---
 name: google-java-format
-version: v1.9
+version_cmd: |
+  google-java-format --version 2>&1 | awk '{printf "v%s\n", $NF}'
 command:
   - google-java-format
   - "--replace"
