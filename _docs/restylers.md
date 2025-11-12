@@ -20,6 +20,7 @@
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.25.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.32.0` | No |
+| [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.2.1` | No |
 | [hlint](#hlint) | Haskell | `v3.5` | No |
 | [isort](#isort) | Python | `v7.0.0` | Yes |
@@ -1634,6 +1635,72 @@ private enum Answer {
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-google-java-format)
+
+## headroom
+
+Restyles _*_, must be explicitly enabled.
+
+<details>
+<summary>Documentation</summary>
+
+- https://doc.norcane.com/headroom/v0.4.3.0/
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+restylers:
+- headroom:
+    arguments: []
+    command:
+    - headroom
+    - run
+    - --replace-headers
+    - --source-path
+    image: public.ecr.aws/restyled-io/restyler-headroom:v0.4.3.0
+    include:
+    - '**/*'
+    interpreters: []
+
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+
+**Before**
+
+```
+module Main where
+
+```
+
+**After**
+
+```
+{-|
+Module      : Main
+Description : !!! INSERT MODULE SHORT DESCRIPTION !!!
+Copyright   : (c) 2025 Patrick Brisbin
+License     : MIT
+Maintainer  : pbrisbin@restyled.io
+Stability   : experimental
+Portability : POSIX
+
+!!! INSERT MODULE LONG DESCRIPTION !!!
+-}
+module Main where
+
+```
+
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-headroom)
 
 ## hindent
 
