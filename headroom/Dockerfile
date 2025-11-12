@@ -11,7 +11,10 @@ RUN \
   locale-gen en_US.UTF-8 && \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
+
+# renovate: datasource=github-releases depName=headroom package=vaclavsvejcar/headroom
 ENV HEADROOM_VERSION=0.4.3.0
+
 RUN \
   curl -L -o /usr/bin/headroom \
   https://github.com/vaclavsvejcar/headroom/releases/download/v${HEADROOM_VERSION}/headroom-${HEADROOM_VERSION}-Linux-ghc-8.10.4 && \
