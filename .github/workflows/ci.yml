@@ -148,6 +148,8 @@ jobs:
 
       # Test manifest
       - uses: restyled-io/actions/setup-demo@v4
+        with:
+          options: '--manifest ./restylers.yaml'
       - uses: restyled-io/actions/setup@v4
       - uses: restyled-io/actions/run@v4
         with:
