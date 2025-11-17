@@ -32,9 +32,8 @@
         "/(^|/)Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( packageName=(?<packageName>.*?))?( versioning=(?<versioning>.*?))?\\nENV [A-Z_]+=(?<currentValue>\\S+)\\n"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}loose{{/if}}"
+        "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION=(?<currentValue>.+?)\\s"
+      ]
     },
     {
       "customType": "regex",
