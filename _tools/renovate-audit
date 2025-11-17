@@ -18,11 +18,6 @@ gh pr list \
   done |
   sort -u >"$tmp"
 
-ret=0
-updated=0
-waiting=0
-missing=0
-
 manifests=(
   Gemfile
   package.json
@@ -30,47 +25,94 @@ manifests=(
   stack.yaml
 )
 
-for info in */info.yaml; do
+ret=0
+updated=()
+waiting=()
+missing=()
+skipped=()
+
+swaps='
+cmake-format: cmakelang
+prettier-ruby: prettier
+sqlformat: sqlparse
+standardrb: standard
+'
+
+check_info() {
+  local info=$1
+
   dep=$(dirname "$info")
 
   read -r override < <(yq '.overrides' "$dep"/info.yaml)
 
   # If it's an override, skip it
   if [[ "$override" != null ]]; then
-    printf ' \e[1;36m·\e[0m \e[35m%s\e[0m is an override of \e[35m%s\e[0m\n' "$dep" "$override"
-    continue
+    skipped+=("$dep is an override of $override")
+    return 0
   fi
 
   # If we have a PR we're good
   if grep -Fxq "$dep" "$tmp"; then
-    ((updated++)) || true
-    printf ' \e[32m✓\e[0m \e[35m%s\e[0m is updated by renovate\n' "$dep"
-    continue
+    updated+=("$dep is updated by renovate")
+    return 0
   fi
 
   # If we're using a manifest, assume it's being maintained
   for m in "${manifests[@]}"; do
     if [[ -f "$dep/$m" ]]; then
-      if grep -Fqw "$dep" "$dep/$m"; then
-        ((waiting++)) || true
-        printf ' \e[1;33m⏲\e[0m \e[35m%s\e[0m is configured, but not yet updated by renovate (%s)\n' "$dep" "$m"
-        continue 2
+      read -r n < <(awk "/^$dep: /"' {print $2}' <<< "$swaps") || n=$dep
+
+      if grep -Fqw "$n" "$dep/$m"; then
+        waiting+=("$dep is configured, but not yet updated by renovate ($m -> $n)")
+        return 0
+      else
+        printf 'Warning: %s/%s exists, but does not reference %s\n' "$dep" "$m" "$n" >&2
       fi
     fi
   done
 
   # If we have regex comments
   if grep -q "^# renovate: .* depName=$dep\( \|$\)" ./*/Dockerfile; then
-    ((waiting++)) || true
-    printf ' \e[1;33m⏲\e[0m \e[35m%s\e[0m is configured, but not yet updated by renovate\n' "$dep"
-    continue
+    waiting+=("$dep is configured, but not yet updated by renovate (Dockerfile)")
+    return 0
   fi
 
-  printf ' \e[31m✗\e[0m \e[35m%s\e[0m is \e[1mnot\e[0m renovate-maintained\n' "$dep" >&2
-  ((missing++)) || true
-  ret=1
+  missing+=("$dep is not renovate-maintained")
+  return 1
+}
+
+for info in */info.yaml; do
+  if ! check_info "$info"; then
+    ret=1
+  fi
 done
 
+printf '\e[1m%s\e[0m: %d\n' "Skipped" "${#skipped[@]}"
+for x in "${skipped[@]}"; do
+  read -r dep msg <<<"$x"
+  printf '  \e[1;36m·\e[0m \e[35m%s\e[0m %s\n' "$dep" "$msg"
+done
 echo
-printf 'Updated: \e[32m%d\e[0m, waiting: \e[33m%d\e[0m, missing: \e[31m%d\e[0m\n' "$updated" "$waiting" "$missing"
+
+printf '\e[1m%s\e[0m: %d\n' "Updated" "${#updated[@]}"
+for x in "${updated[@]}"; do
+  read -r dep msg <<<"$x"
+  printf '  \e[32m✓\e[0m \e[35m%s\e[0m %s\n' "$dep" "$msg"
+done
+echo
+
+printf '\e[1m%s\e[0m: %d\n' "Waiting" "${#waiting[@]}"
+for x in "${waiting[@]}"; do
+  read -r dep msg <<<"$x"
+  printf '  \e[1;33m⏲\e[0m \e[35m%s\e[0m %s\n' "$dep" "$msg"
+done
+echo
+
+printf '\e[1m%s\e[0m: %d\n' "Missing" "${#missing[@]}"
+for x in "${missing[@]}"; do
+  read -r dep msg <<<"$x"
+  printf '  \e[31m✗\e[0m \e[35m%s\e[0m %s\n' "$dep" "$msg"
+done
+echo
+
 exit "$ret"
