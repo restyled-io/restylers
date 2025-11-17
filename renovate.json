@@ -11,12 +11,6 @@
   ],
   "semanticCommitScope": "{{packageFileDir}}",
   "semanticCommitType": "feat",
-  "terraform": {
-    "enabled": true
-  },
-  "html": {
-    "enabled": true
-  },
   "customDatasources": {
     "hashicorp": {
       "defaultRegistryUrlTemplate": "https://api.releases.hashicorp.com/v1/releases/{{packageName}}?license_class=oss",
