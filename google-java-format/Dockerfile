@@ -3,7 +3,7 @@ LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG=en_US.UTF-8
 RUN apk update && apk add --no-cache bash curl
 
-# renovate: datasource=maven depName=google-java-format
+# renovate: datasource=maven depName=google-java-format packageName=com.google.googlejavaformat
 ENV GOOGLE_JAVA_FORMAT_VERSION=1.32.0
 
 RUN curl -sSf -L -o /opt/google-java-format.jar \
