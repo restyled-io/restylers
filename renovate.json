@@ -40,24 +40,11 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/cabal-fmt/stack.yaml/"
+        "/(^|/)stack.yaml$/"
       ],
       "matchStrings": [
-        "  - cabal-fmt-(?<currentValue>.*?)\\n"
+        "  - (?<depName>.*?)-(?<currentValue>[0-9].*?)\\n"
       ],
-      "depNameTemplate": "cabal-fmt",
-      "datasourceTemplate": "hackage",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/hindent/stack.yaml/"
-      ],
-      "matchStrings": [
-        "  - hindent-(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "hindent",
       "datasourceTemplate": "hackage",
       "versioningTemplate": "loose"
     },
