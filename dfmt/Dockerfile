@@ -1,7 +1,10 @@
 FROM dlanguage/dmd:2.080.0 as builder
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
+
+# renovate: datasource=github-tags depName=dfmt packageName=dlang-community/dfmt
 ENV DFMT_VERSION v0.14.2
+
 ENV LANG en_US.UTF-8
 RUN \
   apt-get update && \

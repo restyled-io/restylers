@@ -1,7 +1,10 @@
 FROM alpine:3.22.2
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 RUN apk add --no-cache bash curl
+
+# renovate: datasource=github-releases depName=jq packageName=stdeolan/jq
 ENV JQ_VERSION=1.6
+
 RUN curl -L -o /usr/bin/jq \
   https://github.com/stedolan/jq/releases/download/jq-$JQ_VERSION/jq-linux64
 RUN chmod +x /usr/bin/jq

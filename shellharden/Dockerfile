@@ -2,6 +2,7 @@ FROM rust:alpine3.10
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 
+# renovate: datasource=crate depName=shellharden
 ENV SHELLHARDEN_VERSION=4.1.1
 
 # https://github.com/rust-lang/cargo/issues/10303#issuecomment-1015007926

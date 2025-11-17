@@ -50,147 +50,13 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/dfmt/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV DFMT_VERSION (?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "dfmt",
-      "packageNameTemplate": "dlang-community/dfmt",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/fourmolu/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV FOURMOLU_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "fourmolu",
-      "datasourceTemplate": "hackage",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
         "/hindent/stack.yaml/"
       ],
       "matchStrings": [
         "  - hindent-(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "hindent",
-      "datasourceTemplate": "hackage",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/jq/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV JQ_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "jq",
-      "packageNameTemplate": "stedolan/jq",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/ormolu/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV ORMOLU_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "jq",
-      "packageNameTemplate": "tweag/ormolu",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/perltidy/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV PERLTIDY_TAG (?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "perltidy",
-      "packageNameTemplate": "perltidy/perltidy",
-      "datasourceTemplate": "github-tags",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/pg_format/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV PG_FORMAT_TAG (?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "pg_format",
-      "packageNameTemplate": "darold/pgFormatter",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/shellcheck/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV SHELLCHECK_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "shellcheck",
-      "packageNameTemplate": "koalaman/shellcheck",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/shellharden/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV SHELLHARDEN_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "shellharden",
-      "datasourceTemplate": "crate"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/shfmt/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV SHFMT_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "shfmt",
-      "packageNameTemplate": "mvdan.cc/sh",
-      "datasourceTemplate": "go"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/stylish-haskell/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV STYLISH_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "stylish-haskell",
-      "packageNameTemplate": "haskell/stylish-haskell",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/verible/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV VERIBLE_VERSION (?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "verible",
-      "packageNameTemplate": "chipsalliance/verible",
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "loose"
+      "datasourceTemplate": "hackage", "versioningTemplate": "loose"
     },
     {
       "customType": "regex",
@@ -203,18 +69,6 @@
       "depNameTemplate": "whitespace",
       "packageNameTemplate": "restyled-io/restyler-whitespace",
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/terraform/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV TERRAFORM_VERSION (?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "terraform",
-      "datasourceTemplate": "custom.terraform",
       "versioningTemplate": "loose"
     }
   ]

@@ -11,8 +11,10 @@ RUN \
       curl &&\
   apt-get clean &&\
   rm -rf /var/lib/apt/lists/*
-#Install verible
+
+# renovate: datasource=github-releases depName=verible packageName=chipsalliance/verible versioning=loose
 ENV VERIBLE_VERSION v0.0-4023-gc1271a00
+
 RUN \
   curl --silent --fail --show-error --location \
     https://github.com/chipsalliance/verible/releases/download/$VERIBLE_VERSION/verible-$VERIBLE_VERSION-linux-static-x86_64.tar.gz | \

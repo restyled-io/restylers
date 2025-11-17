@@ -1,6 +1,7 @@
 FROM alpine:3.22
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
+# renovate: datasource=github-tags depName=pg_format packageName=darold/pgFormatter
 ENV PG_FORMAT_TAG v5.8
 ENV PG_FORMAT_ARCHIVE \
   https://github.com/darold/pgFormatter/archive/$PG_FORMAT_TAG.tar.gz

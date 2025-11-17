@@ -12,7 +12,9 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 
+# renovate: datasource=github-releases depName=ormolu packageName=tweag/ormolu
 ENV ORMOLU_VERSION=0.5.3.0
+
 ENV ORMOLU_ZIP_URL=https://github.com/tweag/ormolu/releases/download/${ORMOLU_VERSION}/ormolu-Linux.zip
 RUN \
   cd /tmp && \

@@ -12,6 +12,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 
+# renovate: datasource=github-releases depName=stylish-haskell packageName=haskell/stylish-haskell
 ENV STYLISH_VERSION=0.14.3.0
 ENV STYLISH_TAR_URL=https://github.com/haskell/stylish-haskell/releases/download/v${STYLISH_VERSION}/stylish-haskell-v${STYLISH_VERSION}-linux-x86_64.tar.gz
 RUN \
