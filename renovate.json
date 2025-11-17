@@ -58,7 +58,8 @@
         "  - hindent-(?<currentValue>.*?)\\n"
       ],
       "depNameTemplate": "hindent",
-      "datasourceTemplate": "hackage", "versioningTemplate": "loose"
+      "datasourceTemplate": "hackage",
+      "versioningTemplate": "loose"
     },
     {
       "customType": "regex",
