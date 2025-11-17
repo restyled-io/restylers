@@ -57,7 +57,13 @@ check_info() {
     return 0
   fi
 
-  # If we're using a manifest, assume it's being maintained
+  # If we have regex comments, it's maintained
+  if grep -q "^# renovate: .* depName=$dep\( \|$\)" ./*/Dockerfile; then
+    waiting+=("$dep is configured, but not yet updated by renovate (Dockerfile)")
+    return 0
+  fi
+
+  # If we're using a manifest that mentions it, it's maintained
   for m in "${manifests[@]}"; do
     if [[ -f "$dep/$m" ]]; then
       read -r n < <(awk "/^$dep: /"' {print $2}' <<< "$swaps") || n=$dep
@@ -70,12 +76,6 @@ check_info() {
       fi
     fi
   done
-
-  # If we have regex comments
-  if grep -q "^# renovate: .* depName=$dep\( \|$\)" ./*/Dockerfile; then
-    waiting+=("$dep is configured, but not yet updated by renovate (Dockerfile)")
-    return 0
-  fi
 
   missing+=("$dep is not renovate-maintained")
   return 1
