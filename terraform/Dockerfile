@@ -3,7 +3,7 @@ LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN apk add --no-cache bash curl unzip
 
-# renovate: datasource=custom.terraform depName=terraform
+# renovate: datasource=custom.hashicorp depName=terraform
 ENV TERRAFORM_VERSION 1.12.2
 ENV TERRAFORM_ARCHIVE terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 ENV TERRAFORM_URL \
