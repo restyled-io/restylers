@@ -1,4 +1,5 @@
-resolver: lts-21.6
+resolver: nightly-2025-11-17
 extra-deps:
-  - hlint-3.5
+  - hlint-3.10
+  - apply-refact-0.15.0.0
 packages: []
