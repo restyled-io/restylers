@@ -23,6 +23,13 @@ updated=0
 waiting=0
 missing=0
 
+manifests=(
+  Gemfile
+  package.json
+  requirements.txt
+  stack.yaml
+)
+
 for info in */info.yaml; do
   dep=$(dirname "$info")
 
@@ -42,21 +49,15 @@ for info in */info.yaml; do
   fi
 
   # If we're using a manifest, assume it's being maintained
-  if ! find "$dep" \
-    -mindepth 1 \
-    -maxdepth 1 \
-    -type f \
-    \( \
-    -name Gemfile -o \
-    -name package.json -o \
-    -name requirements.txt -o \
-    -name stack.yaml \
-    \) \
-    -exec false {} +; then
-    ((waiting++)) || true
-    printf ' \e[1;33m⏲\e[0m \e[35m%s\e[0m is configured, but not yet updated by renovate\n' "$dep"
-    continue
-  fi
+  for m in "${manifests[@]}"; do
+    if [[ -f "$dep/$m" ]]; then
+      if grep -Fqw "$dep" "$dep/$m"; then
+        ((waiting++)) || true
+        printf ' \e[1;33m⏲\e[0m \e[35m%s\e[0m is configured, but not yet updated by renovate (%s)\n' "$dep" "$m"
+        continue 2
+      fi
+    fi
+  done
 
   # If we have regex comments
   if grep -q "^# renovate: .* depName=$dep\( \|$\)" ./*/Dockerfile; then
