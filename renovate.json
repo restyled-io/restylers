@@ -6,9 +6,6 @@
   ],
   "automerge": true,
   "automergeType": "pr",
-  "ignorePaths": [
-    "prettier-ruby/Gemfile"
-  ],
   "semanticCommitScope": "{{packageFileDir}}",
   "semanticCommitType": "feat",
   "customDatasources": {
