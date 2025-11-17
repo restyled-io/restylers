@@ -2,7 +2,7 @@ FROM alpine:3.22.2
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 RUN apk add --no-cache bash curl
 
-# renovate: datasource=github-releases depName=jq packageName=stdeolan/jq
+# renovate: datasource=github-releases depName=jq packageName=stedolan/jq
 ENV JQ_VERSION=1.6
 
 RUN curl -L -o /usr/bin/jq \
