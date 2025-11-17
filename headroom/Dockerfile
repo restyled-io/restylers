@@ -12,7 +12,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 
-# renovate: datasource=github-releases depName=headroom package=vaclavsvejcar/headroom
+# renovate: datasource=github-releases depName=headroom packageName=vaclavsvejcar/headroom
 ENV HEADROOM_VERSION=0.4.3.0
 
 RUN \
