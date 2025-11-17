@@ -51,18 +51,6 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/clazy/Dockerfile/"
-      ],
-      "matchStrings": [
-        "ENV CLAZY_VERSION=(?<currentValue>.*?)\\n"
-      ],
-      "depNameTemplate": "clazy",
-      "packageNameTemplate": "KDE/clazy",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
         "/dfmt/Dockerfile/"
       ],
       "matchStrings": [

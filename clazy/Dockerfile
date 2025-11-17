@@ -20,7 +20,10 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 ENV LANG=en_US.UTF-8
+
+# renovate: datasource=github-tags depName=clazy packageName=KDE/clazy
 ENV CLAZY_VERSION=v1.16
+
 RUN \
   cd /tmp && \
   git clone https://github.com/KDE/clazy && \
