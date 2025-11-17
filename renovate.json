@@ -2,7 +2,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    ":semanticCommitTypeAll(feat)",
+    ":semanticCommitTypeAll(feat)"
   ],
   "automerge": true,
   "automergeType": "pr",
