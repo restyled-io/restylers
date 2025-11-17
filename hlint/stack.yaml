@@ -1,2 +1,4 @@
 resolver: lts-21.6
+extra-deps:
+  - hlint-3.5
 packages: []
