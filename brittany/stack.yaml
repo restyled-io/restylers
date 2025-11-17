@@ -1,2 +1,4 @@
 resolver: lts-19.33
+exra-deps:
+  - brittany-0.14.02
 packages: []
