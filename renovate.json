@@ -3,11 +3,9 @@
     "config:recommended",
     ":semanticCommits",
     ":semanticCommitTypeAll(feat)",
-    ":disableDependencyDashboard"
   ],
   "automerge": true,
   "automergeType": "pr",
-  "dependencyDashboard": true,
   "ignorePaths": [
     "prettier-ruby/Gemfile"
   ],
