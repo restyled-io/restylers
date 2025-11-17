@@ -9,14 +9,9 @@ gh pr list \
   --author 'renovate[bot]' \
   --base main \
   --state all \
-  --limit 100 \
-  --json title \
-  --jq '.[] | .title' | while read -r title; do
-    read -r dep < <(sed 's/^feat(\(.*\)): .*$/\1/' <<<"$title")
-    read -r msg < <(sed 's/^feat(.*): \(.*\)$/\1/' <<<"$title")
-    grep -Fwo "$dep" <<<"$msg" || true
-  done |
-  sort -u >"$tmp"
+  --limit 1000 \
+  --json title,mergedAt \
+  --jq '.[]' >"$tmp"
 
 manifests=(
   Gemfile
@@ -25,59 +20,67 @@ manifests=(
   stack.yaml
 )
 
+swaps='
+cmake-format:           cmakelang
+google-java-format:     com.google.googlejavaformat:google-java-format
+php-cs-fixer:           friendsofphp/php-cs-fixer
+prettier-ruby:          prettier
+sqlformat:              sqlparse
+standardrb:             standard
+'
+
 ret=0
 updated=()
 waiting=()
 missing=()
 skipped=()
 
-swaps='
-cmake-format: cmakelang
-prettier-ruby: prettier
-sqlformat: sqlparse
-standardrb: standard
-'
-
 check_info() {
-  local info=$1
+  local info=$1 dir dep override merged d m
 
-  dep=$(dirname "$info")
+  dir=$(dirname "$info")
 
-  read -r override < <(yq '.overrides' "$dep"/info.yaml)
+  # The dependency name be be different from the restyler directory name
+  read -r dep < <(awk "/^$dir: /"' {print $2}' <<< "$swaps"; echo "$dir")
 
   # If it's an override, skip it
+  read -r override < <(yq '.overrides' "$dir"/info.yaml)
+
   if [[ "$override" != null ]]; then
-    skipped+=("$dep is an override of $override")
+    skipped+=("$dir is an override of $override")
     return 0
   fi
 
   # If we have a PR we're good
-  if grep -Fxq "$dep" "$tmp"; then
-    updated+=("$dep is updated by renovate")
-    return 0
-  fi
+  while read -r merged; do
+    if [[ "$merged" != "null" ]]; then
+      d=$(date --date "$merged" +%Y-%m-%d)
+      updated+=("$dir is updated by renovate ($d)")
+      return 0
+    fi
+  done < <(jq -r 'select(.title | contains("update dependency '"$dep"' ")) | .mergedAt' < "$tmp")
 
-  # If we have regex comments, it's maintained
-  if grep -q "^# renovate: .* depName=$dep\( \|$\)" ./*/Dockerfile; then
-    waiting+=("$dep is configured, but not yet updated by renovate (Dockerfile)")
-    return 0
+  # If we have regex comments as depName or packageName, it's maintained
+  if [[ -f "$dir"/Dockerfile ]]; then
+    if grep -q "^# renovate: .* \(depName\|packageName\)=$dep\( \|$\)" "$dir"/Dockerfile; then
+      waiting+=("$dir is configured, but not yet updated by renovate (Dockerfile)")
+      return 0
+    fi
   fi
 
   # If we're using a manifest that mentions it, it's maintained
   for m in "${manifests[@]}"; do
-    if [[ -f "$dep/$m" ]]; then
-      read -r n < <(awk "/^$dep: /"' {print $2}' <<< "$swaps") || n=$dep
-
-      if grep -Fqw "$n" "$dep/$m"; then
-        waiting+=("$dep is configured, but not yet updated by renovate ($m -> $n)")
+    if [[ -f "$dir/$m" ]]; then
+      if grep -Fqw "$dep" "$dir/$m"; then
+        waiting+=("$dir is configured, but not yet updated by renovate ($m -> $dep)")
         return 0
       else
-        printf 'Warning: %s/%s exists, but does not reference %s\n' "$dep" "$m" "$n" >&2
+        printf 'Warning: %s/%s exists, but does not reference %s\n' "$dir" "$m" "$dep" >&2
       fi
     fi
   done
 
-  missing+=("$dep is not renovate-maintained")
+  missing+=("$dir is not renovate-maintained")
   return 1
 }
 
