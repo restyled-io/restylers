@@ -22,7 +22,7 @@
 | [google-java-format](#google-java-format) | Java | `v1.32.0` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.2.1` | No |
-| [hlint](#hlint) | Haskell | `v3.5` | No |
+| [hlint](#hlint) | Haskell | `v3.10` | No |
 | [isort](#isort) | Python | `v7.0.0` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
 | [jq](#jq) | JSON | `v1.6-4` | No |
@@ -1779,7 +1779,7 @@ restylers:
     - hlint
     - --refactor
     - --refactor-options=-i
-    image: public.ecr.aws/restyled-io/restyler-hlint:v3.5
+    image: public.ecr.aws/restyled-io/restyler-hlint:v3.10
     include:
     - '**/*.hs'
     interpreters: []
