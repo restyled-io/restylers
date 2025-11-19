@@ -72,7 +72,7 @@ getImageSource yaml info =
 
 load :: MonadIO m => FilePath -> m RestylerInfo
 load yaml = do
-  eOverride <- liftIO $ Yaml.decodeFileEither yaml
+  eOverride <- Override.load yaml
 
   case eOverride of
     Left _ -> do

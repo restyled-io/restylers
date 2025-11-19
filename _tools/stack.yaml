@@ -3,6 +3,7 @@ resolver: lts-24.20
 packages:
   - restylers
   - restylers-docs
+  - renovate-audit
 
 extra-deps:
   - monad-validate-1.3.0.0

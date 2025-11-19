@@ -3,37 +3,25 @@ cabal-version: 1.12
 -- This file has been generated from package.yaml by hpack version 0.38.1.
 --
 -- see: https://github.com/sol/hpack
---
--- hash: e9eb8b443dd99acbc31f6b7eb01f598054517ea57722a4e134554ea5876d645c
 
-name:           restylers
+name:           renovate-audit
 version:        0.0.0.0
 license:        AGPL-3
 build-type:     Simple
 
 library
   exposed-modules:
-      Restylers.App
-      Restylers.Build
-      Restylers.Env
-      Restylers.Image
-      Restylers.Info
-      Restylers.Info.Build
-      Restylers.Info.Metadata
-      Restylers.Info.Resolved
-      Restylers.Info.Test
-      Restylers.Info.Test.Support
-      Restylers.LogFormat
-      Restylers.Manifest
-      Restylers.Name
-      Restylers.Options
-      Restylers.Override
-      Restylers.Prelude
-      Restylers.Test
-      Restylers.Test.Output
-      Restylers.Version
+      RenovateAudit.App
+      RenovateAudit.Audit
+      RenovateAudit.Config
+      RenovateAudit.Dependencies
+      RenovateAudit.DependencyDashboard
+      RenovateAudit.GitHub
+      RenovateAudit.Main
+      RenovateAudit.Options
+      RenovateAudit.Pretty
   other-modules:
-      Paths_restylers
+      Paths_renovate_audit
   hs-source-dirs:
       src
   default-extensions:
@@ -54,30 +42,34 @@ library
   ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       Blammo
+    , Glob
     , aeson
-    , aeson-pretty
     , base
     , bytestring
-    , errors
+    , containers
+    , directory
+    , exceptions
+    , extra
     , filepath
-    , hspec
+    , http-client
+    , http-conduit
+    , http-types
+    , megaparsec
     , microlens
-    , mtl
-    , optparse-applicative
-    , semigroups
-    , semver
-    , shakespeare
-    , shellwords
+    , prettyprinter
+    , prettyprinter-ansi-terminal
+    , restylers
+    , retry
     , text
-    , typed-process
+    , time
+    , transformers
     , unliftio
-    , yaml
   default-language: GHC2021
 
-executable restylers
+executable renovate-audit
   main-is: Main.hs
   other-modules:
-      Paths_restylers
+      Paths_renovate_audit
   hs-source-dirs:
       app
   default-extensions:
@@ -98,18 +90,15 @@ executable restylers
   ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       base
-    , filepath
-    , restylers
-    , unliftio
+    , renovate-audit
   default-language: GHC2021
 
 test-suite spec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Restylers.ImageSpec
-      Restylers.Info.ResolvedSpec
-      Paths_restylers
+      RenovateAudit.DependencyDashboardSpec
+      Paths_renovate_audit
   hs-source-dirs:
       test
   default-extensions:
@@ -130,9 +119,9 @@ test-suite spec
   ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       base
-    , filepath
+    , containers
     , hspec
+    , renovate-audit
     , restylers
     , text
-    , unliftio
   default-language: GHC2021

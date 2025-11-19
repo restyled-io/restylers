@@ -1,4 +1,4 @@
-name: restylers
+name: renovate-audit
 version: 0.0.0.0
 license: AGPL-3
 
@@ -44,40 +44,42 @@ library:
   source-dirs: src
   dependencies:
     - Blammo
+    - Glob
     - aeson
-    - aeson-pretty
     - bytestring
-    - errors
+    - containers
+    - directory
+    - exceptions
+    - extra
     - filepath
-    - hspec
+    - http-client
+    - http-conduit
+    - http-types
+    - megaparsec
     - microlens
-    - mtl
-    - optparse-applicative
-    - semigroups
-    - semver
-    - shakespeare
-    - shellwords
+    - prettyprinter
+    - prettyprinter-ansi-terminal
+    - restylers
+    - retry
     - text
-    - typed-process
+    - time
+    - transformers
     - unliftio
-    - yaml
 
 executables:
-  restylers:
+  renovate-audit:
     main: Main.hs
     source-dirs: app
     dependencies:
-      - filepath
-      - restylers
-      - unliftio
+      - renovate-audit
 
 tests:
   spec:
     main: Spec.hs
     source-dirs: test
     dependencies:
-      - filepath
+      - containers
       - hspec
+      - renovate-audit
       - restylers
       - text
-      - unliftio
