@@ -13,3 +13,6 @@ headroom:
 
 docs:
   stack --stack-yaml _tools/stack.yaml exec -- restylers-docs > _docs/restylers.md
+
+renovate-audit:
+  GITHUB_TOKEN=$(gh auth token) stack --stack-yaml _tools/stack.yaml run -- renovate-audit

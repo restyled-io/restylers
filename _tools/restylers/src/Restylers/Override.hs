@@ -8,13 +8,16 @@
 -- Portability : POSIX
 module Restylers.Override
   ( RestylerOverride (..)
+  , load
   )
 where
 
 import Restylers.Prelude
 
 import Data.Aeson
+import Data.Bifunctor (first)
 import Data.Semigroup (Last)
+import Data.Yaml qualified as Yaml
 import Restylers.Info.Metadata (Metadata)
 import Restylers.Name
 
@@ -34,3 +37,6 @@ data RestylerOverride = RestylerOverride
   }
   deriving stock (Generic)
   deriving anyclass (FromJSON)
+
+load :: MonadIO m => FilePath -> m (Either String RestylerOverride)
+load yaml = liftIO $ first Yaml.prettyPrintParseException <$> Yaml.decodeFileEither yaml

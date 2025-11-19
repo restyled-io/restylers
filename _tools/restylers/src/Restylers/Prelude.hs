@@ -8,6 +8,7 @@
 -- Portability : POSIX
 module Restylers.Prelude
   ( module X
+  , foldMapM
   , loggedProc
   ) where
 
@@ -24,7 +25,7 @@ import Control.Monad.Reader as X
   )
 import Data.Foldable as X (for_, traverse_)
 import Data.List.NonEmpty as X (NonEmpty (..))
-import Data.Maybe as X (catMaybes, fromMaybe)
+import Data.Maybe as X (catMaybes, fromMaybe, listToMaybe)
 import Data.Text as X (Text, pack, unpack)
 import Data.Text.Encoding as X (decodeUtf8With, encodeUtf8)
 import Data.Text.Encoding.Error as X (lenientDecode)
@@ -40,6 +41,14 @@ import Prelude as X
 
 import Blammo.Logging.Logger (flushLogger)
 import System.Process.Typed (ProcessConfig, proc)
+
+-- | <https://hackage-content.haskell.org/package/relude-1.2.2.2/docs/src/Relude.Foldable.Fold.html#foldMapM>
+foldMapM
+  :: forall b m f a. (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapM f xs = foldr step return xs mempty
+ where
+  step x r z = f x >>= \y -> r $! z `mappend` y
+{-# INLINE foldMapM #-}
 
 loggedProc
   :: ( MonadIO m
