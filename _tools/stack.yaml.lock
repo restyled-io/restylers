@@ -5,13 +5,6 @@
 
 packages:
 - completed:
-    hackage: Blammo-2.1.3.0@sha256:1ebab378041b1786fffbc06ebdbd31483175d4531a27859f4ef6a63dd14b5cd2,4794
-    pantry-tree:
-      sha256: edd81370a0174d5ae397ceccfb6fc657bfbfd4994a6975efe4cc9b34035d9dd6
-      size: 1866
-  original:
-    hackage: Blammo-2.1.3.0
-- completed:
     hackage: monad-validate-1.3.0.0@sha256:eb6ddd5c9cf72ff0563cba604fa00291376e96138fdb4932d00ff3a99d66706e,2605
     pantry-tree:
       sha256: 0b2a3a57be48fcc739708b214fca202f1e95b1cd773dd3bb9589d3007cf8cf5e
@@ -20,7 +13,7 @@ packages:
     hackage: monad-validate-1.3.0.0
 snapshots:
 - completed:
-    sha256: 87da71cb0ae9ee1ea1bf51a8eb9812f39f779be76abc0a3c926defd8afda05d1
-    size: 719139
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/22/28.yaml
-  original: lts-22.28
+    sha256: 92becf9417de918f477cc79583b70700cbead6c5028fc4c4415f04fab5fb5354
+    size: 726332
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/24/20.yaml
+  original: lts-24.20

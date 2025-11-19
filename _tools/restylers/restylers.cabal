@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.37.0.
+-- This file has been generated from package.yaml by hpack version 0.38.1.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9574d686e762ae178a58bb1a2c55b1df1f713b7e4cbe487c44f4aa8e14fc8f83
+-- hash: c0f4983a558750025c1a6d3d0bd205e3cee30fc981fbe4f74e0e1559fe5340d7
 
 name:           restylers
 version:        0.0.0.0
@@ -47,12 +47,10 @@ library
       NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
-      NoPostfixOperators
       OverloadedRecordDot
       OverloadedStrings
-      QuasiQuotes
       TypeFamilies
-  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       Blammo
     , aeson
@@ -92,12 +90,10 @@ executable restylers
       NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
-      NoPostfixOperators
       OverloadedRecordDot
       OverloadedStrings
-      QuasiQuotes
       TypeFamilies
-  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       base
     , filepath
@@ -126,12 +122,10 @@ test-suite spec
       NoFieldSelectors
       NoImplicitPrelude
       NoMonomorphismRestriction
-      NoPostfixOperators
       OverloadedRecordDot
       OverloadedStrings
-      QuasiQuotes
       TypeFamilies
-  ghc-options: -fignore-optim-changes -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-safe-haskell-mode -Wno-prepositive-qualified-module -Wno-unsafe
+  ghc-options: -fwrite-ide-info -Weverything -Wno-all-missed-specialisations -Wno-missed-specialisations -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-missing-kind-signatures -Wno-missing-local-signatures -Wno-missing-role-annotations -Wno-missing-safe-haskell-mode -Wno-monomorphism-restriction -Wno-prepositive-qualified-module -Wno-safe -Wno-unsafe -optP-Wno-nonportable-include-path
   build-depends:
       base
     , filepath
