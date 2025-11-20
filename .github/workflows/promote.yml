@@ -62,7 +62,7 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # so we can find from-tag refs
 

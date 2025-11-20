@@ -29,7 +29,7 @@ jobs:
   tools:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: stack
         uses: freckle/stack-action@v5
         with:
@@ -43,7 +43,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # need to get back to base
@@ -71,7 +71,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/download-artifact@v6
         with:
           name: tools
@@ -183,7 +183,7 @@ jobs:
             echo
           } >>"$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - if: ${{ steps.prep.outputs.dockerfiles }}
         uses: hadolint/hadolint-action@master
         with:
@@ -193,7 +193,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0 # need to get back to base
