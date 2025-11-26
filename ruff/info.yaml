@@ -5,6 +5,7 @@ version_cmd: |
   ruff --version | sed '/^ruff \(.*\)$/!d; s//v\1/'
 command:
   - ruff
+arguments:
   - format
 supports_arg_sep: true
 supports_multiple_paths: true
