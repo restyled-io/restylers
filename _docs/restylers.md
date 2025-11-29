@@ -35,11 +35,11 @@
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.8` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.89.2` | Yes |
-| [prettier](#prettier) | JavaScript | `v3.7.1-4` | Yes |
-| [prettier-json](#prettier-json) | JSON | `v3.7.1-4` | Yes |
-| [prettier-markdown](#prettier-markdown) | Markdown | `v3.7.1-4` | Yes |
+| [prettier](#prettier) | JavaScript | `v3.7.2-4` | Yes |
+| [prettier-json](#prettier-json) | JSON | `v3.7.2-4` | Yes |
+| [prettier-markdown](#prettier-markdown) | Markdown | `v3.7.2-4` | Yes |
 | [prettier-ruby](#prettier-ruby) | Ruby | `v3.2.2-1` | No |
-| [prettier-yaml](#prettier-yaml) | Yaml | `v3.7.1-4` | Yes |
+| [prettier-yaml](#prettier-yaml) | Yaml | `v3.7.2-4` | Yes |
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
@@ -3090,7 +3090,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.1-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.2-4
     include:
     - '**/*.js'
     - '**/*.jsx'
@@ -3224,7 +3224,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.1-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.2-4
     include:
     - '**/*.json'
     interpreters: []
@@ -3284,7 +3284,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.1-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.2-4
     include:
     - '**/*.md'
     - '**/*.markdown'
@@ -3432,7 +3432,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.1-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.7.2-4
     include:
     - '**/*.yml'
     - '**/*.yaml'
