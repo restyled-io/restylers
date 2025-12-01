@@ -6,6 +6,7 @@ version_cmd: |
 command:
   - php-cs-fixer
   - fix
+  - --no-interaction
 include:
   - "**/*.php"
 supports_multiple_paths: false
