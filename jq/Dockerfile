@@ -1,4 +1,4 @@
-FROM alpine:3.22.2
+FROM alpine:3.23.0
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 RUN apk add --no-cache bash curl
 
