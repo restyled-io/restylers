@@ -1915,7 +1915,7 @@ restylers:
     arguments: []
     command:
     - formatter
-    image: restyled/restyler-jdt:v2.13.0
+    image: public.ecr.aws/restyled-io/restyler-jdt:v2.13.0
     include:
     - '**/*.java'
     - '**/*.css'
