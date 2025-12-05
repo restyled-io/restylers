@@ -19,7 +19,7 @@
 | [fourmolu](#fourmolu) | Haskell | `v0.19.0.1` | No |
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.25.0` | Yes |
-| [google-java-format](#google-java-format) | Java | `v1.32.0` | No |
+| [google-java-format](#google-java-format) | Java | `v1.33.0` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.2.1` | No |
 | [hlint](#hlint) | Haskell | `v3.10` | No |
@@ -29,7 +29,7 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v16.0.0` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
@@ -56,7 +56,7 @@
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.12.2` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-4021-g76446d4d` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-4023-gc1271a00` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -1590,7 +1590,7 @@ restylers:
     command:
     - google-java-format
     - --replace
-    image: public.ecr.aws/restyled-io/restyler-google-java-format:v1.32.0
+    image: public.ecr.aws/restyled-io/restyler-google-java-format:v1.33.0
     include:
     - '**/*.java'
     interpreters: []
@@ -2420,7 +2420,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v16.0.0
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
@@ -5393,7 +5393,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4021-g76446d4d
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4023-gc1271a00
     include:
     - '**/*.sv'
     interpreters: []
