@@ -44,7 +44,7 @@
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.16.0` | Yes |
-| [rubocop](#rubocop) | Ruby | `v1.81.7` | No |
+| [rubocop](#rubocop) | Ruby | `v1.82.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
@@ -3858,7 +3858,7 @@ restylers:
     - --auto-correct
     - --fail-level
     - fatal
-    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.81.7
+    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.82.0
     include:
     - '**/*.rb'
     interpreters:
