@@ -4,7 +4,7 @@
 | -------- | ----------- | ------- | ------------------- |
 | [astyle](#astyle) | C, C++, C#, Java*, Objective-C | `v3.6.2` | Yes |
 | [autopep8](#autopep8) | Python | `v2.3.2` | Yes |
-| [black](#black) | Python | `v25.11.0` | Yes |
+| [black](#black) | Python | `v26.1.0` | Yes |
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
@@ -283,7 +283,7 @@ restylers:
     arguments: []
     command:
     - black
-    image: public.ecr.aws/restyled-io/restyler-black:v25.11.0
+    image: public.ecr.aws/restyled-io/restyler-black:v26.1.0
     include:
     - '**/*.py'
     interpreters:
