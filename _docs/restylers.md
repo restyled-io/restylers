@@ -29,7 +29,7 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v16.2.0` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
@@ -44,7 +44,7 @@
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.16.0` | Yes |
-| [rubocop](#rubocop) | Ruby | `v1.82.0` | No |
+| [rubocop](#rubocop) | Ruby | `v1.84.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
@@ -2420,7 +2420,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v16.2.0
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
@@ -3858,7 +3858,7 @@ restylers:
     - --auto-correct
     - --fail-level
     - fatal
-    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.82.0
+    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.84.0
     include:
     - '**/*.rb'
     interpreters:
