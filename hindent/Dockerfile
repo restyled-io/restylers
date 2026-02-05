@@ -11,7 +11,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.UTF-8
 
-# renovate: datasource=hackage depName=hindent
+# renovate: datasource=hackage depName=hindent versioning=semver
 ENV HINDENT_VERSION=6.2.1
 
 RUN \
