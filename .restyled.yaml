@@ -1,5 +1,6 @@
 also_exclude:
   - "./*/LICENSE*"
+  - "_tools/renovate-audit/test/files/**/*"
 
 restylers:
   - fourmolu:
