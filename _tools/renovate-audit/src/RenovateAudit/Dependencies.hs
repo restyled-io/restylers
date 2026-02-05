@@ -47,6 +47,7 @@ packageNames =
   , ("google-java-format", "com.google.googlejavaformat:google-java-format")
   , ("php-cs-fixer", "friendsofphp/php-cs-fixer")
   , ("prettier-ruby", "prettier")
+  , ("refmt", "reason-cli")
   , ("sqlformat", "sqlparse")
   , ("standardrb", "standard")
   , ("taplo", "tamasfe/taplo")
