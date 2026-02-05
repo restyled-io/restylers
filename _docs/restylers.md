@@ -55,7 +55,7 @@
 | [standardrb](#standardrb) | Ruby | `v1.53.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
-| [terraform](#terraform) | Terraform | `v1.12.2` | Yes |
+| [terraform](#terraform) | Terraform | `v1.14.4` | Yes |
 | [verible](#verible) | System Verilog | `v0.0-4051-g9fdb4057` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
@@ -5311,7 +5311,7 @@ restylers:
     command:
     - terraform
     - fmt
-    image: public.ecr.aws/restyled-io/restyler-terraform:v1.12.2
+    image: public.ecr.aws/restyled-io/restyler-terraform:v1.14.4
     include:
     - '**/*.tf'
     interpreters: []
