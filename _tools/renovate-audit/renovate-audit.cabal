@@ -13,7 +13,6 @@ library
   exposed-modules:
       RenovateAudit.App
       RenovateAudit.Audit
-      RenovateAudit.Config
       RenovateAudit.Dependencies
       RenovateAudit.DependencyDashboard
       RenovateAudit.GitHub
@@ -47,10 +46,8 @@ library
     , base
     , bytestring
     , containers
-    , directory
     , exceptions
     , extra
-    , filepath
     , http-client
     , http-conduit
     , http-types
@@ -62,7 +59,6 @@ library
     , retry
     , text
     , time
-    , transformers
     , unliftio
   default-language: GHC2021
 

@@ -9,7 +9,6 @@ import Restylers.Prelude
 import Data.List (find)
 import Data.Text qualified as T
 import Data.Time (defaultTimeLocale, formatTime)
-import RenovateAudit.Config
 import RenovateAudit.Dependencies (Dependency (..))
 import RenovateAudit.DependencyDashboard
   ( DependencyDashboard
@@ -21,7 +20,6 @@ import RenovateAudit.Pretty
 
 data AuditResult = AuditResult
   { dependency :: Dependency
-  , configured :: Maybe (Doc Ann)
   , managed :: Maybe (Doc Ann)
   , updated :: Maybe (Doc Ann)
   }
@@ -34,12 +32,9 @@ auditDependency
   -> Dependency
   -> m AuditResult
 auditDependency dashboard prs dependency = do
-  configured <- findRenovatedConfigured dependency
-
   pure
     AuditResult
       { dependency
-      , configured
       , managed = knownDoc <$> DependencyDashboard.lookup dashboard dependency
       , updated = updatedDoc <$> find (pullRequestUpdates dependency) prs
       }
@@ -74,28 +69,21 @@ updatedDoc pr =
 -- | Returns pretty sort key in first tuple element
 prettyAuditResult :: Int -> AuditResult -> (Int, Doc Ann)
 prettyAuditResult w result =
-  case (result.configured, result.managed, result.updated) of
-    (Nothing, Nothing, Nothing) ->
-      ( 3
-      , annotate Failure "✗"
-          <+> depName
-          <+> failure "not configured"
-      )
-    (Just doc, Nothing, Nothing) ->
+  case (result.managed, result.updated) of
+    (Nothing, Nothing) ->
       ( 2
       , annotate Failure "✗"
           <+> depName
-          <+> failure "not managed"
-          <+> doc
+          <+> annotate Failure (fill labelW "not managed")
       )
-    (_, Just doc, Nothing) ->
+    (Just doc, Nothing) ->
       ( 1
-      , annotate Failure "✗"
+      , annotate Warning "_"
           <+> depName
-          <+> failure "not updated"
+          <+> annotate Warning (fill labelW "not updated")
           <+> doc
       )
-    (_, _, Just doc) ->
+    (_, Just doc) ->
       ( 0
       , annotate Success "✓"
           <+> depName
@@ -104,5 +92,4 @@ prettyAuditResult w result =
       )
  where
   depName = annotate DepName $ fill w $ pretty result.dependency.depName
-  failure = annotate Failure . fill labelW
-  labelW = 15
+  labelW = 11

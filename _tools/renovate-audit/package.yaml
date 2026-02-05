@@ -48,10 +48,8 @@ library:
     - aeson
     - bytestring
     - containers
-    - directory
     - exceptions
     - extra
-    - filepath
     - http-client
     - http-conduit
     - http-types
@@ -63,7 +61,6 @@ library:
     - retry
     - text
     - time
-    - transformers
     - unliftio
 
 executables:
