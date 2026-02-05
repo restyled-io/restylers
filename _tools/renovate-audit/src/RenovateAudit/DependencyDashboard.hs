@@ -36,14 +36,14 @@ data KnownDependency = KnownDependency
 size :: DependencyDashboard -> Int
 size d = Map.size d.unwrap
 
-lookup :: DependencyDashboard -> Dependency -> Maybe KnownDependency
-lookup d dependency =
+lookup :: Dependency -> DependencyDashboard -> Maybe KnownDependency
+lookup dependency d =
   Map.lookup dependency.packageName d.unwrap
     <|> Map.lookup dependency.depName d.unwrap
 
 fromDependencyDashboardIssue :: PullRequest -> DependencyDashboard
 fromDependencyDashboardIssue issue =
-  case parseDependencyDashboardIssue issue.body of
+  case parseDependencyDashboardIssue $ fromMaybe "" issue.body of
     Left {} -> mempty
     Right dashboard -> dashboard
 

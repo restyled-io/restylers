@@ -6,8 +6,8 @@ module RenovateAudit.Audit
 
 import Restylers.Prelude
 
-import Data.List (find)
-import Data.Text qualified as T
+import Data.Map.Strict (Map)
+import Data.Map.Strict qualified as Map
 import Data.Time (defaultTimeLocale, formatTime)
 import RenovateAudit.Dependencies (Dependency (..))
 import RenovateAudit.DependencyDashboard
@@ -17,6 +17,8 @@ import RenovateAudit.DependencyDashboard
 import RenovateAudit.DependencyDashboard qualified as DependencyDashboard
 import RenovateAudit.GitHub (PullRequest (..))
 import RenovateAudit.Pretty
+import RenovateAudit.PullRequests (PullRequests)
+import RenovateAudit.PullRequests qualified as PullRequests
 
 data AuditResult = AuditResult
   { dependency :: Dependency
@@ -28,26 +30,16 @@ data AuditResult = AuditResult
 auditDependency
   :: MonadUnliftIO m
   => DependencyDashboard
-  -> [PullRequest]
+  -> PullRequests
   -> Dependency
   -> m AuditResult
 auditDependency dashboard prs dependency = do
   pure
     AuditResult
       { dependency
-      , managed = knownDoc <$> DependencyDashboard.lookup dashboard dependency
-      , updated = updatedDoc <$> find (pullRequestUpdates dependency) prs
+      , managed = knownDoc <$> DependencyDashboard.lookup dependency dashboard
+      , updated = updatedDoc <$> PullRequests.lookup dependency prs
       }
-
-pullRequestUpdates :: Dependency -> PullRequest -> Bool
-pullRequestUpdates dependency pr = expectedTitlePrefix `T.isInfixOf` pr.title
- where
-  expectedTitlePrefix =
-    "feat("
-      <> dependency.depName
-      <> "): update dependency "
-      <> dependency.packageName
-      <> " to"
 
 knownDoc :: KnownDependency -> Doc Ann
 knownDoc known =

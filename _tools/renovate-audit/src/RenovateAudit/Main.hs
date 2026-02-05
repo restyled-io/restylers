@@ -20,6 +20,8 @@ import RenovateAudit.DependencyDashboard qualified as DependencyDashboard
 import RenovateAudit.GitHub qualified as GitHub
 import RenovateAudit.Options
 import RenovateAudit.Pretty (annToAnsi)
+import RenovateAudit.PullRequests (toRenovatePullRequests)
+import RenovateAudit.PullRequests qualified as PullRequests
 
 main :: IO ()
 main = do
@@ -41,8 +43,11 @@ main = do
       $ "Parsed renovate-detected dependencies"
       :# ["count" .= DependencyDashboard.size dashboard]
 
-    prs <- GitHub.listClosedPullRequestsByAuthor "renovate%5Bbot%5D"
-    logInfo $ "Loaded update PRs" :# ["count" .= length prs]
+    prs <- GitHub.foldMapClosedPullRequests $ foldMap toRenovatePullRequests
+
+    logInfo
+      $ "Fetched renovate dependency PRs"
+      :# ["count" .= PullRequests.size prs]
 
     shouldColor <- asks $ view $ loggerL . to getLoggerShouldColor
 

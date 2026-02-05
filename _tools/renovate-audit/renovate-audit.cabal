@@ -19,6 +19,7 @@ library
       RenovateAudit.Main
       RenovateAudit.Options
       RenovateAudit.Pretty
+      RenovateAudit.PullRequests
   other-modules:
       Paths_renovate_audit
   hs-source-dirs:
@@ -94,6 +95,7 @@ test-suite spec
   main-is: Spec.hs
   other-modules:
       RenovateAudit.DependencyDashboardSpec
+      RenovateAudit.PullRequestsSpec
       Paths_renovate_audit
   hs-source-dirs:
       test

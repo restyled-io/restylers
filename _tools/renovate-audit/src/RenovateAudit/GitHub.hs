@@ -3,7 +3,7 @@ module RenovateAudit.GitHub
   , envGitHubToken
   , HasGitHubToken (..)
   , PullRequest (..)
-  , listClosedPullRequestsByAuthor
+  , foldMapClosedPullRequests
   , getOpenIssueByTitle
   ) where
 
@@ -55,61 +55,48 @@ instance HasGitHubToken GitHubToken where
 data PullRequest = PullRequest
   { number :: Int
   , title :: Text
-  , body :: Text
+  , body :: Maybe Text
   , closed_at :: Maybe UTCTime
   }
   deriving stock (Generic, Show)
   deriving anyclass (FromJSON)
 
-newtype SearchResponse = SearchResponse
-  { items :: [PullRequest]
+data SearchResponse = SearchResponse
+  { total_count :: Int
+  , items :: [PullRequest]
   }
   deriving stock (Generic, Show)
   deriving anyclass (FromJSON)
 
-listClosedPullRequestsByAuthor
+foldMapClosedPullRequests
   :: ( MonadUnliftIO m
      , MonadLogger m
      , MonadReader env m
      , HasGitHubToken env
+     , Monoid w
      )
-  => Text
-  -> m [PullRequest]
-listClosedPullRequestsByAuthor author = go 1
+  => ([PullRequest] -> w)
+  -> m w
+foldMapClosedPullRequests f = go mempty 1
  where
-  go
-    :: ( MonadUnliftIO m
-       , MonadLogger m
-       , MonadReader env m
-       , HasGitHubToken env
-       )
-    => Int
-    -> m [PullRequest]
-  go page = do
-    resp <-
-      get @SearchResponse
-        $ "/search/issues"
-        <> "?q="
-        <> unpack query
+  go acc p = do
+    prs <-
+      get @[PullRequest]
+        $ "/repos/restyled-io/restylers/pulls"
+        <> "?state=closed"
+        <> "&sort=updated"
+        <> "&direction=desc"
         <> "&per_page=100"
         <> "&page="
-        <> show page
+        <> show @Int p
 
-    case (page, resp.items) of
-      (n, prs) | n == 1 -> pure prs -- disable pagination due to rate limits
-      (_, []) -> pure []
-      (_, prs) -> (prs <>) <$> go (page + 1)
+    -- NB. Because we sort updated-descending, and we use (acc <>) below, the
+    -- fact that Map's (<>) is the left-biased union means that the newest PR by
+    -- dependency is what we get.
 
-  query :: Text
-  query =
-    T.intercalate
-      "+"
-      [ "repo:restyled-io%2Frestylers"
-      , "is:pr"
-      , "state:closed"
-      , "author:" <> author
-      , "sort:updated-desc"
-      ]
+    if null prs
+      then pure acc
+      else go (acc <> f prs) (p + 1)
 
 newtype Issue = Issue
   { title :: Text

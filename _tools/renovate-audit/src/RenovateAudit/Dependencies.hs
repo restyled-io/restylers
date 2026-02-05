@@ -16,7 +16,7 @@ data Dependency = Dependency
   { depName :: Text
   , packageName :: Text
   }
-  deriving stock (Eq, Show)
+  deriving stock (Eq, Ord, Show)
 
 loadDependencies :: MonadIO m => m [Dependency]
 loadDependencies = do
