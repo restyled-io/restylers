@@ -12,7 +12,7 @@ RUN \
 ENV LANG=en_US.UTF-8
 
 # renovate: datasource=hackage depName=hindent versioning=semver
-ENV HINDENT_VERSION=6.2.1
+ENV HINDENT_VERSION=6.3.0
 
 RUN \
   curl -L -o /usr/bin/hindent \
