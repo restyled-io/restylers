@@ -21,7 +21,7 @@
 | [gofmt](#gofmt) | Go | `go1.25.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.34.1` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
-| [hindent](#hindent) | Haskell | `v6.2.1` | No |
+| [hindent](#hindent) | Haskell | `v6.3.0` | No |
 | [hlint](#hlint) | Haskell | `v3.10` | No |
 | [isort](#isort) | Python | `v7.0.0` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
@@ -1722,7 +1722,7 @@ restylers:
     arguments: []
     command:
     - hindent
-    image: public.ecr.aws/restyled-io/restyler-hindent:v6.2.1
+    image: public.ecr.aws/restyled-io/restyler-hindent:v6.3.0
     include:
     - '**/*.hs'
     interpreters: []
