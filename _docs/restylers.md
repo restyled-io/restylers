@@ -46,7 +46,7 @@
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.16.0` | Yes |
 | [rubocop](#rubocop) | Ruby | `v1.84.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
-| [rustfmt](#rustfmt) | Rust | `v1.7.1-stable` | Yes |
+| [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
@@ -4166,7 +4166,7 @@ restylers:
     arguments: []
     command:
     - rustfmt
-    image: restyled/restyler-rustfmt:v1.7.1-stable
+    image: public.ecr.aws/restyled-io/restyler-rustfmt:v1.8.0-stable
     include:
     - '**/*.rs'
     interpreters: []
