@@ -6,8 +6,6 @@ module RenovateAudit.Audit
 
 import Restylers.Prelude
 
-import Data.Map.Strict (Map)
-import Data.Map.Strict qualified as Map
 import Data.Time (defaultTimeLocale, formatTime)
 import RenovateAudit.Dependencies (Dependency (..))
 import RenovateAudit.DependencyDashboard
