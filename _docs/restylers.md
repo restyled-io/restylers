@@ -18,7 +18,7 @@
 | [fantomas](#fantomas) | F# | `v3.3.0` | Yes |
 | [fourmolu](#fourmolu) | Haskell | `v0.19.0.1` | No |
 | [gn](#gn) | GN | `v2` | Yes |
-| [gofmt](#gofmt) | Go | `go1.25.0` | Yes |
+| [gofmt](#gofmt) | Go | `go1.26.0` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.34.1` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.3.0` | No |
@@ -1510,7 +1510,7 @@ restylers:
     command:
     - gofmt
     - -w
-    image: public.ecr.aws/restyled-io/restyler-gofmt:go1.25.0
+    image: public.ecr.aws/restyled-io/restyler-gofmt:go1.26.0
     include:
     - '**/*.go'
     interpreters: []
