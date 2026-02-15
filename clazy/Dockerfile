@@ -22,7 +22,7 @@ RUN \
 ENV LANG=en_US.UTF-8
 
 # renovate: datasource=github-tags depName=clazy packageName=KDE/clazy
-ENV CLAZY_VERSION=v1.16
+ENV CLAZY_VERSION=v1.17
 
 RUN \
   cd /tmp && \
