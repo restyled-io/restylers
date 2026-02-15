@@ -8,7 +8,7 @@
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
-| [clazy](#clazy) | C++ | `v1.16` | Yes |
+| [clazy](#clazy) | C++ | `v1.17` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
 | [dart-format](#dart-format) | Dart | `v3.1.4` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
@@ -588,7 +588,7 @@ restylers:
     arguments: []
     command:
     - clazy-standalone-apply
-    image: public.ecr.aws/restyled-io/restyler-clazy:v1.16
+    image: public.ecr.aws/restyled-io/restyler-clazy:v1.17
     include:
     - '**/*.cpp'
     interpreters: []
