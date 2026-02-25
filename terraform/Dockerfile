@@ -4,7 +4,7 @@ ENV LANG en_US.UTF-8
 RUN apk add --no-cache bash curl unzip
 
 # renovate: datasource=custom.hashicorp depName=terraform
-ENV TERRAFORM_VERSION=1.14.5
+ENV TERRAFORM_VERSION=1.14.6
 ENV TERRAFORM_ARCHIVE=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 ENV TERRAFORM_URL=https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/$TERRAFORM_ARCHIVE
 
