@@ -34,7 +34,7 @@ jobs:
         uses: freckle/stack-action@v5
         with:
           working-directory: _tools
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: tools
           path: "${{ steps.stack.outputs.local-install-root }}/bin/*"
@@ -72,7 +72,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           name: tools
 
@@ -157,7 +157,7 @@ jobs:
           manifest: ./restylers.yaml
           dry-run: true
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: manifest
           path: restylers.yaml
