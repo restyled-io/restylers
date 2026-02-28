@@ -2,6 +2,6 @@
   "name": "@restyled/restyler-npm-groovy-lint",
   "version": "0.0.0",
   "dependencies": {
-    "npm-groovy-lint": "16.2.0"
+    "npm-groovy-lint": "17.0.0"
   }
 }
