@@ -4,7 +4,7 @@
 | -------- | ----------- | ------- | ------------------- |
 | [astyle](#astyle) | C, C++, C#, Java*, Objective-C | `v3.6.2` | Yes |
 | [autopep8](#autopep8) | Python | `v2.3.2` | Yes |
-| [black](#black) | Python | `v26.3.0` | Yes |
+| [black](#black) | Python | `v26.3.1` | Yes |
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
@@ -29,7 +29,7 @@
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
 | [nixfmt](#nixfmt) | Nix | `v0.6.0` | Yes |
 | [nixpkgs-fmt](#nixpkgs-fmt) | Nix | `v1.3.0` | No |
-| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v17.0.3` | Yes |
+| [npm-groovy-lint](#npm-groovy-lint) | Groovy | `v15.0.2` | Yes |
 | [ocamlformat](#ocamlformat) | OCaml | `v0.26.2` | Yes |
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
@@ -283,7 +283,7 @@ restylers:
     arguments: []
     command:
     - black
-    image: public.ecr.aws/restyled-io/restyler-black:v26.3.0
+    image: public.ecr.aws/restyled-io/restyler-black:v26.3.1
     include:
     - '**/*.py'
     interpreters:
@@ -2420,7 +2420,7 @@ restylers:
     command:
     - npm-groovy-lint
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v17.0.3
+    image: public.ecr.aws/restyled-io/restyler-npm-groovy-lint:v15.0.2
     include:
     - '**/*.groovy'
     interpreters: []
