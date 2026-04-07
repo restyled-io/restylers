@@ -50,7 +50,7 @@
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
-| [shfmt](#shfmt) | POSIX sh, Bash | `v3.12.0` | Yes |
+| [shfmt](#shfmt) | POSIX sh, Bash | `v3.13.1` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.5.5` | No |
 | [standardrb](#standardrb) | Ruby | `v1.54.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
@@ -4469,7 +4469,7 @@ restylers:
     command:
     - shfmt
     - -w
-    image: public.ecr.aws/restyled-io/restyler-shfmt:v3.12.0
+    image: public.ecr.aws/restyled-io/restyler-shfmt:v3.13.1
     include:
     - '**/*.sh'
     - '**/*.bash'
