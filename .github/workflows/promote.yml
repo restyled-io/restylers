@@ -94,7 +94,7 @@ jobs:
           commit_sha: "${{ steps.prep.outputs.from }}^{}"
 
       - name: Add manifest to ${{ steps.prep.outputs.to }} release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.prep.outputs.to }}
           files: |
