@@ -39,7 +39,7 @@ jobs:
           ./restylers-docs > _docs/restylers.md
 
       - id: release
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@v6
         with:
           extra_plugins: |
             conventional-changelog-conventionalcommits
