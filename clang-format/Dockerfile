@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 ENV LANG en_US.UTF-8
 RUN \
