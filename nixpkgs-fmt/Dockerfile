@@ -1,4 +1,4 @@
-FROM nixos/nix:2.34.6
+FROM nixos/nix:2.34.7
 LABEL maintainer="Pat Brisbin <pbrisbin@gmail.com>"
 RUN nix-env --install gnused nixpkgs-fmt
 RUN mkdir -p /code
