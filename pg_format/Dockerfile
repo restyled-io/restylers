@@ -1,4 +1,4 @@
-FROM alpine:3.23
+FROM alpine:3.24
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
 # renovate: datasource=github-tags depName=pg_format packageName=darold/pgFormatter
