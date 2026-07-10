@@ -43,7 +43,7 @@
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
-| [reorder-python-imports](#reorder-python-imports) | Python | `v3.16.0` | Yes |
+| [reorder-python-imports](#reorder-python-imports) | Python | `v3.17.0` | Yes |
 | [rubocop](#rubocop) | Ruby | `v1.88.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
@@ -3790,7 +3790,7 @@ restylers:
     command:
     - reorder-python-imports
     - --exit-zero-even-if-changed
-    image: public.ecr.aws/restyled-io/restyler-reorder-python-imports:v3.16.0
+    image: public.ecr.aws/restyled-io/restyler-reorder-python-imports:v3.17.0
     include:
     - '**/*.py'
     interpreters:
