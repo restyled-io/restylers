@@ -75,7 +75,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            :warning: This PR contains no restyle scopes
+            :warning: **This PR contains no restyler scopes**
 
             No restylers will be built, tested, or deployed as a result of this
             PR. If you intended to build, test, or deploy a restyler, ensure at
