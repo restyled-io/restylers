@@ -57,6 +57,44 @@ jobs:
     outputs:
       restylers: ${{ steps.scopes.outputs.restylers }}
 
+  comment-scopes:
+    needs:
+      - changes
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: find-comment
+        uses: peter-evans/find-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: '<!-- restylers scopes comment -->'
+
+      - if: ${{ !needs.changes.outputs.restylers && !steps.find-comment.outputs.comment-id }}
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            :warning: This PR contains no restyle scopes
+
+            No restylers will be built, tested, or deployed as a result of this
+            PR. If you intended to build, test, or deploy a restyler, ensure at
+            least one commit includes it as its scope:
+
+            ```
+            feat(prettier): implement the thing
+            ```
+
+            <!-- restylers scopes comment -->
+
+      - if: ${{ needs.changes.outputs.restylers && steps.find-comment.outputs.comment-id }}
+        run: |
+          gh api -X DELETE "/repos/$GH_REPO/pulls/comments/$COMMENT_ID"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          COMMENT_ID: ${{ steps.find-comment.outputs.comment-id }}
+
   restylers:
     needs:
       - tools
