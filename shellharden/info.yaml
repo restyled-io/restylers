@@ -1,7 +1,7 @@
 ---
 enabled: true
 name: shellharden
-version_cmd:
+version_cmd: |
   shellharden --version | sed 's/^/v/'
 command:
   - shellharden
