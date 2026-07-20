@@ -1,7 +1,8 @@
 ---
 enabled: true
 name: shellharden
-version: v4.1.1-3
+version_cmd:
+  shellharden --version | sed 's/^/v/'
 command:
   - shellharden
   - "--replace"
