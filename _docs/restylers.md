@@ -7,6 +7,7 @@
 | [black](#black) | Python | `v26.5.1` | Yes |
 | [brittany](#brittany) | Haskell | `v0.14.0.2` | No |
 | [cabal-fmt](#cabal-fmt) | Haskell | `v0.1.12` | No |
+| [cabal-gild](#cabal-gild) | Haskell | `v1.8.4.1` | No |
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
 | [clazy](#clazy) | C++ | `v1.17` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
@@ -35,11 +36,11 @@
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.10` | Yes |
 | [php-cs-fixer](#php-cs-fixer) | PHP | `v3.95.13` | Yes |
-| [prettier](#prettier) | JavaScript | `v3.9.5-4` | Yes |
-| [prettier-json](#prettier-json) | JSON | `v3.9.5-4` | Yes |
-| [prettier-markdown](#prettier-markdown) | Markdown | `v3.9.5-4` | Yes |
+| [prettier](#prettier) | JavaScript | `v3.9.6-4` | Yes |
+| [prettier-json](#prettier-json) | JSON | `v3.9.6-4` | Yes |
+| [prettier-markdown](#prettier-markdown) | Markdown | `v3.9.6-4` | Yes |
 | [prettier-ruby](#prettier-ruby) | Ruby | `v3.2.2-1` | No |
-| [prettier-yaml](#prettier-yaml) | Yaml | `v3.9.5-4` | Yes |
+| [prettier-yaml](#prettier-yaml) | Yaml | `v3.9.6-4` | Yes |
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
@@ -49,7 +50,7 @@
 | [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
-| [shellharden](#shellharden) | POSIX sh, Bash | `v4.1.1-3` | Yes |
+| [shellharden](#shellharden) | POSIX sh, Bash | `v4.3.2` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.13.1` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.5.5` | No |
 | [standardrb](#standardrb) | Ruby | `v1.56.0` | Yes |
@@ -495,6 +496,97 @@ executable cabal-fmt
 </details>
 
 [See all available images](https://gallery.ecr.aws/restyled-io/restyler-cabal-fmt)
+
+## cabal-gild
+
+Restyles _Haskell_, must be explicitly enabled.
+
+<details>
+<summary>Documentation</summary>
+
+- https://github.com/tfausak/cabal-gild
+
+</details>
+
+<details>
+<summary>Configuration</summary>
+
+```yaml
+restylers:
+- cabal-gild:
+    arguments: []
+    command:
+    - cabal-gild
+    image: public.ecr.aws/restyled-io/restyler-cabal-gild:v1.8.4.1
+    include:
+    - '**/*.cabal'
+    interpreters: []
+
+```
+
+</details>
+
+<details>
+<summary>Examples</summary>
+
+
+**Before**
+
+```haskell
+cabal-version: 2.4
+name: cabal-gild
+version: 0
+
+-- An example package
+executable cabal-gild
+    default-language: Haskell2010
+    hs-source-dirs: src
+    main-is: Main.hs
+    -- build depends will be in
+    -- a nice tabular format
+    build-depends: base >=4.11 && <4.13, pretty >=1.1.3.6 && <1.2, bytestring, Cabal ^>=2.5, containers ^>=0.5.11.0 || ^>=0.6.0.1
+    -- extensions will be sorted
+    other-extensions:
+      DeriveFunctor FlexibleContexts ExistentialQuantification OverloadedStrings
+      RankNTypes
+
+```
+
+**After**
+
+```haskell
+cabal-version: 2.4
+name: cabal-gild
+version: 0
+
+-- An example package
+executable cabal-gild
+  default-language: Haskell2010
+  hs-source-dirs: src
+  main-is: Main.hs
+  -- build depends will be in
+  -- a nice tabular format
+  build-depends:
+    base >=4.11 && <4.13,
+    bytestring,
+    Cabal ^>=2.5,
+    containers ^>=0.5.11.0 || ^>=0.6.0.1,
+    pretty >=1.1.3.6 && <1.2,
+
+  -- extensions will be sorted
+  other-extensions:
+    DeriveFunctor
+    ExistentialQuantification
+    FlexibleContexts
+    OverloadedStrings
+    RankNTypes
+
+```
+
+
+</details>
+
+[See all available images](https://gallery.ecr.aws/restyled-io/restyler-cabal-gild)
 
 ## clang-format
 
@@ -3091,7 +3183,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.5-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.6-4
     include:
     - '**/*.js'
     - '**/*.jsx'
@@ -3225,7 +3317,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.5-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.6-4
     include:
     - '**/*.json'
     interpreters: []
@@ -3285,7 +3377,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.5-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.6-4
     include:
     - '**/*.md'
     - '**/*.markdown'
@@ -3433,7 +3525,7 @@ restylers:
     command:
     - prettier
     - --write
-    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.5-4
+    image: public.ecr.aws/restyled-io/restyler-prettier:v3.9.6-4
     include:
     - '**/*.yml'
     - '**/*.yaml'
@@ -4406,7 +4498,7 @@ restylers:
     command:
     - shellharden
     - --replace
-    image: public.ecr.aws/restyled-io/restyler-shellharden:v4.1.1-3
+    image: public.ecr.aws/restyled-io/restyler-shellharden:v4.3.2
     include:
     - '**/*.sh'
     - '**/*.bash'
