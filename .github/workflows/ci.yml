@@ -58,6 +58,8 @@ jobs:
       restylers: ${{ steps.scopes.outputs.restylers }}
 
   comment-scopes:
+    if: ${{ github.event_name == 'pull_request' }}
+
     needs:
       - changes
 
