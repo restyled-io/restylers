@@ -20,7 +20,7 @@
 | [fourmolu](#fourmolu) | Haskell | `v0.19.0.1` | No |
 | [gn](#gn) | GN | `v2` | Yes |
 | [gofmt](#gofmt) | Go | `go1.26.0` | Yes |
-| [google-java-format](#google-java-format) | Java | `v1.36.0` | No |
+| [google-java-format](#google-java-format) | Java | `v1.36.1` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.3.0` | No |
 | [hlint](#hlint) | Haskell | `v3.10` | No |
@@ -35,7 +35,7 @@
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.10` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.95.17` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.95.18` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.9.6-4` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.9.6-4` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.9.6-4` | Yes |
@@ -1682,7 +1682,7 @@ restylers:
     command:
     - google-java-format
     - --replace
-    image: public.ecr.aws/restyled-io/restyler-google-java-format:v1.36.0
+    image: public.ecr.aws/restyled-io/restyler-google-java-format:v1.36.1
     include:
     - '**/*.java'
     interpreters: []
@@ -3126,7 +3126,7 @@ restylers:
     - php-cs-fixer
     - fix
     - --no-interaction
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.95.17
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.95.18
     include:
     - '**/*.php'
     interpreters: []
