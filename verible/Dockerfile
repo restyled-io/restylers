@@ -13,7 +13,7 @@ RUN \
   rm -rf /var/lib/apt/lists/*
 
 # renovate: datasource=github-releases depName=verible packageName=chipsalliance/verible versioning=loose
-ENV VERIBLE_VERSION=v0.0-4117-gdd17e7fe
+ENV VERIBLE_VERSION=v0.0-4126-g2b611e4d
 
 RUN \
   curl --silent --fail --show-error --location \
