@@ -57,7 +57,7 @@
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.15.8` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-4128-gce6d8b4b` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-4133-g873f559f` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -5485,7 +5485,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4128-gce6d8b4b
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4133-g873f559f
     include:
     - '**/*.sv'
     interpreters: []
