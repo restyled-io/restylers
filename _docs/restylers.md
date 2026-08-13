@@ -52,7 +52,7 @@
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.3.2` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.13.1` | Yes |
-| [sqlformat](#sqlformat) | SQL, PSQL | `0.5.5` | No |
+| [sqlformat](#sqlformat) | SQL, PSQL | `0.6.0` | No |
 | [standardrb](#standardrb) | Ruby | `v1.56.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
@@ -4625,7 +4625,7 @@ restylers:
     - sqlformat
     - --reindent
     - --keywords=upper
-    image: public.ecr.aws/restyled-io/restyler-sqlformat:0.5.5
+    image: public.ecr.aws/restyled-io/restyler-sqlformat:0.6.0
     include:
     - '**/*.sql'
     interpreters: []
