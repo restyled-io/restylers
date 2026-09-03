@@ -11,7 +11,7 @@
 | [clang-format](#clang-format) | C, C++, Java, JavaScript, Objective-C, Protobuf, C# | `v18.1.8` | Yes |
 | [clazy](#clazy) | C++ | `v1.17` | Yes |
 | [cmake-format](#cmake-format) | CMake | `0.6.13-1` | Yes |
-| [dart-format](#dart-format) | Dart | `v3.1.10` | Yes |
+| [dart-format](#dart-format) | Dart | `v3.1.13` | Yes |
 | [dfmt](#dfmt) | D | `v0.14.2` | Yes |
 | [dhall-format](#dhall-format) | Dhall | `1.42.2` | Yes |
 | [dotnet-format](#dotnet-format) | C#, VB.NET | `v5.1.250801` | No |
@@ -19,12 +19,12 @@
 | [fantomas](#fantomas) | F# | `v3.3.0` | Yes |
 | [fourmolu](#fourmolu) | Haskell | `v0.19.0.1` | No |
 | [gn](#gn) | GN | `v2` | Yes |
-| [gofmt](#gofmt) | Go | `go1.26.0` | Yes |
+| [gofmt](#gofmt) | Go | `go1.27.1` | Yes |
 | [google-java-format](#google-java-format) | Java | `v1.36.1` | No |
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.3.0` | No |
 | [hlint](#hlint) | Haskell | `v3.10` | No |
-| [isort](#isort) | Python | `v8.0.1` | Yes |
+| [isort](#isort) | Python | `v9.0.1` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
 | [jq](#jq) | JSON | `v1.6-4` | No |
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
@@ -35,7 +35,7 @@
 | [ormolu](#ormolu) | Haskell | `v0.5.3.0` | No |
 | [perltidy](#perltidy) | Perl | `v20250912.01` | Yes |
 | [pg_format](#pg_format) | PSQL | `v5.10` | Yes |
-| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.95.19` | Yes |
+| [php-cs-fixer](#php-cs-fixer) | PHP | `v3.95.24` | Yes |
 | [prettier](#prettier) | JavaScript | `v3.9.6-4` | Yes |
 | [prettier-json](#prettier-json) | JSON | `v3.9.6-4` | Yes |
 | [prettier-markdown](#prettier-markdown) | Markdown | `v3.9.6-4` | Yes |
@@ -45,19 +45,19 @@
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.17.0` | Yes |
-| [rubocop](#rubocop) | Ruby | `v1.89.0` | No |
+| [rubocop](#rubocop) | Ruby | `v1.90.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
 | [shellcheck](#shellcheck) | POSIX sh, Bash | `v0.11.0` | Yes |
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.3.2` | Yes |
-| [shfmt](#shfmt) | POSIX sh, Bash | `v3.13.1` | Yes |
+| [shfmt](#shfmt) | POSIX sh, Bash | `v3.14.0` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.6.0` | No |
 | [standardrb](#standardrb) | Ruby | `v1.56.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
-| [terraform](#terraform) | Terraform | `v1.15.8` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-4148-g1ea007ec` | Yes |
+| [terraform](#terraform) | Terraform | `v1.16.1` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-4163-g6cce8f19` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -1021,7 +1021,7 @@ restylers:
     command:
     - dart
     - format
-    image: public.ecr.aws/restyled-io/restyler-dart-format:v3.1.10
+    image: public.ecr.aws/restyled-io/restyler-dart-format:v3.1.13
     include:
     - '**/*.dart'
     interpreters: []
@@ -1602,7 +1602,7 @@ restylers:
     command:
     - gofmt
     - -w
-    image: public.ecr.aws/restyled-io/restyler-gofmt:go1.26.0
+    image: public.ecr.aws/restyled-io/restyler-gofmt:go1.27.1
     include:
     - '**/*.go'
     interpreters: []
@@ -1925,7 +1925,7 @@ restylers:
     arguments: []
     command:
     - isort
-    image: public.ecr.aws/restyled-io/restyler-isort:v8.0.1
+    image: public.ecr.aws/restyled-io/restyler-isort:v9.0.1
     include:
     - '**/*.py'
     interpreters:
@@ -3126,7 +3126,7 @@ restylers:
     - php-cs-fixer
     - fix
     - --no-interaction
-    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.95.19
+    image: public.ecr.aws/restyled-io/restyler-php-cs-fixer:v3.95.24
     include:
     - '**/*.php'
     interpreters: []
@@ -3950,7 +3950,7 @@ restylers:
     - --auto-correct
     - --fail-level
     - fatal
-    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.89.0
+    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.90.0
     include:
     - '**/*.rb'
     interpreters:
@@ -4561,7 +4561,7 @@ restylers:
     command:
     - shfmt
     - -w
-    image: public.ecr.aws/restyled-io/restyler-shfmt:v3.13.1
+    image: public.ecr.aws/restyled-io/restyler-shfmt:v3.14.0
     include:
     - '**/*.sh'
     - '**/*.bash'
@@ -5403,7 +5403,7 @@ restylers:
     command:
     - terraform
     - fmt
-    image: public.ecr.aws/restyled-io/restyler-terraform:v1.15.8
+    image: public.ecr.aws/restyled-io/restyler-terraform:v1.16.1
     include:
     - '**/*.tf'
     interpreters: []
@@ -5485,7 +5485,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4148-g1ea007ec
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4163-g6cce8f19
     include:
     - '**/*.sv'
     interpreters: []
