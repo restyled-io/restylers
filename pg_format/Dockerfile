@@ -2,7 +2,7 @@ FROM alpine:3.24
 LABEL maintainer="Patrick Brisbin <pbrisbin@gmail.com>"
 
 # renovate: datasource=github-tags depName=pg_format packageName=darold/pgFormatter
-ENV PG_FORMAT_VERSION=5.10
+ENV PG_FORMAT_VERSION=5.11
 ENV PG_FORMAT_ARCHIVE=https://github.com/darold/pgFormatter/archive/v$PG_FORMAT_VERSION.tar.gz
 
 RUN apk add --no-cache \
