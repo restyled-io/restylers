@@ -45,7 +45,7 @@
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
 | [reorder-python-imports](#reorder-python-imports) | Python | `v3.17.0` | Yes |
-| [rubocop](#rubocop) | Ruby | `v1.90.0` | No |
+| [rubocop](#rubocop) | Ruby | `v1.91.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
 | [scalafmt](#scalafmt) | Scala | `v3.7.10` | No |
@@ -57,7 +57,7 @@
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.16.2` | Yes |
-| [verible](#verible) | System Verilog | `v0.0-4171-ga5e38787` | Yes |
+| [verible](#verible) | System Verilog | `v0.0-4196-g33af5e45` | Yes |
 | [whitespace](#whitespace) | * | `v0.2.0.5` | Yes |
 | [yapf](#yapf) | Python | `v0.43.0-1` | Yes |
 
@@ -3950,7 +3950,7 @@ restylers:
     - --auto-correct
     - --fail-level
     - fatal
-    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.90.0
+    image: public.ecr.aws/restyled-io/restyler-rubocop:v1.91.0
     include:
     - '**/*.rb'
     interpreters:
@@ -5485,7 +5485,7 @@ restylers:
     command:
     - verible-verilog-format
     - --inplace
-    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4171-ga5e38787
+    image: public.ecr.aws/restyled-io/restyler-verible:v0.0-4196-g33af5e45
     include:
     - '**/*.sv'
     interpreters: []
