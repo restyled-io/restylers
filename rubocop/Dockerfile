@@ -5,7 +5,7 @@ RUN apk add --no-cache \
   bash=5.0.0-r0 \
   g++=8.3.0-r0 \
   linux-headers=4.19.36-r0 \
-  make=4.2.1-r2
+  make=4.4.1-r4
 RUN mkdir -p /app
 WORKDIR /app
 COPY Gemfile .
