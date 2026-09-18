@@ -4,7 +4,7 @@ ENV LANG en_US.UTF-8
 RUN apk add --no-cache \
   bash=5.0.0-r0 \
   g++=8.3.0-r0 \
-  linux-headers=4.19.36-r0 \
+  linux-headers=7.0.0-r1 \
   make=4.2.1-r2
 RUN mkdir -p /app
 WORKDIR /app
