@@ -24,7 +24,7 @@
 | [headroom](#headroom) | * | `v0.4.3.0` | No |
 | [hindent](#hindent) | Haskell | `v6.3.0` | No |
 | [hlint](#hlint) | Haskell | `v3.10` | No |
-| [isort](#isort) | Python | `v9.0.1` | Yes |
+| [isort](#isort) | Python | `v9.0.2` | Yes |
 | [jdt](#jdt) | Java, JavaScript*, CSS, HTML, JSON, XML | `v2.13.0` | No |
 | [jq](#jq) | JSON | `v1.6-4` | No |
 | [luaformatter](#luaformatter) | Lua | `v1.3.6` | Yes |
@@ -1925,7 +1925,7 @@ restylers:
     arguments: []
     command:
     - isort
-    image: public.ecr.aws/restyled-io/restyler-isort:v9.0.1
+    image: public.ecr.aws/restyled-io/restyler-isort:v9.0.2
     include:
     - '**/*.py'
     interpreters:
