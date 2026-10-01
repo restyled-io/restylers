@@ -2,7 +2,7 @@
 enabled: true
 name: prettier
 version_cmd: |
-  prettier --version | sed 's/^/v/; s/$/-5/'
+  prettier --version | sed 's/^/v/; s/$/-6/'
 command:
   - prettier
   - "--write"
@@ -129,3 +129,19 @@ metadata:
         )
       restyled: |
         matrix(1, 0, 0, 0, 1, 0, 0, 0, 1);
+
+    - name: With shared config package
+      support:
+        path: package.json
+        contents: |
+          {
+            "name": "@blah/blah",
+            "version": "0.1.0",
+            "private": true,
+            "prettier": "@freckle/prettier-config"
+          }
+      extension: js
+      contents: |
+        const x = { a: 1 }
+      restyled: |
+        const x = {a: 1}

@@ -5,6 +5,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY package.json .
 RUN yarn install && yarn cache clean
+RUN ln -s /app/node_modules /node_modules
 COPY prettier-shim /usr/local/bin/prettier
 COPY prettier-shim /usr/local/bin/prettier-with-tailwindcss
 RUN mkdir -p /code
