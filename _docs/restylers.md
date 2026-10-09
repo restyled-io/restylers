@@ -44,7 +44,7 @@
 | [purty](#purty) | PureScript | `v7.0.0` | Yes |
 | [pyment](#pyment) | Python | `v0.3.3` | Yes |
 | [refmt](#refmt) | Reason | `v3.3.3` | Yes |
-| [reorder-python-imports](#reorder-python-imports) | Python | `v3.17.0` | Yes |
+| [reorder-python-imports](#reorder-python-imports) | Python | `v3.18.0` | Yes |
 | [rubocop](#rubocop) | Ruby | `v1.91.0` | No |
 | [ruff](#ruff) | Python | `v0.14.0` | No |
 | [rustfmt](#rustfmt) | Rust | `v1.8.0-stable` | Yes |
@@ -53,7 +53,7 @@
 | [shellharden](#shellharden) | POSIX sh, Bash | `v4.3.2` | Yes |
 | [shfmt](#shfmt) | POSIX sh, Bash | `v3.14.1` | Yes |
 | [sqlformat](#sqlformat) | SQL, PSQL | `0.6.0` | No |
-| [standardrb](#standardrb) | Ruby | `v1.56.0` | Yes |
+| [standardrb](#standardrb) | Ruby | `v1.57.0` | Yes |
 | [stylish-haskell](#stylish-haskell) | Haskell | `v0.14.3.0` | Yes |
 | [taplo](#taplo) | TOML | `0.9.3` | Yes |
 | [terraform](#terraform) | Terraform | `v1.16.5` | Yes |
@@ -3897,7 +3897,7 @@ restylers:
     command:
     - reorder-python-imports
     - --exit-zero-even-if-changed
-    image: public.ecr.aws/restyled-io/restyler-reorder-python-imports:v3.17.0
+    image: public.ecr.aws/restyled-io/restyler-reorder-python-imports:v3.18.0
     include:
     - '**/*.py'
     interpreters:
@@ -4715,7 +4715,7 @@ restylers:
     command:
     - standardrb
     - --fix
-    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.56.0
+    image: public.ecr.aws/restyled-io/restyler-standardrb:v1.57.0
     include:
     - '**/*.rb'
     interpreters:
